@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.CommonMapper">
+    <!-- 根据platformID查询platform信息 -->
+    <select id="FindMasterPlatforms" resultType="com.web.app.domain.Entity.MasterPlatforms">
+        SELECT
+            *
+        FROM
+            master_platforms
+        WHERE
+            Id = #{platformId}
+            AND DeleteFlag = false
+        ORDER BY
+            Id
+    </select>
+
+    <!-- 根据用户ID或用户邮箱查询用户信息 -->
+    <select id="FindUserByUidOrEmail" resultType="com.web.app.domain.Entity.OdrUsers">
+        SELECT
+            *
+        FROM
+            odr_users
+        WHERE
+            <choose>
+                <when test="uid != null and uid != ''">
+                    Uid = #{uid}
+                </when>
+                <otherwise>
+                    Email = #{email}
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="platformId != null and platformId != ''">
+                    AND PlatformId = #{platformId}
+                </when>
+                <otherwise>
+                    AND 1 = 1
+                </otherwise>
+            </choose>
+            AND DeleteFlag = false
+    </select>
+    <!-- 根据caseID查询案件信息 -->
+    <select id="FindCasesInfoByCid" resultType="com.web.app.domain.Entity.Cases">
+        SELECT
+            *
+        FROM
+            cases
+        WHERE
+            cid = #{cid}
+            AND DeleteFlag = false
+    </select>
+
+    <!-- 查询种类信息 -->
+    <select id="FindMasterTypeName" resultType="com.web.app.domain.Entity.MasterTypes">
+        SELECT
+            *
+        FROM
+            master_types
+        WHERE
+            LanguageId = #{languageId}
+            AND PlatformId = #{platformId}
+            AND Type = #{type}
+        ORDER BY
+            OrderNo
+    </select>
+
+    <!-- 取得邮件模板 -->
+    <select id="FindMailTemplatesList" resultType="com.web.app.domain.Entity.MailTemplates">
+        SELECT
+            *
+        FROM
+            mail_templates
+        WHERE
+            PlatformId = #{platformId}
+            AND TemplateNo = #{tempId}
+            AND LanguageId = 'jp'
+    </select>
+</mapper>
