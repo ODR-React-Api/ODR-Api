@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetPetitionsTempMapper">
+    <resultMap id="petitionTempResultMap" type="com.web.app.domain.PetitionTemp">
+        <result property="petitionUserId" column="PetitionUserId" jdbcType="VARCHAR"/>
+        <result property="casePetition" column="CasePetition" jdbcType="VARCHAR"/>
+        <result property="petitionUserInfo_Email" column="PetitionUserInfo_Email" jdbcType="INTEGER"/>
+        <result property="agent1_Email" column="Agent1_Email" jdbcType="INTEGER"/>
+        <result property="agent2_Email" column="Agent2_Email" jdbcType="VARCHAR"/>
+        <result property="agent3_Email" column="Agent3_Email" jdbcType="VARCHAR"/>
+        <result property="agent4_Email" column="Agent4_Email" jdbcType="VARCHAR"/>
+        <result property="agent5_Email" column="Agent5_Email" jdbcType="VARCHAR"/>
+        <result property="traderUserEmail" column="TraderUserEmail" jdbcType="VARCHAR"/>
+        <result property="productName" column="productName" jdbcType="VARCHAR"/>
+        <result property="productId" column="ProductId" jdbcType="VARCHAR"/>
+        <result property="traderName" column="TraderName" jdbcType="VARCHAR"/>
+        <result property="traderUrl" column="TraderUrl" jdbcType="VARCHAR"/>
+        <result property="boughtDate" column="BoughtDate" jdbcType="TIMESTAMP"/>
+        <result property="price" column="Price" jdbcType="DECIMAL"/>
+        <result property="petitionTypeValue" column="petitionTypeValue" jdbcType="VARCHAR"/>
+        <result property="petitionContext" column="petitionContext" jdbcType="VARCHAR"/>
+        <result property="expectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR"/>
+        <result property="other" column="Other" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="infoResultMap" type="com.web.app.domain.PetitionInfo">
+        <result property="firstName" column="FirstName" jdbcType="VARCHAR"/>
+        <result property="lastName" column="LastName" jdbcType="VARCHAR"/>
+        <result property="firstName_kana" column="FirstName_kana" jdbcType="VARCHAR"/>
+        <result property="lastName_kana" column="LastName_kana" jdbcType="VARCHAR"/>
+        <result property="companyName" column="CompanyName" jdbcType="VARCHAR"/>   
+    </resultMap>
+    <resultMap id="fileIdResultMap" type="com.web.app.domain.FileId">
+        <result property="fileName" column="FileName" jdbcType="VARCHAR"/>
+        <result property="fileUrl" column="FileUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="scaleItemsResultMap" type="com.web.app.domain.ScaleItems">
+        <result property="extensionitemId" column="ExtensionitemId" jdbcType="VARCHAR"/>
+        <result property="extensionitemValue" column="ExtensionitemValue" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- 下書き保存のデータを取得する -->
+    <select id="selectPetitionsTemp"  resultMap="petitionTempResultMap">
+        SELECT 
+            cr.PetitionUserId,
+            cr.CasePetition,	
+            cr.PetitionUserInfo_Email,	
+            cr.Agent1_Email,	
+            cr.Agent2_Email,	
+            cr.Agent3_Email,	
+            cr.Agent4_Email,	
+            cr.Agent5_Email,	
+            cr.TraderUserEmail,
+            cp.productName,
+            cp.ProductId,
+            cp.TraderName,
+            cp.TraderUrl,
+            cp.BoughtDate,
+            cp.Price,
+            cp.petitionTypeValue,
+            cp.petitionContext,
+            cp.ExpectResloveTypeValue,
+            cp.Other
+        FROM
+            case_relations cr, case_petitions cp
+        WHERE
+            cr.PetitionUserId = #{sessionId}
+            AND cr.CasePetition = cp.id
+            AND cp.Status = 0
+    </select>
+    <!-- 申立人情報取得 -->
+    <select id="selectOdrUsers" resultMap="infoResultMap">
+        SELECT
+            FirstName,
+            LastName,
+            FirstName_kana,
+            LastName_kana,
+            CompanyName
+        FROM
+            odr_users
+        WHERE
+            Email = #{infoEmail}
+            AND Uid = #{sessionId}
+    </select>
+    <!-- 案件のファイルID取得 -->
+    <select id="selectFileId" resultMap="fileIdResultMap">
+        SELECT
+            f.FileName,
+            f.FileUrl
+        FROM
+            files f, case_file_relations cf
+        WHERE
+            cf.RelationType = 0
+            AND cf.RelatedId = #{casePetition}
+            AND cf.fileId = f.id
+    </select>
+    <!-- 拡張項目内容取得 -->
+    <select id="scaleItemsSearch" resultMap="scaleItemsResultMap">
+        SELECT
+            cv.ExtensionitemId,
+            cv.ExtensionitemValue
+        FROM
+            case_extensionitem_values cv, case_extensionitem_relations cr, case_petitions cp
+        WHERE
+            cv.PlatformId = #{platformId}
+            AND cv.Case_petitionId = cp.id
+            AND cv.DeleteFlag = 0
+            AND cr.ExtensionitemId = cv.ExtensionitemId
+        ORDER BY cr.DisplayOrder ASC
+    </select>
+</mapper>
