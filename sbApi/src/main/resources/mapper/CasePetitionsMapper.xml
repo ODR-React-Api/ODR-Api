@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.CasePetitionsMapper">
+
+    <!-- TBL「案件別個人情報リレーション（case_relations）」の更新 -->
+    <update id="updateCasePetitions" parameterType="com.web.app.domain.Entity.UpdateCasePetitions">
+        update  
+            case_petitions
+        set 
+            PlatformId,
+            CaseId,
+            productName,
+            ProductId,
+            TraderName,
+            TraderMail,
+            TraderUrl,
+            BoughtDate,
+            Price,
+            petitionTypeValue,
+            petitionContext,
+            ExpectResloveTypeValue,
+            Other,
+            LanguageId
+        where
+            id = #{id} 
+    </update> 
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.FilesMapper">
+
+    <!-- TBL「添付ファイル（files）」を論理削除する -->
+    <update id="updateDeleteFlag" resultType="String">
+        update
+            files
+        set
+            DeleteFlag = #{deleteFlag}
+        where
+            id = #{fileId}
+    </update>
+
+    <!-- TBL「添付ファイル（files）」を新規登録する -->
+    <insert id="insertFiles" parameterType="com.web.app.domain.Entity.InsertFiles">
+        insert into Files(
+            id,
+            PlatformId,
+            CaseId,
+            FileName,
+            FileExtension,
+            FileUrl,
+            FileSize,
+            RegisterUserId,
+            RegisterDate,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )
+        values(
+            #{id},
+            #{platformId},
+            #{caseId},
+            #{fileName},
+            #{fileExtension},
+            #{fileUrl},
+            #{fileSize},
+            #{registerUserId},
+            #{registerDate},
+            #{deleteFlag},
+            #{lastModifiedDate},
+            #{lastModifiedBy}
+        )
+    </insert>
+
+    <!-- TBL「添付ファイル（files）」のMAX（id）の取得 -->
+    <select id="selectMaxId" resultType="String">
+        select 
+            MAX(id) AS id
+        from 
+            files
+    </select>
+</mapper>

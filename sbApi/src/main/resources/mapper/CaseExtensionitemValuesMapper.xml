@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.CaseExtensionitemValuesMapper">
+
+    <resultMap id="BaseResultMap" type="com.web.app.domain.Entity.IdPetitionUserId">
+            <result property="extensionitemId" column="ExtensionitemId" jdbcType="VARCHAR"/>
+            <result property="extensionitemValue" column="ExtensionitemValue" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 拡張項目内容を取得 -->
+    <select id="selectCaseIdPetition1" resultMap="BaseResultMap">
+        select ExtensionitemId, 
+            ExtensionitemValue
+        from 
+            case_extensionitem_values
+        where
+            PlatformId = #{platformId} and
+            Case_petitionId = #{casePetitionId} and
+            DeleteFlag = #{deleteFlag0} and
+            ExtensionitemId = #{extensionitemId} and
+    </select>
+    <!-- 拡張項目内容の更新 -->
+    <update id="updateCasePetitions" parameterType="com.web.app.domain.Entity.UpdateOrInsertCaseExtensionitemValues">
+        update  
+            case_extensionitem_values
+        set 
+            ExtensionitemValue,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy,
+            CaseId,
+        where
+            PlatformId = #{platformId}
+            Case_petitionId = #{casePetitionId}
+            DeleteFlag = #{deleteFlag0}
+            ExtensionitemId = #{extensionitemId}
+    </update> 
+
+    <!-- case_extensionitem_valuesのMAX（id）の取得 -->
+    <select id="selectMaxId" resultType="String">
+        select 
+            MAX(id) AS id
+        from 
+            case_extensionitem_values
+    </select>
+
+    <!-- case_extensionitem_valuesのMAX（id）を新規登録する -->
+    <insert id="insertCaseExtensionitemValues" parameterType="com.web.app.domain.Entity.UpdateOrInsertCaseExtensionitemValues">
+        insert into cases(
+            id,
+            PlatformId,
+            CaseId,
+            case_petitionId,
+            ExtensionitemId,
+            ExtensionitemValue,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )
+        values(
+            #{id},
+            #{platformId},
+            #{caseId},
+            #{casePetitionId},
+            #{extensionitemId},
+            #{extensionitemValue},
+            #{deleteFlag},
+            #{lastModifiedDate},
+            #{lastModifiedBy}
+        )
+    </insert>
+</mapper>
