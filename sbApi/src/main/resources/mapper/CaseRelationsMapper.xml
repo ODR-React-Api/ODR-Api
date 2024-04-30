@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.CaseRelationsMapper">
+
+    <resultMap id="BaseResultMap" type="com.web.app.domain.Entity.UserCase">
+            <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
+            <result property="petitionUserId" column="PetitionUserId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="BaseResultMap2" type="com.web.app.domain.Entity.IdPetitionUserId">
+            <result property="id" column="Id" jdbcType="VARCHAR"/>
+            <result property="petitionUserId" column="PetitionUserId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- ユーザが申立人となるケースの取得-->
+    <select id="selectCaseIdPetition1" resultMap="BaseResultMap">
+        select caseId, 
+            petitionUserId
+        from 
+            case_relations
+        where
+            (PetitionUserInfo_Email = #{email} or
+            Agent1_Email = #{email} or
+            Agent2_Email = #{email} or
+            Agent3_Email = #{email} or
+            Agent4_Email = #{email} or
+            Agent5_Email = #{email}) and
+            DeleteFlag = 0
+        order by
+            caseId
+    </select>
+
+    <!-- ユーザが相手方とするケースの取得-->
+    <select id="selectCaseIdPetition2" resultMap="BaseResultMap">
+        select caseId, 
+            petitionUserId
+        from 
+            case_relations
+        where
+            (TraderUserEmail = #{email} or
+            TraderAgent1_UserEmail = #{email} or
+            TraderAgent2_UserEmail = #{email} or
+            TraderAgent3_UserEmail = #{email} or
+            TraderAgent4_UserEmail = #{email} or
+            TraderAgent5_UserEmail = #{email}) and
+            DeleteFlag = 0
+        order by
+            caseId
+    </select>
+
+    <!-- ユーザが調停人とするケースの取得-->
+    <select id="selectCaseIdPetition3" resultMap="BaseResultMap">
+        select caseId, 
+            petitionUserId
+        from 
+            case_relations
+        where
+            MediatorUserEmail = #{email} and
+            DeleteFlag = 0
+        order by
+            caseId
+    </select>
+
+    <!-- TBL「案件別個人情報リレーション（case_relations）」と「申立（case_petitions）」より用意した下書き保存データを取得する。 -->
+    <select id="selectIdPetitionUserId" resultMap="BaseResultMap2">
+        select b.id, 
+            a.petitionUserId
+        from 
+            case_relations as a
+        inner join
+            case_petitions as b
+        where
+            a.petitionUserId = #{uid} and
+            b.status = '0' and
+            a.casePetition = b.id
+    </select>
+
+    <!-- 案件別個人情報リレーション（case_relations）のMAX（id）の取得 -->
+    <select id="selectMaxId" resultType="String">
+        select 
+            MAX(id) AS id
+        from 
+            case_relations
+    </select>
+
+    <!-- TBL「案件別個人情報リレーション（case_relations）」の更新 -->
+    <update id="updateCaseRelations" parameterType="com.web.app.domain.Entity.UpdateCaseRelations">
+        update  
+            case_relations
+        set 
+            id,
+            CaseId,
+            PlatformId,
+            etitionUserInfo_Email,
+            Agent1_Email,
+            Agent2_Email,
+            Agent3_Email,
+            Agent4_Email,
+            Agent5_Email,
+            TraderUserEmail
+        where
+            CasePetitions = #{casePetitions} and
+            PetitionUserId = #{petitionUserId}
+    </update> 
+</mapper>

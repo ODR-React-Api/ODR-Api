@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.OdrUsersMapper">
+
+    <resultMap id="BaseResultMap" type="com.web.app.domain.Entity.UserLanguageIdPlatformId">
+            <result property="languageId" column="LanguageId" jdbcType="VARCHAR"/>
+            <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- ユーザ情報を取得 -->
+    <select id="selectEmailOdrUsers" resultType="String">
+        select 
+            email 
+        from 
+            odr_users 
+        where Uid = #{uid} and
+            DeleteFlag = 0
+    </select>
+
+    <!-- ユーザ情報の取得-->
+    <select id="selectLanguageIdAndPlatformId" resultMap="BaseResultMap">
+        select languageId, 
+            platformId
+        from 
+            odr_users
+        where
+            uid = #{uid}
+    </select>
+
+    <!-- 販売者メールアドレス登録有無の判定-->
+    <select id="selectCount" resultType="int">
+        select count(*)
+        from 
+            odr_users
+        where
+            Email = #{email} and
+            PlatformId = #{platformId} and
+            DeleteFlag = #{deleteFlag}
+    </select>
+</mapper>
