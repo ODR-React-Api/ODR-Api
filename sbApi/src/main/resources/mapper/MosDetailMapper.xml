@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.MosDetail.MosDetailMapper">
+    <!-- API_案件状態取得 -->
+    <resultMap id="casesMap" type="com.web.app.domain.MosDetail.Cases">
+        <id property="cid" column="cid" jdbcType="VARCHAR"/>
+        <result property="caseStage" column="CaseStage" jdbcType="INTEGER"/>
+        <result property="caseStatus" column="CaseStatus" jdbcType="VARCHAR"/>
+        <result property="caseTitle" column="CaseTitle" jdbcType="VARCHAR"/>
+        <result property="replyEndDate" column="ReplyEndDate" jdbcType="TIMESTAMP"/>
+        <result property="counterclaimEndDate" column="CounterclaimEndDate" jdbcType="TIMESTAMP"/>
+        <result property="cancelDate" column="CancelDate" jdbcType="TIMESTAMP"/>
+        <result property="resolutionDate" column="ResolutionDate" jdbcType="TIMESTAMP"/>
+        <result property="negotiationEndDate" column="NegotiationEndDate" jdbcType="TIMESTAMP"/>
+        <result property="mediationEndDate" column="MediationEndDate" jdbcType="TIMESTAMP"/>
+        <result property="negotiationEndDateChangeStatus" column="NegotiationEndDateChangeStatus" jdbcType="INTEGER"/>
+        <result property="negotiationEndDateChangeCount" column="NegotiationEndDateChangeCount" jdbcType="INTEGER"/>
+        <result property="mediationEndDateChangeCount" column="MediationEndDateChangeCount" jdbcType="INTEGER"/>
+        <result property="groupMessageFlag1" column="GroupMessageFlag1" jdbcType="INTEGER"/>
+        <result property="groupMessageFlag2" column="GroupMessageFlag2" jdbcType="INTEGER"/>
+        <result property="mediatorUserEmail" column="MediatorUserEmail" jdbcType="VARCHAR"/>
+        <result property="negotiationStatus" column="negotiationsStatus" jdbcType="INTEGER"/>
+        <result property="mediationStatus" column="mediationsStatus" jdbcType="INTEGER"/>
+    </resultMap>
+    <!-- 該当案件のステータスを取得 -->
+    <select id="getCaseInfo" resultMap="casesMap">
+        SELECT
+            cases.cid,
+            cases.CaseStage,
+            cases.CaseStatus,
+            cases.CaseTitle,
+            cases.ReplyEndDate,
+            cases.CounterclaimEndDate,
+            cases.CancelDate,
+            cases.ResolutionDate,
+            cases.NegotiationEndDate,
+            cases.MediationEndDate,
+            cases.NegotiationEndDateChangeStatus,
+            cases.NegotiationEndDateChangeCount,
+            cases.MediationEndDateChangeCount ,
+            cases.GroupMessageFlag1 ,
+            cases.GroupMessageFlag2,
+            case_relations.MediatorUserEmail,
+            case_negotiations.Status AS negotiationsStatus,
+            case_mediations.Status As mediationsStatus
+        FROM cases
+        INNER JOIN case_relations
+        ON cases.cid = case_relations.CaseId
+        LEFT JOIN case_negotiations
+        ON cases.cid = case_negotiations.CaseId
+        LEFT JOIN case_mediations
+        ON cases.cid = case_mediations.CaseId
+        WHERE
+            cases.cid = #{caseId}
+        AND cases.DeleteFlag = 0
+        AND case_relations.DeleteFlag = 0
+        AND case_negotiations.DeleteFlag = 0
+        AND case_mediations.DeleteFlag = 0
+    </select>
+
+    <resultMap id="masterPlatformsMap" type="com.web.app.domain.MosDetail.MasterPlatforms">
+        <result property="phaseNegotiation" column="Phase_negotiation" jdbcType="INTEGER"/>
+        <result property="phaseMediation" column="Phase_mediation" jdbcType="INTEGER"/>
+        <result property="phaseArbitration" column="Phase_arbitration" jdbcType="INTEGER"/>
+        <result property="phaseReply" column="Phase_reply" jdbcType="INTEGER"/>
+    </resultMap>
+    <!-- 利用モジュール状況取得 -->
+    <select id="getPhases" resultMap="masterPlatformsMap">
+        SELECT
+            Phase_negotiation,
+            Phase_mediation,
+            Phase_arbitration,
+            Phase_reply
+        FROM master_platforms
+        WHERE
+            Id = #{platformId}
+        AND DeleteFlag = 0
+    </select>
+
+    <resultMap id="odrUsersMap" type="com.web.app.domain.MosDetail.OdrUsers">
+        <result property="showTuritor1" column="ShowTuritor1" jdbcType="INTEGER"/>
+        <result property="showTuritor2" column="ShowTuritor2" jdbcType="INTEGER"/>
+        <result property="showTuritor3" column="ShowTuritor3" jdbcType="INTEGER"/>
+    </resultMap>
+    <!-- チュートリアル表示制御取得 -->
+    <select id="getShowTuritor" resultMap="odrUsersMap">
+        SELECT
+            ShowTuritor1,
+            ShowTuritor2,
+            ShowTuritor3
+        FROM odr_users
+        WHERE
+            Uid = #{userId}
+        AND PlatformId = #{platformId}
+        AND DeleteFlag = 0
+    </select>
+
+    <!-- チュートリアル表示制御変更 -->
+    <update id="updShowTuritor" parameterType="com.web.app.domain.MosDetail.GetCaseInfoParameter">
+        UPDATE odr_users
+        <set>
+            <if test="turitor1Flg == 1">
+            ShowTuritor1 = 1,
+            </if>
+            <if test="turitor2Flg == 1">
+            ShowTuritor2 = 1,
+            </if>
+            <if test="turitor3Flg == 1">
+            ShowTuritor3 = 1,
+            </if>
+        </set>
+        WHERE
+            Uid = #{userId}
+        AND PlatformId = #{platformId}
+        AND DeleteFlag = 0
+    </update>
+
+    <!-- API_和解内容取得 -->
+    <resultMap id="caseNegotiationsMap" type="com.web.app.domain.MosDetail.CaseNegotiations">
+        <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
+        <result property="status" column="Status" jdbcType="INTEGER"/>
+        <result property="expectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR"/>
+        <result property="otherContext" column="OtherContext" jdbcType="VARCHAR"/>
+        <result property="payAmount" column="PayAmount" jdbcType="DECIMAL"/>
+        <result property="counterClaimPayment" column="CounterClaimPayment" jdbcType="DECIMAL"/>
+        <result property="paymentEndDate" column="PaymentEndDate" jdbcType="TIMESTAMP"/>
+        <result property="shipmentPayType" column="ShipmentPayType" jdbcType="INTEGER"/>
+        <result property="specialItem" column="SpecialItem" jdbcType="VARCHAR"/>
+        <result property="lastModifiedDate" column="LastModifiedDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!-- 和解内容の取得 -->
+    <select id="getCaseNegotiations" resultMap="caseNegotiationsMap">
+        SELECT
+            CaseId,
+            Status,
+            ExpectResloveTypeValue,
+            OtherContext,
+            PayAmount,
+            CounterClaimPayment,
+            PaymentEndDate,
+            ShipmentPayType,
+            SpecialItem,
+            LastModifiedDate
+        FROM case_negotiations
+        WHERE
+            CaseId = #{caseId}
+        AND Status != 0
+        AND DeleteFlag = 0
+    </select>
+
+    <!-- API_調停内容取得 -->
+    <resultMap id="caseMediationsMap" type="com.web.app.domain.MosDetail.CaseMediations">
+        <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
+        <result property="status" column="Status" jdbcType="INTEGER"/>
+        <result property="expectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR"/>
+        <result property="payAmount" column="PayAmount" jdbcType="DECIMAL"/>
+        <result property="counterClaimPayment" column="CounterClaimPayment" jdbcType="DECIMAL"/>
+        <result property="paymentEndDate" column="PaymentEndDate" jdbcType="TIMESTAMP"/>
+        <result property="shipmentPayType" column="ShipmentPayType" jdbcType="INTEGER"/>
+        <result property="specialItem" column="SpecialItem" jdbcType="VARCHAR"/>
+        <result property="lastModifiedDate" column="LastModifiedDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!-- 調停内容の取得 -->
+    <select id="getCaseMediations" resultMap="caseMediationsMap">
+        SELECT
+            CaseId,
+            Status,
+            ExpectResloveTypeValue,
+            PayAmount,
+            CounterClaimPayment,
+            PaymentEndDate,
+            ShipmentPayType,
+            SpecialItem,
+            LastModifiedDate
+        FROM case_mediations
+        WHERE
+            CaseId = #{caseId}
+        AND Status != 0
+        AND DeleteFlag = 0
+    </select>
+
+    <resultMap id="filesMap" type="com.web.app.domain.MosDetail.Files">
+        <result property="fileName" column="FileName" jdbcType="VARCHAR"/>
+        <result property="fileUrl" column="FileUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- 共通 添付資料の取得 -->
+    <select id="getFiles" resultMap="filesMap">
+        SELECT
+            files.FileName,
+            files.FileUrl
+        FROM case_file_relations, files
+        WHERE
+            case_file_relations.CaseId = #{caseId}
+        AND case_file_relations.RelationType = #{relationType}
+        AND case_file_relations.DeleteFlag = 0
+        AND files.id = case_file_relations.fileId
+        AND files.DeleteFlag = 0
+    </select>
+</mapper>
