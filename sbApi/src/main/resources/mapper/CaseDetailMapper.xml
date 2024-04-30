@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.CaseDetailMapper">
+    <resultMap id="caseDetailCasesInfoResultMap" type="com.web.app.domain.CaseDetailCasesSelectInfo">
+        <id property="caseId" column="caseId" jdbcType="VARCHAR"/>
+        <result property="cId" column="cid" jdbcType="VARCHAR"/>
+   		<result property="caseStage" column="CaseStage" jdbcType="INTEGER"/>
+   		<result property="caseStatus" column="CaseStatus" jdbcType="VARCHAR"/>
+   		<result property="caseTitle" column="CaseTitle" jdbcType="VARCHAR"/>
+   		<result property="petitionDate" column="PetitionDate" jdbcType="DATE"/>
+   		<result property="replyEndDate" column="ReplyEndDate" jdbcType="DATE"/>
+   		<result property="counterclaimEndDate" column="CounterclaimEndDate" jdbcType="DATE"/>
+   		<result property="negotiationEndDate" column="NegotiationEndDate" jdbcType="DATE"/>
+   		<result property="mediationEndDate" column="MediationEndDate" jdbcType="DATE"/>
+   		<result property="negotiationEndDateChangeStatus" column="NegotiationEndDateChangeStatus" jdbcType="INTEGER"/>
+   		<result property="caseNegotiationsStatus" column="NegotiationsStatus" jdbcType="INTEGER"/>
+   		<result property="mediationsStatus" column="caseMediationsStatus" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="CaseDetailCasesInforSearch" resultMap="caseDetailCasesInfoResultMap">
+        SELECT
+            Cases.cid AS  cid,
+            Cases.CaseStage AS  CaseStage,
+            Cases.CaseStatus AS  CaseStatus,
+            Cases.CaseTitle AS  CaseTitle,
+            Cases.PetitionDate AS  PetitionDate,
+            Cases.ReplyEndDate AS  ReplyEndDate,
+            Cases.CounterclaimEndDate AS  CounterclaimEndDate,
+            Cases.NegotiationEndDate AS  NegotiationEndDate,
+            Cases.MediationEndDate AS  MediationEndDate,
+            Cases.NegotiationEndDateChangeStatus AS  NegotiationEndDateChangeStatus,            
+            Cases.GroupMessageFlag1  AS  GroupMessageFlag1,
+            Cases.GroupMessageFlag2  AS  GroupMessageFlag2,
+            caseNegotiations.Status AS NegotiationsStatus,
+            caseMediations.Status AS caseMediationsStatus
+        FROM
+            cases Cases 
+        LEFT JOIN case_negotiations caseNegotiations ON Cases.cid = caseNegotiations.CaseId
+        LEFT JOIN case_mediations caseMediations ON caseMediations.CaseId = Cases.cid 
+        AND  caseMediations.PlatformId =  Cases.PlatformId
+        WHERE
+            Cases.cid = #{caseId}
+            AND Cases.DeleteFlag = 0
+            AND caseNegotiations.DeleteFlag = 0
+        ORDER BY Cases.cid asc                
+    </select>
+    <select id="CaseDetailCasesMediatorDisclosureFlagInfoSearch" resultType="Integer">
+        SELECT 
+            MediatorDisclosureFlag
+        FROM
+            cases
+        WHERE
+            cases.cid =
+                    #{CaseId}               
+                
+    </select>
+    <select id="CaseDetailUserMessagesReadedCntInfoSearch" resultType="Integer">
+        SELECT 
+            count(*) as notReadedCnt
+        FROM
+            user_messages
+        WHERE
+            CaseId = #{CaseId}
+                AND userId = #{userId}
+                AND ReadFlag = 0
+                AND DeleteFlag = 0
+    </select>
+    
+    <select id="CaseDetailMessagesUserMessagesReadedCntInfoSearch" resultType="Integer">
+        SELECT 
+            count(*) as notReadedCnt
+        FROM
+            user_messages userMessages,messages messages
+        WHERE
+            user_messages.CaseId = #{CaseId}
+                AND userMessages.userId = #{userId}
+                AND userMessages.ReadFlag = 0
+                AND userMessages.DeleteFlag = 0
+                AND messages.CaseId = userMessages.CaseId
+                AND messages.Id = userMessages.MessageId
+                AND messages.DeleteFlag = 0
+                AND messages.CaseStage > 3
+    </select>
+</mapper>
