@@ -59,7 +59,7 @@ public class GetFileInfoController {
       System.out.println(caseId + "##"+id + "##"+positionFlg+"##"+ mediatorDisclosureFlag);
       return caseFileInfoList;
     } catch (Exception e) {
-      AjaxResult.fatal("案件添付ファイル取得失败!", e);
+      AjaxResult.fatal("案件添付ファイル取得失败!!!!!", e);
       return null;
     }
   }
