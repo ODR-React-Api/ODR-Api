@@ -2,6 +2,7 @@ package com.web.app.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -211,5 +212,13 @@ public class UtilServiceImpl implements UtilService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public Date AddDaysToDate(Date date, int days) {
+        Calendar calender = Calendar.getInstance();
+        calender.setTime(date);
+        calender.add(Calendar.DAY_OF_YEAR, days);
+        return calender.getTime();
     }
 }
