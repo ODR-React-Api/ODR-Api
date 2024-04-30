@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 
 // API接口文档识别
-@Api(tags = "用户模块") 
+@Api(tags = "API_一覧取得") 
 // 当前类可接受HTTP请求
 @RestController
 // 接受请求URL
