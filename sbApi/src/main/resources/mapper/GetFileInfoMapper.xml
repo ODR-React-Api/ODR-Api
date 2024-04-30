@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetFileInfoMapper">
+
+<resultMap id="loginUserRoleOpenInfoMap" type="com.web.app.domain.GetFileInfo">
+    <result property="mediatorDisclosureFlag" column="MediatorDisclosureFlag" jdbcType="INTEGER"/>
+    <result property="petitionUserId" column="PetitionUserId" jdbcType="VARCHAR"/>
+    <result property="traderUserEmail" column="TraderUserEmail" jdbcType="VARCHAR"/>
+    <result property="mediatorUserEmail" column="MediatorUserEmail" jdbcType="VARCHAR"/>
+</resultMap>
+<resultMap id="caseFileInfoMap" type="com.web.app.domain.CaseFileInfo">
+    <result property="fileName" column="FileName" jdbcType="VARCHAR"/>
+    <result property="fileUrl" column="FileUrl" jdbcType="VARCHAR"/>
+    <result property="registerUserId" column="RegisterUserId" jdbcType="VARCHAR"/>
+    <result property="registerDate" column="RegisterDate" jdbcType="VARCHAR"/>
+</resultMap>
+<select id="selectLoginUserRoleOpenInfo" resultMap="loginUserRoleOpenInfoMap">
+    SELECT
+        MediatorDisclosureFlag, 
+        PetitionUserId,
+        TraderUserEmail,
+        MediatorUserEmail
+    FROM
+        react_use.cases t1
+    LEFT JOIN
+        react_use.case_relations t2
+    ON
+        t1.cid = t2.CaseId
+    WHERE 
+        t1.cid = #{caseId}
+        AND t1.DeleteFlag = '0'
+        AND t2.DeleteFlag = '0';
+</select>
+<select id="selectCaseFileInfoList" resultMap="caseFileInfoMap">
+    SELECT
+        FileName,
+        FileUrl,
+        RegisterUserId,
+        RegisterDate 
+    FROM
+        react_use.files t1,
+        react_use.action_histories t2,
+        react_use.action_file_relations t3 
+    WHERE
+        t2.CaseId = #{caseId} 
+        AND t2.DeleteFlag = '0' 
+        AND t2.UserType in (1, 2, 3) 
+        AND t2.HaveFile = TRUE 
+        AND (t2.MessageGroupId is null 
+    OR t2.MessageGroupId IN ( 
+        SELECT
+            messageGroupId 
+        FROM
+            react_use.user_messagegroups t4 
+        WHERE
+            t4.userId = #{id} 
+            AND t4.CaseId = #{caseId}
+    ))
+        AND t3.ActionHistoryId = t2.Id 
+        AND t3.DeleteFlag = '0' 
+        AND t1.id = t3.fileId 
+        AND t1.DeleteFlag = '0'
+        <if test="positionFlg == 2 
+        and (mediatorDisclosureFlag == 0 
+        or mediatorDisclosureFlag == 2)"> 
+        AND t2.CaseStage != 3 
+        </if> 
+    ORDER BY
+        t2.UserId
+</select>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetPoliciesInfoMapper">
+
+<resultMap id="getPoliciesInfoResultMap" type="com.web.app.domain.PoliciesInfo">
+    <result property="htmlContext" column="HtmlContext" jdbcType="VARCHAR"/>
+    <result property="versionNo" column="VersionNo" jdbcType="VARCHAR"/>
+</resultMap>
+<select id="selectPoliciesInfo" resultMap="getPoliciesInfoResultMap">
+    SELECT
+        HtmlContext, 
+        VersionNo 
+    FROM
+        react_use.master_policies
+    WHERE 
+        platformId = '0001'
+        AND LanguageId = 'jp'
+        AND PolicyType = 1
+        AND IsActive = 1
+        AND DeleteFlag = 0;
+</select>
+<select id="selectPrivacyPolicyInfo" resultMap="getPoliciesInfoResultMap">
+    SELECT
+        HtmlContext, 
+        VersionNo 
+    FROM
+        react_use.master_policies
+    WHERE 
+        platformId = '0001'
+        AND LanguageId = 'jp'
+        AND PolicyType = 0
+        AND IsActive = 1
+        AND DeleteFlag = 0;
+</select>
+</mapper>
