@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetRepliesMapper">
+
+    <resultMap id="getGetRepliesResultMap" type="com.web.app.domain.GetReplies">
+        <result column="replyType" jdbcType="VARCHAR" property="replyType" />
+        <result column="replyContext" jdbcType="VARCHAR" property="replyContext" />
+        <result column="HaveCounterClaim" jdbcType="VARCHAR" property="HaveCounterClaim" />
+        <result column="CounterClaimContext" jdbcType="VARCHAR" property="CounterClaimContext" />
+        <result column="TraderAgent1_UserEmail" jdbcType="VARCHAR" property="TraderAgent1_UserEmail" />
+        <result column="TraderAgent2_UserEmail" jdbcType="VARCHAR" property="TraderAgent2_UserEmail" />
+        <result column="TraderAgent3_UserEmail" jdbcType="VARCHAR" property="TraderAgent3_UserEmail" />
+        <result column="TraderAgent4_UserEmail" jdbcType="VARCHAR" property="TraderAgent4_UserEmail" />
+        <result column="TraderAgent5_UserEmail" jdbcType="VARCHAR" property="TraderAgent5_UserEmail" />
+        <result column="FileName" jdbcType="VARCHAR" property="FileName" />
+        <result column="FileUrl" jdbcType="VARCHAR" property="FileUrl" />
+    </resultMap>
+
+    <select id="getReplies" resultMap="getGetRepliesResultMap">
+        SELECT
+            c.replyType,
+            c.replyContext,
+            c.HaveCounterClaim,
+            C.CounterClaimContext,
+            C.TraderAgent1_UserEmail,
+            C.TraderAgent2_UserEmail,
+            C.TraderAgent3_UserEmail,
+            C.TraderAgent4_UserEmail,
+            C.TraderAgent5_UserEmail,
+            f.FileName,
+            f.FileUrl
+        FROM
+            react_use.case_replies c,react_use.files f,react_use.case_file_relations r
+        WHERE
+            c.CaseId = #{CaseId} 
+            and c.PlatformId = #{PlatformId}  
+            and c.Status = 0
+            and c.DeleteFlag = 0
+            and r.CaseId = c.CaseId 
+            and r.PlatformId = #{PlatformId} 
+            and r.RelationType in (1,2)
+            and r.RelatedId = c.id 
+            and r.DeleteFlag = 0
+            and f.id = r.fileId
+            and f.PlatformId = #{PlatformId}  
+    </select>
+</mapper>
+
+
