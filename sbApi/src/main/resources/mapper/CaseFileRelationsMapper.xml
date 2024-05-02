@@ -19,7 +19,7 @@
     </select>
 
     <!-- TBL「案件-添付ファイルリレーション（case_file_relations）」を論理削除する -->
-    <update id="updateDeleteFlag" resultType="integer">
+    <update id="updateDeleteFlag">
         update
             case_file_relations
         set

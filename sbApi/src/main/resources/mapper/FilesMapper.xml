@@ -5,7 +5,7 @@
 <mapper namespace="com.web.app.mapper.FilesMapper">
 
     <!-- TBL「添付ファイル（files）」を論理削除する -->
-    <update id="updateDeleteFlag" resultType="String">
+    <update id="updateDeleteFlag">
         update
             files
         set
