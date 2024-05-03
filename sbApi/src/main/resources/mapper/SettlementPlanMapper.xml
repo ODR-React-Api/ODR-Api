@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.SettlementPlan.SettlementPlanMapper">
+    <!--  -->
+    <insert id="AddSettlementPlan" parameterType="com.web.app.domain.SettlementPlan.AddSettlementPlan">
+        INSERT INTO case_negotiations(
+            id,
+            PlatformId,
+            CaseId,
+            Status,
+            InfoStatus,
+            ExpectResloveTypeValue,
+            OtherContext,
+            HtmlContext,
+            HtmlContext2,
+            PayAmount,
+            PaymentEndDate,
+            ShipmentPayType,
+            ShipmentPayValue,
+            SpecialItem,
+            UserId,
+            SubmitDate,
+            AgreementDate,
+            TemplateFileName,
+            CounterClaimType,
+            CounterClaimContext,
+            CounterClaimPayment,
+            PaymentUser,
+            EditAbleUser,
+            LanguageId,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )VALUES(
+            UUID(),
+            #{PlatformId},
+            #{CaseId},
+            Status,
+            NULL,
+            #{ExpectResloveTypeValue},
+            #{OtherContext},
+            #{HtmlContext},
+            #{HtmlContext2},
+            #{PayAmount},
+            #{PaymentEndDate},
+            #{ShipmentPayType},
+            ShipmentPayValue,
+            #{SpecialItem},
+            #{UserId},
+            #{SubmitDate},
+            NUll,
+            NULL,
+            NULL,
+            NULL,
+            #{CounterClaimPayment},
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            0,
+            CURRENT_TIMESTAMP(),
+            #{UserId}
+            )
+    </insert>
+</mapper>
