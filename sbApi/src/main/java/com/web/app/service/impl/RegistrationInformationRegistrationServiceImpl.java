@@ -175,7 +175,9 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     // ID
     insertCases.setCid(cid);
     // プラットフォームID
-    insertCases.setPlatformId(userLanguageIdPlatformId.getPlatformId());
+    if (userLanguageIdPlatformId != null) {
+      insertCases.setPlatformId(userLanguageIdPlatformId.getPlatformId());
+    }
     // 案件ステージ
     insertCases.setCaseStage("0");
     // 案件ステータス
@@ -186,7 +188,9 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     // 申立て日
     insertCases.setPetitionDate(new Date());
     // 利用言語
-    insertCases.setLanguageId(userLanguageIdPlatformId.getLanguageId());
+    if (userLanguageIdPlatformId != null) {
+      insertCases.setLanguageId(userLanguageIdPlatformId.getLanguageId());
+    }
     // 回答開始日
     insertCases.setReplyStartDate(new Date());
     // 回答期限日
@@ -206,7 +210,9 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     // 案件ID
     updateCaseRelations.setCaseId(maxCid);
     // プラットフォームID
-    updateCaseRelations.setPlatformId(userLanguageIdPlatformId.getPlatformId());
+    if (userLanguageIdPlatformId != null) {
+      updateCaseRelations.setPlatformId(userLanguageIdPlatformId.getPlatformId());
+    }
     // 申立て人入力情報
     updateCaseRelations.setPetitionUserInfoEmail(s09ScreenIntelligence.getEtitionUserInfoEmail());
     // 代理人1
