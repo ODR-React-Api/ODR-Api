@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import lombok.Data;
-import net.sf.jsqlparser.expression.DateTimeLiteralExpression.DateTime;
 
 @Data
 public class ReconciliationUser implements Serializable {
@@ -27,4 +26,11 @@ public class ReconciliationUser implements Serializable {
     private Date LastModifiedDate;
 
     private String LastModifiedBy;
+
+    private String Email;
+
+    private String UserId;
+
+    private String PlatformId;
+
 }
