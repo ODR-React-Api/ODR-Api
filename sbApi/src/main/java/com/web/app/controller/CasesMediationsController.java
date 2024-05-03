@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.app.domain.MediatorDisclosureRequest;
 // import com.web.app.domain.Constants;
 import com.web.app.domain.Response;
 import com.web.app.domain.constants.Constants;
@@ -57,11 +58,11 @@ public class CasesMediationsController {
     @ApiOperation("調停人情報開示制限")
     @GetMapping("/updMediatorDisclosureFlag")
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public Response updMediatorDisclosureFlag(String caseId) throws Exception {
+    public Response updMediatorDisclosureFlag(MediatorDisclosureRequest mediatorDisclosureRequest) throws Exception {
         try {
 
             System.out.println("获取的数据库连接为:" + dataSource.getConnection());
-            Boolean resultBoolean = casesMediationsService.updMediatorDisclosureFlag(caseId);
+            Boolean resultBoolean = casesMediationsService.updMediatorDisclosureFlag(mediatorDisclosureRequest);
             Response response = new Response<Boolean>();
             if (resultBoolean) {
                 response.setCode(Constants.RETCD_SUCCESS);

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.web.app.domain.MediatorDisclosureRequest;
+
 /**
  * @author HHH
  * @description 针对表【user】的数据库操作Mapper
@@ -16,6 +18,6 @@ public interface CasesMediationsMapper {
 
     Date getMediatorDisclosureDate(String caseId);
 
-    Boolean updMediatorDisclosureFlag(String caseId);
+    Boolean updMediatorDisclosureFlag(MediatorDisclosureRequest mediatorDisclosureRequest);
 
 }

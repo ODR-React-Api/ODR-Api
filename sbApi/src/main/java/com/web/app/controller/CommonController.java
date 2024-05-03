@@ -2,6 +2,7 @@ package com.web.app.controller;
 
 import java.util.Date;
 import java.util.UUID;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -54,12 +55,13 @@ public class CommonController {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @ApiOperation("アクション履歴新規登録")
     @GetMapping("/InsHistories")
-    public Response InsHistories(ActionHistories actionHistories) throws Exception {
+    public Response InsHistories(ActionHistories actionHistories, List<String> fileId, Boolean parametersFlag,
+            Boolean displayNameFlag) throws Exception {
         Response dataResponse = new Response<>();
         try {
             actionHistories.setId(UUID.randomUUID().toString());
             actionHistories.setActionDateTime(new Date());
-            int res = commonService.InsHistories(actionHistories);
+            int res = commonService.InsHistories(actionHistories, fileId, parametersFlag, displayNameFlag);
             if (res == 1) {
                 dataResponse.setData(res);
                 dataResponse.setCode(Constants.RETCD_SUCCESS);

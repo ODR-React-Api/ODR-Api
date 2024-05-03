@@ -1,5 +1,7 @@
 package com.web.app.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +30,13 @@ public class CommonServiceImpl implements CommonService {
 
     @Transactional(noRollbackFor = { ArithmeticException.class })
     @Override
-    public Integer InsHistories(ActionHistories actionHistories) {
+    public Integer InsHistories(ActionHistories actionHistories, List<String> fileId, Boolean parametersFlag,
+            Boolean displayNameFlag) {
+        if (fileId == null || fileId.size() == 0) {
+            actionHistories.setHaveFile(false);
+        } else {
+            actionHistories.setHaveFile(true);
+        }
         Integer result = commonMapper.InsHistories(actionHistories);
         return result;
     }

@@ -40,7 +40,9 @@
     <update id="updMediatorDisclosureFlag" parameterType="string">
         UPDATE cases
         SET
-            MediatorDisclosureFlag = 2
+            MediatorDisclosureFlag = 2,
+            LastModifiedDate = #{LastModifiedDate},
+            LastModifiedBy = #{UserId}            
         WHERE
             CaseId = #{caseId}
     </update>
