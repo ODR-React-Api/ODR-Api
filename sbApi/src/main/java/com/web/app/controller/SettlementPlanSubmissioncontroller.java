@@ -23,12 +23,15 @@ public class SettlementPlanSubmissioncontroller {
     @Autowired
     private AddSettlementPlanService addSettlementPlanService;
 
+    private UserIdentityController userIdentityController;
+
 
     @ApiOperation("和解案提出登録")
     @PostMapping("AddSettlementPlan")
     //@SuppressWarnings("")
     public Response addSettlementPlan(@RequestBody AddSettlementPlan addSettlementPlan){
         try{
+            userIdentityController.FindUserIdentityService(addSettlementPlan.getEmail());
             addSettlementPlanService.AddSettlementPlan(addSettlementPlan);
             return AjaxResult.success("和解案提出成功!");
         }catch (Exception e){
