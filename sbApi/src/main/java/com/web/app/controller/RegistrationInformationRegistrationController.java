@@ -28,7 +28,7 @@ public class RegistrationInformationRegistrationController {
   @PostMapping("/registrationInformationRegistration")
   public Response RegistrationInformationRegistration(@RequestBody S09ScreenIntelligence s09ScreenIntelligence) {
     try {
-      String uid = null;
+      String uid = "";
       String platformId = null;
       Integer num = registrationInformationRegistrationService.LoginIntelligence(s09ScreenIntelligence, uid,  platformId);
       if (num == 0) {

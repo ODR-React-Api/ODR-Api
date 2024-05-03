@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.casesMapper">
+<mapper namespace="com.web.app.mapper.CasesMapper">
 
     <!-- ユーザ情報を取得 -->
     <select id="selectMaxCid" resultType="String">

@@ -20,7 +20,7 @@
     </select>
 
     <!-- ユーザ情報の取得-->
-    <select id="selectLanguageIdAndPlatformId" resultMap="BaseResultMap">
+    <select id="selectLanguageIdAndPlatformId" parameterType="string" resultMap="BaseResultMap">
         select languageId, 
             platformId
         from 
