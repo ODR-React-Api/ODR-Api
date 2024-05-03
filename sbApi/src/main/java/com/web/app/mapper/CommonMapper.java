@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.web.app.domain.User;
+import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.Entity.MailTemplates;
 import com.web.app.domain.Entity.MasterPlatforms;
@@ -27,4 +29,8 @@ public interface CommonMapper {
 
     // 取得邮件模板
     List<MailTemplates> FindMailTemplatesList(String platformId, String tempId);
+
+    User GetUserDataFromCaseIdentity(Boolean identity, String languageId, String platformId, String caseId);
+
+    int InsHistories(ActionHistories actionHistories);
 }
