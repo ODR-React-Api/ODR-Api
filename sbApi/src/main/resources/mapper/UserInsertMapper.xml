@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UserInsertMapper">
+  <insert id="userInsert" parameterType="com.web.app.domain.UserInsertModel">
+        INSERT INTO odr_users (
+            Uid,
+            password,
+            Email,
+            FirstName,
+            MiddleName,
+            LastName,
+            FirstName_kana,
+            MiddleName_kana,
+            LastName_kana,
+            CompanyName,
+            PlatformId,
+            LanguageId,
+            Status,
+            MessageFrequency,
+            TermsConfirmed,
+            LastLoginDate,
+            RegisterDate,
+            UserType,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )
+        VALUES (
+            #{uid},
+            #{password},
+            #{email},
+            #{firstName},
+            #{middleName},
+            #{lastName},
+            #{firstNameKana},
+            #{middleNameKana},
+            #{lastNameKana},
+            #{companyName},
+            #{platformId},
+            #{languageId},
+            #{status},
+            #{messageFrequency},
+            #{termsConfirmed},
+            CURRENT_TIMESTAMP,
+            CURRENT_TIMESTAMP,
+            #{userType},
+            #{deleteFlag},
+            CURRENT_TIMESTAMP,
+            #{lastModifiedBy}
+        )
+    </insert>
+
+  <select id="getMaxUid" resultType="String">
+        select max(Uid) from odr_users
+  </select>
+</mapper>

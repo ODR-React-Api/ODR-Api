@@ -10,7 +10,7 @@ public class SelectCondition  implements Serializable{
     //TBL「案件別個人情報リレーション」.案件ID
     private String caseId;
     //TBL「案件別個人情報リレーション」.申立て人
-    private String petitionUserId;
+    private String PetitionUserId;
     //立場フラグ
     private int positionFlg;
     //申立て番号
