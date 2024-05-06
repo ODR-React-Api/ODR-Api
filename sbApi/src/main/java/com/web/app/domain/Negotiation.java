@@ -1,7 +1,6 @@
 package com.web.app.domain;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 import lombok.Data;
 
@@ -15,7 +14,7 @@ public class Negotiation implements Serializable {
 
     private int status;
 
-    private Date lastModifiedDate;
+    private String lastModifiedDate;
     
     private String loginUser;
 }

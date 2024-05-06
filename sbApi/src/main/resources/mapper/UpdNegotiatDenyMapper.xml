@@ -9,7 +9,7 @@
             Status = #{status},
             LastModifiedDate = #{lastModifiedDate},
             LastModifiedBy = #{loginUser},
-            User = '',
+            UserId = '',
             SubmitDate = null
         WHERE
             id = #{negotiationId}

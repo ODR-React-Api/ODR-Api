@@ -1,7 +1,11 @@
 package com.web.app.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.web.app.domain.Negotiation;
 import com.web.app.domain.Response;
+import com.web.app.service.UpdNegotiatDenyService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 
@@ -11,16 +15,20 @@ import io.swagger.annotations.Api;
 @RequestMapping("/negotiat")
 @SuppressWarnings("rawtypes")
 public class UpdNegotiatDenyController {
-    @PostMapping("/updNegotiatDeny")
-    public Response refusalNegotiations(@RequestBody String negotiationId){   
-        try {
 
-            System.out.println("后台访问成功");
-            System.out.println(negotiationId);
-            return AjaxResult.success("和解案更新成功!");
-          } catch (Exception e) {
-            AjaxResult.fatal("更新失败!", e);
-            return null;
+  @Autowired
+  private UpdNegotiatDenyService updNegotiatDenyService;
+
+  @PostMapping("/updNegotiatDeny")
+  public Response refusalNegotiations(@RequestBody Negotiation negotiation){   
+      try {
+          if (updNegotiatDenyService.updateNegotiatData(negotiation) != 0) {
+            return AjaxResult.success("和解案已更新!");
           }
-    }
+          return AjaxResult.success("和解案未更新!");
+        } catch (Exception e) {
+          AjaxResult.fatal("更新失败!", e);
+          return null;
+        }
+  }
 }
