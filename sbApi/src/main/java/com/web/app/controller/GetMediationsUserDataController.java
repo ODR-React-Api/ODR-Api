@@ -42,7 +42,7 @@ public class GetMediationsUserDataController {
     try {
       List<MediationsUserData> mediationsUserDataList = new ArrayList<MediationsUserData>();
       mediationsUserDataList = getMediationsUserDataService.findAllUser(caseId,platformId);
-      System.out.println("------------------------log------------------------------");
+      //System.out.println("------------------------log------------------------------");
       System.out.println(mediationsUserDataList.toString());
       return AjaxResult.success("请求成功", mediationsUserDataList);
     } catch (Exception e) {
