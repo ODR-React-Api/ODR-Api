@@ -6,4 +6,8 @@ import com.web.app.domain.MediateUser;
 @Mapper
 public interface MediationMapper {
     MediateUser Mediationstatus(MediateUser mediateUser);
+
+    String MediatorUserEmail(MediateUser mediateUser);
+    
+    String MediatorUserUid(String MediatorUserEmail);
 }

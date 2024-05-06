@@ -6,12 +6,29 @@
 
 <select id="Mediationstatus" resultType="com.web.app.domain.MediateUser">
  SELECT
-            Status,
-            CaseId
+            Status
         FROM
             case_mediations
         WHERE
             CaseId = #{CaseId}
+</select>
+
+<select id="MediatorUserEmail" resultType="string">
+ SELECT
+            MediatorUserEmail
+        FROM
+            case_relations
+        WHERE
+            CaseId = #{CaseId}
+</select>
+
+<select id="MediatorUserUid" resultType="string">
+ SELECT
+            Uid
+        FROM
+            odr_users
+        WHERE
+            Email = #{MediatorUserEmail}
 </select>
 
 </mapper>

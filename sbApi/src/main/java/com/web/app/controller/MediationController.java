@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import com.web.app.domain.MediateUser;
-import com.web.app.service.MediationService;;
+import com.web.app.service.MediationService;
 
 @CrossOrigin(origins = "*")
 @Api(tags = "調停案ステータス取得")
@@ -30,4 +30,12 @@ public class MediationController {
             return null;
         }
     }
+
+    @ApiOperation("調停人メール取得")
+    @PostMapping("/MediationEmail")
+    public MediateUser MediationEmail(@RequestBody MediateUser mediateUser) {
+        MediateUser mediationemail = mediationService.MediationEmail(mediateUser);
+        return mediationemail;
+    }
+
 }

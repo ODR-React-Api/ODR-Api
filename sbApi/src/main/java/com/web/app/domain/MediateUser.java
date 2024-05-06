@@ -12,5 +12,8 @@ public class MediateUser implements Serializable{
     private String CaseId;
 
     private Integer Status;
-    
+
+    private String  MediatorUserEmail;
+
+    private String  Uid;
 }
