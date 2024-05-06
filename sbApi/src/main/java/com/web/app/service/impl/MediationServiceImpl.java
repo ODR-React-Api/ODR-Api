@@ -15,8 +15,8 @@ public class MediationServiceImpl implements MediationService {
     private MediationMapper mediationMapper;
 
     @Override
-    public int Mediationstatus(MediateUser mediateUser) {
-        int num = mediationMapper.Mediationstatus(mediateUser);
+    public MediateUser Mediationstatus(MediateUser mediateUser) {
+        MediateUser num = mediationMapper.Mediationstatus(mediateUser);
         return num;
     }
 }

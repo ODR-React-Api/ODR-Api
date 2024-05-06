@@ -22,12 +22,12 @@ public class MediationController {
 
     @ApiOperation("調停案ステータス取得API")
     @PostMapping("/Mediationstatus")
-    public int Mediationstatus(@RequestBody MediateUser mediateUser) {
+    public MediateUser Mediationstatus(@RequestBody MediateUser mediateUser) {
         try {
-            int num = mediationService.Mediationstatus(mediateUser);
+            MediateUser num = mediationService.Mediationstatus(mediateUser);
             return num;
         } catch (Exception e) {
-            return 0;
+            return null;
         }
     }
 }
