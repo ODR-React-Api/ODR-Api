@@ -1,5 +1,6 @@
 package com.web.app.service;
 
+import com.web.app.domain.MasterPlatforms2;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.Entity.MasterPlatforms;
 import com.web.app.domain.Entity.OdrUsers;
@@ -21,4 +22,8 @@ public interface UtilService {
 
     // mail送信
     boolean SendMail(SendMailRequest SendMailRequest);
+
+
+    // 根据platformID查询platform部分信息
+    MasterPlatforms2 GetMasterPlatforms2(String platFormId);
 }

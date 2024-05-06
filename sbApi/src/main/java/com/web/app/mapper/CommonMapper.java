@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.web.app.domain.MasterPlatforms2;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.Entity.MailTemplates;
 import com.web.app.domain.Entity.MasterPlatforms;
@@ -27,4 +28,7 @@ public interface CommonMapper {
 
     // 取得邮件模板
     List<MailTemplates> FindMailTemplatesList(String platformId, String tempId);
+
+    // 根据platformID查询platform部分信息
+    MasterPlatforms2 GetMasterPlatforms2(String platFormId);
 }

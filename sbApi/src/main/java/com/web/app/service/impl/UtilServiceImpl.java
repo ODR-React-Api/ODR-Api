@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.web.app.domain.MasterPlatforms2;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.Entity.MailTemplates;
 import com.web.app.domain.Entity.MasterPlatforms;
@@ -211,5 +212,11 @@ public class UtilServiceImpl implements UtilService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    //根据platformID查询platform部分信息
+    @Override
+    public MasterPlatforms2 GetMasterPlatforms2(String platFormId) {
+        return commonMapper.GetMasterPlatforms2(platFormId);
     }
 }

@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.LoginUser;
+import com.web.app.domain.MasterPlatforms2;
 import com.web.app.service.LoginUserService;
 // import com.web.app.service.UtilService;
+import com.web.app.service.UtilService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +24,9 @@ public class LoginUserController {
     @Autowired
     LoginUserService testService;
 
+    @Autowired
+    UtilService utilService;
+
     // @Autowired
     // UtilService utilService;
 
@@ -31,6 +36,14 @@ public class LoginUserController {
         List<LoginUser> list = testService.Login(email, passWord);
         return list;
 
+    }
+
+    @ApiOperation("查询platform部分信息")
+    @PostMapping("/GetMasterPlatforms")
+    public MasterPlatforms2 GetMasterPlatforms(String platFormId){
+        MasterPlatforms2 masterPlatforms2;
+        masterPlatforms2 = utilService.GetMasterPlatforms2(platFormId);
+        return masterPlatforms2;
     }
 
     // @ApiOperation("更新登录时间")

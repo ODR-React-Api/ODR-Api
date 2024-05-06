@@ -77,4 +77,20 @@
             AND TemplateNo = #{tempId}
             AND LanguageId = 'jp'
     </select>
+
+
+    <!-- 通过platformsid查询部分字段 -->
+    <sql id="MasterPlatforms">
+        UserProductId,UseTraderName,UseProductUrl,UseOther,Phase_negotiation,
+        Phase_reply,CounterclaimLimitDays,NegotiationLimitDays,MediationLimitDays
+    </sql>
+
+    <select id="GetMasterPlatforms2" resultType="com.web.app.domain.MasterPlatforms2">
+        SELECT
+            <include refid="MasterPlatforms"/>
+        FROM
+            master_platforms
+        WHERE
+            Id = #{platFormId}
+    </select>
 </mapper>
