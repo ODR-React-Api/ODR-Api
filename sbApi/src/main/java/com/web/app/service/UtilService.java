@@ -21,4 +21,7 @@ public interface UtilService {
 
     // mail送信
     boolean SendMail(SendMailRequest SendMailRequest);
+
+    // Guid取得
+    String GetGuid();
 }
