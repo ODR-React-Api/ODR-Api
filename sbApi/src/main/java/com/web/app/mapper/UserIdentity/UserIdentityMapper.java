@@ -8,5 +8,5 @@ import com.web.app.domain.UserIdentity.UserIdentity;
 public interface UserIdentityMapper {
 
     //根据邮箱查用户是什么身份
-    UserIdentity FindUserIdentity(String email);
+    UserIdentity FindUserIdentity(String caseId);
 }

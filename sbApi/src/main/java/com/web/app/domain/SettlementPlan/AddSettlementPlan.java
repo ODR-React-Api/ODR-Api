@@ -6,14 +6,20 @@ import lombok.Data;
 
 @Data
 public class AddSettlementPlan implements Serializable{
+
+    //ログインemail
     private String email;
 
+    //自動生成GIUD
     private String id;
 
+    //PlatformId
     private String PlatformId;
 
+    //CaseId
     private String CaseId;
 
+    //
     private String Status;
 
     private String InfoStatus;
@@ -71,4 +77,17 @@ public class AddSettlementPlan implements Serializable{
     // private String LastModifiedDate;
     
     // private String LastModifiedBy;
+
+    private String FileName;
+    private String FileExtension;
+    private String FileUrl;
+    private String FileBlobStorageId;
+    private String FileSize;
+    private String RegisterUserId;
+    private String RegisterDate;
+
+
+    private String RelationType;
+    private String RelatedId;
+    private String fileId;
 }

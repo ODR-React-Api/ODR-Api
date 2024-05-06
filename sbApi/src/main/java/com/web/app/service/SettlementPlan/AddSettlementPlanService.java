@@ -3,4 +3,6 @@ import com.web.app.domain.SettlementPlan.AddSettlementPlan;
 
 public interface AddSettlementPlanService {
     int AddSettlementPlan(AddSettlementPlan AddSettlementPlan);
+    int AddFile(AddSettlementPlan addSettlementPlan);
+    int AddCaseFileRelations(AddSettlementPlan addSettlementPlan);
 }

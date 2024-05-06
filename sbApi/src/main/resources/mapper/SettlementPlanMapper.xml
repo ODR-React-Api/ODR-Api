@@ -4,6 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.SettlementPlan.SettlementPlanMapper">
     <!--  -->
+    <select id="" resultType="">
+        SELECT
+            *
+        FROM
+            case_negotiations
+        WHERE
+            CaseId = #{caseId}
+    </select>
+
     <insert id="AddSettlementPlan" parameterType="com.web.app.domain.SettlementPlan.AddSettlementPlan">
         INSERT INTO case_negotiations(
             id,
@@ -71,6 +80,83 @@
             0,
             CURRENT_TIMESTAMP(),
             #{UserId}
+            );
+    </insert>
+
+    <insert id="AddFile" parameterType="com.web.app.domain.SettlementPlan.AddSettlementPlan">
+        INSERT INTO files(
+            id,
+            PlatformId,
+            CaseId,
+            FileName,
+            FileExtension,
+            FileUrl,
+            FileBlobStorageId,
+            FileSize,
+            RegisterUserId,
+            RegisterDate,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy)
+        VALUE(
+            UUID(),
+            #{PlatformId},
+            #{CaseId},
+            #{FileName},
+            #{FileExtension},
+            #{FileUrl},
+            NULL,
+            #{FileSize},
+            #{UserId},
+            CURRENT_TIMESTAMP(),
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            0,
+            CURRENT_TIMESTAMP(),
+            #{UserId}
+        );
+    </insert>
+
+    <insert id="AddCaseFileRelations" parameterType="com.web.app.domain.SettlementPlan.AddSettlementPlan">
+        INSERT INTO case_file_relations(
+            id,
+            PlatformId,
+            CaseId,
+            RelationType,
+            RelatedId,
+            fileId,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
             )
+        VALUE(
+            UUID(),
+            #{PlatformId},
+            #{CaseId},
+            4,
+            (SELECT id FROM case_negotiations WHERE CaseId = #{CaseId}),
+            (SELECT id FROM files WHERE DeleteFlag = 0 AND CaseId = #{CaseId}),
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            0,
+            CURRENT_TIMESTAMP(),
+            #{UserId}
+        );
     </insert>
 </mapper>

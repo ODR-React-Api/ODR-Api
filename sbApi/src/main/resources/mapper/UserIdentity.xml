@@ -10,6 +10,6 @@
         FROM
             case_relations
         WHERE
-            CaseId = #{CaseId}
+            CaseId = #{caseId}
     </select>
 </mapper>

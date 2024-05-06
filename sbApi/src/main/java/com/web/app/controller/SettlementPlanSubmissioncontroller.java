@@ -24,16 +24,36 @@ public class SettlementPlanSubmissioncontroller {
     @Autowired
     private AddSettlementPlanService addSettlementPlanService;
 
+    @Autowired
     private UserIdentityController userIdentityController;
-
 
     @ApiOperation("和解案提出登録")
     @PostMapping("AddSettlementPlan")
     //@SuppressWarnings("")
     public Response addSettlementPlan(@RequestBody AddSettlementPlan addSettlementPlan){
         try{
-            UserIdentity userIdentity = userIdentityController.FindUserIdentityService(addSettlementPlan.getEmail());
-            //addSettlementPlanService.AddSettlementPlan(addSettlementPlan);
+            UserIdentity userIdentity = userIdentityController.FindUserIdentityService(addSettlementPlan.getCaseId());
+            if (addSettlementPlan.getEmail().equals(userIdentity.getPetitionUserInfo_Email()) ||
+                addSettlementPlan.getEmail().equals(userIdentity.getAgent1_Email()) ||
+                addSettlementPlan.getEmail().equals(userIdentity.getAgent2_Email()) ||
+                addSettlementPlan.getEmail().equals(userIdentity.getAgent3_Email()) ||
+                addSettlementPlan.getEmail().equals(userIdentity.getAgent4_Email()) ||
+                addSettlementPlan.getEmail().equals(userIdentity.getAgent5_Email())) 
+            {
+                addSettlementPlan.setStatus("15");
+            } else if(
+                addSettlementPlan.getEmail().equals(userIdentity.getTraderUserEmail()) ||
+                addSettlementPlan.getEmail().equals(userIdentity.getTraderAgent1_UserEmail()) ||
+                addSettlementPlan.getEmail().equals(userIdentity.getTraderAgent2_UserEmail()) ||
+                addSettlementPlan.getEmail().equals(userIdentity.getTraderAgent3_UserEmail()) ||
+                addSettlementPlan.getEmail().equals(userIdentity.getTraderAgent4_UserEmail()) ||
+                addSettlementPlan.getEmail().equals(userIdentity.getTraderAgent5_UserEmail())
+            ){
+                addSettlementPlan.setStatus("2");
+            }
+            addSettlementPlanService.AddSettlementPlan(addSettlementPlan);
+            addSettlementPlanService.AddFile(addSettlementPlan);
+            addSettlementPlanService.AddCaseFileRelations(addSettlementPlan);
             return AjaxResult.success("和解案提出成功!");
         }catch (Exception e){
             AjaxResult.fatal("和解案提出失败!", e);

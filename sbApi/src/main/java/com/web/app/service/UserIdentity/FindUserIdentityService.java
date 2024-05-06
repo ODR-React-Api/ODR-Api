@@ -4,5 +4,5 @@ import com.web.app.domain.UserIdentity.UserIdentity;
 
 public interface FindUserIdentityService {
 
-    UserIdentity FindUserIdentity(String eamil);
+    UserIdentity FindUserIdentity(String caseId);
 } 
