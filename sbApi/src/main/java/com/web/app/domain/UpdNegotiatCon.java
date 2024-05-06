@@ -2,8 +2,10 @@ package com.web.app.domain;
 
 import java.sql.Date;
 
-import javax.xml.crypto.Data;
+import lombok.Data;
 
+
+@Data
 public class UpdNegotiatCon {
     //缓冲
     private static final long serialVersionUID = 1L;
@@ -12,7 +14,7 @@ public class UpdNegotiatCon {
 
     private int status;
 
-    private Date lastModifiedDate;
+    private String lastModifiedDate;
     
     private String loginUser;
 }
