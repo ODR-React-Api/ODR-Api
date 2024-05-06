@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdNegotiatConMapper">
+    <resultMap id="setNegotiationStatus" type="com.web.app.domain.UpdNegotiatCon">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="lastModifiedDate" column="lastModifiedDate" jdbcType="TIMESTAMP"/>
+        <result property="lastModifiedBy" column="lastModifiedBy" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <update id="setNegotiationStatus" parameterType="com.web.app.domain.UpdNegotiatCon">
+        UPDATE case_negotiations
+        SET
+            Status = #{status},
+            LastModifiedDate = #{lastModifiedDate}
+            LastModifiedBy = #{loginUser}
+        WHERE
+            id = #{negotiationId}
+    </update>
+    <select id="getNegotiationStatus" resultMap="java.lang.String">
+        SELECT 
+            Status
+        FROM
+            case_negotiations
+        WHERE
+            id = #{negotiationId}
+    </select>
+</mapper>

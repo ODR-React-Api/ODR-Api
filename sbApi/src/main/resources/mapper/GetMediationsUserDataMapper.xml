@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetMediationsUserDataMapper">
+    <resultMap id="selectAllUserResultMap" type="com.web.app.domain.MediationsUserData">
+        <result property="firstName" column="firstName" jdbcType="VARCHAR"/>
+        <result property="middleName" column="middleName" jdbcType="VARCHAR"/>
+        <result property="lastName" column="lastName" jdbcType="VARCHAR"/>
+        <result property="companyName" column="companyName" jdbcType="VARCHAR"/>
+        
+    </resultMap>
+    <select id="findAllUser" resultMap="com.web.app.domain.MediationsUserData">
+        SELECT 
+            firstName,middleName,lastName,companyName
+        FROM
+            react_use.odr_users
+        WHERE
+            Uid = #{caseId} and
+            PlatformId = #{platformId} and
+            DeleteFlag = 0 and
+            Status = 0
+    </select>
+</mapper>
