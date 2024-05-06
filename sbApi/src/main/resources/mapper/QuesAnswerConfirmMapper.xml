@@ -38,7 +38,7 @@
             LastModifiedDate,
             LastModifiedBy
         )VALUES(
-            UUID(),
+            #{id},
             #{platformId},
             #{caseId},
             NULL,

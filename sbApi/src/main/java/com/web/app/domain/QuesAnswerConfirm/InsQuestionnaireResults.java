@@ -11,6 +11,8 @@ import lombok.Data;
  */
 @Data
 public class InsQuestionnaireResults implements Serializable {
+    // ID 自動生成GIUD
+    private String id;
 
     // サーバ設定.platformId 「0001」
     private String platformId;

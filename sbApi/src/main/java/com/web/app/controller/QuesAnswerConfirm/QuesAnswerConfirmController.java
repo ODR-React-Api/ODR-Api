@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
 import com.web.app.domain.QuesAnswerConfirm.InsQuestionnaireResults;
+import com.web.app.service.UtilService;
 import com.web.app.service.QuesAnswerConfirm.QuesAnswerConfirmService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
@@ -26,10 +27,15 @@ public class QuesAnswerConfirmController {
     @Autowired
     private QuesAnswerConfirmService quesAnswerConfirmService;
 
+    @Autowired
+    private UtilService utilService;
+
     @ApiOperation("アンケート入力結果新規登録")
     @PostMapping("/InsQuestionnairesResults")
     @SuppressWarnings("rawtypes")
     public Response insQuestionnairesResults(@RequestBody InsQuestionnaireResults insQuestionnaireResults) {
+        // ID 自動生成GIUD
+        insQuestionnaireResults.setId(utilService.GetGuid());
         // System.out.println("insQuestionnaireResults:" + insQuestionnaireResults);
         // TODO
         // 2.1 メール送信 & アクション履歴記録 送信先：【画面C08】.userEmail
