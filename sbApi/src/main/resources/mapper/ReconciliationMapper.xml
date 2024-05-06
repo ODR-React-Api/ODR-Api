@@ -51,6 +51,7 @@
             case_relations
         WHERE
             CaseId = #{CaseId}
+            AND DeleteFlag = 0
 </select>
 
     <insert id="ActionHistoriesInsert" parameterType="com.web.app.domain.ActionHistories">

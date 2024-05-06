@@ -10,4 +10,6 @@ public interface MediationMapper {
     String MediatorUserEmail(MediateUser mediateUser);
     
     String MediatorUserUid(String MediatorUserEmail);
+
+    MediateUser MediatorIntelligence(MediateUser MediatorIntelligence);
 }

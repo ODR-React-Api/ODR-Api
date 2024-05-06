@@ -1,4 +1,5 @@
 package com.web.app.service.impl;
+
 import com.web.app.service.MediationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,12 @@ public class MediationServiceImpl implements MediationService {
         MediationEmail.setUid(MediatorUserUid);
         return MediationEmail;
 
+    }
+
+    @Override
+    public MediateUser MediatorIntelligence(MediateUser mediateUser) {
+        MediateUser MediatorIntelligence = mediationMapper.MediatorIntelligence(mediateUser);
+        return  MediatorIntelligence;
     }
 
 }

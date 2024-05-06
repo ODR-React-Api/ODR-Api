@@ -38,4 +38,10 @@ public class MediationController {
         return mediationemail;
     }
 
+    @ApiOperation("調停人情報取得")
+    @PostMapping("/MediatorIntelligence")
+    public MediateUser MediatorIntelligence(@RequestBody MediateUser mediateUser){
+        MediateUser mediateUser2 = new MediateUser();
+        return mediateUser2;
+    }
 }
