@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.LoginUserMapper">
+
+    <resultMap id="ResultMap" type="com.web.app.domain.LoginUser">
+            <result property="firstName" column="FirstName" jdbcType="VARCHAR"/>
+            <result property="middleName" column="MiddleName" jdbcType="VARCHAR"/>
+            <result property="lastName" column="LastName" jdbcType="VARCHAR"/>
+            <result property="firstNameKana" column="FirstName_kana" jdbcType="VARCHAR"/>
+            <result property="middleNameKana" column="MiddleName_kana" jdbcType="VARCHAR"/>
+            <result property="lastNameKana" column="LastName_kana" jdbcType="VARCHAR"/>
+            <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
+            <result property="languageId" column="LanguageId" jdbcType="VARCHAR"/>
+            <result property="status" column="Status" jdbcType="INTEGER"/>
+            <result property="timeZone" column="TimeZone" jdbcType="VARCHAR"/>
+            <result property="confirmedVersionNoOfTerms" column="ConfirmedVersionNoOfTerms" jdbcType="INTEGER"/>
+            <result property="confirmedVersionNoOfPolicy" column="ConfirmedVersionNoOfPolicy" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Login_List">
+        FirstName,MiddleName,
+        LastName,FirstName_kana,MiddleName_kana,
+        LastName_kana,PlatformId,LanguageId,
+        status,TimeZone,ConfirmedVersionNoOfTerms,
+        ConfirmedVersionNoOfPolicy
+    </sql>
+    <sql id="Success_Insert_List">
+        (id,PlatformId,CaseId,ActionType,
+        CaseStage,UserId,UserType,ActionDateTime,
+        MessageGroupId,MessageId,HaveFile,Parameters,
+        Other01,Other02,Other03,Other04,Other05,
+        DeleteFlag,LastModifiedDate,LastModifiedBy)
+    </sql>
+    <sql id="Success_Insert_Values">
+        (#{newId}, '001','', 'LoginOK', 
+            99, #{email},0, NOW(), '', '', 0, #{email}, '', 
+            '', '', '', '', 0, NOW(), #{email})
+    </sql>
+    <sql id="Fail_Insert_List">
+        (id,PlatformId,CaseId,ActionType,
+        CaseStage,UserId,UserType,ActionDateTime,
+        MessageGroupId,MessageId,HaveFile,Parameters,
+        Other01,Other02,Other03,Other04,Other05,
+        DeleteFlag,LastModifiedDate,LastModifiedBy)
+    </sql>
+    <sql id="Fail_Insert_Values">
+        (#{newId}, '001','', 'LoginNG', 
+            99, #{email},0, NOW(), '', '', 0, #{email}, '', 
+            '', '', '', '', 0, NOW(), #{email})
+    </sql>
+
+    <select id="Login" resultMap="ResultMap">
+        select <include refid="Login_List"/> from odr_users where Email = #{email} and password = #{passWord} and DeleteFlag = 0;
+    </select>
+
+    <update id="updateLoginDate">
+        update odr_users set LastLoginDate = NOW() where Email = #{email} and password = #{passWord} and DeleteFlag = 0;
+    </update>
+
+    <select id="selectMaxId" resultType="String">
+        SELECT MAX(id) FROM react_use.action_histories where LENGTH(id) = 4
+    </select>
+
+    <insert id="insertActionSuccess">
+        insert into action_histories<include refid="Success_Insert_List"/> values<include refid="Success_Insert_Values"/>
+    </insert>
+
+    <insert id="insertActionFail">
+        insert into action_histories<include refid="Fail_Insert_List"/> values<include refid="Fail_Insert_Values"/>
+    </insert>
+
+</mapper>
