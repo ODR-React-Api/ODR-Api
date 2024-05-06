@@ -7,7 +7,7 @@ import com.web.app.domain.Negotiation;
 @Mapper
 public interface UpdNegotiatDenyMapper {
 
-    String getNegotiationStatus(String negotiationId);
+    Integer getNegotiationStatus(String negotiationId);
     
     int setNegotiationStatus(Negotiation negotiat);
 }

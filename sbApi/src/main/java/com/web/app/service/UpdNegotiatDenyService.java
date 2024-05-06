@@ -1,5 +1,8 @@
 package com.web.app.service;
 
-public class UpdNegotiatDenyService {
-    
+import com.web.app.domain.Negotiation;
+
+public interface UpdNegotiatDenyService {
+
+    int updateNegotiatData(Negotiation negotiation);
 }

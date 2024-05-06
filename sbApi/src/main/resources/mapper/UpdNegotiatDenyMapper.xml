@@ -15,7 +15,7 @@
             id = #{negotiationId}
     </update>
 
-    <select id="getNegotiationStatus" resultType="java.lang.String">
+    <select id="getNegotiationStatus" resultType="java.lang.Integer">
         SELECT
             Status
         FROM
