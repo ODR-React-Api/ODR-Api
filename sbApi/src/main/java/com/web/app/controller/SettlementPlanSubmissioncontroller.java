@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.SettlementPlan.AddSettlementPlan;
+import com.web.app.domain.UserIdentity.UserIdentity;
 import com.web.app.service.SettlementPlan.AddSettlementPlanService;
 import com.web.app.tool.AjaxResult;
 
@@ -31,8 +32,8 @@ public class SettlementPlanSubmissioncontroller {
     //@SuppressWarnings("")
     public Response addSettlementPlan(@RequestBody AddSettlementPlan addSettlementPlan){
         try{
-            userIdentityController.FindUserIdentityService(addSettlementPlan.getEmail());
-            addSettlementPlanService.AddSettlementPlan(addSettlementPlan);
+            UserIdentity userIdentity = userIdentityController.FindUserIdentityService(addSettlementPlan.getEmail());
+            //addSettlementPlanService.AddSettlementPlan(addSettlementPlan);
             return AjaxResult.success("和解案提出成功!");
         }catch (Exception e){
             AjaxResult.fatal("和解案提出失败!", e);
