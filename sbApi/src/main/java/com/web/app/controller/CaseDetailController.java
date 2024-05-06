@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.app.domain.CaseDetailResultInfo;
+import com.web.app.domain.ReturnResult;
 
 import com.web.app.domain.CaseIdListInfo;
 import com.web.app.service.CaseDetailService;
@@ -25,9 +25,9 @@ public class CaseDetailController {
 
     @ApiOperation("ケース詳細案件cases取得")
     @PostMapping("/caseDetail")
-    public CaseDetailResultInfo caseDetail(@RequestBody CaseIdListInfo caseListInfo) {
+    public ReturnResult caseDetail(@RequestBody CaseIdListInfo caseListInfo) {
         try {
-            CaseDetailResultInfo caseDetail = caseDetailService.CaseDetailCasesInfoSearch(caseListInfo);
+            ReturnResult caseDetail = caseDetailService.CaseDetailCasesInfoSearch(caseListInfo);
             return caseDetail;
         } catch (Exception e) {
             AjaxResult.fatal("查询失败!", e);

@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.domain.CaseDetailResultInfo;
+import com.web.app.domain.ReturnResult;
 import com.web.app.domain.CaseDetailCasesSelectInfo;
 import com.web.app.domain.CaseIdListInfo;
 import com.web.app.mapper.CaseDetailMapper;
@@ -18,7 +18,7 @@ public class CaseDetailServiceImpl implements CaseDetailService {
 
     // ケース詳細調停案でcasesを取得
     @Override
-    public CaseDetailResultInfo CaseDetailCasesInfoSearch(CaseIdListInfo caseIdListInfo) {
+    public ReturnResult CaseDetailCasesInfoSearch(CaseIdListInfo caseIdListInfo) {
         String caseId = caseIdListInfo.getCaseId();
         Integer idFlag = caseIdListInfo.getFlag();
         String userId = caseIdListInfo.getUserId();
@@ -27,21 +27,20 @@ public class CaseDetailServiceImpl implements CaseDetailService {
                 .CaseDetailCasesInforSearch(caseId);
         System.out.println("111casesから:" + caseDetailCasesInfo);
         //
-        CaseDetailResultInfo caseInfo = CaseDetailMediationsInfoSearch(caseDetailCasesInfo, caseId, idFlag, userId);
+        ReturnResult caseInfo = CaseDetailMediationsInfoSearch(caseDetailCasesInfo, caseId, idFlag, userId);
         // System.out.println("111casesから:" + caseDetailCasesInfo);
         return caseInfo;
-
     }
 
     // ケース詳細調停案でcase_mediationsを取得
-    private CaseDetailResultInfo CaseDetailMediationsInfoSearch(CaseDetailCasesSelectInfo caseDetailCasesSelInfo,
+    private ReturnResult CaseDetailMediationsInfoSearch(CaseDetailCasesSelectInfo caseDetailCasesSelInfo,
             String caseId, Integer idFlag, String userId) {
         // CaseDetailCasesInfo caseDetailCasesInfo1 = new ArrayList();
         // 「cases」と「case_negotiations」から取得したの項目の順番取り
 
         // for (CaseDetailCasesInfo item : caseDetailCasesInfo) {
         // ケース詳細調停案 戻り値
-        CaseDetailResultInfo caseDetailCasesInfoItem = new CaseDetailResultInfo();
+        ReturnResult caseDetailCasesInfoItem = new ReturnResult();
         caseDetailCasesInfoItem.setCid(caseDetailCasesSelInfo.getCId());
         caseDetailCasesInfoItem.setCaseStatus(caseDetailCasesSelInfo.getCaseStage().toString());
         caseDetailCasesInfoItem.setCaseTitle(caseDetailCasesSelInfo.getCaseTitle());
