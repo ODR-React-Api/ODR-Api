@@ -1,10 +1,6 @@
 package com.web.app.mapper;
 
-import java.util.Date;
-
 import org.apache.ibatis.annotations.Mapper;
-
-import com.web.app.domain.MediatorDisclosureRequest;
 
 /**
  * @author HHH
@@ -15,9 +11,4 @@ import com.web.app.domain.MediatorDisclosureRequest;
 @Mapper
 public interface CasesMediationsMapper {
     Boolean delAboutCasesMediations(String caseId);
-
-    Date getMediatorDisclosureDate(String caseId);
-
-    Boolean updMediatorDisclosureFlag(MediatorDisclosureRequest mediatorDisclosureRequest);
-
 }
