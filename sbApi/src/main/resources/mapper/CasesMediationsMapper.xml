@@ -4,46 +4,52 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.CasesMediationsMapper">
 
-    <resultMap id="BaseResultMap" type="com.web.app.domain.User">
-        <id property="id" column="id" jdbcType="INTEGER"/>
-        <result property="name" column="name" jdbcType="VARCHAR"/>
-        <result property="portrait" column="portrait" jdbcType="VARCHAR"/>
-        <result property="phone" column="phone" jdbcType="VARCHAR"/>
-        <result property="password" column="password" jdbcType="VARCHAR"/>
-        <result property="regIp" column="reg_ip" jdbcType="VARCHAR"/>
-        <result property="accountNonExpired" column="account_non_expired" jdbcType="BIT"/>
-        <result property="credentialsNonExpired" column="credentials_non_expired" jdbcType="BIT"/>
-        <result property="accountNonLocked" column="account_non_locked" jdbcType="BIT"/>
-        <result property="status" column="status" jdbcType="VARCHAR"/>
-        <result property="isDel" column="is_del" jdbcType="BIT"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-        <result property="firstName" column="FirstName" jdbcType="VARCHAR"/>
-        <result property="middleName" column="MiddleName" jdbcType="VARCHAR"/>
-        <result property="lastName" column="LastName" jdbcType="VARCHAR"/>
+    <resultMap id="BaseResultMap" type="com.web.app.domain.Entity.Cases">
+        <id property="Cid" column="Cid" jdbcType="VARCHAR"/>
+        <result property="MediatorChangeableCount1" column="MediatorChangeableCount1" jdbcType="VARCHAR"/>
+        <result property="MediatorChangeableCount2" column="MediatorChangeableCount2" jdbcType="VARCHAR"/>
+        <result property="MediatorNoReasonChangeDate" column="MediatorNoReasonChangeDate" jdbcType="DATE"/>
     </resultMap>
+
+    <parameterMap id="ParameterMap" type="com.web.app.domain.Entity.Cases">
+        <parameter property="Cid" jdbcType="VARCHAR"/>
+        <parameter property="MediatorChangeableCount1" jdbcType="INTEGER"/>
+        <parameter property="MediatorChangeableCount2" jdbcType="INTEGER"/>
+        <parameter property="MediatorNoReasonChangeDate" jdbcType="DATE"/>
+    </parameterMap>
+
     <update id="delAboutCasesMediations" parameterType="string">
         UPDATE case_mediations
         SET
-            DeleteFlag = 1
+            DeleteFlag = '1'
         WHERE
             CaseId = #{caseId}
     </update>
-    <select id="getMediatorDisclosureDate" parameterType="string" resultType="date">
-        select MediatorDisclosureDate 
-            from cases
-        WHERE
-        cid = #{caseId}
-    </select>
 
-    <!-- 調停人情報開示制限 -->
-    <update id="updMediatorDisclosureFlag" parameterType="string">
+    <!-- 案件関連情報更新 -->
+    <update id="updAboutCasesInfo" parameterMap="ParameterMap">
         UPDATE cases
         SET
-            MediatorDisclosureFlag = 2,
-            LastModifiedDate = #{LastModifiedDate},
-            LastModifiedBy = #{UserId}            
+            CaseStage = 6 ,
+            MediatorDisclosureFlag = 0,
+            MediatorNoReasonChangeDate = null,
+            MediatorDisclosureDate = null,
+            GroupMessageFlag1 = 0,
+            GroupMessageFlag2 = 0,
+            MediatorChangeableCount1 = #{MediatorChangeableCount1},
+            MediatorChangeableCount2 = #{MediatorChangeableCount2}
         WHERE
-            CaseId = #{caseId}
+        cid = #{Cid}
     </update>
+
+    <select id="getMediatorChangeableCount" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+            cid,
+            MediatorChangeableCount1,	
+            MediatorChangeableCount2,	
+            MediatorNoReasonChangeDate
+            from cases
+        WHERE
+        cid = #{Cid}
+    </select>
 </mapper>

@@ -38,11 +38,42 @@ public class CasesMediationsController {
             Response response = new Response<Boolean>();
             if (resultBoolean) {
                 response.setCode(Constants.RETCD_SUCCESS);
-                response.setData(response);
+                response.setData(resultBoolean);
                 response.setMsg(Constants.MSG_SUCCESS);
             } else {
                 response.setCode(Constants.RETCD_ERROR);
-                response.setData(response);
+                response.setData(resultBoolean);
+                response.setMsg(Constants.RETCD_NG);
+            }
+            return response;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @ApiOperation("案件関連情報更新")
+    @GetMapping("/updAboutCasesInfo")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    /**
+     * 
+     * @param caseId セッション.案件ID
+     * @param userType 1:申立人 2:相手方
+     * @return
+     * @throws Exception
+     */
+    public Response updAboutCasesInfo(String caseId,String userType) throws Exception {
+        try {
+
+            System.out.println("获取的数据库连接为:" + dataSource.getConnection());
+            Boolean resultBoolean = casesMediationsService.updAboutCasesInfo(caseId,userType);
+            Response response = new Response<Boolean>();
+            if (resultBoolean) {
+                response.setCode(Constants.RETCD_SUCCESS);
+                response.setData(resultBoolean);
+                response.setMsg(Constants.MSG_SUCCESS);
+            } else {
+                response.setCode(Constants.RETCD_ERROR);
+                response.setData(resultBoolean);
                 response.setMsg(Constants.RETCD_NG);
             }
             return response;

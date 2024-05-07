@@ -2,6 +2,8 @@ package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.web.app.domain.Entity.Cases;
+
 /**
  * @author HHH
  * @description 针对表【user】的数据库操作Mapper
@@ -11,4 +13,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CasesMediationsMapper {
     Boolean delAboutCasesMediations(String caseId);
+
+    Boolean updAboutCasesInfo(Cases cases);
+
+    Cases getMediatorChangeableCount(String caseId);
 }
