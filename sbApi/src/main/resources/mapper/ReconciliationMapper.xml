@@ -99,4 +99,13 @@
         )
     </insert>
 
+<select id="CaseTitleSearch" resultType="String">
+ SELECT
+            CaseTitle
+        FROM
+            cases
+        WHERE
+            cid = #{Cid}
+</select>
+
 </mapper>

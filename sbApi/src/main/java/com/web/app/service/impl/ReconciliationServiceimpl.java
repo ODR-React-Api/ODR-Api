@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.app.domain.ReconciliationUser;
 import com.web.app.mapper.ReconciliationMapper;
 import com.web.app.domain.ActionHistories;
+import com.web.app.domain.Entity.Cases;
 
 @Service
 public class ReconciliationServiceImpl implements ReconciliationService {
@@ -83,5 +84,11 @@ public class ReconciliationServiceImpl implements ReconciliationService {
             return 0;
         }
         return 1;
+    }
+
+    @Override
+    public String CaseTitleSearch(Cases cases) {
+        String CaseTitleSearch = ReconciliationUpdate.CaseTitleSearch(cases);
+        return CaseTitleSearch;
     }
 }

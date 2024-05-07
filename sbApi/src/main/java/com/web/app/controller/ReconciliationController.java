@@ -8,6 +8,7 @@ import com.web.app.domain.util.SendMailRequest;
 import com.web.app.service.ReconciliationService;
 import com.web.app.service.UtilService;
 import com.web.app.domain.ActionHistories;
+import com.web.app.domain.Entity.Cases;
 import java.util.ArrayList;;
 @CrossOrigin(origins = "*")
 @Api(tags = "和解案合意更新模块") 
@@ -36,16 +37,19 @@ public class ReconciliationController {
       int ActionHistoriesInsertStatus = ReconciliationSerce.ActionHistoriesInsert(actionHistories);
     
       if (ActionHistoriesInsertStatus==1) {
-
-          SendMailRequest sendMailRequest = new SendMailRequest();
+        //检索case表的CaseTitle
+        Cases cases =new Cases();
+        cases.setCid(reconciliationuser.getCaseId());
+        String CaseTitle = ReconciliationSerce.CaseTitleSearch(cases);
+        SendMailRequest sendMailRequest = new SendMailRequest();
   
-          sendMailRequest.setPlatformId("P025");
+          sendMailRequest.setPlatformId("0001");
   
           sendMailRequest.setLanguageId("JP");
   
-          sendMailRequest.setTempId("M026");
+          sendMailRequest.setTempId("M029");
   
-          sendMailRequest.setCaseId("0000000032");
+          sendMailRequest.setCaseId(reconciliationuser.getCaseId());
   
           ArrayList<String> recipientEmail = new ArrayList<String>();
   
@@ -55,10 +59,9 @@ public class ReconciliationController {
   
           ArrayList<String> parameter = new ArrayList<String>();
   
-          parameter.add("0000000032");
-          parameter.add("メール受信テスト２_返金");
-          parameter.add("UserName");
-          parameter.add("https://blog.csdn.net/miaomiao19971215/article/details/104048139");
+          parameter.add(reconciliationuser.getCaseId());
+          parameter.add(CaseTitle);
+          parameter.add("https://http://localhost:3000/");
   
           sendMailRequest.setParameter(parameter);
   
