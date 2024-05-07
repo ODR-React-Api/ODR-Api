@@ -1,4 +1,5 @@
 package com.web.app.domain.MosDetail;
+
 import java.util.Date;
 import lombok.Data;
 
@@ -6,7 +7,7 @@ import lombok.Data;
  * 申立て概要画面
  * API_和解内容取得
  * Dao层
- * CaseNegotiations 
+ * CaseNegotiations
  * テーブル名：case_negotiations和解案
  * 和解内容の取得
  */
@@ -21,7 +22,7 @@ public class CaseNegotiations {
     // 希望する解決方法
     private String expectResloveTypeValue;
 
-    // その他　内容
+    // その他 内容
     private String otherContext;
 
     // 支払金額

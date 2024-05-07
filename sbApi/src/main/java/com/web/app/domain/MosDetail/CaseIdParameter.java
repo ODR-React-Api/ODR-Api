@@ -1,10 +1,11 @@
 package com.web.app.domain.MosDetail;
+
 import lombok.Data;
 
 /**
  * 申立て概要画面
  * Dao层
- * CaseIdParameter 
+ * CaseIdParameter
  * 引数: caseId
  */
 @Data

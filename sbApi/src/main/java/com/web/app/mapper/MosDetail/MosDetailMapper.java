@@ -1,4 +1,5 @@
 package com.web.app.mapper.MosDetail;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import com.web.app.domain.MosDetail.CaseMediations;
@@ -32,7 +33,7 @@ public interface MosDetailMapper {
     // API_和解内容取得
     // 和解内容の取得
     CaseNegotiations getCaseNegotiations(String caseId);
- 
+
     // API_調停内容取得
     // 調停内容の取得
     CaseMediations getCaseMediations(String caseId);

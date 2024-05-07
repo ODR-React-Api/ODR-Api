@@ -1,4 +1,5 @@
 package com.web.app.domain.MosDetail;
+
 import java.util.Date;
 import lombok.Data;
 
@@ -6,7 +7,7 @@ import lombok.Data;
  * 申立て概要画面
  * API_調停内容取得
  * Dao层
- * CaseMediations 
+ * CaseMediations
  * テーブル名：case_mediations調停案
  * 調停内容の取得
  */

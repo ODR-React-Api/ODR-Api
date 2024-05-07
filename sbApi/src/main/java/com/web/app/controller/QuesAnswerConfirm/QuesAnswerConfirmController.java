@@ -1,4 +1,5 @@
 package com.web.app.controller.QuesAnswerConfirm;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @CrossOrigin(origins = "*")
 // 声明当前controller需要生成文档，并且指定在文档中的标签为“アンケート回答確認画面”
-@Api(tags = "アンケート回答確認画面") 
+@Api(tags = "アンケート回答確認画面")
 @RestController
 @RequestMapping("/QuesAnswerConfirm")
 public class QuesAnswerConfirmController {

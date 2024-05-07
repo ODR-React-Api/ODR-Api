@@ -1,4 +1,5 @@
 package com.web.app.domain.QuesAnswerConfirm;
+
 import java.io.Serializable;
 import lombok.Data;
 

@@ -1,4 +1,5 @@
 package com.web.app.domain.MosDetail;
+
 import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
@@ -7,7 +8,7 @@ import lombok.Data;
  * 申立て概要画面
  * API_和解内容取得
  * Dao层
- * GetNegotiationsData 
+ * GetNegotiationsData
  * API「和解内容取得」を呼び出すData
  */
 @Data

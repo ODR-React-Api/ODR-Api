@@ -1,4 +1,5 @@
 package com.web.app.service.MosDetail.impl;
+
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -88,7 +89,7 @@ public class MosDetailServiceImpl implements MosDetailService {
     // S7C6 （調停案が確認済みでした。（相手方））
     public static final String S7C6 = "6";
     // 上記判定条件以外の場合はCaseStatusにS9A9B9C9（網羅外ステータス）を設定する。
-    public static final String S9A9B9C9 = "S9A9B9C9";  
+    public static final String S9A9B9C9 = "S9A9B9C9";
     // S3A0 （期日変更依頼なし）
     public static final int S3A0 = 0;
     // S3A1 （相手方期日変更依頼あり）
@@ -133,11 +134,11 @@ public class MosDetailServiceImpl implements MosDetailService {
         CaseInfo caseInfo = new CaseInfo();
         // 該当案件のステータスを取得
         Cases cases = mosDetailMapper.getCaseInfo(caseId);
-        
+
         // 案件ステータスの設定
-        if(cases != null){
+        if (cases != null) {
             caseInfo = setCaseInfoCaseStatus(cases);
-        }else {
+        } else {
             // （網羅外ステータス）を設定する
             caseInfo.setCaseStatus(S9A9B9C9);
         }
@@ -145,14 +146,14 @@ public class MosDetailServiceImpl implements MosDetailService {
         // 利用モジュール状況取得
         MasterPlatforms masterPlatforms = mosDetailMapper.getPhases(platformId);
         // 利用モジュール状況の設定
-        if(masterPlatforms != null){
+        if (masterPlatforms != null) {
             int moudleFlg = setCaseInfoMoudleFlg(masterPlatforms);
             caseInfo.setMoudleFlg(moudleFlg);
         }
-        
+
         // チュートリアル表示制御取得
         OdrUsers odrUsers = mosDetailMapper.getShowTuritor(userId, platformId);
-        if(odrUsers != null){
+        if (odrUsers != null) {
             // チュートリアル表示（申立）
             int showTuritor1 = odrUsers.getShowTuritor1();
             // チュートリアル表示（回答）
@@ -185,20 +186,20 @@ public class MosDetailServiceImpl implements MosDetailService {
         // 和解内容の取得
         CaseNegotiations caseNegotiations = mosDetailMapper.getCaseNegotiations(caseId);
         // 和解内容の設定
-        if(caseNegotiations != null){
+        if (caseNegotiations != null) {
             negotiationsData = setNegotiationsData(caseNegotiations);
 
-            if(caseNegotiations.getCaseId() != null){
+            if (caseNegotiations.getCaseId() != null) {
                 // 和解案 添付資料の取得
                 List<Files> files = mosDetailMapper.getFiles(caseNegotiations.getCaseId(), CASE_NEGOTIATIONS);
-                if(files != null){
+                if (files != null) {
                     // 添付資料リストの設定
                     negotiationsData.setFile(files);
                 }
             }
 
             return negotiationsData;
-        }else {
+        } else {
             return null;
         }
     }
@@ -212,23 +213,24 @@ public class MosDetailServiceImpl implements MosDetailService {
         // 調停内容の取得
         CaseMediations caseMediations = mosDetailMapper.getCaseMediations(caseId);
         // 調停内容の設定
-        if(caseMediations != null){
+        if (caseMediations != null) {
             mediationsData = setMediationsData(caseMediations);
 
-            if(caseMediations.getCaseId() != null){
+            if (caseMediations.getCaseId() != null) {
                 // 調停案 添付資料の取得
                 List<Files> files = mosDetailMapper.getFiles(caseMediations.getCaseId(), CASE_MEDIATIONS);
-                if(files != null){
+                if (files != null) {
                     // 添付資料リストの設定
                     mediationsData.setFile(files);
                 }
             }
 
             return mediationsData;
-        }else {
+        } else {
             return null;
         }
     }
+
     // 画面内容取得 下記項目を返す
     public CaseInfo setCaseInfoCaseStatus(Cases cases) {
         CaseInfo caseInfo = new CaseInfo();
@@ -259,110 +261,110 @@ public class MosDetailServiceImpl implements MosDetailService {
         int messageStatus = 99;
         int stage = caseStage;
         // 案件ステータスの判定
-        if(caseStage == 0){   
-            // CaseStatus 
-            if(status == "0000"){
+        if (caseStage == 0) {
+            // CaseStatus
+            if (status == "0000") {
                 caseStatus = S01;
-            }else if(status == "0001"){
+            } else if (status == "0001") {
                 caseStatus = S02;
-            }else {
+            } else {
                 caseStatus = S9A9B9C9;
             }
-        }else if(caseStage == 3){
+        } else if (caseStage == 3) {
             // CaseStatus
-            if(negotiationStatus == "0"){
+            if (negotiationStatus == "0") {
                 caseStatus = S3B0;
-            }else if(negotiationStatus == null){
+            } else if (negotiationStatus == null) {
                 caseStatus = S3B99;
-            }else if(negotiationStatus == "1"){
+            } else if (negotiationStatus == "1") {
                 caseStatus = S3B1;
-            }else if(negotiationStatus == "2"){
+            } else if (negotiationStatus == "2") {
                 caseStatus = S3B2;
-            }else if(negotiationStatus == "3"){
+            } else if (negotiationStatus == "3") {
                 caseStatus = S3B3;
-            }else if(negotiationStatus == "4"){
+            } else if (negotiationStatus == "4") {
                 caseStatus = S3B4;
-            }else if(negotiationStatus == "5"){
+            } else if (negotiationStatus == "5") {
                 caseStatus = S3B5;
-            }else if(negotiationStatus == "7"){
+            } else if (negotiationStatus == "7") {
                 caseStatus = S3B7;
-            }else if(negotiationStatus == "8"){
+            } else if (negotiationStatus == "8") {
                 caseStatus = S3B8;
-            }else if(negotiationStatus == "9"){
+            } else if (negotiationStatus == "9") {
                 caseStatus = S3B9;
-            }else if(negotiationStatus == "10"){
+            } else if (negotiationStatus == "10") {
                 caseStatus = S3B10;
-            }else if(negotiationStatus == "11"){
+            } else if (negotiationStatus == "11") {
                 caseStatus = S3B11;
-            }else if(negotiationStatus == "12"){
+            } else if (negotiationStatus == "12") {
                 caseStatus = S3B12;
-            }else if(negotiationStatus == "13"){
+            } else if (negotiationStatus == "13") {
                 caseStatus = S3B13;
-            }else if(negotiationStatus == "14"){
+            } else if (negotiationStatus == "14") {
                 caseStatus = S3B14;
-            }else if(negotiationStatus == "15"){
+            } else if (negotiationStatus == "15") {
                 caseStatus = S3B15;
-            }else {
+            } else {
                 caseStatus = S9A9B9C9;
             }
             // DateRequestStatus
-            if(negotiationEndDateChangeStatus == 0 && negotiationEndDateChangeCount == 0){
+            if (negotiationEndDateChangeStatus == 0 && negotiationEndDateChangeCount == 0) {
                 dateRequestStatus = S3A0;
-            }else if(negotiationEndDateChangeStatus == 1){
+            } else if (negotiationEndDateChangeStatus == 1) {
                 dateRequestStatus = S3A1;
-            }else if(negotiationEndDateChangeStatus == 2){
+            } else if (negotiationEndDateChangeStatus == 2) {
                 dateRequestStatus = S3A2;
-            }else if(negotiationEndDateChangeStatus == 0 && negotiationEndDateChangeCount == 1){
+            } else if (negotiationEndDateChangeStatus == 0 && negotiationEndDateChangeCount == 1) {
                 dateRequestStatus = S3A3;
             }
-        }else if(caseStage == 6){
+        } else if (caseStage == 6) {
             // CaseStatus
-            if(mediatorUserEmail == null){
+            if (mediatorUserEmail == null) {
                 caseStatus = S61;
-            }else {
+            } else {
                 caseStatus = S62;
             }
-        }else if(caseStage == 7){
+        } else if (caseStage == 7) {
             // CaseStatus
-            if(mediationStatus == "0"){
+            if (mediationStatus == "0") {
                 caseStatus = S7C0;
-            }else if(mediationStatus == null){
+            } else if (mediationStatus == null) {
                 caseStatus = S7C99;
-            }else if(mediationStatus == "1"){
+            } else if (mediationStatus == "1") {
                 caseStatus = S7C1;
-            }else if(mediationStatus == "2"){
+            } else if (mediationStatus == "2") {
                 caseStatus = S7C2;
-            }else if(mediationStatus == "3"){
+            } else if (mediationStatus == "3") {
                 caseStatus = S7C3;
-            }else if(mediationStatus == "4"){
+            } else if (mediationStatus == "4") {
                 caseStatus = S7C4;
-            }else if(mediationStatus == "7"){
+            } else if (mediationStatus == "7") {
                 caseStatus = S7C5;
-            }else if(mediationStatus == "8"){
+            } else if (mediationStatus == "8") {
                 caseStatus = S7C6;
-            }else {
+            } else {
                 caseStatus = S9A9B9C9;
             }
             // DateRequestStatus
-            if(mediationEndDateChangeCount == 0){
+            if (mediationEndDateChangeCount == 0) {
                 dateRequestStatus = S7A1;
-            }else if(mediationEndDateChangeCount == 1){
+            } else if (mediationEndDateChangeCount == 1) {
                 dateRequestStatus = S7A2;
             }
             // MessageStatus
-            if(groupMessageFlag1 == 0 && groupMessageFlag2 == 0){
+            if (groupMessageFlag1 == 0 && groupMessageFlag2 == 0) {
                 messageStatus = S7B0;
-            }else if(groupMessageFlag1 == 1){
+            } else if (groupMessageFlag1 == 1) {
                 messageStatus = S7B1;
-            }else if(groupMessageFlag1 == 3){
+            } else if (groupMessageFlag1 == 3) {
                 messageStatus = S7B2;
-            }else if(groupMessageFlag1 == 2){
+            } else if (groupMessageFlag1 == 2) {
                 messageStatus = S7B3;
-            }else if(groupMessageFlag2 == 1){
+            } else if (groupMessageFlag2 == 1) {
                 messageStatus = S7B4;
-            }else if(groupMessageFlag2 == 3){
+            } else if (groupMessageFlag2 == 3) {
                 messageStatus = S7B5;
-            }else if(groupMessageFlag2 == 2){
+            } else if (groupMessageFlag2 == 2) {
                 messageStatus = S7B6;
             }
         }
@@ -385,28 +387,32 @@ public class MosDetailServiceImpl implements MosDetailService {
         Date negotiationEndDate = cases.getNegotiationEndDate();
         // 調停期限日
         Date mediationEndDate = cases.getMediationEndDate();
-        if(replyEndDate != null){
-            caseInfo.setReplyEndDate(stringToStringFormat(dateToString(replyEndDate)));;
+        if (replyEndDate != null) {
+            caseInfo.setReplyEndDate(stringToStringFormat(dateToString(replyEndDate)));
+            ;
         }
-        if(counterclaimEndDate != null){
-            caseInfo.setCounterclaimEndDate(stringToStringFormat(dateToString(counterclaimEndDate)));;
+        if (counterclaimEndDate != null) {
+            caseInfo.setCounterclaimEndDate(stringToStringFormat(dateToString(counterclaimEndDate)));
+            ;
         }
-        if(cancelDate != null){
+        if (cancelDate != null) {
             caseInfo.setCancelDate(stringToStringFormat(dateToString(cancelDate)));
         }
-        if(resolutionDate != null){
-            caseInfo.setResolutionDate(stringToStringFormat(dateToString(resolutionDate)));;
+        if (resolutionDate != null) {
+            caseInfo.setResolutionDate(stringToStringFormat(dateToString(resolutionDate)));
+            ;
         }
-        if(negotiationEndDate != null){
+        if (negotiationEndDate != null) {
             caseInfo.setNegotiationEndDate(stringToStringFormat(dateToString(negotiationEndDate)));
         }
-        if(mediationEndDate != null){
-            caseInfo.setMediationEndDate(stringToStringFormat(dateToString(mediationEndDate)));;
+        if (mediationEndDate != null) {
+            caseInfo.setMediationEndDate(stringToStringFormat(dateToString(mediationEndDate)));
+            ;
         }
 
         return caseInfo;
     }
-    
+
     // モジュール利用状況Flgの設定
     public int setCaseInfoMoudleFlg(MasterPlatforms masterPlatforms) {
         // モジュール利用状況Flg
@@ -416,23 +422,23 @@ public class MosDetailServiceImpl implements MosDetailService {
         // 調停機能利用有無
         int phaseMediation = masterPlatforms.getPhaseMediation();
         // 反訴機能利用有無
-        int phaseReply =masterPlatforms.getPhaseReply();
+        int phaseReply = masterPlatforms.getPhaseReply();
         // モジュール利用状況Flgの設定
-        if(phaseNegotiation == 1 &&phaseMediation == 1 && phaseReply == 1){
+        if (phaseNegotiation == 1 && phaseMediation == 1 && phaseReply == 1) {
             moudleFlg = 1;
-        }else if(phaseNegotiation == 1 &&phaseMediation == 1 && phaseReply == 0){
+        } else if (phaseNegotiation == 1 && phaseMediation == 1 && phaseReply == 0) {
             moudleFlg = 2;
-        }else if(phaseNegotiation == 1 &&phaseMediation == 0 && phaseReply == 1){
+        } else if (phaseNegotiation == 1 && phaseMediation == 0 && phaseReply == 1) {
             moudleFlg = 3;
-        }else if(phaseNegotiation == 1 &&phaseMediation == 0 && phaseReply == 0){
+        } else if (phaseNegotiation == 1 && phaseMediation == 0 && phaseReply == 0) {
             moudleFlg = 4;
-        }else if(phaseNegotiation == 0 &&phaseMediation == 1 && phaseReply == 1){
+        } else if (phaseNegotiation == 0 && phaseMediation == 1 && phaseReply == 1) {
             moudleFlg = 5;
-        }else if(phaseNegotiation == 0 &&phaseMediation == 1 && phaseReply == 0){
+        } else if (phaseNegotiation == 0 && phaseMediation == 1 && phaseReply == 0) {
             moudleFlg = 6;
-        }else if(phaseNegotiation == 0 &&phaseMediation == 0 && phaseReply == 1){
+        } else if (phaseNegotiation == 0 && phaseMediation == 0 && phaseReply == 1) {
             moudleFlg = 7;
-        }else if(phaseNegotiation == 0 &&phaseMediation == 0 && phaseReply == 0){
+        } else if (phaseNegotiation == 0 && phaseMediation == 0 && phaseReply == 0) {
             moudleFlg = 8;
         }
         return moudleFlg;
@@ -446,7 +452,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         int status = caseNegotiations.getStatus();
         // 希望する解決方法
         String expectResloveTypeValue = caseNegotiations.getExpectResloveTypeValue();
-        // その他　内容
+        // その他 内容
         String otherContext = caseNegotiations.getOtherContext();
         // 支払金額
         double payAmount = caseNegotiations.getPayAmount();
@@ -465,13 +471,13 @@ public class MosDetailServiceImpl implements MosDetailService {
         String overview = null;
         // 概要を設定
         // OtherContextがNullでない場合
-        if(otherContext != null){
-            // Overviewに　ExpectResloveTypeValue + '、' + OtherContext　を設定
+        if (otherContext != null) {
+            // Overviewに ExpectResloveTypeValue + '、' + OtherContext を設定
             overview = expectResloveTypeValue + "、" + otherContext;
         }
         // OtherContextがNullの場合
         else {
-            // Overviewに　ExpectResloveTypeValue　を設定
+            // Overviewに ExpectResloveTypeValue を設定
             overview = expectResloveTypeValue;
         }
         // 和解内容の戻り項目の設定
@@ -479,12 +485,12 @@ public class MosDetailServiceImpl implements MosDetailService {
         negotiationsData.setOverview(overview);
         negotiationsData.setPayAmount(doubleToStringFormat(payAmount));
         negotiationsData.setCounterClaimPayment(doubleToStringFormat(counterClaimPayment));
-        if(paymentEndDate != null){
+        if (paymentEndDate != null) {
             negotiationsData.setPaymentEndDate(stringToStringFormat(dateToString(paymentEndDate)));
         }
         negotiationsData.setShipmentPayType(shipmentPayType);
         negotiationsData.setSpecialItem(specialItem);
-        if(lastModifiedDate != null){
+        if (lastModifiedDate != null) {
             negotiationsData.setLastModifiedDate(dateToString(lastModifiedDate));
         }
 
@@ -516,21 +522,22 @@ public class MosDetailServiceImpl implements MosDetailService {
         mediationsData.setExpectResloveTypeValue(expectResloveTypeValue);
         mediationsData.setPayAmount(doubleToStringFormat(payAmount));
         mediationsData.setCounterClaimPayment(doubleToStringFormat(counterClaimPayment));
-        if(paymentEndDate != null){
+        if (paymentEndDate != null) {
             mediationsData.setPaymentEndDate(stringToStringFormat(dateToString(paymentEndDate)));
         }
         mediationsData.setShipmentPayType(shipmentPayType);
         mediationsData.setSpecialItem(specialItem);
-        if(lastModifiedDate != null){
+        if (lastModifiedDate != null) {
             mediationsData.setLastModifiedDate(dateToString(lastModifiedDate));
         }
 
         return mediationsData;
     }
-    
+
     // 日付フォーマット定数
-    private static final String FORMAT      = "yyyy-MM-dd HH:mm:ss";
+    private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final String MENU_FORMAT = "yyyy年MM月dd日";
+
     // Date to String (yyyyMMdd)
     public static String dateToString(Date formatDate) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(FORMAT);
