@@ -3,27 +3,67 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.UpdNegotiatConMapper">
-    <resultMap id="setNegotiationStatus" type="com.web.app.domain.UpdNegotiatCon">
-        <id property="id" column="id" jdbcType="VARCHAR"/>
-        <result property="status" column="status" jdbcType="VARCHAR"/>
-        <result property="lastModifiedDate" column="lastModifiedDate" jdbcType="TIMESTAMP"/>
-        <result property="lastModifiedBy" column="lastModifiedBy" jdbcType="TIMESTAMP"/>
-    </resultMap>
     <update id="setNegotiationStatus" parameterType="com.web.app.domain.UpdNegotiatCon">
         UPDATE case_negotiations
         SET
             Status = #{status},
-            LastModifiedDate = #{lastModifiedDate}
+            LastModifiedDate = #{lastModifiedDate},
             LastModifiedBy = #{loginUser}
         WHERE
             id = #{negotiationId}
     </update>
-    <select id="getNegotiationStatus" resultMap="java.lang.String">
+    
+    <select id="getNegotiationStatus" resultType="java.lang.Integer">
         SELECT 
             Status
         FROM
             case_negotiations
         WHERE
             id = #{negotiationId}
+    </select>
+
+    <resultMap id="setRelationsEmail" type="com.web.app.domain.UpdNegotiatCon">
+        <result property="petitionUserInfoEmail" column="petitionUserInfo_Email" jdbcType="VARCHAR"/>
+        <result property="agent1Email" column="agent1_Email" jdbcType="VARCHAR"/>
+        <result property="agent2Email" column="agent2_Email" jdbcType="VARCHAR"/>
+        <result property="agent3Email" column="agent3_Email" jdbcType="VARCHAR"/>
+        <result property="agent4Email" column="agent4_Email" jdbcType="VARCHAR"/>
+        <result property="agent5Email" column="agent5_Email" jdbcType="VARCHAR"/>
+        <result property="traderUserEmail" column="traderUserEmail" jdbcType="VARCHAR"/>
+        <result property="traderAgent1UserEmail" column="traderAgent1_UserEmail" jdbcType="VARCHAR"/>
+        <result property="traderAgent2UserEmail" column="traderAgent2_UserEmail" jdbcType="VARCHAR"/>
+        <result property="traderAgent3UserEmail" column="traderAgent3_UserEmail" jdbcType="VARCHAR"/>
+        <result property="traderAgent4UserEmail" column="traderAgent4_UserEmail" jdbcType="VARCHAR"/>
+        <result property="traderAgent5UserEmail" column="traderAgent5_UserEmail" jdbcType="VARCHAR"/>
+        <result property="mediatorUserEmail" column="mediatorUserEmail" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getRelationsEmail" resultMap="setRelationsEmail">
+        SELECT 
+            petitionUserInfo_Email,
+            agent1_Email,
+            agent2_Email,
+            agent3_Email,
+            agent4_Email,
+            agent5_Email,
+            traderUserEmail,
+            traderAgent1_UserEmail,
+            traderAgent2_UserEmail,
+            traderAgent3_UserEmail,
+            traderAgent4_UserEmail,
+            traderAgent5_UserEmail,
+            mediatorUserEmail
+        FROM
+            case_relations
+        WHERE
+            caseId = #{caseId}
+    </select>
+
+    <select id="getUsersEmail" resultType="com.web.app.domain.UpdNegotiatCon">
+        SELECT 
+            email
+        FROM
+            odr_users
+        WHERE
+            Uid = #{loginUser}
     </select>
 </mapper>
