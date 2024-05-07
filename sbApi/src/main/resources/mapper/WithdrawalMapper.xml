@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.WithdrawalMapper">
+
+<select id="getCaseStage" resultType="com.web.app.domain.Withdrawal">
+  SELECT
+      cid,
+      CaseStage
+  FROM
+      react_use.cases
+  WHERE
+      cid = #{caseId}
+  AND DeleteFlag = '0'
+</select>
+
+<update id="updateWithdrawal">
+  UPDATE
+      react_use.cases
+  SET
+      WithDrawDate = CURRENT_TIMESTAMP,
+      CaseStage = '1',
+      CaseStatus = '0100',
+      ResolutionDate = CURRENT_TIMESTAMP,
+      ResolutionFlag = '0'
+  WHERE
+      cid = #{cid}
+  AND 
+      DeleteFlag = '0'
+</update>
+
+</mapper>

@@ -26,14 +26,10 @@ public class SearchDetailCaseController {
 
   @PostMapping("/detail")
   @ApiOperation("検索用ケース詳細取得")
-  @SuppressWarnings("rawtypes")
-  public Response searchDetail(@RequestBody SelectCondition searchCase) {
+  public ReturnResult searchDetail(@RequestBody SelectCondition searchCase) {
     ReturnResult result = searchDetailCaseService.searchSetailCase(searchCase);
 
-    if (result != null) {
-      return Response.success(result);
-    }
-    return Response.error("失败");
+    return result;
   }
 
 }
