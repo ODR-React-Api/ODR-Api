@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.MediatorHistoriesMapper">
+
+  <select id="usersId" resultType="string">
+        SELECT UserId
+        FROM react_use.user_messagegroups
+        WHERE messageGroupId=#{messageGroupId}
+            AND   DeleteFlag  = 0
+            AND   PlatformId = #{platformId}
+            AND   userId != #{uid}
+  </select>
+
+
+  <update id="mediatorHistoriesUpdate">
+        UPDATE
+            react_use.mediator_histories
+        SET Status=4, ResignFlag=1
+        WHERE CaseId=#{caseId}
+            AND userId=#{uid}
+  </update>
+
+  <insert id="messagesInsert">
+        INSERT INTO react_use.messages (
+            id,
+            PlatformId,
+            CaseId,
+            messageGroupId,
+            SendUserId,
+            SendUserType,
+            SendDate,
+            MessageType,
+            Message,
+            FileId1,
+            FileId2,
+            FileId3,
+            CaseStage,
+            JoinedUserId,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )
+        VALUES (
+            #{id},
+            "001",
+            #{caseId},
+            null,
+            #{uid},
+            3,
+            CURRENT_TIMESTAMP,
+            4,
+            null,
+            null,
+            null,
+            null,
+            6,
+            #{uid},
+            null,
+            null,
+            null,
+            null,
+            null,
+            0,
+            CURRENT_TIMESTAMP,
+            #{uid}
+        )
+  </insert>
+
+  <insert id="usersMessagesInsert" >
+        INSERT INTO react_use.user_messages (
+            id,
+            PlatformId,
+            CaseId,
+            messageGroupId,
+            messageId,
+            userId,
+            ReadFlag,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )
+          VALUES
+        <foreach collection="list" separator="," item="item">
+            (
+            #{item.id},
+            #{item.platformId},
+            #{item.caseId},
+            null,
+            #{item.messageId},
+            #{item.userId},
+            0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            0,
+            CURRENT_TIMESTAMP,
+            #{item.userId}
+            )
+        </foreach>
+        
+  </insert>
+</mapper>

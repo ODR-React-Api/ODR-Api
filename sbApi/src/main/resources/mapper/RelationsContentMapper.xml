@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.RelationsContentMapper">
+    <resultMap id="RelationsContent" type="com.web.app.domain.Users">
+        <id property="firstName" column="FirstName" jdbcType="VARCHAR"/>
+        <result property="lastName" column="LastName" jdbcType="VARCHAR"/>
+        <result property="firstNamekana" column="FirstName_kana" jdbcType="VARCHAR"/>
+        <result property="lastNamekana" column="LastName_kana" jdbcType="VARCHAR"/>
+        <result property="companyName" column="CompanyName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="RelationsContentListDataSearch" resultMap="RelationsContent">
+        SELECT 
+              FirstName,
+              LastName,
+              FirstName_kana,
+              LastName_kana,
+              CompanyName
+        FROM react_use.odr_users
+        WHERE
+              PlatformId="001"
+          AND Email=#{petitionUserInfoEmail}
+          AND DeleteFlag=0
+          
+    </select>
+</mapper>

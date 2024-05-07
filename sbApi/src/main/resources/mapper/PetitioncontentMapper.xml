@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.PetitioncontentMapper">
+    <resultMap id="PetitionList" type="com.web.app.domain.CasePetitions">
+        <id property="caseId" column="CaseId" jdbcType="VARCHAR"/>
+        <result property="productName" column="productName" jdbcType="VARCHAR"/>
+        <result property="productId" column="ProductId" jdbcType="VARCHAR"/>
+        <result property="traderName" column="TraderName" jdbcType="VARCHAR"/>
+        <result property="traderMail" column="TraderMail" jdbcType="VARCHAR"/>
+        <result property="traderUrl" column="TraderUrl" jdbcType="VARCHAR"/>
+        <result property="boughtDate" column="BoughtDate" jdbcType="DATE"/>
+        <result property="price" column="Price" jdbcType="DECIMAL"/>
+        <result property="petitionTypeValue" column="petitionTypeValue" jdbcType="VARCHAR"/>
+        <result property="petitionContext" column="petitionContext" jdbcType="VARCHAR"/>
+        <result property="expectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR"/>
+        <result property="other" column="Other" jdbcType="VARCHAR"/>
+        <result property="lastModifiedDate" column="LastModifiedDate" jdbcType="DATE"/>
+    </resultMap>
+    <select id="PetitionListDataSearch" resultMap="PetitionList">
+        SELECT 
+            CaseId,
+            productName,
+            ProductId,
+            TraderName,
+            TraderMail,
+            TraderUrl,
+            BoughtDate,
+            Price,
+            petitionTypeValue,
+            petitionContext,
+            ExpectResloveTypeValue,
+            Other,
+            LastModifiedDate
+        FROM react_use.case_petitions
+        WHERE
+            CaseId=#{caseId}
+            AND Status!=0 
+            AND DeleteFlag=0
+
+    </select>
+
+    <resultMap id="PetitionFile" type="com.web.app.domain.AttachedFile">
+        <id property="filename" column="FileName" jdbcType="VARCHAR"/>
+        <result property="fileUrl" column="FileUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="PetitionFileSearch" resultMap="PetitionFile">
+        SELECT 
+              A.FileName,
+              A.FileUrl
+        FROM 
+              react_use.files as A
+        LEFT JOIN
+              react_use.case_file_relations as B
+        ON
+              A.id = B.fileid
+        WHERE 
+                B.CaseId=#{caseId}
+            AND B.RelationType=0
+            AND B.DeleteFlag=0
+            AND A.DeleteFlag=0
+    </select>
+
+    <resultMap id="PetitionExtensionitem" type="com.web.app.domain.ExtensionItem">
+        <id property="itemDisplayName" column="ItemDisplayName" jdbcType="VARCHAR"/>
+        <result property="ExtensionitemValue" column="ExtensionitemValue" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="PetitionExtensionitemSearch" resultMap="PetitionExtensionitem">
+        SELECT 
+              B.ItemDisplayName,
+              A.ExtensionitemValue
+        FROM 
+              case_extensionitem_values as A
+        LEFT JOIN
+              master_extensionitems as B
+        ON
+              B.id = A.ExtensionItemId
+        LEFT JOIN
+              case_extensionitem_relations as C
+        ON	A.ExtensionItemId=C.ExtensionItemId
+        WHERE 
+                A.PlatformId="001"
+            AND A.CaseId=#{caseId}
+            AND A.DeleteFlag=0
+            AND B.LanguageId="jp"
+            AND B.DeleteFlag=0
+            AND C.PlatformId="001"
+            AND C.RelationType=0
+            AND C.DeleteFlag=0
+            ORDER BY
+              C.DisplayOrder asc
+              LIMIt 5
+    </select>
+</mapper>

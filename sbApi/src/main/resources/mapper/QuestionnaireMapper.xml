@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.QuestionnaireMapper">
+    <resultMap id="testUserResultMap" type="com.web.app.domain.QuestionnaireData">
+        <id property="QuestionId" column="QuestionId" jdbcType="VARCHAR"/>
+        <result property="UserEmail" column="UserEmail" jdbcType="VARCHAR"/>
+        <result property="UserType" column="UserType" jdbcType="INTEGER"/>
+        <result property="CaseId" column="CaseId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="questionnaieListDataSearch" resultMap="testUserResultMap">
+        SELECT 
+            QuestionId,
+            UserEmail,
+            UserType,
+            CaseId
+        FROM
+            react_use.questionnaire_mails
+        WHERE
+            GUID = #{Id}
+    </select>
+
+    <select id="questionnaieCountSearch" resultType="Integer">
+        <!-- SELECT
+            COUNT(*)
+        FROM
+            react_use.questionnaire_mails as A
+        LEFT JOIN 
+            react_use.questionnaire_results as B
+        ON
+            B.QuestionId= A.QuestionId  and
+            B.CaseId=A.CaseId and
+            B.UserType=A.UserType 
+        WHERE
+            GUID = #{Id} -->
+        SELECT
+            COUNT(*)
+        FROM
+            react_use.questionnaire_mails as A
+        WHERE
+            A.QuestionId= #{questionId}  and
+            A.CaseId=#{caseId} and
+            A.UserType=#{userType} 
+    </select>
+
+    <resultMap id="QuestionnaireResultMap" type="com.web.app.domain.QuestionnaireList">
+        <id property="Description" column="Description" jdbcType="VARCHAR"/>
+        <result property="Type" column="Type" jdbcType="INTEGER"/>
+        <result property="ActiveFlag" column="ActiveFlag" jdbcType="INTEGER"/>
+        <result property="Order" column="Order" jdbcType="INTEGER"/>
+        <result property="RequireFlag" column="RequireFlag" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="searchQuestionnaieList" resultMap="QuestionnaireResultMap">
+        <!-- SELECT
+              A.Description,
+              A.Type,
+              A.ActiveFlag,
+              A.Order,
+              A.RequireFlag
+        FROM
+            react_use.questionnaires as A
+        LEFT JOIN
+            react_use.questionnaire_mails as B
+        ON
+              A.QuestionId=B.QuestionId
+        WHERE
+              A.PlatformId=#{platformId} and
+              A.EffectiveDate >  CURRENT_DATE() and
+              A.Open=1 and
+              A.ActiveFlag=1 and
+              B.GUID=#{Id}
+        Order By
+              A.Order ASC -->
+
+        SELECT
+              A.Description,
+              A.Type,
+              A.ActiveFlag,
+              A.Order,
+              A.RequireFlag
+        FROM
+            react_use.questionnaires as A
+        WHERE
+              A.PlatformId=#{platformId} and
+              A.EffectiveDate >  CURRENT_DATE() and
+              A.Open=1 and
+              A.ActiveFlag=1 and
+              A.QuestionId=#{questionId} 
+        Order By
+              A.Order ASC
+    </select>
+</mapper>
