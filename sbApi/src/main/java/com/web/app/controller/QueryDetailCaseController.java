@@ -10,6 +10,7 @@ import com.web.app.domain.ReturnResult;
 import com.web.app.service.QueryDetailCaseService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -21,6 +22,7 @@ public class QueryDetailCaseController {
   private QueryDetailCaseService queryDetailCaseService;
   
   @PostMapping("/queryDetailCase")
+  @ApiOperation("曖昧検索用ケース詳細取得")
   public ReturnResult querydetailCase(String caseId, String petitionUserId, int positionFlag, String queryString){
     ReturnResult returnResult = queryDetailCaseService.getQueryDetailCase(caseId,petitionUserId,positionFlag,queryString);
     return returnResult;

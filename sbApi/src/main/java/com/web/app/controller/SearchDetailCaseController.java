@@ -25,7 +25,7 @@ public class SearchDetailCaseController {
   private SearchDetailCaseService searchDetailCaseService;
 
   @PostMapping("/detail")
-  @ApiOperation("详细检索case取得")
+  @ApiOperation("検索用ケース詳細取得")
   @SuppressWarnings("rawtypes")
   public Response searchDetail(@RequestBody SelectCondition searchCase) {
     ReturnResult result = searchDetailCaseService.searchSetailCase(searchCase);

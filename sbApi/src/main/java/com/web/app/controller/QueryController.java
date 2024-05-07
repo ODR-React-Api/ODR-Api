@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.app.domain.Response;
 import com.web.app.domain.ReturnResult;
 import com.web.app.service.QueryService;
 
@@ -25,13 +26,15 @@ public class QueryController {
   private QueryService queryService;
   
   @PostMapping("/detail")
-  @ApiOperation("模糊检索")
-  public List<ReturnResult> query(@RequestParam("userId") String uid,@RequestParam("queryString") String queryString){
-    System.out.println("uid:" + uid);
-    System.out.println("queryString:" + queryString);
-    
+  @ApiOperation("曖昧検索用一覧取得")
+  @SuppressWarnings("rawtypes")
+  public Response query(@RequestParam("userId") String uid,@RequestParam("queryString") String queryString){
+
     List<ReturnResult> returnResults = queryService.queryData(uid,queryString);
 
-    return returnResults;
+    if (returnResults != null) {
+      return Response.success(returnResults);
+    }
+    return Response.error("失败");
   }
 }
