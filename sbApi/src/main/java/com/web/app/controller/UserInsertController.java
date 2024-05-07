@@ -26,7 +26,7 @@ public class UserInsertController {
   @Autowired
   private UserInsertService userInsertService;
 
-  // @SuppressWarnings("rawtypes")
+  @SuppressWarnings("rawtypes")
   @PostMapping("RegisterUser")
   @ApiOperation("添加用户")
   public Response RegisterUser(UserInfoModel userInfo) {

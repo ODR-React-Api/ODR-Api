@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.app.domain.SelectCondition;
+import com.web.app.domain.Response;
 import com.web.app.domain.ReturnResult;
+import com.web.app.domain.SelectCondition;
 import com.web.app.service.SearchDetailCaseService;
 
 import io.swagger.annotations.Api;
@@ -22,12 +23,17 @@ public class SearchDetailCaseController {
 
   @Autowired
   private SearchDetailCaseService searchDetailCaseService;
-  
+
   @PostMapping("/detail")
   @ApiOperation("详细检索case取得")
-  public ReturnResult searchDetail(@RequestBody SelectCondition searchCase){
+  @SuppressWarnings("rawtypes")
+  public Response searchDetail(@RequestBody SelectCondition searchCase) {
     ReturnResult result = searchDetailCaseService.searchSetailCase(searchCase);
-    return result;
+
+    if (result != null) {
+      return Response.success(result);
+    }
+    return Response.error("失败");
   }
 
 }
