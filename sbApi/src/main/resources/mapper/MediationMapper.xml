@@ -2,33 +2,49 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
 <mapper namespace="com.web.app.mapper.MediationMapper">
-
-<select id="Mediationstatus" resultType="com.web.app.domain.MediateUser">
- SELECT
+    <resultMap id="MediateUserMap" type="com.web.app.domain.MediateUser">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="userId" column="userId" jdbcType="VARCHAR"/>
+        <result property="Status" column="Status" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="Mediationstatus" resultType="com.web.app.domain.MediateUser">
+        SELECT
             Status
         FROM
             case_mediations
         WHERE
             CaseId = #{CaseId}
-</select>
+    </select>
 
-<select id="MediatorUserEmail" resultType="string">
- SELECT
+    <select id="MediatorUserEmail" resultType="string">
+        SELECT
             MediatorUserEmail
         FROM
             case_relations
         WHERE
             CaseId = #{CaseId}
-</select>
+    </select>
 
-<select id="MediatorUserUid" resultType="string">
- SELECT
+    <select id="MediatorUserUid" resultType="string">
+        SELECT
             Uid
         FROM
             odr_users
         WHERE
             Email = #{MediatorUserEmail}
-</select>
+    </select>
+
+    <select id="MediatorIntelligence" resultMap="MediateUserMap">
+        SELECT
+            userId,
+            Status
+        FROM
+            mediator_histories
+        WHERE
+            CaseId = #{CaseId}
+            AND Status in (0, 1, 3, 6)
+    </select>
 
 </mapper>

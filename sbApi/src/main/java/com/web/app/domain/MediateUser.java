@@ -9,13 +9,15 @@ public class MediateUser implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
+    private String id;
+
     private String CaseId;
 
-    private Integer Status;
+    private int Status;
 
-    private String  MediatorUserEmail;
+    private String MediatorUserEmail;
 
-    private String  Uid;
+    private String Uid;
 
-    private String  userId;
+    private String userId;
 }

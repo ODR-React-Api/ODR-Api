@@ -1,5 +1,7 @@
 package com.web.app.mapper;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.web.app.domain.MediateUser;
@@ -11,5 +13,5 @@ public interface MediationMapper {
     
     String MediatorUserUid(String MediatorUserEmail);
 
-    MediateUser MediatorIntelligence(MediateUser MediatorIntelligence);
+    ArrayList<MediateUser> MediatorIntelligence(MediateUser MediatorIntelligence);
 }

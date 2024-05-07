@@ -1,13 +1,18 @@
 package com.web.app.service.impl;
 
 import com.web.app.service.MediationService;
+
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.web.app.mapper.MediationMapper;
 import com.web.app.domain.MediateUser;
 
 @Service
 public class MediationServiceImpl implements MediationService {
+
     @Autowired
     private MediationMapper mediationMapper;
 
@@ -27,13 +32,11 @@ public class MediationServiceImpl implements MediationService {
         String MediatorUserUid = mediationMapper.MediatorUserUid(MediatorUserEmail);
         MediationEmail.setUid(MediatorUserUid);
         return MediationEmail;
-
     }
 
     @Override
-    public MediateUser MediatorIntelligence(MediateUser mediateUser) {
-        MediateUser MediatorIntelligence = mediationMapper.MediatorIntelligence(mediateUser);
-        return  MediatorIntelligence;
+    public ArrayList<MediateUser> MediatorIntelligence(MediateUser mediateUser) {
+        ArrayList<MediateUser> MediatorIntelligence = mediationMapper.MediatorIntelligence(mediateUser);
+        return MediatorIntelligence;
     }
-
 }

@@ -1,5 +1,7 @@
 package com.web.app.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,8 +42,13 @@ public class MediationController {
 
     @ApiOperation("調停人情報取得")
     @PostMapping("/MediatorIntelligence")
-    public MediateUser MediatorIntelligence(@RequestBody MediateUser mediateUser){
-        MediateUser mediateUser2 = new MediateUser();
-        return mediateUser2;
+    public ArrayList<MediateUser> MediatorIntelligence(@RequestBody MediateUser mediateUser) {
+
+        try {
+            ArrayList<MediateUser> MediatorIntelligence = mediationService.MediatorIntelligence(mediateUser);
+            return MediatorIntelligence;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

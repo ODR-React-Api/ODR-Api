@@ -1,4 +1,6 @@
 package com.web.app.service;
+
+import java.util.ArrayList;
 import com.web.app.domain.MediateUser;
 
 public interface MediationService {
@@ -6,5 +8,5 @@ public interface MediationService {
 
     MediateUser MediationEmail(MediateUser mediateUser);
 
-    MediateUser MediatorIntelligence(MediateUser mediateUser);
-} 
+    ArrayList<MediateUser> MediatorIntelligence(MediateUser mediateUser);
+}
