@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-// import javax.activation.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,33 +23,27 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/getMediationsUserData")
 public class GetMediationsUserDataController {
-    @Autowired
-    DataSource dataSource;
-    @Autowired
-    private GetMediationsUserDataService getMediationsUserDataService;
+  @Autowired
+  DataSource dataSource;
+  @Autowired
+  private GetMediationsUserDataService getMediationsUserDataService;
 
   @SuppressWarnings("rawtypes")
   @ApiOperation("会員登録取得")
   @PostMapping("/getMediationsUserData")
-  public Response getMediationsUserData(String caseId,String platformId) {
-    
+  public Response getMediationsUserData(String caseId, String platformId) {
 
     // String caseId = "02a179e8-205d-41f8-bb13-d9001";
     // String id = "001";
 
     try {
       List<MediationsUserData> mediationsUserDataList = new ArrayList<MediationsUserData>();
-      mediationsUserDataList = getMediationsUserDataService.findAllUser(caseId,platformId);
-      //System.out.println("------------------------log------------------------------");
-      System.out.println(mediationsUserDataList.toString());
+      mediationsUserDataList = getMediationsUserDataService.findAllUser(caseId, platformId);
       return AjaxResult.success("请求成功", mediationsUserDataList);
     } catch (Exception e) {
-      System.out.println("-------------------------java----------------");
-      System.out.println(e.toString());
       AjaxResult.fatal("查询失败!", e);
       return null;
     }
   }
 
 }
-

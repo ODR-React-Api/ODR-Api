@@ -17,11 +17,10 @@ public class GetMediationsUserDataServiceImpl implements GetMediationsUserDataSe
     private GetMediationsUserDataMapper getMediationsUserDataMapper;
 
     @Override
-    public List<MediationsUserData> findAllUser(String caseId,String platformId) {
+    public List<MediationsUserData> findAllUser(String caseId, String platformId) {
         List<MediationsUserData> list = new ArrayList<MediationsUserData>();
-        list = getMediationsUserDataMapper.findAllUser(caseId,platformId);
+        list = getMediationsUserDataMapper.findAllUser(caseId, platformId);
         return list;
     }
-    
 
 }
