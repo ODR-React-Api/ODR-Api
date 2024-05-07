@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.SettlementPlan.SettlementPlanMapper">
     <!--  -->
-    <select id="" resultType="">
+    <select id="SearchCaseNegotiations" resultType="com.web.app.domain.SettlementPlan.CaseNegotiations">
         SELECT
             *
         FROM
@@ -159,4 +159,44 @@
             #{UserId}
         );
     </insert>
+
+    <update id="UpCaseNegotiations" parameterType="com.web.app.domain.SettlementPlan.CaseNegotiations">
+        UPDATE case_negotiations
+        SET
+            ExpectResloveTypeValue = #{ExpectResloveTypeValue},
+            OtherContext = #{OtherContext},
+            PayAmount = #{PayAmount},
+            CounterClaimPayment = #{CounterClaimPayment},
+            PaymentEndDate = #{PaymentEndDate},
+            ShipmentPayType = #{ShipmentPayType},
+            SpecialItem = #{SpecialItem},
+            HtmlContext = #{HtmlContext},
+            HtmlContext2 = #{HtmlContext2},
+            SubmitDate = #{SubmitDate},
+            Status = #{Status},
+            LastModifiedDate = CURRENT_TIMESTAMP(),
+            LastModifiedBy = #{UserId}
+        WHERE
+            CaseId = #{CaseId}
+    </update>
+
+    <update id="UpFile" parameterType="com.web.app.domain.SettlementPlan.AddSettlementPlan">
+        UPDATE files
+        SET
+            DeleteFlag = 1,
+            LastModifiedDate = CURRENT_TIMESTAMP(),
+            LastModifiedBy = #{UserId}
+        WHERE
+            id = #{FileId}
+    </update>
+
+    <update id="UpCaseFileRelations" parameterType="com.web.app.domain.SettlementPlan.AddSettlementPlan">
+        UPDATE case_file_relations
+        SET
+            DeleteFlag = 1,
+            LastModifiedDate = CURRENT_TIMESTAMP(),
+            LastModifiedBy = #{UserId}
+        WHERE
+            fileId = #{FileId}
+    </update>
 </mapper>

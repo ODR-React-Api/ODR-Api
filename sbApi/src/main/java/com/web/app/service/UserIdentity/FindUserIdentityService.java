@@ -1,8 +1,8 @@
 package com.web.app.service.UserIdentity;
 
-import com.web.app.domain.UserIdentity.UserIdentity;
+import com.web.app.domain.SettlementPlan.AddSettlementPlan;
 
 public interface FindUserIdentityService {
 
-    UserIdentity FindUserIdentity(String caseId);
+    String FindUserIdentity(AddSettlementPlan addSettlementPlan);
 } 

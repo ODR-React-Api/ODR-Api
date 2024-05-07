@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.app.domain.SettlementPlan.AddSettlementPlan;
 import com.web.app.domain.UserIdentity.UserIdentity;
 import com.web.app.service.UserIdentity.FindUserIdentityService;
 
@@ -22,10 +23,10 @@ public class UserIdentityController {
     
     @ApiOperation("用户身份查询")
     @PostMapping("FindUserIdentity")
-    public UserIdentity FindUserIdentityService (String caseId){
+    public String FindUserIdentityService (AddSettlementPlan addSettlementPlan){
         try{
-            UserIdentity userIdentity = findUserIdentityService.FindUserIdentity(caseId);
-            return userIdentity;
+            String status = findUserIdentityService.FindUserIdentity(addSettlementPlan);
+            return status;
         }catch(Exception e){
             return null;
         }
