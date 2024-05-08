@@ -24,6 +24,10 @@ public interface UtilService {
     // mail送信
     boolean SendMail(SendMailRequest SendMailRequest);
 
+    // Guid取得
+    String GetGuid();
+
     // 指定时间加天数
     Date AddDaysToDate(Date date, int days);
+
 }

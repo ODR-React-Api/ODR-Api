@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
 
@@ -45,6 +46,13 @@ public class UtilServiceImpl implements UtilService {
     @Override
     public Cases GetCasesByCid(String cid) {
         return commonMapper.FindCasesInfoByCid(cid);
+    }
+
+    @Override
+    public String GetGuid() {
+        String strGuid = UUID.randomUUID().toString();
+        strGuid = strGuid.replace("-", "").toUpperCase();
+        return strGuid;
     }
 
     @Override
