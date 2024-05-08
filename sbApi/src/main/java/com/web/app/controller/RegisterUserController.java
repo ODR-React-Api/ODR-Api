@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.UserInfoModel;
-import com.web.app.service.UserInsertService;
+import com.web.app.service.RegisterUserService;
 import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
@@ -19,23 +19,21 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "用户登陆模块") 
 @RestController
 @RequestMapping("/")
-public class UserInsertController {
+public class RegisterUserController {
   
   @Autowired
-  private UserInsertService userInsertService;
+  private RegisterUserService userInsertService;
 
   @SuppressWarnings("rawtypes")
   @PostMapping("RegisterUser")
   @ApiOperation("ユーザ新規登録")
   public Response RegisterUser(UserInfoModel userInfo) {
-      //TODO: process POST request
       try {
       int userInsertRep = userInsertService.UserInsert(userInfo);
       if(userInsertRep != 0){
         return AjaxResult.success("添加用户成功!");
       }
       } catch (Exception e) {
-        // TODO: handle exception
         AjaxResult.fatal("添加用户失败!", e);
         return null;
       }

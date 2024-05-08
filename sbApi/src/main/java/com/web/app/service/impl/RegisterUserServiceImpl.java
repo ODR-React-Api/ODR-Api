@@ -12,17 +12,17 @@ import com.web.app.domain.UserInfoModel;
 import com.web.app.domain.UserInsertModel;
 import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.util.SendMailRequest;
-import com.web.app.mapper.UserInsertMapper;
-import com.web.app.service.UserInsertService;
+import com.web.app.mapper.RegisterUserMapper;
+import com.web.app.service.RegisterUserService;
 import com.web.app.service.UtilService;
 
 @Service
-public class UserInsertServiceImpl implements UserInsertService {
+public class RegisterUserServiceImpl implements RegisterUserService {
 
-  private static final Logger log = LogManager.getLogger(UserInsertServiceImpl.class);
+  private static final Logger log = LogManager.getLogger(RegisterUserServiceImpl.class);
 
   @Autowired
-  private UserInsertMapper userInsertMapper;
+  private RegisterUserMapper userInsertMapper;
 
   @Autowired
   private UtilService utilService;
@@ -69,7 +69,7 @@ public class UserInsertServiceImpl implements UserInsertService {
 
       ArrayList<String> parameter = new ArrayList<>();
 
-      parameter.add(userInfo.getLastName() + userInfo.getFirstName());
+      parameter.add(userInfo.getLastName() + " " + userInfo.getFirstName());
       parameter.add("http://localhost:3000/");
 
       sendMailRequest.setParameter(parameter);

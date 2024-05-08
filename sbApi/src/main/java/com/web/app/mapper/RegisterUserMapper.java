@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.web.app.domain.UserInsertModel;
 
 @Mapper
-public interface UserInsertMapper {
+public interface RegisterUserMapper {
 
   Integer userInsert(UserInsertModel userInsert);
 
