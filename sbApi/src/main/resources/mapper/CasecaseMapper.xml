@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.CasecaseMapper">
+
+    <resultMap id="BaseResultMap" type="com.web.app.domain.Casecase">
+            <id property="cid" column="cid" jdbcType="VARCHAR"/>
+            <!-- <result property="CaseId" column="CaseId" jdbcType="VARCHAR"/>
+            <result property="CasePetition" column="CasePetition" jdbcType="VARCHAR"/> -->
+            <result property="PlatformId" column="PlatformId" jdbcType="VARCHAR"/>
+            <result property="TraderAgent1_UserEmail" column="TraderAgent1_UserEmail" jdbcType="VARCHAR"/>
+            <result property="TraderAgent2_UserEmail" column="TraderAgent2_UserEmail" jdbcType="VARCHAR"/>
+            <result property="TraderAgent3_UserEmail" column="TraderAgent3_UserEmail" jdbcType="VARCHAR"/>
+            <result property="TraderAgent4_UserEmail" column="TraderAgent4_UserEmail" jdbcType="VARCHAR"/>
+            <result property="TraderAgent5_UserEmail" column="TraderAgent5_UserEmail" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <update id="updateCasecase" parameterType="com.web.app.domain.Casecase">
+        UPDATE react_use.cases ca,react_use.case_relations re
+        <set>
+            ca.CaseStage = #{caseStage},
+            ca.CaseStatus = #{caseStatus},
+            ca.CounterclaimFlag = #{counterclaimFlag},
+            <if test="counterclaimFlag = 1 ">
+                ca.CounterclaimStartDate = #{counterclaimStartDate},
+                ca.CounterclaimEndDate = #{counterclaimEndDate},            
+            </if>
+            <if test="counterclaimFlag = 0 ">
+                ca.NegotiationStartDate = #{negotiationStartDate},
+                ca.NegotiationEndDate = #{negotiationEndDate},        
+            </if>
+            <if test="counterclaimFlag = 0 and phaseNegotiation = 1 ">
+                ca.NegotiationEndDateChangeStatus = 0,
+                ca.NegotiationEndDateChangeCount = 0,         
+            </if>
+            ca.CancelDate = NULL,
+            ca.LastModifiedDate = #{newDate},
+            ca.LastModifiedBy = '2020/08/12 6:19:14'
+        </set>
+        WHERE
+            ca.PlatformId = re.PlatformId
+            AND ca.Cid = re.CaseId 
+            AND ca.cid = #{cid}
+            AND ca.PlatformId = #{platformId}
+            AND ca.CaseStage = '0'
+            AND ca.CaseStatus = '0001'
+            AND ca.DeleteFlag = '0'
+            AND
+            ( re.TraderUserEmail = #{traderUserEmail}
+            OR re.TraderAgent1_UserEmail = #{traderagentuserListAll[0]}
+            OR re.TraderAgent2_UserEmail = #{traderagentuserListAll[1]}
+            OR re.TraderAgent3_UserEmail = #{traderagentuserListAll[2]}
+            OR re.TraderAgent4_UserEmail = #{traderagentuserListAll[3]}
+            OR re.TraderAgent5_UserEmail = #{traderagentuserListAll[4]} )
+    </update>
+
+</mapper>
