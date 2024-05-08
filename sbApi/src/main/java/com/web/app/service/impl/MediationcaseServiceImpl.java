@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.web.app.service.MediationcaseService;
+import com.web.app.controller.List;
 import com.web.app.domain.Mediationcase;
 import com.web.app.mapper.MediationcaseMapper;;
 
@@ -26,7 +27,13 @@ public class MediationcaseServiceImpl implements MediationcaseService {
 
         return MediationcaseInsertStatus;
     }
-    
-    // @Override
-    // public int MediationcaseInsert(Mediationcase mediationcase) {
+
+    @Override
+    public List<Mediationcase> MediationcaseSearch(Mediationcase mediationcase) {
+
+        List<Mediationcase> mList =mediationcaseMapper.MediationcaseSearch(mediationcase);
+        
+        return mList;
+}
+
 }

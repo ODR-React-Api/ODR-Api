@@ -6,10 +6,8 @@
 
 <select id="reconciliationUserSearch" resultType="com.web.app.domain.ReconciliationUser">
  SELECT
-            HtmlContext,
-            HtmlContext2,
-            AgreementDate,
-            Status
+        CaseId,
+
         FROM
             case_negotiations
         WHERE

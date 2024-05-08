@@ -23,9 +23,8 @@ public class MediationcaseController {
     @PostMapping("/Mediationstatus")
     public int MediationcaseInsert(@RequestBody Mediationcase mediationcase) {
         try {
-            // 判断数据是否已经存在
-            // List<Mediationcase> mediationcaseSearch =
-            // mediationcaseService.mediationcaseSearch(mediationcase);
+            //判断数据是否已经存在
+            List<Mediationcase> mediationcaseSearch = mediationcaseService.MediationcaseSearch(mediationcase);
 
             int num = mediationcaseService.MediationcaseInsert(mediationcase);
             return num;
