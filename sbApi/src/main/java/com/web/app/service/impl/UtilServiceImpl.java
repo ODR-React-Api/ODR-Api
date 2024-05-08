@@ -140,7 +140,6 @@ public class UtilServiceImpl implements UtilService {
             }
 
             request.getParameter().add(Constants.HELP_URL);
-            // aaabbb
             
             if ("M003".equals(request.getTempId())) {
                 request.getParameter().add(sendMailTemplateJp.getFromEmail());
