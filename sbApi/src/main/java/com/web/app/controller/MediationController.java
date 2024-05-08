@@ -15,7 +15,7 @@ import com.web.app.domain.MediateUser;
 import com.web.app.service.MediationService;
 
 @CrossOrigin(origins = "*")
-@Api(tags = "調停案ステータス取得")
+@Api(tags = "調停案ステータス取得模块")
 @RestController
 @RequestMapping("/mediate")
 public class MediationController {

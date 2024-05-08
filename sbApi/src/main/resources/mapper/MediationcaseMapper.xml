@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.MediationcaseMapper">
+
+<select id="reconciliationUserSearch" resultType="com.web.app.domain.ReconciliationUser">
+ SELECT
+            HtmlContext,
+            HtmlContext2,
+            AgreementDate,
+            Status
+        FROM
+            case_negotiations
+        WHERE
+            CaseId = #{CaseId}
+            AND DeleteFlag = false
+</select>
+
+
+
+<insert id="MediationcaseInsert" parameterType="com.web.app.domain.Mediationcase">
+        INSERT INTO case_mediations (
+        id,
+        CaseId
+        )VALUES
+        (
+        #{id},
+        #{CaseId}
+        )
+</insert>
+</mapper>
