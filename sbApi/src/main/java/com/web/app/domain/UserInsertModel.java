@@ -5,65 +5,67 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class UserInsertModel implements Serializable{
+public class UserInsertModel implements Serializable {
 
-  private String uid;
+    private static final long serialVersionUID = 1L;
 
-  private String password;
+    private String uid;
 
-  private String email;
+    private String password;
 
-  private String firstName;
+    private String email;
 
-  private String middleName;
+    private String firstName;
 
-  private String lastName;
+    private String middleName;
 
-  private String firstNameKana;
+    private String lastName;
 
-  private String middleNameKana;
+    private String firstNameKana;
 
-  private String lastNameKana;
+    private String middleNameKana;
 
-  private String companyName;
+    private String lastNameKana;
 
-  private String platformId;
+    private String companyName;
 
-  private String languageId;
+    private String platformId;
 
-  private Integer status;
+    private String languageId;
 
-  private String timeZone;
+    private Integer status;
 
-  private String themeId1;
+    private String timeZone;
 
-  private String themeId2;
-  
-  private String themeId3;
-  
-  private String themeId4;
-  
-  private Integer messageFrequency;
+    private String themeId1;
 
-  private Integer termsConfirmed;
+    private String themeId2;
 
-  private String confirmedVersionNoOfTerms;
+    private String themeId3;
 
-  private String confirmedVersionNoOfPolicy;
+    private String themeId4;
 
-  private Integer userType;
+    private Integer messageFrequency;
 
-  private String other01;
+    private Integer termsConfirmed;
 
-  private String other02;
+    private String confirmedVersionNoOfTerms;
 
-  private String other03;
+    private String confirmedVersionNoOfPolicy;
 
-  private String other04;
+    private Integer userType;
 
-  private String other05;
+    private String other01;
 
-  private Integer deleteFlag;
+    private String other02;
 
-  private String lastModifiedBy;
+    private String other03;
+
+    private String other04;
+
+    private String other05;
+
+    private Integer deleteFlag;
+
+    private String lastModifiedBy;
 }

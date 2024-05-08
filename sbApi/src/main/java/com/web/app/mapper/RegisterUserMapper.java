@@ -7,8 +7,8 @@ import com.web.app.domain.UserInsertModel;
 @Mapper
 public interface RegisterUserMapper {
 
-  Integer userInsert(UserInsertModel userInsert);
+    Integer registerUser(UserInsertModel userInsert);
 
-  String getMaxUid();
-  
+    String getMaxUid();
+
 }

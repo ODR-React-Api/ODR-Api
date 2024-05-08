@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.UserInsertMapper">
-  <insert id="userInsert" parameterType="com.web.app.domain.UserInsertModel">
+  <insert id="registerUser" parameterType="com.web.app.domain.UserInsertModel">
         INSERT INTO odr_users (
             Uid,
             password,
