@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
 
@@ -28,7 +29,7 @@ public class UtilServiceImpl implements UtilService {
 
     @Autowired
     private CommonMapper commonMapper;
-    
+
     @Autowired
     private JavaMailSender javaMailSender;
 
@@ -37,13 +38,22 @@ public class UtilServiceImpl implements UtilService {
         MasterPlatforms masterPlatforms = commonMapper.FindMasterPlatforms(platformId);
         return masterPlatforms;
     }
+
     @Override
     public OdrUsers GetOdrUsersByUidOrEmail(String uid, String email, String platformId) {
         return commonMapper.FindUserByUidOrEmail(uid, email, platformId);
     }
+
     @Override
     public Cases GetCasesByCid(String cid) {
         return commonMapper.FindCasesInfoByCid(cid);
+    }
+
+    @Override
+    public String GetGuid() {
+        String strGuid = UUID.randomUUID().toString();
+        strGuid = strGuid.replace("-", "").toUpperCase();
+        return strGuid;
     }
 
     @Override
@@ -55,32 +65,30 @@ public class UtilServiceImpl implements UtilService {
         List<MasterTypes> masterTypesList = commonMapper.FindMasterTypeName(type, languageId, platformId);
         String[] typeValueList = typeValue.split(",");
 
-        for (int i = 0; i < typeValueList.length; i++)
-        {
-            for (int j = 0; j < masterTypesList.size(); j++)
-            {
-                if (typeValueList[i].equals(masterTypesList.get(j).Value))
-                {
+        for (int i = 0; i < typeValueList.length; i++) {
+            for (int j = 0; j < masterTypesList.size(); j++) {
+                if (typeValueList[i].equals(masterTypesList.get(j).Value)) {
                     typeValueList[i] = masterTypesList.get(j).DisplayName;
                 }
             }
-            
+
         }
         return String.join(", ", typeValueList);
     }
-    
+
     @Override
     public boolean SendMail(SendMailRequest request) {
         try {
-            if(request == null
-            || request.getPlatformId().isEmpty()
-            || request.getTempId().isEmpty()
-            || request.getRecipientEmail().isEmpty()
-            || request.getRecipientEmail().size() == 0) {
+            if (request == null
+                    || request.getPlatformId().isEmpty()
+                    || request.getTempId().isEmpty()
+                    || request.getRecipientEmail().isEmpty()
+                    || request.getRecipientEmail().size() == 0) {
                 return false;
             }
             // 邮件模板取得
-            List<MailTemplates> mailTemplates = commonMapper.FindMailTemplatesList(request.getPlatformId(), request.getTempId());
+            List<MailTemplates> mailTemplates = commonMapper.FindMailTemplatesList(request.getPlatformId(),
+                    request.getTempId());
             if (mailTemplates.size() == 0) {
                 return false;
             }
@@ -97,12 +105,12 @@ public class UtilServiceImpl implements UtilService {
 
             for (int i = 0; i < mailTemplates.size(); i++) {
                 // 言語IDがjpの場合
-                if ("jp".equals(mailTemplates.get(i).getLanguageId()))
-                {
+                if ("jp".equals(mailTemplates.get(i).getLanguageId())) {
                     sendMailTemplateJp.setSenderEmail(mailTemplates.get(i).getSendFromMail());
                     sendMailTemplateJp.setSenderEmailName(mailTemplates.get(i).getSendFromName());
                     sendMailTemplateJp.setSubject(mailTemplates.get(i).getSubject());
-                    sendMailTemplateJp.setHtmlBody(mailTemplates.get(i).getHtmlContent().replace("{ServiceSiteUrl}", (ServiceSiteUrl != null ? ServiceSiteUrl : "")));
+                    sendMailTemplateJp.setHtmlBody(mailTemplates.get(i).getHtmlContent().replace("{ServiceSiteUrl}",
+                            (ServiceSiteUrl != null ? ServiceSiteUrl : "")));
                     sendMailTemplateJp.setPlainText(mailTemplates.get(i).getTextContent());
                     sendMailTemplateJp.setFromEmail(mailTemplates.get(i).getSendFromMail());
                     sendMailTemplateJp.setFromName(mailTemplates.get(i).getSendFromName());
@@ -113,14 +121,15 @@ public class UtilServiceImpl implements UtilService {
 
             List<SendMailTemplate> sendMailTemplate = new ArrayList<SendMailTemplate>();
             sendMailTemplate.add(sendMailTemplateJp);
-            
-            for (int i = 0; i < request.getRecipientEmail().size(); i++) {
-                if (!(request.getRecipientEmail().get(i) == null || request.getRecipientEmail().get(i) =="")) {
-                    if (request.getControlType() == 1) {
-                        OdrUsers user = GetOdrUsersByUidOrEmail(null, request.getRecipientEmail().get(i), request.getPlatformId());
 
-                        if(user != null) {
-                            if(!(user.getNoticeEmail() == null || user.getNoticeEmail() == "")) {
+            for (int i = 0; i < request.getRecipientEmail().size(); i++) {
+                if (!(request.getRecipientEmail().get(i) == null || request.getRecipientEmail().get(i) == "")) {
+                    if (request.getControlType() == 1) {
+                        OdrUsers user = GetOdrUsersByUidOrEmail(null, request.getRecipientEmail().get(i),
+                                request.getPlatformId());
+
+                        if (user != null) {
+                            if (!(user.getNoticeEmail() == null || user.getNoticeEmail() == "")) {
                                 request.getRecipientEmail().set(i, user.getNoticeEmail());
                             }
                         }
@@ -140,11 +149,10 @@ public class UtilServiceImpl implements UtilService {
             }
 
             request.getParameter().add(Constants.HELP_URL);
-            
+
             if ("M003".equals(request.getTempId())) {
                 request.getParameter().add(sendMailTemplateJp.getFromEmail());
             }
-            
 
             for (int i = 0; i < request.getRecipientEmail().size(); i++) {
                 String caseTitle = "";
@@ -154,13 +162,15 @@ public class UtilServiceImpl implements UtilService {
                     caseTitle = GetCasesByCid(request.getCaseId()).getCaseTitle();
                     int index = caseTitle.lastIndexOf('_');
                     String typeValue = caseTitle.substring(index + 1);
-                    String resloveDisplayName = GetMasterDisplayName(request.getPlatformId(), sendMailTemplate.get(i).getLanguageId(), "ResloveType", typeValue);
+                    String resloveDisplayName = GetMasterDisplayName(request.getPlatformId(),
+                            sendMailTemplate.get(i).getLanguageId(), "ResloveType", typeValue);
 
                     caseTitledisplayName = caseTitle.substring(0, index) + "_" + resloveDisplayName;
                 }
                 String htmlBodyTemp = sendMailTemplate.get(i).getHtmlBody();
                 if (request.getParameter() != null) {
-                    htmlBodyTemp = ReplaceText(request.getParameter(), sendMailTemplate.get(i).getHtmlBody(), caseTitle, caseTitledisplayName, sendMailTemplate.get(i).getLanguageId(), request.getTempId());
+                    htmlBodyTemp = ReplaceText(request.getParameter(), sendMailTemplate.get(i).getHtmlBody(), caseTitle,
+                            caseTitledisplayName, sendMailTemplate.get(i).getLanguageId(), request.getTempId());
 
                     MimeMessage mimeMessage = javaMailSender.createMimeMessage();
                     MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
@@ -175,24 +185,23 @@ public class UtilServiceImpl implements UtilService {
         } catch (Exception e) {
             return false;
         }
-        
+
     }
 
-    private static String ReplaceText(List<String> parameter, String emailBody, String caseTitle, String caseTitledisplayName, String languageId, String tempId) {
+    private static String ReplaceText(List<String> parameter, String emailBody, String caseTitle,
+            String caseTitledisplayName, String languageId, String tempId) {
 
         emailBody = emailBody.replace("{OpenUniqueNumber}", parameter.get(parameter.size() - 1));
         for (int i = 0; i < parameter.size(); i++) {
-            if ((caseTitle != null || caseTitle != "") && parameter.get(i).contains(caseTitle))
-            {
+            if ((caseTitle != null || caseTitle != "") && parameter.get(i).contains(caseTitle)) {
                 emailBody = emailBody.replace("{" + i + "}", caseTitledisplayName);
-            }
-            else
-            {
+            } else {
                 if (parameter.get(i) != null || parameter.get(i) != "") {
                     Date date = new Date();
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
                     if (JudgingTime(parameter.get(i))) {
-                        emailBody = emailBody.replace("{" + i + "}", String.format("{0:yyyy\\/MM\\/dd}", dateFormat.format(date)));
+                        emailBody = emailBody.replace("{" + i + "}",
+                                String.format("{0:yyyy\\/MM\\/dd}", dateFormat.format(date)));
                     } else {
                         emailBody = emailBody.replace("{" + i + "}", parameter.get(i));
                     }
