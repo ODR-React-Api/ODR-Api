@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetMediationsDataMapper">
+    <select id="selectMediationsData" resultType="com.web.app.domain.Mediation">
+        SELECT
+            t1.ExpectResloveTypeValue,
+            t1.Status,
+            t1.OtherContext,
+            t1.PayAmount,
+            t1.CounterClaimPayment,
+            t1.PaymentEndDate,
+            t1.ShipmentPayType,
+            t1.AgreementDate,
+            t1.SpecialItem,
+            t1.UserId,
+            t3.FileName,
+            t3.FileUrl
+        FROM
+            case_mediations t1,case_file_relations t2,files t3
+        WHERE
+            t1.CaseId = #{caseId} AND
+            t1.platformId = #{platformId} AND
+            t1.DeleteFlag = 0 AND
+            t1.CaseId = t2.CaseId AND
+            t2.platformId = #{platformId} AND
+            t2.RelationType = 5 AND
+            t2.RelatedId = t1.id AND
+            t2.DeleteFlag = 0 AND
+            t3.id = t2.fileId AND
+            t3.platformId = t2.platformId
+        ORDER BY
+            t3.LastModifiedDate
+    </select>
+</mapper>
