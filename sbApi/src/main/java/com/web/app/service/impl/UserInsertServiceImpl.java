@@ -1,6 +1,5 @@
 package com.web.app.service.impl;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -15,8 +14,13 @@ import com.web.app.mapper.UserInsertMapper;
 import com.web.app.service.UserInsertService;
 import com.web.app.service.UtilService;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 @Service
-public class UserInsertServiceImpl implements UserInsertService{
+public class UserInsertServiceImpl implements UserInsertService {
+
+  private static final Logger log = LogManager.getLogger(UserInsertServiceImpl.class);
 
   @Autowired
   private UserInsertMapper userInsertMapper;
@@ -49,35 +53,42 @@ public class UserInsertServiceImpl implements UserInsertService{
     userInsert.setPlatformId("0001");
     userInsert.setLanguageId("jp");
 
-    SendMailRequest sendMailRequest = new SendMailRequest();
+    int rertuenData = userInsertMapper.userInsert(userInsert);
 
-    sendMailRequest.setPlatformId("0001");
+    if (rertuenData != 0) {
+      SendMailRequest sendMailRequest = new SendMailRequest();
 
-    sendMailRequest.setLanguageId("JP");
+      sendMailRequest.setPlatformId("0001");
 
-    sendMailRequest.setTempId(MailConstants.MailId_M002);
+      sendMailRequest.setLanguageId("JP");
 
-    ArrayList<String> recipientEmail = new ArrayList<String>();
+      sendMailRequest.setTempId(MailConstants.MailId_M002);
 
-    recipientEmail.add(userInsert.getEmail());
+      ArrayList<String> recipientEmail = new ArrayList<String>();
 
-    sendMailRequest.setRecipientEmail(recipientEmail);
+      recipientEmail.add(userInsert.getEmail());
 
+      sendMailRequest.setRecipientEmail(recipientEmail);
 
-    sendMailRequest.setUserId(userInsert.getUid());
+      sendMailRequest.setUserId(userInsert.getUid());
 
-    boolean bool = utilService.SendMail(sendMailRequest);
+      boolean bool = utilService.SendMail(sendMailRequest);
 
-    return userInsertMapper.userInsert(userInsert);
+      if (!bool) {
+        log.error("通知メールの送信に失敗しました。");
+      }
+    }
+
+    return rertuenData;
   }
 
   // private String uidFormat(String uid){
-  //   DecimalFormat decimalFormat = new DecimalFormat("00000");
-  //   String newUid = "";
-  //   newUid = uid.substring(1,uid.length());
-  //   int i = Integer.parseInt(newUid) + 1;
-  //   newUid = "U" + decimalFormat.format(i);
-  //   return newUid;
+  // DecimalFormat decimalFormat = new DecimalFormat("00000");
+  // String newUid = "";
+  // newUid = uid.substring(1,uid.length());
+  // int i = Integer.parseInt(newUid) + 1;
+  // newUid = "U" + decimalFormat.format(i);
+  // return newUid;
   // }
-  
+
 }

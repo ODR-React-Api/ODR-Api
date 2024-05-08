@@ -31,10 +31,7 @@ public class QueryController {
   public Response query(@RequestParam("userId") String uid,@RequestParam("queryString") String queryString){
 
     List<ReturnResult> returnResults = queryService.queryData(uid,queryString);
+    return Response.success(returnResults);
 
-    if (returnResults != null) {
-      return Response.success(returnResults);
-    }
-    return Response.error("失败");
   }
 }
