@@ -1,8 +1,9 @@
 package com.web.app.controller;
 
 import com.web.app.domain.RelationsContent;
+import com.web.app.domain.Response;
 import com.web.app.service.RelationsContentService;
-import com.web.app.tool.AjaxResult;
+
 
 import io.swagger.annotations.Api;
 
@@ -24,19 +25,17 @@ public class RelationsContentController {
   @Autowired
   private RelationsContentService relationsContentService;
 
+  @SuppressWarnings("rawtypes")
   @GetMapping("/getRelationsContent")
-  public RelationsContent getRelationsContent(String caseId) {
+  public Response getRelationsContent(String caseId) {
 
-    try {
+    // 申立ての内容取得
+    RelationsContent relationsContent = relationsContentService.selectRelationsContentData(caseId);
 
-      // 申立ての内容取得
-      RelationsContent relationsContent = relationsContentService.selectRelationsContentData(caseId);
-
-      return relationsContent;
-    } catch (Exception e) {
-      AjaxResult.fatal("查询失败!", e);
-      return null;
+    if (relationsContent != null) {
+      return Response.success(relationsContent);
     }
+    return Response.error("失败");
   }
 
 }

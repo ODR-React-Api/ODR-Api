@@ -1,8 +1,8 @@
 package com.web.app.controller;
 
 import com.web.app.domain.CaseRelations;
+import com.web.app.domain.Response;
 import com.web.app.service.CaseRelationsService;
-import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 
@@ -24,19 +24,17 @@ public class RelationsController {
   @Autowired
   private CaseRelationsService caseRelationsService;
 
+  @SuppressWarnings("rawtypes")
   @GetMapping("/getRelations")
-  public CaseRelations getRelations(String caseId) {
+  public Response getRelations(String caseId) {
 
-    try {
 
       // 申立ての内容取得
       CaseRelations caseRelations = caseRelationsService.selectRelationsData(caseId);
 
-      return caseRelations;
-    } catch (Exception e) {
-      AjaxResult.fatal("查询失败!", e);
-      return null;
+      if(caseRelations != null) {
+        return Response.success(caseRelations);
     }
+    return Response.error("失败");
   }
-
 }

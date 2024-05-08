@@ -1,10 +1,9 @@
 package com.web.app.controller;
 
 import com.web.app.domain.Questionnaire_Mails;
-
+import com.web.app.domain.Response;
 import com.web.app.service.QuestionnaireService;
 
-import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 
@@ -26,33 +25,30 @@ public class QuestionnaireController {
   @Autowired
   private QuestionnaireService questionnaireService;
 
+  @SuppressWarnings("rawtypes")
   @GetMapping("/getQuestionnaires")
-  public Questionnaire_Mails getQuestionnaires(String Id, String PlatformId) {
+  public Response getQuestionnaires(String Id, String PlatformId) {
 
-    try {
+    Questionnaire_Mails allQuestionnaire = new Questionnaire_Mails();
 
-      Questionnaire_Mails allQuestionnaire = new Questionnaire_Mails();
+    allQuestionnaire = questionnaireService.selectQuestionnaireData(Id, PlatformId);
 
-      allQuestionnaire = questionnaireService.selectQuestionnaireData(Id, PlatformId);
+    // 確認画面用データ
+    // allQuestionnaire.setQuestionnaireData(questionnaireService.selectQuestionnaireData(Id));
 
-      // 確認画面用データ
-      // allQuestionnaire.setQuestionnaireData(questionnaireService.selectQuestionnaireData(Id));
-
-      // // アンケート回答済みかフラグ
-      // int count = questionnaireService.selectQuestionnairecount(Id);
-      // if (count > 0) {
-      //   allQuestionnaire.setFlag(true);
-      // } else {
-      //   allQuestionnaire.setFlag(false);
-      // }
-      // // アンケートの問題リスト
-      // allQuestionnaire.setQuestionnaireList(questionnaireService.selectQuestionnaireList(Id,PlatformId));
-
-      return allQuestionnaire;
-    } catch (Exception e) {
-      AjaxResult.fatal("查询失败!", e);
-      return null;
+    // // アンケート回答済みかフラグ
+    // int count = questionnaireService.selectQuestionnairecount(Id);
+    // if (count > 0) {
+    // allQuestionnaire.setFlag(true);
+    // } else {
+    // allQuestionnaire.setFlag(false);
+    // }
+    // // アンケートの問題リスト
+    // allQuestionnaire.setQuestionnaireList(questionnaireService.selectQuestionnaireList(Id,PlatformId));
+    if (allQuestionnaire != null) {
+      return Response.success(allQuestionnaire);
     }
+    return Response.error("失败");
   }
 
 }

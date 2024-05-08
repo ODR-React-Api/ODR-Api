@@ -1,8 +1,9 @@
 package com.web.app.controller;
 
 import com.web.app.domain.Petitioncontent;
+import com.web.app.domain.Response;
 import com.web.app.service.PetitioncontentService;
-import com.web.app.tool.AjaxResult;
+
 
 import io.swagger.annotations.Api;
 
@@ -24,21 +25,19 @@ public class PetitioncontentController {
   @Autowired
   private PetitioncontentService petitioncontentService;
 
+  @SuppressWarnings("rawtypes")
   @GetMapping("/getPetitioncontent")
-  public Petitioncontent getPetitioncontent(String caseId) {
+  public Response getPetitioncontent(String caseId) {
 
-    try {
+    Petitioncontent petitioncontent = new Petitioncontent();
 
-      Petitioncontent petitioncontent = new Petitioncontent();
+    // 申立ての内容取得
+    petitioncontent = petitioncontentService.selectPetitionData(caseId);
 
-      // 申立ての内容取得
-      petitioncontent = petitioncontentService.selectPetitionData(caseId);
-
-      return petitioncontent;
-    } catch (Exception e) {
-      AjaxResult.fatal("查询失败!", e);
-      return null;
+    if (petitioncontent != null) {
+      return Response.success(petitioncontent);
     }
+    return Response.error("失败");
   }
 
 }
