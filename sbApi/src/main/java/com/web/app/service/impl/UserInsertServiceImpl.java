@@ -82,13 +82,4 @@ public class UserInsertServiceImpl implements UserInsertService {
     return rertuenData;
   }
 
-  // private String uidFormat(String uid){
-  // DecimalFormat decimalFormat = new DecimalFormat("00000");
-  // String newUid = "";
-  // newUid = uid.substring(1,uid.length());
-  // int i = Integer.parseInt(newUid) + 1;
-  // newUid = "U" + decimalFormat.format(i);
-  // return newUid;
-  // }
-
 }
