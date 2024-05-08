@@ -1,6 +1,7 @@
 package com.web.app.service.impl;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +9,20 @@ import org.springframework.stereotype.Service;
 
 import com.web.app.domain.UserInfoModel;
 import com.web.app.domain.UserInsertModel;
+import com.web.app.domain.constants.MailConstants;
+import com.web.app.domain.util.SendMailRequest;
 import com.web.app.mapper.UserInsertMapper;
 import com.web.app.service.UserInsertService;
+import com.web.app.service.UtilService;
 
 @Service
 public class UserInsertServiceImpl implements UserInsertService{
 
   @Autowired
   private UserInsertMapper userInsertMapper;
+
+  @Autowired
+  private UtilService utilService;
 
   @Override
   public int UserInsert(UserInfoModel userInfo) {
@@ -41,6 +48,25 @@ public class UserInsertServiceImpl implements UserInsertService{
     userInsert.setDeleteFlag(0);
     userInsert.setPlatformId("0001");
     userInsert.setLanguageId("jp");
+
+    SendMailRequest sendMailRequest = new SendMailRequest();
+
+    sendMailRequest.setPlatformId("0001");
+
+    sendMailRequest.setLanguageId("JP");
+
+    sendMailRequest.setTempId(MailConstants.MailId_M002);
+
+    ArrayList<String> recipientEmail = new ArrayList<String>();
+
+    recipientEmail.add(userInsert.getEmail());
+
+    sendMailRequest.setRecipientEmail(recipientEmail);
+
+
+    sendMailRequest.setUserId(userInsert.getUid());
+
+    boolean bool = utilService.SendMail(sendMailRequest);
 
     return userInsertMapper.userInsert(userInsert);
   }
