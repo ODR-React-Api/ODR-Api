@@ -3,6 +3,8 @@ package com.web.app.service.impl;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,6 @@ import com.web.app.domain.util.SendMailRequest;
 import com.web.app.mapper.UserInsertMapper;
 import com.web.app.service.UserInsertService;
 import com.web.app.service.UtilService;
-
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
 @Service
 public class UserInsertServiceImpl implements UserInsertService {
@@ -30,8 +29,6 @@ public class UserInsertServiceImpl implements UserInsertService {
 
   @Override
   public int UserInsert(UserInfoModel userInfo) {
-    // TODO Auto-generated method stub
-    // String uid = userInsertMapper.getMaxUid();
 
     UserInsertModel userInsert = new UserInsertModel();
     userInsert.setUid(UUID.randomUUID().toString());
@@ -70,7 +67,16 @@ public class UserInsertServiceImpl implements UserInsertService {
 
       sendMailRequest.setRecipientEmail(recipientEmail);
 
-      sendMailRequest.setUserId(userInsert.getUid());
+      ArrayList<String> parameter = new ArrayList<>();
+
+      parameter.add(userInfo.getLastName() + userInfo.getFirstName());
+      parameter.add("http://localhost:3000/");
+
+      sendMailRequest.setParameter(parameter);
+
+      sendMailRequest.setUserId("ODR_Front");
+
+      sendMailRequest.setControlType(2);
 
       boolean bool = utilService.SendMail(sendMailRequest);
 
