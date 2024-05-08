@@ -25,6 +25,3 @@ public interface UtilService {
     // Guid取得
     String GetGuid();
 }
-=======
-}
->>>>>>> dev-xuxiaojiao
