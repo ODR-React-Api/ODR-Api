@@ -42,15 +42,6 @@ public class GetQueryListInfoServiceImpl implements GetQueryListInfoService {
                     selectUserInfoForCase.getPetitionUserId(), 1, queryString);
             queryCase.setPositionFlg(1);
 
-            // ReturnResult queryCase = new ReturnResult();
-            // queryCase.setCid("0000000001");
-            // queryCase.setCaseTitle("件名");
-            // queryCase.setPetitionDate(new Date());
-            // queryCase.setCaseStatus("1");
-            // queryCase.setCorrespondDate("99999999");
-            // queryCase.setMsgCount(2);
-            // queryCase.setCorrespondence("1");
-
             results.add(queryCase);
         }
 
@@ -64,15 +55,6 @@ public class GetQueryListInfoServiceImpl implements GetQueryListInfoService {
                     selectUserInfoForCase.getPetitionUserId(), 2, queryString);
             queryCase.setPositionFlg(2);
 
-            // ReturnResult queryCase = new ReturnResult();
-            // queryCase.setCid("0000000001");
-            // queryCase.setCaseTitle("件名");
-            // queryCase.setPetitionDate(new Date());
-            // queryCase.setCaseStatus("1");
-            // queryCase.setCorrespondDate("99999999");
-            // queryCase.setMsgCount(2);
-            // queryCase.setCorrespondence("1");
-
             results.add(queryCase);
         }
 
@@ -84,15 +66,6 @@ public class GetQueryListInfoServiceImpl implements GetQueryListInfoService {
             ReturnResult queryCase = queryDetailCaseController.querydetailCase(selectUserInfoForCase.getCaseId(),
                     selectUserInfoForCase.getPetitionUserId(), 3, queryString);
             queryCase.setPositionFlg(3);
-
-            // ReturnResult queryCase = new ReturnResult();
-            // queryCase.setCid("0000000001");
-            // queryCase.setCaseTitle("件名");
-            // queryCase.setPetitionDate(new Date());
-            // queryCase.setCaseStatus("1");
-            // queryCase.setCorrespondDate("99999999");
-            // queryCase.setMsgCount(2);
-            // queryCase.setCorrespondence("1");
 
             results.add(queryCase);
         }
