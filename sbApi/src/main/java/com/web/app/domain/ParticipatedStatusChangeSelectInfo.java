@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class ParticipatedStatusChangeSelectInfo implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     // ID
     private String cId;
     // 案件ステージ

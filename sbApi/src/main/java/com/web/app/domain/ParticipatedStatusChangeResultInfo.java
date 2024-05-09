@@ -7,8 +7,11 @@ import lombok.Data;
 @Data
 // 関係者メアド取得
 public class ParticipatedStatusChangeResultInfo implements Serializable {
-    // 参照表明更新済Flg
+    private static final long serialVersionUID = 1L;
+
+    // 参照表明更新済フラグ
     private Integer participatedFlag;
+    // 関係者メアド取得
     ElevantPersonnelEmailAddressInfo elevantPersonnelEmailAddressInfo;
 
 }

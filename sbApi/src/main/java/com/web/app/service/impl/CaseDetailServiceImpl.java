@@ -48,37 +48,37 @@ public class CaseDetailServiceImpl implements CaseDetailService {
 
         // 対応期日の設定
         // 0:（申立）2:（反訴）3:（交渉）6:（調停人指名）7:（調停）
-        // 创建SimpleDateFormat对象
+        // SimpleDateFormatオブジェクトを作成する
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
         if (caseDetailCasesSelInfo.getCaseStage() == 0) {
-            // 日期格式化成 字符串
+            // 対応期日を文字列にフォーマットを設定する
             String dateString = simpleDateFormat.format(caseDetailCasesSelInfo.getReplyEndDate());
-            // 对应期日赋值
+            // 対応期日を設定された
             caseDetailCasesInfoItem.setCorrespondDate(dateString);
             // System.out.println("SolveDate dateNumberから:" + dateString);
         } else if (caseDetailCasesSelInfo.getCaseStage() == 2) {
-            // 日期格式化成 字符串
+            // 対応期日を文字列にフォーマットを設定する
             String dateString = simpleDateFormat.format(caseDetailCasesSelInfo.getCounterclaimEndDate());
-            // 对应期日赋值
+            // 対応期日を設定された
             caseDetailCasesInfoItem.setCorrespondDate(dateString);
             // System.out.println("SolveDate dateNumberから:" + dateString);
         } else if (caseDetailCasesSelInfo.getCaseStage() == 3) {
-            // 日期格式化成 字符串
+            // 対応期日を文字列にフォーマットを設定する
             String dateString = simpleDateFormat.format(caseDetailCasesSelInfo.getNegotiationEndDate());
-            // 对应期日赋值
+            // 対応期日を設定された
             caseDetailCasesInfoItem.setCorrespondDate(dateString);
             // System.out.println("SolveDate dateNumberから:" + dateString);
 
         } else if (caseDetailCasesSelInfo.getCaseStage() == 6 || caseDetailCasesSelInfo.getCaseStage() == 7) {
-            // 日期格式化成 字符串
+            // 対応期日を文字列にフォーマットを設定するする
             String dateString = simpleDateFormat.format(caseDetailCasesSelInfo.getMediationEndDate());
-            // 对应期日赋值
+            // 対応期日を設定された
             caseDetailCasesInfoItem.setCorrespondDate(dateString);
             System.out.println("SolveDate dateNumberから:" + dateString);
 
         } else {
             String dateNumber = "99999999";
-            // 对应期日赋值
+            // 対応期日を設定された
             caseDetailCasesInfoItem.setCorrespondDate(dateNumber);
             // System.out.println("SolveDate dateNumberから:" + dateNumber);
         }

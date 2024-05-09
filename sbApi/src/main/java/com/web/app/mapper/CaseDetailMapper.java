@@ -20,6 +20,7 @@ public interface CaseDetailMapper {
                         @Param("caseId") String caseId,
                         @Param("userId") String userId);
 
+        // 「user_messages」から、未読メッセージ件数取得
         Integer CaseDetailMessagesUserMessagesReadedCntInfoSearch(String caseId,
                         String userId);
 

@@ -1,4 +1,5 @@
 package com.web.app.domain;
+
 import java.io.Serializable;
 import lombok.Data;
 
@@ -17,4 +18,5 @@ public class CaseDetails implements Serializable {
 
     // セッション.ユーザID
     private String uid;
+
 }
