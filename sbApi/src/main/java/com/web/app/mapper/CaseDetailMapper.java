@@ -7,7 +7,8 @@ import com.web.app.domain.CaseDetailCasesSelectInfo;
 
 @Mapper
 public interface CaseDetailMapper {
-        // 「cases」と「case_negotiations」から取得した
+        // 「cases」、「case_negotiations」と「case_mediations」から
+        // 申立て番号、件名、登録日付、対応期日、状態、要対応有無、ステータを取得した
         CaseDetailCasesSelectInfo CaseDetailCasesInforSearch(
                         String caseId);
 

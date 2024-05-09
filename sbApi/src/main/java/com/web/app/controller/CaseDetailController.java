@@ -16,8 +16,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "*")
-// 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
 @Api(tags = "ケース詳細模块")
+/**
+ * API_検索用ケース詳細取得
+ * 
+ * @author DUC 朱暁芳
+ * @since 2024/04/17
+ * @version 1.0
+ */
 @RestController
 public class CaseDetailController {
     @Autowired
@@ -30,7 +36,7 @@ public class CaseDetailController {
             ReturnResult caseDetail = caseDetailService.CaseDetailCasesInfoSearch(caseListInfo);
             return caseDetail;
         } catch (Exception e) {
-            AjaxResult.fatal("查询失败!", e);
+            AjaxResult.fatal("失敗しました。", e);
             return null;
         }
     }
