@@ -10,14 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.app.controller.QueryDetailCaseController;
 import com.web.app.domain.ReturnResult;
 import com.web.app.domain.SelectUserInfoForCase;
-import com.web.app.mapper.QueryMapper;
-import com.web.app.service.QueryService;
+import com.web.app.mapper.GetQueryListInfoMapper;
+import com.web.app.service.GetQueryListInfoService;
 
 @Service
-public class QueryServiceImpl implements QueryService {
+public class GetQueryListInfoServiceImpl implements GetQueryListInfoService {
 
     @Autowired
-    private QueryMapper queryMapper;
+    private GetQueryListInfoMapper queryMapper;
 
     @Autowired
     private QueryDetailCaseController queryDetailCaseController;

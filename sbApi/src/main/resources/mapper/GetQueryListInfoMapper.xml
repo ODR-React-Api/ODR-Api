@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.QueryMapper">
+<mapper namespace="com.web.app.mapper.GetQueryListInfoMapper">
   <resultMap id="SelectUserInfoForCasetMap" type="com.web.app.domain.SelectUserInfoForCase">
         <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
         <result property="petitionUserId" column="petitionUserId" jdbcType="VARCHAR"/>

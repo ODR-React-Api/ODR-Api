@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.web.app.domain.SelectUserInfoForCase;
 
 @Mapper
-public interface QueryMapper {
+public interface GetQueryListInfoMapper {
 
   String getUserInfo(String uid);
 

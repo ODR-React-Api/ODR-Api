@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.ReturnResult;
-import com.web.app.service.QueryService;
+import com.web.app.service.GetQueryListInfoService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,10 +20,10 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(tags = "检索模块")
 @RequestMapping("/query")
-public class QueryController {
+public class GetQueryListInfoController {
 
     @Autowired
-    private QueryService queryService;
+    private GetQueryListInfoService queryService;
 
     @PostMapping("/detail")
     @ApiOperation("曖昧検索用一覧取得")
