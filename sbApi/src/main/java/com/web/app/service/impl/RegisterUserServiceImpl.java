@@ -16,6 +16,14 @@ import com.web.app.mapper.RegisterUserMapper;
 import com.web.app.service.RegisterUserService;
 import com.web.app.service.UtilService;
 
+/**
+ * ユーザ新規登録ServiceImpl
+ * 
+ * @author DUC 張万超
+ * @since 2024/04/17
+ * @version 1.0
+ */
+
 @Service
 public class RegisterUserServiceImpl implements RegisterUserService {
 
@@ -27,9 +35,17 @@ public class RegisterUserServiceImpl implements RegisterUserService {
     @Autowired
     private UtilService utilService;
 
-    @Override
-    public int registerUser(UserInfoModel userInfo) {
+    /**
+     * ユーザ新規登録
+     *
+     * @param userInfo 画面項目情報
+     * @return 増加が成功したかどうか
+     */
 
+    @Override
+    public Integer registerUser(UserInfoModel userInfo) {
+
+        // 新規ユーザー情報の処理
         UserInsertModel userInsert = new UserInsertModel();
         userInsert.setUid(UUID.randomUUID().toString());
         userInsert.setEmail(userInfo.getEmail());
@@ -50,37 +66,34 @@ public class RegisterUserServiceImpl implements RegisterUserService {
         userInsert.setPlatformId("0001");
         userInsert.setLanguageId("jp");
 
+        // 新規ユーザーMapperの呼び出し
         int rertuenData = registerUserMapper.registerUser(userInsert);
 
+        // 増加本数が0でない場合
         if (rertuenData != 0) {
+
             SendMailRequest sendMailRequest = new SendMailRequest();
-
             sendMailRequest.setPlatformId("0001");
-
             sendMailRequest.setLanguageId("JP");
-
             sendMailRequest.setTempId(MailConstants.MailId_M002);
 
             ArrayList<String> recipientEmail = new ArrayList<String>();
-
             recipientEmail.add(userInsert.getEmail());
-
             sendMailRequest.setRecipientEmail(recipientEmail);
 
             ArrayList<String> parameter = new ArrayList<>();
-
             parameter.add(userInfo.getLastName() + " " + userInfo.getFirstName());
             parameter.add("http://localhost:3000/");
-
             sendMailRequest.setParameter(parameter);
 
             sendMailRequest.setUserId("ODR_Front");
-
             sendMailRequest.setControlType(2);
 
             boolean bool = utilService.SendMail(sendMailRequest);
 
+            // 送信が成功したかどうかを判断する
             if (!bool) {
+                // 送信失敗印刷log
                 log.error("通知メールの送信に失敗しました。");
             }
         }

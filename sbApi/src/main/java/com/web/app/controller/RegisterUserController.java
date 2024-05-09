@@ -14,6 +14,14 @@ import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * ユーザ新規登録API
+ * 
+ * @author DUC 張万超
+ * @since 2024/04/17
+ * @version 1.0
+ */
+
 @CrossOrigin(origins = "*")
 @Api(tags = "用户登陆模块")
 @RestController
@@ -23,19 +31,31 @@ public class RegisterUserController {
     @Autowired
     private RegisterUserService registerUserService;
 
+    /**
+     * ユーザ新規登録API
+     *
+     * @param userInfo 画面項目情報
+     * @return 増加が成功したかどうか
+     * @throws Exception DB異常
+     */
+
     @SuppressWarnings("rawtypes")
     @PostMapping("RegisterUser")
     @ApiOperation("ユーザ新規登録")
     public Response registerUser(UserInfoModel userInfo) {
         try {
+            // 新規ユーザーサービスの呼び出し
             int userInsertRep = registerUserService.registerUser(userInfo);
+            // 追加された状態の判断
             if (userInsertRep != 0) {
                 return AjaxResult.success("添加用户成功!");
             }
         } catch (Exception e) {
+            // DB異常
             AjaxResult.fatal("添加用户失败!", e);
             return null;
         }
+        // 追加本数が0の場合
         AjaxResult.error("添加用户失败!");
         return null;
     }
