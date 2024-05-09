@@ -93,7 +93,7 @@ public class UpdNegotiatAgreeImpl implements UpdNegotiatAgreeService {
         }
         return 1;
     }
-
+    
     /**
      * メール送信
      * 
