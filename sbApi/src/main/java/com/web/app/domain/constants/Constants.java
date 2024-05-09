@@ -1,5 +1,7 @@
 package com.web.app.domain.constants;
 
+import org.springframework.boot.autoconfigure.web.ServerProperties.Jetty.Accesslog.FORMAT;
+
 // import java.util.Map;
 
 public class Constants {
@@ -85,6 +87,33 @@ public class Constants {
     public static final String STR_CASE_STATUS_ABORTEDCONFIRM = "1300";
     public static final String STR_ACTION_TYPE_ABORTEDCONFIRM = "CaseAbortedConfirmMailSend";
     public static final String HELP_URL = "http://uat-odr-service.azurewebsites.net/help";
+    //（相手方和解案作成待ち）
+    public static final int S3B0 = 0;
+    //（相手方和解案下書き（共同編集））
+    public static final int S3B1 = 1;
+   
+    //（申立人対案作成まち）
+    public static final int S3B7 = 7;
+    //（申立人対案作成まち・下書き中）
+    public static final int S3B8 = 8;
+    //（相手方対案作成待ち）
+    public static final int S3B10 = 10;
+    //（相手方対案下書き）
+    public static final int S3B11 = 11;
+    //（申立人和解案下書き）
+    public static final int S3B13 = 13;
+    //（申立人和解案下書き・共同編集）
+    public static final int S3B14 = 14;
+    public static final String FORMAT  = "yyyy-MM-dd HH:mm:ss";
+    //ログインユーザーは申立人の場合
+    public static final int POSITIONFLAG_PETITION = 1;
+    //ログインユーザーは相手方の場合
+    public static final int POSITIONFLAG_TRADER= 2;
+    //DeleteFlag
+    public static final int DELETED_0 = 0;
+    public static final int DELETED_1 = 1;
+    //「case_file_relations.RelationType案件種類」 4:和解案
+    public static final int CASE_NEGOTIATIONS =4;
 
     // public static final Map<Object,String> SIFANGJI_SIGNAL_STATE_MAP = new
     // HashMap<Object,String>(){{
