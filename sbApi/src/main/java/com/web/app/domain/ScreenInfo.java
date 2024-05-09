@@ -1,5 +1,10 @@
 package com.web.app.domain;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.ArrayList;
+
+import java.util.List;
 
 import lombok.Data;
 
@@ -21,9 +26,9 @@ public class ScreenInfo  implements Serializable{
     //画面.販売者ＵＲＬ
     private String useproductUrl;
     //画面.購入日
-    private String commoditydate;
+    private Date commoditydate;
     //画面.購入金額
-    private String purchaseamount;
+    private BigDecimal purchaseamount;
     //画面.申立ての種類
     private String petitionKind;
     //画面.申立て内容
@@ -44,4 +49,16 @@ public class ScreenInfo  implements Serializable{
     private String agentemail4;
     //画面.代理人5メールアドレス
     private String agentemail5;
+    //画面.添付ファイル
+    //添付ファイル.FileName
+    private String fileName;
+    //添付ファイル.FileExtension
+    private String fileExtension;
+    //添付ファイル.FileUrl
+    private String fileUrl;
+    //添付ファイル.FileSize
+    private Integer fileSize;
+    //拡張項目List
+    List <ScaleItems> petitionTypeDisplayName = new ArrayList<>();
+
 }
