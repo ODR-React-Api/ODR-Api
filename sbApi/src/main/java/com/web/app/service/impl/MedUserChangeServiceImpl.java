@@ -5,19 +5,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.domain.Entity.Cases;
-import com.web.app.mapper.CasesMediationsMapper;
-import com.web.app.service.CasesMediationsService;
+import com.web.app.mapper.MedUserChangeMapper;
+import com.web.app.service.MedUserChangeService;
 
 @Service
-public class CasesMediationsServiceImpl implements CasesMediationsService {
+public class MedUserChangeServiceImpl implements MedUserChangeService {
     @Autowired
-    private CasesMediationsMapper casesMediationsMapper;
+    private MedUserChangeMapper medUserChangeMapper;
 
     @Override
     @Transactional(noRollbackFor = { ArithmeticException.class }) // 设置当出现ArithmeticException时，不回滚
     public Boolean delAboutCasesMediations(String caseId) {
         try {
-            return casesMediationsMapper.delAboutCasesMediations(caseId);
+            return medUserChangeMapper.delAboutCasesMediations(caseId);
 
         } catch (Exception e) {
             throw e;
@@ -31,14 +31,14 @@ public class CasesMediationsServiceImpl implements CasesMediationsService {
         try {
             Cases info = new Cases();
             info.setCid(caseId);
-            Cases count = casesMediationsMapper.getMediatorChangeableCount(caseId);
+            Cases count = medUserChangeMapper.getMediatorChangeableCount(caseId);
             if (userType.equals("1")) {
                 info.setMediatorChangeableCount1(count.getMediatorChangeableCount1() + 1);
             }
             if (userType.equals('2')) {
                 info.setMediatorChangeableCount2(count.getMediatorChangeableCount2() + 1);
             }
-            return casesMediationsMapper.updAboutCasesInfo(info, withReason);
+            return medUserChangeMapper.updAboutCasesInfo(info, withReason);
         } catch (Exception e) {
             throw e;
         }

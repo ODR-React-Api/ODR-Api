@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.constants.Constants;
-import com.web.app.service.CasesMediationsService;
+import com.web.app.service.MedUserChangeService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,12 +27,12 @@ import io.swagger.annotations.ApiOperation;
  * @since 2024/04/29
  * @version 1.0
  */
-public class CasesMediationsController {
+public class MedUserChangeController {
     @Autowired
     DataSource dataSource;
 
     @Autowired
-    private CasesMediationsService casesMediationsService;
+    private MedUserChangeService medUserChangeService;
 
     @ApiOperation("調停案削除")
     @GetMapping("/delAboutCasesMediations")
@@ -48,7 +48,7 @@ public class CasesMediationsController {
         try {
 
             System.out.println("获取的数据库连接为:" + dataSource.getConnection());
-            Boolean resultBoolean = casesMediationsService.delAboutCasesMediations(caseId);
+            Boolean resultBoolean = medUserChangeService.delAboutCasesMediations(caseId);
             Response response = new Response<Boolean>();
             if (resultBoolean) {
                 response.setCode(Constants.RETCD_SUCCESS);
@@ -80,7 +80,7 @@ public class CasesMediationsController {
     public Response updAboutCasesInfo(String caseId, String userType, Boolean withReason) throws Exception {
         try {
             System.out.println("获取的数据库连接为:" + dataSource.getConnection());
-            Boolean resultBoolean = casesMediationsService.updAboutCasesInfo(caseId, userType, withReason);
+            Boolean resultBoolean = medUserChangeService.updAboutCasesInfo(caseId, userType, withReason);
             Response response = new Response<Boolean>();
             if (resultBoolean) {
                 response.setCode(Constants.RETCD_SUCCESS);

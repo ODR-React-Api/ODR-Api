@@ -11,7 +11,7 @@ import com.web.app.domain.Entity.Cases;
  * @Entity com.web.app.domain.User
  */
 @Mapper
-public interface CasesMediationsMapper {
+public interface MedUserChangeMapper {
     Boolean delAboutCasesMediations(String caseId);
 
     Boolean updAboutCasesInfo(Cases cases, Boolean withReason);
