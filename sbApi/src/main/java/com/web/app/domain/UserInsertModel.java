@@ -45,7 +45,7 @@ public class UserInsertModel implements Serializable {
 
     private String themeId4;
 
-    private Integer messageFrequency;
+    private String messageFrequency;
 
     private Integer termsConfirmed;
 

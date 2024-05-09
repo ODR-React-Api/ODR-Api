@@ -18,7 +18,7 @@ public interface RegisterUserMapper {
     /**
      * ユーザ新規登録
      *
-     * @param userInfo 画面項目情報
+     * @param userInsert 画面項目情報
      * @return 追加されたデータのエントリ数
      */
     public Integer registerUser(UserInsertModel userInsert);

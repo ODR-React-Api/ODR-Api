@@ -1,9 +1,9 @@
 package com.web.app.service;
 
-import com.web.app.domain.SelectCondition;
 import com.web.app.domain.ReturnResult;
+import com.web.app.domain.SelectCondition;
 
 public interface SearchDetailCaseService {
 
-  ReturnResult searchSetailCase(SelectCondition searchCase);
+    public ReturnResult searchSetailCase(SelectCondition searchCase);
 }

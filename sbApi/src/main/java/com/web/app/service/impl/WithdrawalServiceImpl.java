@@ -11,33 +11,33 @@ import com.web.app.mapper.WithdrawalMapper;
 import com.web.app.service.WithdrawalService;
 
 @Service
-public class WithdrawalServiceImpl implements WithdrawalService{
+public class WithdrawalServiceImpl implements WithdrawalService {
 
-  @Autowired
-  private WithdrawalMapper withdrawalMapper;
+    @Autowired
+    private WithdrawalMapper withdrawalMapper;
 
-  @Override
-  @Transactional
-  public WithdrawalReturn withdrawal(String caseId) {
-    WithdrawalReturn withdrawalReturn = new WithdrawalReturn();
-    Withdrawal withdrawal = withdrawalMapper.getCaseStage(caseId);
-    if(withdrawal.getCaseStage() == 0){
-      int res = withdrawalMapper.updateWithdrawal(withdrawal.getCid());
-      if(res != 0){
-        withdrawalReturn.setUpdateFlag(0);
+    @Override
+    @Transactional
+    public WithdrawalReturn withdrawal(String caseId) {
+        WithdrawalReturn withdrawalReturn = new WithdrawalReturn();
+        Withdrawal withdrawal = withdrawalMapper.getCaseStage(caseId);
+        if (withdrawal.getCaseStage() == 0) {
+            int res = withdrawalMapper.updateWithdrawal(withdrawal.getCid());
+            if (res != 0) {
+                withdrawalReturn.setUpdateFlag(0);
 
-        // アクション履歴の登録 TODO
+                // アクション履歴の登録 TODO
 
-        // メール送信用関係者メアドの取得 TODO
-        withdrawalReturn.setCaseRelations(new CaseRelations());
+                // メール送信用関係者メアドの取得 TODO
+                withdrawalReturn.setCaseRelations(new CaseRelations());
 
+                return withdrawalReturn;
+            }
+        }
+
+        withdrawalReturn.setUpdateFlag(1);
         return withdrawalReturn;
-      }
+
     }
 
-    withdrawalReturn.setUpdateFlag(1);
-    return withdrawalReturn;
-    
-  }
-  
 }

@@ -6,32 +6,34 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class SearchDetail implements Serializable{
-  private String cid;
+public class SearchDetail implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-  private Integer caseStage;
+    private String cid;
 
-  private String caseStatus;
+    private Integer caseStage;
 
-  private String caseTitle;
+    private String caseStatus;
 
-  private Date petitonDate;
+    private String caseTitle;
 
-  private Date replyEndDate;
+    private Date petitonDate;
 
-  private Date conuterclaimEndDate;
-  
-  private Date negotiationEndDate;
+    private Date replyEndDate;
 
-  private Date mediationEndDate;
+    private Date conuterclaimEndDate;
 
-  private Integer negotiationEndDateChangeStatus;
+    private Date negotiationEndDate;
 
-  private Integer status;
+    private Date mediationEndDate;
 
-  private Integer groupMessageFlag1;
+    private Integer negotiationEndDateChangeStatus;
 
-  private Integer groupMessageFlag2;
+    private Integer status;
 
-  private Integer mediationsStatus;
+    private Integer groupMessageFlag1;
+
+    private Integer groupMessageFlag2;
+
+    private Integer mediationsStatus;
 }

@@ -1,7 +1,6 @@
 package com.web.app.service.impl;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,7 +58,7 @@ public class RegisterUserServiceImpl implements RegisterUserService {
         userInsert.setPassword(userInfo.getPassword());
         userInsert.setLastModifiedBy(userInfo.getLastModifiedBy());
         userInsert.setStatus(0);
-        userInsert.setMessageFrequency(100);
+        userInsert.setMessageFrequency("100");
         userInsert.setTermsConfirmed(1);
         userInsert.setUserType(0);
         userInsert.setDeleteFlag(0);
@@ -67,10 +66,10 @@ public class RegisterUserServiceImpl implements RegisterUserService {
         userInsert.setLanguageId("jp");
 
         // 新規ユーザーMapperの呼び出し
-        int rertuenData = registerUserMapper.registerUser(userInsert);
+        int rerturnCount = registerUserMapper.registerUser(userInsert);
 
         // 増加本数が0でない場合
-        if (rertuenData != 0) {
+        if (rerturnCount != 0) {
 
             SendMailRequest sendMailRequest = new SendMailRequest();
             sendMailRequest.setPlatformId("0001");
@@ -98,7 +97,7 @@ public class RegisterUserServiceImpl implements RegisterUserService {
             }
         }
 
-        return rertuenData;
+        return rerturnCount;
     }
 
 }

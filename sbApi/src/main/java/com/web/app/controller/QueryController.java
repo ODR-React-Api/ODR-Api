@@ -22,16 +22,16 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/query")
 public class QueryController {
 
-  @Autowired
-  private QueryService queryService;
-  
-  @PostMapping("/detail")
-  @ApiOperation("曖昧検索用一覧取得")
-  @SuppressWarnings("rawtypes")
-  public Response query(@RequestParam("userId") String uid,@RequestParam("queryString") String queryString){
+    @Autowired
+    private QueryService queryService;
 
-    List<ReturnResult> returnResults = queryService.queryData(uid,queryString);
-    return Response.success(returnResults);
+    @PostMapping("/detail")
+    @ApiOperation("曖昧検索用一覧取得")
+    @SuppressWarnings("rawtypes")
+    public Response query(@RequestParam("userId") String uid, @RequestParam("queryString") String queryString) {
 
-  }
+        List<ReturnResult> returnResults = queryService.queryData(uid, queryString);
+        return Response.success(returnResults);
+
+    }
 }

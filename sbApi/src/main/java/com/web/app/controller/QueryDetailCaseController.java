@@ -18,13 +18,14 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/query")
 public class QueryDetailCaseController {
 
-  @Autowired
-  private QueryDetailCaseService queryDetailCaseService;
-  
-  @PostMapping("/queryDetailCase")
-  @ApiOperation("曖昧検索用ケース詳細取得")
-  public ReturnResult querydetailCase(String caseId, String petitionUserId, int positionFlag, String queryString){
-    ReturnResult returnResult = queryDetailCaseService.getQueryDetailCase(caseId,petitionUserId,positionFlag,queryString);
-    return returnResult;
-  }
+    @Autowired
+    private QueryDetailCaseService queryDetailCaseService;
+
+    @PostMapping("/queryDetailCase")
+    @ApiOperation("曖昧検索用ケース詳細取得")
+    public ReturnResult querydetailCase(String caseId, String petitionUserId, int positionFlag, String queryString) {
+        ReturnResult returnResult = queryDetailCaseService.getQueryDetailCase(caseId, petitionUserId, positionFlag,
+                queryString);
+        return returnResult;
+    }
 }
