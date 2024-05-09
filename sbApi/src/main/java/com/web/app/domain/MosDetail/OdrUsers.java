@@ -10,6 +10,10 @@ import lombok.Data;
  * OdrUsers
  * テーブル名：odr_usersユーザ
  * チュートリアル表示制御取得
+ * 
+ * @author DUC 張明慧
+ * @since 2024/04/23
+ * @version 1.0
  */
 @Data
 public class OdrUsers implements Serializable {

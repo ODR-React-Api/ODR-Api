@@ -9,6 +9,10 @@ import lombok.Data;
  * Dao层
  * CaseInfo
  * API「案件状態取得」を呼び出すData
+ * 
+ * @author DUC 張明慧
+ * @since 2024/04/22
+ * @version 1.0
  */
 @Data
 public class CaseInfo implements Serializable {

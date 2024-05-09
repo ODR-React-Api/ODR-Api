@@ -10,6 +10,10 @@ import lombok.Data;
  * MasterPlatforms
  * テーブル名：master_platformsプラットフォームマスタ
  * 利用モジュール状況取得
+ * 
+ * @author DUC 張明慧
+ * @since 2024/04/23
+ * @version 1.0
  */
 @Data
 public class MasterPlatforms implements Serializable {

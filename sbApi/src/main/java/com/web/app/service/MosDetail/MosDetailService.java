@@ -9,6 +9,10 @@ import com.web.app.domain.MosDetail.NegotiationsData;
  * 申立て概要画面
  * Service层
  * MosDetailService
+ * 
+ * @author DUC 張明慧
+ * @since 2024/04/22
+ * @version 1.0
  */
 public interface MosDetailService {
     // API_案件状態取得

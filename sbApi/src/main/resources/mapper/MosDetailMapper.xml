@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.MosDetail.MosDetailMapper">
     <!-- API_案件状態取得 -->
-    <resultMap id="casesMap" type="com.web.app.domain.MosDetail.Cases">
+    <resultMap id="casesDataMap" type="com.web.app.domain.MosDetail.CasesData">
         <id property="cid" column="cid" jdbcType="VARCHAR"/>
         <result property="caseStage" column="CaseStage" jdbcType="INTEGER"/>
         <result property="caseStatus" column="CaseStatus" jdbcType="VARCHAR"/>
@@ -25,7 +25,7 @@
         <result property="mediationStatus" column="mediationsStatus" jdbcType="INTEGER"/>
     </resultMap>
     <!-- 該当案件のステータスを取得 -->
-    <select id="getCaseInfo" resultMap="casesMap">
+    <select id="getCaseInfo" resultMap="casesDataMap">
         SELECT
             cases.cid,
             cases.CaseStage,

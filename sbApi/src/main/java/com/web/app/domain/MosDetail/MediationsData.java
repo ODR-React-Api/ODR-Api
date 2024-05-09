@@ -10,6 +10,10 @@ import lombok.Data;
  * Dao层
  * MediationsData
  * API「調停内容取得」を呼び出すData
+ * 
+ * @author DUC 張明慧
+ * @since 2024/04/29
+ * @version 1.0
  */
 @Data
 public class MediationsData implements Serializable {

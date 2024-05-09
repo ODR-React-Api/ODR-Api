@@ -1,5 +1,6 @@
 package com.web.app.domain.MosDetail;
 
+import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
 
@@ -10,9 +11,13 @@ import lombok.Data;
  * CaseNegotiations
  * テーブル名：case_negotiations和解案
  * 和解内容の取得
+ * 
+ * @author DUC 張明慧
+ * @since 2024/04/25
+ * @version 1.0
  */
 @Data
-public class CaseNegotiations {
+public class CaseNegotiations implements Serializable {
     // 案件ID
     private String caseId;
 
@@ -42,4 +47,6 @@ public class CaseNegotiations {
 
     // 最終変更日
     private Date lastModifiedDate;
+
+    private static final long serialVersionUID = 1L;
 }

@@ -10,6 +10,10 @@ import lombok.Data;
  * Dao层
  * GetNegotiationsData
  * API「和解内容取得」を呼び出すData
+ * 
+ * @author DUC 張明慧
+ * @since 2024/04/25
+ * @version 1.0
  */
 @Data
 public class NegotiationsData implements Serializable {

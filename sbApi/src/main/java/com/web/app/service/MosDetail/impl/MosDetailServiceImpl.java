@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.web.app.domain.MosDetail.CaseInfo;
 import com.web.app.domain.MosDetail.CaseMediations;
 import com.web.app.domain.MosDetail.CaseNegotiations;
-import com.web.app.domain.MosDetail.Cases;
+import com.web.app.domain.MosDetail.CasesData;
 import com.web.app.domain.MosDetail.Files;
 import com.web.app.domain.MosDetail.GetCaseInfoParameter;
 import com.web.app.domain.MosDetail.MasterPlatforms;
@@ -24,6 +24,10 @@ import com.web.app.service.MosDetail.MosDetailService;
  * 申立て概要画面
  * Service层实现类
  * MosDetailServiceImpl
+ * 
+ * @author DUC 張明慧
+ * @since 2024/04/22
+ * @version 1.0
  */
 @Service
 public class MosDetailServiceImpl implements MosDetailService {
@@ -41,7 +45,7 @@ public class MosDetailServiceImpl implements MosDetailService {
     // S3B99 （相手方和解案作成待ち）
     public static final String S3B99 = "99";
     // S3B1 （相手方和解案下書き（共同編集））
-    public static final String S3B1 = "4";
+    public static final String S3B1 = "1";
     // S3B2 （相手方提出済み）
     public static final String S3B2 = "2";
     // S3B3 （合意済み）
@@ -127,17 +131,23 @@ public class MosDetailServiceImpl implements MosDetailService {
     private MosDetailMapper mosDetailMapper;
 
     /**
+     * API_案件状態取得
      * 申立て一覧画面より渡されたCaseIdを引数として、DBから該当する案件のステータスを取得する。
+     * 
+     * @param caseId     渡し項目.CaseId
+     * @param platformId セッション.PlatformId
+     * @param userId     セッション.ユーザID
+     * @return caseInfo API「案件状態取得」を呼び出すData
      */
     @Override
     public CaseInfo getCaseInfo(String caseId, String platformId, String userId) {
         CaseInfo caseInfo = new CaseInfo();
         // 該当案件のステータスを取得
-        Cases cases = mosDetailMapper.getCaseInfo(caseId);
+        CasesData casesData = mosDetailMapper.getCaseInfo(caseId);
 
-        // 案件ステータスの設定
-        if (cases != null) {
-            caseInfo = setCaseInfoCaseStatus(cases);
+        // 案件内容の設定
+        if (casesData != null) {
+            caseInfo = setCaseInfoCaseStatus(casesData);
         } else {
             // （網羅外ステータス）を設定する
             caseInfo.setCaseStatus(S9A9B9C9);
@@ -170,6 +180,9 @@ public class MosDetailServiceImpl implements MosDetailService {
 
     /**
      * チュートリアル表示制御変更
+     * 
+     * @param getCaseInfoParameter API_案件状態取得の引数
+     * @return int チュートリアル表示制御変更の状況
      */
     // @Transactional
     @Override
@@ -178,7 +191,11 @@ public class MosDetailServiceImpl implements MosDetailService {
     }
 
     /**
-     * DBよりケースに該当する和解の内容を取得して、画面へ返す。
+     * API_和解内容取得
+     * 渡し項目.CaseIdを引数に、DBよりケースに該当する和解の内容を取得して、画面へ返す。
+     * 
+     * @param caseId 渡し項目.CaseId
+     * @return negotiationsData API「和解内容取得」を呼び出すData
      */
     @Override
     public NegotiationsData getNegotiationsData(String caseId) {
@@ -205,7 +222,11 @@ public class MosDetailServiceImpl implements MosDetailService {
     }
 
     /**
+     * API_調停内容取得
      * 渡し項目.CaseIdを引数に、DBよりケースに該当する調停の内容を取得して、画面へ返す。
+     * 
+     * @param caseId 渡し項目.CaseId
+     * @return mediationsData API「調停内容取得」を呼び出すData
      */
     @Override
     public MediationsData getMediationsData(String caseId) {
@@ -231,31 +252,48 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
     }
 
-    // 画面内容取得 下記項目を返す
-    public CaseInfo setCaseInfoCaseStatus(Cases cases) {
+    /**
+     * 案件内容の設定 下記項目を返す
+     * CaseTitle タイトル名
+     * 案件ステータス
+     * ・Stage
+     * ・CaseStatus
+     * ・DateRequestStatus
+     * ・MessageStatus
+     * 期日用項目
+     * ・ReplyEndDate 回答期限日
+     * ・CounterclaimEndDate 反訴の回答期限日
+     * ・CancelDate 手続き中止日
+     * ・ResolutionDate 解決日時
+     * ・MediationEndDate 調停期限日
+     * 
+     * @param casesData 案件のステータスを取得
+     * @return caseInfo API「案件状態取得」を呼び出すData---案件内容の設定
+     */
+    public CaseInfo setCaseInfoCaseStatus(CasesData casesData) {
         CaseInfo caseInfo = new CaseInfo();
         // タイトル名
-        String caseTitle = cases.getCaseTitle();
+        String caseTitle = casesData.getCaseTitle();
         // 案件ステージ
-        int caseStage = cases.getCaseStage();
+        int caseStage = casesData.getCaseStage();
         // 案件ステータス
-        String status = cases.getCaseStatus();
+        String status = casesData.getCaseStatus();
         // 和解案.ステータス
-        String negotiationStatus = cases.getNegotiationStatus();
+        String negotiationStatus = casesData.getNegotiationStatus();
         // 案件別個人情報リレーション.調停人
-        String mediatorUserEmail = cases.getMediatorUserEmail();
+        String mediatorUserEmail = casesData.getMediatorUserEmail();
         // 調停案.ステータス
-        String mediationStatus = cases.getMediationStatus();
+        String mediationStatus = casesData.getMediationStatus();
         // 交渉期限日変更ステータス
-        int negotiationEndDateChangeStatus = cases.getNegotiationEndDateChangeStatus();
+        int negotiationEndDateChangeStatus = casesData.getNegotiationEndDateChangeStatus();
         // 交渉期限日変更回数
-        int negotiationEndDateChangeCount = cases.getNegotiationEndDateChangeCount();
+        int negotiationEndDateChangeCount = casesData.getNegotiationEndDateChangeCount();
         // 調停期限変更回数
-        int mediationEndDateChangeCount = cases.getMediationEndDateChangeCount();
+        int mediationEndDateChangeCount = casesData.getMediationEndDateChangeCount();
         // 個別やりとりステータス（申立人↔調停人）
-        int groupMessageFlag1 = cases.getGroupMessageFlag1();
+        int groupMessageFlag1 = casesData.getGroupMessageFlag1();
         // 個別やりとりステータス（相手方↔調停人）
-        int groupMessageFlag2 = cases.getGroupMessageFlag2();
+        int groupMessageFlag2 = casesData.getGroupMessageFlag2();
         String caseStatus = status;
         int dateRequestStatus = 99;
         int messageStatus = 99;
@@ -368,7 +406,9 @@ public class MosDetailServiceImpl implements MosDetailService {
                 messageStatus = S7B6;
             }
         }
+        // タイトル名の設定
         caseInfo.setCaseTitle(caseTitle);
+        // 案件ステータスの設定
         caseInfo.setStage(stage);
         caseInfo.setCaseStatus(caseStatus);
         caseInfo.setDateRequestStatus(dateRequestStatus);
@@ -376,17 +416,18 @@ public class MosDetailServiceImpl implements MosDetailService {
 
         // 日付フォーマット変換
         // 回答期限日
-        Date replyEndDate = cases.getReplyEndDate();
+        Date replyEndDate = casesData.getReplyEndDate();
         // 反訴の回答期限日
-        Date counterclaimEndDate = cases.getCounterclaimEndDate();
+        Date counterclaimEndDate = casesData.getCounterclaimEndDate();
         // 手続き中止日
-        Date cancelDate = cases.getCancelDate();
+        Date cancelDate = casesData.getCancelDate();
         // 解決日時
-        Date resolutionDate = cases.getResolutionDate();
+        Date resolutionDate = casesData.getResolutionDate();
         // 交渉期限日
-        Date negotiationEndDate = cases.getNegotiationEndDate();
+        Date negotiationEndDate = casesData.getNegotiationEndDate();
         // 調停期限日
-        Date mediationEndDate = cases.getMediationEndDate();
+        Date mediationEndDate = casesData.getMediationEndDate();
+        // 期日用項目の設定
         if (replyEndDate != null) {
             caseInfo.setReplyEndDate(stringToStringFormat(dateToString(replyEndDate)));
             ;
@@ -413,7 +454,12 @@ public class MosDetailServiceImpl implements MosDetailService {
         return caseInfo;
     }
 
-    // モジュール利用状況Flgの設定
+    /**
+     * モジュール利用状況Flgの設定
+     * 
+     * @param masterPlatforms 利用モジュール状況取得
+     * @return int モジュール利用状況Flg
+     */
     public int setCaseInfoMoudleFlg(MasterPlatforms masterPlatforms) {
         // モジュール利用状況Flg
         int moudleFlg = 0;
@@ -444,7 +490,19 @@ public class MosDetailServiceImpl implements MosDetailService {
         return moudleFlg;
     }
 
-    // 和解内容の戻り項目の設定
+    /**
+     * 和解内容の戻り項目の設定 下記項目を返す
+     * ①Overview (概要)
+     * ②PayAmount （申し立て支払い金額）
+     * ③CounterClaimPayment （反訴支払い金額）
+     * ④PaymentEndDate （支払期日）
+     * ⑤ShipmentPayType （返送時送料負担区分）
+     * ⑥SpecialItem （特記事項）
+     * ⑦Status
+     * 
+     * @param caseNegotiations 和解内容の取得
+     * @return negotiationsData API「和解内容取得」を呼び出すData---和解内容の設定
+     */
     public NegotiationsData setNegotiationsData(CaseNegotiations caseNegotiations) {
         NegotiationsData negotiationsData = new NegotiationsData();
 
@@ -497,7 +555,19 @@ public class MosDetailServiceImpl implements MosDetailService {
         return negotiationsData;
     }
 
-    // 調停内容の戻り項目の設定
+    /**
+     * 調停内容の戻り項目の設定 下記項目を返す
+     * ①ExpectResloveTypeValue （対応方法）
+     * ②PayAmount （申し立て支払い金額）
+     * ③CounterClaimPayment （反訴支払い金額）
+     * ④PaymentEndDate （支払期日）
+     * ⑤ShipmentPayType （返送時送料負担区分）
+     * ⑥SpecialItem （特記事項）
+     * ⑦Status
+     * 
+     * @param caseMediations
+     * @return mediationsData API「調停内容取得」を呼び出すData---調停内容の設定
+     */
     public MediationsData setMediationsData(CaseMediations caseMediations) {
         MediationsData mediationsData = new MediationsData();
 
@@ -535,16 +605,28 @@ public class MosDetailServiceImpl implements MosDetailService {
     }
 
     // 日付フォーマット定数
-    private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
-    private static final String MENU_FORMAT = "yyyy年MM月dd日";
+    public static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String MENU_FORMAT = "yyyy年MM月dd日";
 
-    // Date to String (yyyyMMdd)
+    /**
+     * 日付書式設定
+     * Date to String (yyyyMMdd)
+     * 
+     * @param formatDate Date
+     * @return String String (yyyyMMdd)
+     */
     public static String dateToString(Date formatDate) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(FORMAT);
         return simpleDateFormat.format(formatDate);
     }
 
-    // String to String (yyyy年MM月dd日)
+    /**
+     * 日付書式設定
+     * String (yyyyMMdd) to String (yyyy年MM月dd日)
+     * 
+     * @param parseString String (yyyyMMdd)
+     * @return String String (yyyy年MM月dd日)型日付
+     */
     public static String stringToStringFormat(String parseString) {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(FORMAT);
@@ -556,10 +638,19 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
     }
 
-    // double to String ($x,xxx.xx)
+    // ドル記号
+    public static final String STR_DOLLAR = "$";
+
+    /**
+     * 金額書式設定
+     * double to String ($x,xxx.xx)
+     * 
+     * @param money 金額
+     * @return String String ($x,xxx.xx)
+     */
     public static String doubleToStringFormat(double money) {
         NumberFormat nf = NumberFormat.getInstance();
-        String formattedMoney = "$" + nf.format(money);
+        String formattedMoney = STR_DOLLAR + nf.format(money);
         return formattedMoney;
     }
 }
