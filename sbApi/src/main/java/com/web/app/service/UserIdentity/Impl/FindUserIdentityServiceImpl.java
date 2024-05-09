@@ -3,7 +3,7 @@ package com.web.app.service.UserIdentity.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.domain.SettlementPlan.AddSettlementPlan;
+import com.web.app.domain.NegotiatPreview.NegotiationsData;
 import com.web.app.domain.UserIdentity.UserIdentity;
 import com.web.app.mapper.UserIdentity.UserIdentityMapper;
 import com.web.app.service.UserIdentity.FindUserIdentityService;
@@ -14,7 +14,7 @@ public class FindUserIdentityServiceImpl implements FindUserIdentityService{
     private UserIdentityMapper userIdentityMapper;
 
     @Override
-    public String FindUserIdentity(AddSettlementPlan addSettlementPlan) {
+    public String FindUserIdentity(NegotiationsData addSettlementPlan) {
         UserIdentity userIdentity = userIdentityMapper.FindUserIdentity(addSettlementPlan.getCaseId());
         if (addSettlementPlan.getEmail().equals(userIdentity.getPetitionUserInfo_Email()) ||
                 addSettlementPlan.getEmail().equals(userIdentity.getAgent1_Email()) ||

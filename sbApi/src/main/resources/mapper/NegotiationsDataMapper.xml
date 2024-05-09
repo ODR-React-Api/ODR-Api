@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.SettlementPlan.SettlementPlanMapper">
+<mapper namespace="com.web.app.mapper.NegotiatPreview.NegotiationsDataMapper">
     <!--  -->
-    <select id="SearchCaseNegotiations" resultType="com.web.app.domain.SettlementPlan.CaseNegotiations">
+    <select id="SearchCaseNegotiations" resultType="com.web.app.domain.NegotiatPreview.CaseNegotiations">
         SELECT
             *
         FROM
@@ -13,7 +13,7 @@
             CaseId = #{caseId}
     </select>
 
-    <insert id="AddSettlementPlan" parameterType="com.web.app.domain.SettlementPlan.AddSettlementPlan">
+    <insert id="AddCaseNegotiations" parameterType="com.web.app.domain.NegotiatPreview.CaseNegotiations">
         INSERT INTO case_negotiations(
             id,
             PlatformId,
@@ -48,7 +48,7 @@
             LastModifiedDate,
             LastModifiedBy
         )VALUES(
-            UUID(),
+            #{id},
             #{PlatformId},
             #{CaseId},
             Status,
@@ -83,7 +83,7 @@
             );
     </insert>
 
-    <insert id="AddFile" parameterType="com.web.app.domain.SettlementPlan.AddSettlementPlan">
+    <insert id="AddFile" parameterType="com.web.app.domain.NegotiatPreview.File">
         INSERT INTO files(
             id,
             PlatformId,
@@ -104,7 +104,7 @@
             LastModifiedDate,
             LastModifiedBy)
         VALUE(
-            UUID(),
+            #{id},
             #{PlatformId},
             #{CaseId},
             #{FileName},
@@ -125,7 +125,7 @@
         );
     </insert>
 
-    <insert id="AddCaseFileRelations" parameterType="com.web.app.domain.SettlementPlan.AddSettlementPlan">
+    <insert id="AddCaseFileRelations" parameterType="com.web.app.domain.NegotiatPreview.CaseFileRelations">
         INSERT INTO case_file_relations(
             id,
             PlatformId,
@@ -143,7 +143,7 @@
             LastModifiedBy
             )
         VALUE(
-            UUID(),
+            #{id},
             #{PlatformId},
             #{CaseId},
             4,
@@ -160,7 +160,7 @@
         );
     </insert>
 
-    <update id="UpCaseNegotiations" parameterType="com.web.app.domain.SettlementPlan.CaseNegotiations">
+    <update id="UpCaseNegotiations" parameterType="com.web.app.domain.NegotiatPreview.CaseNegotiations">
         UPDATE case_negotiations
         SET
             ExpectResloveTypeValue = #{ExpectResloveTypeValue},
@@ -180,7 +180,7 @@
             CaseId = #{CaseId}
     </update>
 
-    <update id="UpFile" parameterType="com.web.app.domain.SettlementPlan.AddSettlementPlan">
+    <update id="UpFile" parameterType="com.web.app.domain.NegotiatPreview.File">
         UPDATE files
         SET
             DeleteFlag = 1,
@@ -190,7 +190,7 @@
             id = #{FileId}
     </update>
 
-    <update id="UpCaseFileRelations" parameterType="com.web.app.domain.SettlementPlan.AddSettlementPlan">
+    <update id="UpCaseFileRelations" parameterType="com.web.app.domain.NegotiatPreview.CaseFileRelations">
         UPDATE case_file_relations
         SET
             DeleteFlag = 1,

@@ -1,8 +1,8 @@
 package com.web.app.service.UserIdentity;
 
-import com.web.app.domain.SettlementPlan.AddSettlementPlan;
+import com.web.app.domain.NegotiatPreview.NegotiationsData;
 
 public interface FindUserIdentityService {
 
-    String FindUserIdentity(AddSettlementPlan addSettlementPlan);
+    String FindUserIdentity(NegotiationsData addSettlementPlan);
 } 

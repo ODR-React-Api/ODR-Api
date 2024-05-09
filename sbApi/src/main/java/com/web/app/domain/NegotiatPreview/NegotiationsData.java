@@ -1,11 +1,11 @@
-package com.web.app.domain.SettlementPlan;
+package com.web.app.domain.NegotiatPreview;
 
 import java.io.Serializable;
 
 import lombok.Data;
 
 @Data
-public class AddSettlementPlan implements Serializable{
+public class NegotiationsData implements Serializable{
 
     //ログインemail
     private String email;
