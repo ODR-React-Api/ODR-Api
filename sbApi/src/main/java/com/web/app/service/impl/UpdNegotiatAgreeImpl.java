@@ -1,6 +1,9 @@
 package com.web.app.service.impl;
 
 import com.web.app.service.UpdNegotiatAgreeService;
+import com.web.app.service.UtilService;
+
+import java.util.ArrayList;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,13 +12,18 @@ import com.web.app.domain.ReconciliationUser;
 import com.web.app.mapper.UpdNegotiatAgreeMapper;
 import com.web.app.domain.ActionHistories;
 import com.web.app.domain.Entity.Cases;
+import com.web.app.domain.util.SendMailRequest;
 
 @Service
 public class UpdNegotiatAgreeImpl implements UpdNegotiatAgreeService {
 
     @Autowired
     private UpdNegotiatAgreeMapper ReconciliationUpdate;
-//和解案合意更新
+
+    @Autowired
+    private UtilService utilService;
+
+    // 和解案合意更新
     @Transactional
     @Override
     public int reconciliationUpdate(ReconciliationUser reconciliationuser) {
@@ -25,65 +33,98 @@ public class UpdNegotiatAgreeImpl implements UpdNegotiatAgreeService {
         }
         return 1;
     }
-    //「アクロン履歴」新規登録
+
+    // 「アクロン履歴」新規登録
     @Transactional
     @Override
-    public int ActionHistoriesInsert(ActionHistories ActionHistories) {
-        //「アクロン履歴」新規登録時に必要な属性の設定
+    public int ActionHistoriesInsert(ReconciliationUser reconciliationuser) {
+        // 「アクロン履歴」新規登録時に必要な属性の設定
+        ActionHistories actionHistories = new ActionHistories();
         UUID uuid = UUID.randomUUID();
         String id = uuid.toString();
-        ActionHistories.setId(id);
-        ActionHistories.setActionType("NegotiationAgreed");
-        ActionHistories.setCaseStage(3);
-        ActionHistories.setHaveFile(false);
-        ActionHistories.setDeleteFlag(false);
-
+        actionHistories.setId(id);
+        actionHistories.setPlatformId(reconciliationuser.getPlatformId());
+        actionHistories.setCaseId(reconciliationuser.getCaseId());
+        actionHistories.setActionType("NegotiationAgreed");
+        actionHistories.setCaseStage(3);
+        actionHistories.setUserId(reconciliationuser.getUserId());
         String userType = new String();
         // CaseIdに基づいてcase_relationsからデータを取得する
-        ActionHistories UserSearch = ReconciliationUpdate.UserSearch(ActionHistories);
+        ActionHistories UserSearch = ReconciliationUpdate.UserSearch(actionHistories);
         // Emailが取得したデータから申請者かどうかを判断する
-        if (ActionHistories.getEmail().equals(UserSearch.getPetitionUserInfo_Email()) ||
-                ActionHistories.getEmail().equals(UserSearch.getAgent1_Email()) ||
-                ActionHistories.getEmail().equals(UserSearch.getAgent2_Email()) ||
-                ActionHistories.getEmail().equals(UserSearch.getAgent3_Email()) ||
-                ActionHistories.getEmail().equals(UserSearch.getAgent4_Email()) ||
-                ActionHistories.getEmail().equals(UserSearch.getAgent5_Email())) {
+        actionHistories.setEmail(reconciliationuser.getEmail());
+        if (actionHistories.getEmail().equals(UserSearch.getPetitionUserInfo_Email()) ||
+                actionHistories.getEmail().equals(UserSearch.getAgent1_Email()) ||
+                actionHistories.getEmail().equals(UserSearch.getAgent2_Email()) ||
+                actionHistories.getEmail().equals(UserSearch.getAgent3_Email()) ||
+                actionHistories.getEmail().equals(UserSearch.getAgent4_Email()) ||
+                actionHistories.getEmail().equals(UserSearch.getAgent5_Email())) {
             userType = "1";
         }
-        //Emailが取得したデータから相守側であるかどうかを判断する
-        if (ActionHistories.getEmail().equals(UserSearch.getTraderUserEmail()) ||
-                ActionHistories.getEmail().equals(UserSearch.getTraderAgent1_UserEmail()) ||
-                ActionHistories.getEmail().equals(UserSearch.getTraderAgent2_UserEmail()) ||
-                ActionHistories.getEmail().equals(UserSearch.getTraderAgent3_UserEmail()) ||
-                ActionHistories.getEmail().equals(UserSearch.getTraderAgent4_UserEmail()) ||
-                ActionHistories.getEmail().equals(UserSearch.getTraderAgent5_UserEmail())) {
+        // Emailが取得したデータから相守側であるかどうかを判断する
+        if (actionHistories.getEmail().equals(UserSearch.getTraderUserEmail()) ||
+                actionHistories.getEmail().equals(UserSearch.getTraderAgent1_UserEmail()) ||
+                actionHistories.getEmail().equals(UserSearch.getTraderAgent2_UserEmail()) ||
+                actionHistories.getEmail().equals(UserSearch.getTraderAgent3_UserEmail()) ||
+                actionHistories.getEmail().equals(UserSearch.getTraderAgent4_UserEmail()) ||
+                actionHistories.getEmail().equals(UserSearch.getTraderAgent5_UserEmail())) {
             userType = "2";
         }
         // Emailが取得したデータから調停者かどうかを判断する
-        if (ActionHistories.getEmail().equals(UserSearch.getMediatorUserEmail())) {
+        if (actionHistories.getEmail().equals(UserSearch.getMediatorUserEmail())) {
             userType = "3";
         }
-        //アイデンティティに基づいた「アクロン履歴」新規ログインにおけるUserTypeプロパティの設定
+        // アイデンティティに基づいた「アクロン履歴」新規ログインにおけるUserTypeプロパティの設定
         if (userType == "1") {
-            ActionHistories.setUserType(1);
+            actionHistories.setUserType(1);
         }
         if (userType == "2") {
-            ActionHistories.setUserType(2);
+            actionHistories.setUserType(2);
         }
         if (userType == "3") {
-            ActionHistories.setUserType(3);
+            actionHistories.setUserType(3);
         }
-        //「アクロン履歴」新規登録
-        int ActionHistoriesInsertStatus = ReconciliationUpdate.ActionHistoriesInsert(ActionHistories);
+        actionHistories.setHaveFile(false);
+        actionHistories.setDeleteFlag(false);
+        actionHistories.setLastModifiedBy(reconciliationuser.getLastModifiedBy());
+        // 「アクロン履歴」新規登録
+        int ActionHistoriesInsertStatus = ReconciliationUpdate.ActionHistoriesInsert(actionHistories);
         if (ActionHistoriesInsertStatus == 0) {
             return 0;
         }
         return 1;
     }
-    //casesテーブルのCaseTitleを検索し、メール送信に設定する
+
+    // casesテーブルのCaseTitleを検索し、メール送信に設定する
     @Override
     public String CaseTitleSearch(Cases cases) {
         String CaseTitleSearch = ReconciliationUpdate.CaseTitleSearch(cases);
         return CaseTitleSearch;
     }
+
+    @Override
+    public Boolean sendMailRequest(ReconciliationUser reconciliationuser) {
+        SendMailRequest sendMailRequest = new SendMailRequest();
+        // casesテーブルのCaseTitleを検索し、メール送信に設定する
+        Cases cases = new Cases();
+        cases.setCid(reconciliationuser.getCaseId());
+        String CaseTitle = ReconciliationUpdate.CaseTitleSearch(cases);
+        sendMailRequest.setPlatformId("0001");
+        sendMailRequest.setLanguageId("JP");
+        sendMailRequest.setTempId("M029");
+        sendMailRequest.setCaseId(reconciliationuser.getCaseId());
+        ArrayList<String> recipientEmail = new ArrayList<String>();
+        recipientEmail.add("jia.wenzhi@trans-cosmos.com.cn");
+        sendMailRequest.setRecipientEmail(recipientEmail);
+        ArrayList<String> parameter = new ArrayList<String>();
+        parameter.add(reconciliationuser.getCaseId());
+        parameter.add(CaseTitle);
+        parameter.add("https://http://localhost:3000/");
+        sendMailRequest.setParameter(parameter);
+        sendMailRequest.setUserId("001");
+        sendMailRequest.setControlType(1);
+        boolean bool = utilService.SendMail(sendMailRequest);
+        return bool;
+    }
+
 }
