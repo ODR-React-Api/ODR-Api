@@ -23,18 +23,25 @@ public class UpdNegotiatAgreeImpl implements UpdNegotiatAgreeService {
     @Autowired
     private UtilService utilService;
 
-    // 和解案合意更新
+    /**
+     * 和解案合意更新
+     * 
+     * @param reconciliationuser 前台伝出のデータ
+     * @return 和解案合意更新は成功したか
+     */
     @Transactional
     @Override
     public int reconciliationUpdate(ReconciliationUser reconciliationuser) {
         int ReconciliationUpdateStatus = ReconciliationUpdate.reconciliationUpdate(reconciliationuser);
-        if (ReconciliationUpdateStatus == 0) {
-            return 0;
-        }
-        return 1;
+        return ReconciliationUpdateStatus;
     }
 
-    // 「アクロン履歴」新規登録
+    /**
+     * 「アクロン履歴」新規登録
+     *
+     * @param reconciliationuser 前台伝出のデータ
+     * @return 「アクロン履歴」新規登録は成功したか
+     */
     @Transactional
     @Override
     public int ActionHistoriesInsert(ReconciliationUser reconciliationuser) {
@@ -48,10 +55,11 @@ public class UpdNegotiatAgreeImpl implements UpdNegotiatAgreeService {
         actionHistories.setActionType("NegotiationAgreed");
         actionHistories.setCaseStage(3);
         actionHistories.setUserId(reconciliationuser.getUserId());
-        String userType = new String();
         // CaseIdに基づいてcase_relationsからデータを取得する
         ActionHistories UserSearch = ReconciliationUpdate.UserSearch(actionHistories);
+
         // Emailが取得したデータから申請者かどうかを判断する
+        // アイデンティティに基づいた「アクロン履歴」新規ログインにおけるUserTypeプロパティの設定
         actionHistories.setEmail(reconciliationuser.getEmail());
         if (actionHistories.getEmail().equals(UserSearch.getPetitionUserInfo_Email()) ||
                 actionHistories.getEmail().equals(UserSearch.getAgent1_Email()) ||
@@ -59,7 +67,8 @@ public class UpdNegotiatAgreeImpl implements UpdNegotiatAgreeService {
                 actionHistories.getEmail().equals(UserSearch.getAgent3_Email()) ||
                 actionHistories.getEmail().equals(UserSearch.getAgent4_Email()) ||
                 actionHistories.getEmail().equals(UserSearch.getAgent5_Email())) {
-            userType = "1";
+            actionHistories.setUserType(1);
+
         }
         // Emailが取得したデータから相守側であるかどうかを判断する
         if (actionHistories.getEmail().equals(UserSearch.getTraderUserEmail()) ||
@@ -68,20 +77,10 @@ public class UpdNegotiatAgreeImpl implements UpdNegotiatAgreeService {
                 actionHistories.getEmail().equals(UserSearch.getTraderAgent3_UserEmail()) ||
                 actionHistories.getEmail().equals(UserSearch.getTraderAgent4_UserEmail()) ||
                 actionHistories.getEmail().equals(UserSearch.getTraderAgent5_UserEmail())) {
-            userType = "2";
+            actionHistories.setUserType(2);
         }
         // Emailが取得したデータから調停者かどうかを判断する
         if (actionHistories.getEmail().equals(UserSearch.getMediatorUserEmail())) {
-            userType = "3";
-        }
-        // アイデンティティに基づいた「アクロン履歴」新規ログインにおけるUserTypeプロパティの設定
-        if (userType == "1") {
-            actionHistories.setUserType(1);
-        }
-        if (userType == "2") {
-            actionHistories.setUserType(2);
-        }
-        if (userType == "3") {
             actionHistories.setUserType(3);
         }
         actionHistories.setHaveFile(false);
@@ -95,13 +94,12 @@ public class UpdNegotiatAgreeImpl implements UpdNegotiatAgreeService {
         return 1;
     }
 
-    // casesテーブルのCaseTitleを検索し、メール送信に設定する
-    @Override
-    public String CaseTitleSearch(Cases cases) {
-        String CaseTitleSearch = ReconciliationUpdate.CaseTitleSearch(cases);
-        return CaseTitleSearch;
-    }
-
+    /**
+     * メール送信
+     * 
+     * @param reconciliationuser 前台伝出のデータ
+     * @return メール送信は成功したか
+     */
     @Override
     public Boolean sendMailRequest(ReconciliationUser reconciliationuser) {
         SendMailRequest sendMailRequest = new SendMailRequest();

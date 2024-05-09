@@ -7,6 +7,16 @@ import org.springframework.web.bind.annotation.*;
 import com.web.app.domain.ReconciliationUser;
 import com.web.app.service.UpdNegotiatAgreeService;
 
+/**
+ * 和解案合意更新API
+ * 「アクロン履歴」新規登録
+ * メール送信
+ * 
+ * @author DUC jiawenzhi
+ * @since 2024/05/09
+ * @version 1.0
+ */
+
 @CrossOrigin(origins = "*")
 @Api(tags = "和解案合意更新模块")
 @RestController
@@ -16,8 +26,19 @@ public class UpdNegotiatAgreeController {
   @Autowired
   private UpdNegotiatAgreeService ReconciliationSerce;
 
-  @ApiOperation("「和解案」更新")
-  @PostMapping("/reconciliationInsertUpdateDeleteTransactional")
+  /**
+   * 
+   * 和解案合意更新
+   * 「アクロン履歴」新規登録
+   * メール送信
+   * 
+   * @param reconciliationuser フォアグラウンドでんたつ
+   * @return 合意の成否を判断する
+   * @throws Exception 合意失敗
+   */
+
+  @ApiOperation("和解案合意更新")
+  @PostMapping("/reconciliationUpdate")
   public int reconciliationUpdate(@RequestBody ReconciliationUser reconciliationuser) {
     try {
       // ステータスの更新
