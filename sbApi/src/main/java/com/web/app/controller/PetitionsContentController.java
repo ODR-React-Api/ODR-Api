@@ -14,8 +14,8 @@ import io.swagger.annotations.Api;
 /**
  * 申立ての内容取得
  * 
- * @author DUC 姓名
- * @since 2024/05/01
+ * @author DUC 王亞テイ
+ * @since 2024/04/23
  * @version 1.0
  */
 
