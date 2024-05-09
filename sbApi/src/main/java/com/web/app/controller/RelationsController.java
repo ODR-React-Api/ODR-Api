@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
-// 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
 @Api(tags = "関係者メアド取得")
 @RestController
 // @RequestMapping("/getQuestionnaires")
