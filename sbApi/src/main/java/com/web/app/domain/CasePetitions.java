@@ -6,45 +6,56 @@ import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
-@ApiModel 
+/**
+ * case_petitions テーブル取得
+ * 
+ * @author DUC 王亞テイ
+ * @since 2024/04/17
+ * @version 1.0
+ */
+
+@ApiModel
 @Data
 public class CasePetitions implements Serializable {
-  // 案件ID
-  private String caseId;
 
-  // 商品名
-  private String productName;
+    private static final long serialVersionUID = 1L;
 
-  // 商品ID
-  private String productId;
+    // 案件ID
+    private String caseId;
 
-  // 販売元名称
-  private String traderName;
+    // 商品名
+    private String productName;
 
-  // 販売元メールアドレス
-  private String traderMail;
+    // 商品ID
+    private String productId;
 
-  // 販売元ＵＲＬ
-  private String traderUrl;
+    // 販売元名称
+    private String traderName;
 
-  // 購入日
-  private Date boughtDate;
+    // 販売元メールアドレス
+    private String traderMail;
 
-  // 購入金額
-  private double price;
+    // 販売元ＵＲＬ
+    private String traderUrl;
 
-  // 申立ての種類
-  private String petitionTypeValue;
+    // 購入日
+    private Date boughtDate;
 
-  // 申立て内容
-  private String petitionContext;
+    // 購入金額
+    private double price;
 
-  // 希望する解決方法
-  private String expectResloveTypeValue;
+    // 申立ての種類
+    private String petitionTypeValue;
 
-  // その他項目
-  private String other;
+    // 申立て内容
+    private String petitionContext;
 
-  // 最終変更日
-  private Date lastModifiedDate;
+    // 希望する解決方法
+    private String expectResloveTypeValue;
+
+    // その他項目
+    private String other;
+
+    // 最終変更日
+    private Date lastModifiedDate;
 }

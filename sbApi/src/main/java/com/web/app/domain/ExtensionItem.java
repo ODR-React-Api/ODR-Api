@@ -5,12 +5,23 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
-@ApiModel // 声明当前对象是用来封装数据的对象
+/**
+ * 拡張項目の取得
+ * 
+ * @author DUC 王亞テイ
+ * @since 2024/04/23
+ * @version 1.0
+ */
+
+@ApiModel
 @Data
 public class ExtensionItem implements Serializable {
-  // 拡張項目名
-  private String itemDisplayName;
-  // 拡張項目値
-  private String ExtensionitemValue;
+
+    private static final long serialVersionUID = 1L;
+
+    // 拡張項目名
+    private String itemDisplayName;
+    // 拡張項目値
+    private String ExtensionitemValue;
 
 }

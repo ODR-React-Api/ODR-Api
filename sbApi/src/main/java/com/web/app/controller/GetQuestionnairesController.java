@@ -1,7 +1,5 @@
 package com.web.app.controller;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,17 +17,14 @@ import io.swagger.annotations.Api;
 public class GetQuestionnairesController {
 
     @Autowired
-    DataSource dataSource;
-
-    @Autowired
-    private GetQuestionnairesService questionnaireService;
+    private GetQuestionnairesService getQuestionnairesService;
 
     @SuppressWarnings("rawtypes")
     @GetMapping("/getQuestionnaires")
     public Response getQuestionnaires(String Id, String PlatformId) {
 
         // 確認画面用データ
-        Questionnaire_Mails allQuestionnaire = questionnaireService.selectQuestionnaireData(Id, PlatformId);
+        Questionnaire_Mails allQuestionnaire = getQuestionnairesService.selectQuestionnaireData(Id, PlatformId);
 
         if (allQuestionnaire != null) {
             return Response.success(allQuestionnaire);

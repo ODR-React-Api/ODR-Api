@@ -30,18 +30,18 @@ public class GetQuestionnairesServiceImpl implements GetQuestionnairesService {
      */
 
     @Autowired
-    private GetQuestionnairesMapper testQuestionnaieMapper;
+    private GetQuestionnairesMapper getQuestionnairesMapper;
 
     @Override
     public Questionnaire_Mails selectQuestionnaireData(String Id, String platformId) {
 
-        QuestionnaireData questionnaireData = testQuestionnaieMapper.questionnaieDataSearch(Id);
+        QuestionnaireData questionnaireData = getQuestionnairesMapper.questionnaieDataSearch(Id);
         Questionnaire_Mails allQuestionnaire = new Questionnaire_Mails();
         // 確認画面用データ
         allQuestionnaire.setQuestionnaireData(questionnaireData);
 
         // アンケート回答済みかフラグ
-        int count = testQuestionnaieMapper.questionnaieCountSearch(questionnaireData.getCaseId(),
+        int count = getQuestionnairesMapper.questionnaieCountSearch(questionnaireData.getCaseId(),
                 questionnaireData.getQuestionId(), questionnaireData.getUserType());
 
         // レコードのカウントが0の場合、FALSE;レコードのカウントが>0の場合、TRUE
@@ -53,7 +53,7 @@ public class GetQuestionnairesServiceImpl implements GetQuestionnairesService {
         }
 
         // アンケートの問題リスト
-        List<QuestionnaireList> questionnaireList = testQuestionnaieMapper
+        List<QuestionnaireList> questionnaireList = getQuestionnairesMapper
                 .searchQuestionnaieList(questionnaireData.getQuestionId(), platformId);
 
         allQuestionnaire.setQuestionnaireList(questionnaireList);

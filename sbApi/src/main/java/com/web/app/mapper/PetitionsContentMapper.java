@@ -9,7 +9,7 @@ import com.web.app.domain.CasePetitions;
 import com.web.app.domain.ExtensionItem;
 
 @Mapper
-public interface PetitioncontentMapper {
+public interface PetitionsContentMapper {
 
   CasePetitions PetitionListDataSearch(String caseId);
 
