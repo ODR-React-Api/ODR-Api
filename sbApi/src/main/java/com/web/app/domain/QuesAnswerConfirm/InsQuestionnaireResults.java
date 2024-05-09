@@ -7,8 +7,12 @@ import lombok.Data;
  * アンケート回答確認画面
  * API_アンケート入力結果新規登録
  * Dao层
- * InsQuestionnaireResults 画面アンケート回答内容
- * テーブル名：questionnaire_resultsアンケート入力結果
+ * InsQuestionnaireResults
+ * 画面アンケート回答内容
+ * 
+ * @author DUC 張明慧
+ * @since 2024/04/14
+ * @version 1.0
  */
 @Data
 public class InsQuestionnaireResults implements Serializable {

@@ -18,9 +18,14 @@ import io.swagger.annotations.ApiOperation;
  * アンケート回答確認画面
  * Controller层
  * QuesAnswerConfirmController
+ * API_アンケート入力結果新規登録
+ * 
+ * @author DUC 張明慧
+ * @since 2024/04/14
+ * @version 1.0
  */
 @CrossOrigin(origins = "*")
-// 声明当前controller需要生成文档，并且指定在文档中的标签为“アンケート回答確認画面”
+// ラベルを「アンケート回答確認画面」と指定する
 @Api(tags = "アンケート回答確認画面")
 @RestController
 @RequestMapping("/QuesAnswerConfirm")
@@ -31,6 +36,15 @@ public class QuesAnswerConfirmController {
     @Autowired
     private UtilService utilService;
 
+    /**
+     * 「送信する」ボタン押下で、アンケート回答登録処理を行う。
+     * 2.1 メール送信 & アクション履歴記録
+     * 2.2 アンケート回答内容を登録
+     * 2.3 アクション履歴登録
+     * 
+     * @param insQuestionnaireResults アンケート回答登録処理の引数
+     * @return Response アンケート回答登録処理の状況
+     */
     @ApiOperation("アンケート入力結果新規登録")
     @PostMapping("/InsQuestionnairesResults")
     @SuppressWarnings("rawtypes")
@@ -45,7 +59,7 @@ public class QuesAnswerConfirmController {
             quesAnswerConfirmService.insQuestionnairesResults(insQuestionnaireResults);
             return AjaxResult.success("新規登録成功!");
         } catch (Exception e) {
-            AjaxResult.fatal("新規登録失败!", e);
+            AjaxResult.fatal("新規登録失敗!", e);
             return null;
         }
         // TODO
