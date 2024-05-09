@@ -5,20 +5,30 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
-@ApiModel 
+/**
+ * questionnaire_mails テーブル取得
+ * 
+ * @author DUC 王亞テイ
+ * @since 2024/04/17
+ * @version 1.0
+ */
+
+@ApiModel
 @Data
 public class QuestionnaireData implements Serializable {
 
-  // アンケートID
-  private String QuestionId;
+    private static final long serialVersionUID = 1L;
 
-  // 送信対象ユーザEmail
-  private String UserEmail;
+    // アンケートID
+    private String QuestionId;
 
-  // ユーザ立場
-  private Integer UserType;
+    // 送信対象ユーザEmail
+    private String UserEmail;
 
-  // 案件ID
-  private String CaseId;
+    // ユーザ立場
+    private Integer UserType;
+
+    // 案件ID
+    private String CaseId;
 
 }

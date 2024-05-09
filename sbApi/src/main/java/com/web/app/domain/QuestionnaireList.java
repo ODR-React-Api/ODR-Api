@@ -5,22 +5,33 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+/**
+ * アンケートの問題リスト（questionnairesテーブル取得）
+ * 
+ * @author DUC 王亞テイ
+ * @since 2024/04/17
+ * @version 1.0
+ */
+
 @ApiModel
 @Data
 public class QuestionnaireList implements Serializable {
-  //アンケート表示
-  private String Description;
 
-  //アンケートタイプ
-  private Integer Type;
+    private static final long serialVersionUID = 1L;
 
-  //アクティブフラグ
-  private Integer ActiveFlag;
+    // アンケート表示
+    private String Description;
 
-  //表示順
-  private Integer Order;
+    // アンケートタイプ
+    private Integer Type;
 
-  //必須フラグ
-  private Integer RequireFlag;
+    // アクティブフラグ
+    private Integer ActiveFlag;
+
+    // 表示順
+    private Integer Order;
+
+    // 必須フラグ
+    private Integer RequireFlag;
 
 }
