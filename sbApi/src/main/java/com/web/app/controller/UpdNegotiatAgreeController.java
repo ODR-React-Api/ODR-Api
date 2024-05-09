@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.web.app.domain.ReconciliationUser;
 import com.web.app.domain.util.SendMailRequest;
-import com.web.app.service.ReconciliationService;
+import com.web.app.service.UpdNegotiatAgreeService;
 import com.web.app.service.UtilService;
 import com.web.app.domain.ActionHistories;
 import com.web.app.domain.Entity.Cases;
@@ -14,9 +14,9 @@ import java.util.ArrayList;;
 @Api(tags = "和解案合意更新模块") 
 @RestController
 @RequestMapping("/reconciliation")
-public class ReconciliationController {
+public class UpdNegotiatAgreeController {
   @Autowired
-  private ReconciliationService ReconciliationSerce;
+  private UpdNegotiatAgreeService ReconciliationSerce;
   @Autowired
   private UtilService utilService;
 
@@ -24,23 +24,26 @@ public class ReconciliationController {
   @PostMapping("/reconciliationInsertUpdateDeleteTransactional")
   public int reconciliationUpdate(@RequestBody ReconciliationUser reconciliationuser) {
     try {
+      //和解案合意更新
       int ReconciliationUpdateStatus = ReconciliationSerce.reconciliationUpdate(reconciliationuser);
+      
       if (ReconciliationUpdateStatus == 1) {
-      //caseid赋予
+      //「アクロン履歴」新規登録時に必要な属性の設定
       ActionHistories actionHistories =new ActionHistories();
       actionHistories.setCaseId(reconciliationuser.getCaseId());
       actionHistories.setPlatformId(reconciliationuser.getPlatformId());
       actionHistories.setEmail(reconciliationuser.getEmail());
       actionHistories.setUserId(reconciliationuser.getUserId());
       actionHistories.setLastModifiedBy(reconciliationuser.getLastModifiedBy());
-      //履历新规登陆
+      //「アクロン履歴」新規登録
       int ActionHistoriesInsertStatus = ReconciliationSerce.ActionHistoriesInsert(actionHistories);
     
       if (ActionHistoriesInsertStatus==1) {
-        //检索case表的CaseTitle
+        //casesテーブルのCaseTitleを検索し、メール送信に設定する
         Cases cases =new Cases();
         cases.setCid(reconciliationuser.getCaseId());
         String CaseTitle = ReconciliationSerce.CaseTitleSearch(cases);
+        //メール送信
         SendMailRequest sendMailRequest = new SendMailRequest();
   
           sendMailRequest.setPlatformId("0001");
