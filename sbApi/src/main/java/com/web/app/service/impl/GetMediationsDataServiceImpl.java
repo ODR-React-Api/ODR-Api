@@ -15,6 +15,13 @@ import com.web.app.domain.ResultMediation;
 import com.web.app.mapper.GetMediationsDataMapper;
 import com.web.app.service.GetMediationsDataService;
 
+/**
+ * サービス実装クラス
+ * 
+ * @author DUC 徐義然
+ * @since 2024/05/07
+ * @version 1.0
+ */
 @Service
 public class GetMediationsDataServiceImpl implements GetMediationsDataService {
 
@@ -25,14 +32,24 @@ public class GetMediationsDataServiceImpl implements GetMediationsDataService {
     private static final String CONFIRMED_MESSAGE = "確認済みの調停案は、編集を行うことはできません。";
 
     private static final String FINSHED_MESSAGE = "成立済みの調停案は、編集を行うことはできません。";
-
+    
+    //マッパーオブジェクト
     @Autowired
     private GetMediationsDataMapper getMediationsDataMapper;
 
+    /**
+     * 
+     * DBを検索して処理後のデータをコントローラに渡す
+     * 
+     * @param ResultMediation コントローラから渡された画面データ
+     * @return DB検索result
+     */
     @Override
     public ResultMediation getResultMediation(ResultMediation resultMediation){
+        //DBデータ取得
         List<Mediation> mediation = getMediationsDataMapper.selectMediationsData(resultMediation.getCaseId(), resultMediation.getPlatformId());
         if (mediation != null && !mediation.isEmpty()) {
+            //データ取得に成功した場合、取得したデータを処理する
             resultMediation = setResult(mediation, resultMediation);
         }
         return resultMediation;
@@ -40,26 +57,31 @@ public class GetMediationsDataServiceImpl implements GetMediationsDataService {
 
 
     /**
-     * 将检索到的List结果转化到前端要用的实体类中
+     * 取得したList結果をフロントエンドが使用するエンティティークラスに変換する
      * 
-     * mediation:检索结果
-     * resultMediation:目标结果集
+     * @param mediation:检索结果
+     * @param resultMediation:目标结果集
+     * @return resultMediation
      */
     private ResultMediation setResult(List<Mediation> mediation,ResultMediation resultMediation){
         Iterator<Mediation> iterator = mediation.iterator();
-        //计数器
+        //カウンタカウンタ
         int count = 0;
+        //集合を反復器で巡回し、resultMediationに順次渡す
         while (iterator.hasNext()) {
             Mediation next = iterator.next();
             resultMediation.getFiles().get(count).setFileName(next.getFileName());
             resultMediation.getFiles().get(count).setFileUrl(next.getFileUrl());
+            //コレクション内の添付ファイル以外のフィールドはすべて同じなので、値は1回だけとります
             if (count == 0) {
+                //文字列をカンマで分割
                 String expectResloveTypeValue = next.getExpectResloveTypeValue();
                 String[] values = expectResloveTypeValue.split(",");
                 resultMediation.setExpectResloveTypeValue(new ArrayList<String>());
                 for (String value : values) {
                     resultMediation.getExpectResloveTypeValue().add(value);
                 }
+                //設定エラーメッセージ
                 resultMediation.setStatus(next.getStatus());
                 if (resultMediation.getStatus() == 2 || resultMediation.getStatus() == 3 || resultMediation.getStatus() == 4) {
                     resultMediation.setMeg(AGREEMENT_MESSAGE);
@@ -75,7 +97,7 @@ public class GetMediationsDataServiceImpl implements GetMediationsDataService {
                 resultMediation.setOtherContext(next.getOtherContext());
                 resultMediation.setPayAmount(next.getPayAmount());
                 resultMediation.setCounterClaimPayment(next.getCounterClaimPayment());
-                //转换时间
+                //時間フォーマットの変換
                 String paymentEndDate = next.getPaymentEndDate();
                 Date endDate = null;
                 try {
@@ -88,7 +110,7 @@ public class GetMediationsDataServiceImpl implements GetMediationsDataService {
                 }
                 resultMediation.setPaymentEndDate(endDate);
                 resultMediation.setShipmentPayType(next.getShipmentPayType());
-                //转换时间
+                //時間フォーマットの変換
                 String agreement = next.getAgreementDate();
                 Date agreementDate = null;
                 try {

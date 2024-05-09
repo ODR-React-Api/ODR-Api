@@ -9,11 +9,15 @@ import com.web.app.domain.Entity.SubsidiaryFile;
 import lombok.Data;
 
 /**
- * 画面用Entity
+ * 調停案データ取得API 画面用domain
+ * 
+ * @author DUC 徐義然
+ * @since 2024/05/07
+ * @version 1.0
  */
 @Data
 public class ResultMediation implements Serializable {
-    //缓冲
+    //バッファリング
     private static final long serialVersionUID = 1L;   
     //案件ID
     private String caseId;

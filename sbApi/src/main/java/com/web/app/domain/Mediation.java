@@ -4,9 +4,16 @@ import java.io.Serializable;
 
 import lombok.Data;
 
+/**
+ * 調停案データ取得API 検索用domain
+ * 
+ * @author DUC 徐義然
+ * @since 2024/05/07
+ * @version 1.0
+ */
 @Data
 public class Mediation implements Serializable {
-    //缓冲
+    //バッファリング
     private static final long serialVersionUID = 1L;
     //案件ID
     private String caseId;

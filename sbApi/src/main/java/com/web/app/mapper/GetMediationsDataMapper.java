@@ -6,6 +6,14 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.web.app.domain.Mediation;
 
+/**
+ * マッパー
+ * 
+ * @author DUC 徐義然
+ * @since 2024/05/07
+ * @version 1.0
+ */
+
 @Mapper
 public interface GetMediationsDataMapper {
 
