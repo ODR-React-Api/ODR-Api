@@ -47,7 +47,7 @@ public class RegisterUserServiceImpl implements RegisterUserService {
 
         // 新規ユーザー情報の処理
         UserInsertModel userInsert = new UserInsertModel();
-        userInsert.setUid(UUID.randomUUID().toString());
+        userInsert.setUid(utilService.GetGuid());
         userInsert.setEmail(userInfo.getEmail());
         userInsert.setFirstName(userInfo.getFirstName());
         userInsert.setFirstNameKana(userInfo.getFirstNameKana());
