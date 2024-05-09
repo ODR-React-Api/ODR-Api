@@ -173,4 +173,39 @@
         #{lastModifiedBy}
     )
 </insert>
+  <update id="updateNegotiationsEdit" parameterType="com.web.app.domain.NegotiationsEdit">
+        UPDATE case_negotiations
+        SET
+            ExpectResloveTypeValue = #{expectResloveTypeValue},
+            OtherContext = #{otherContext},
+            PayAmount = #{payAmount},
+            CounterClaimPayment = #{counterClaimPayment},
+            PaymentEndDate = #{paymentEndDate},
+            ShipmentPayType = #{shipmentPayType},
+            SpecialItem = #{specialItem},
+            Status = #{status},
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{lastModifiedBy}
+        WHERE
+            Id = #{id}
+    </update>
+
+    <update id="deleteFiles" parameterType="com.web.app.domain.Files">
+        UPDATE files
+        SET
+            DeleteFlag = #{deleteFlag},
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{lastModifiedBy}
+        WHERE
+            Id = #{id}
+    </update>
+    <update id="deleteCaseFileRelations" parameterType="com.web.app.domain.CaseFileRelations">
+        UPDATE case_file_relations
+        SET
+            DeleteFlag = #{deleteFlag},
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{lastModifiedBy}
+        WHERE
+            FileId = #{fileId}
+</update>
 </mapper>

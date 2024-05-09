@@ -1,8 +1,6 @@
 package com.web.app.domain;
 
-
 import java.io.Serializable;
-import java.sql.Date;
 
 import lombok.Data;
 
@@ -11,10 +9,7 @@ public class NegotiationsEdit implements Serializable {
     private static final long serialVersionUID = 1L;
     public String id;
     public String caseId;
-
     public int status;
-
-
     public String platformId;
     public String expectResloveTypeValue;
     public String otherContext;
@@ -28,12 +23,8 @@ public class NegotiationsEdit implements Serializable {
     public String userId;
     public String submitDate;
     public String agreementDate;
-
     public int deleteFlag;
-
     public String lastModifiedDate;
-
     public String lastModifiedBy;
 
-    
 }

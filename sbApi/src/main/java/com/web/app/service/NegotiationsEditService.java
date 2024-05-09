@@ -7,8 +7,11 @@ import java.util.List;
 
 public interface NegotiationsEditService {
 
-  List<Integer> selectStatusList(NegotiationsEdit negotiationsEdit);
-  
-  int addNegotiationsEdit(NegotiationsEdit negotiationsEdit, Files files, CaseFileRelations caseFileRelations);
+    List<Integer> selectStatusList(NegotiationsEdit negotiationsEdit);
+
+    int addNegotiationsEdit(NegotiationsEdit negotiationsEdit, Files files, CaseFileRelations caseFileRelations);
+
+    int updateNegotiationsEdit(NegotiationsEdit negotiationsEdit, Files files, CaseFileRelations caseFileRelations,
+            Files files2, CaseFileRelations caseFileRelations2);
 
 }
