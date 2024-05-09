@@ -7,7 +7,7 @@ import com.web.app.domain.Entity.Cases;
 
 /**
  * 和解案合意更新API
- * 和解案合意更新API
+ * 「アクロン履歴」新規登録
  * メール送信
  * 
  * @author DUC jiawenzhi
@@ -17,13 +17,14 @@ import com.web.app.domain.Entity.Cases;
 
 @Mapper
 public interface UpdNegotiatAgreeMapper {
+
     // 和解案合意更新API
     int reconciliationUpdate(ReconciliationUser reconciliationUser);
 
-    // 和解案合意更新API
+    // 「アクロン履歴」新規登録
     int ActionHistoriesInsert(ActionHistories ActionHistories);
 
-    // メール送信
+    // CaseIdに基づいてcase_relationsからデータを取得する
     ActionHistories UserSearch(ActionHistories ActionHistories);
 
     // casesテーブルのCaseTitleを検索し、メール送信に設定する
