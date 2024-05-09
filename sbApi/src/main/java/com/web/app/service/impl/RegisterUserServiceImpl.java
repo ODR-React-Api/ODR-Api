@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.web.app.domain.UserInfoModel;
 import com.web.app.domain.UserInsertModel;
 import com.web.app.domain.constants.MailConstants;
+import com.web.app.domain.constants.MessageConstants;
 import com.web.app.domain.util.SendMailRequest;
 import com.web.app.mapper.RegisterUserMapper;
 import com.web.app.service.RegisterUserService;
@@ -93,7 +94,7 @@ public class RegisterUserServiceImpl implements RegisterUserService {
             // 送信が成功したかどうかを判断する
             if (!bool) {
                 // 送信失敗印刷log
-                log.error("通知メールの送信に失敗しました。");
+                log.error(MessageConstants.C00007E);
             }
         }
 

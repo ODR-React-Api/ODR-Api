@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.UserInfoModel;
+import com.web.app.domain.constants.MessageConstants;
 import com.web.app.service.RegisterUserService;
 import com.web.app.tool.AjaxResult;
 
@@ -48,15 +49,15 @@ public class RegisterUserController {
             int userInsertRep = registerUserService.registerUser(userInfo);
             // 追加された状態の判断
             if (userInsertRep != 0) {
-                return AjaxResult.success("添加用户成功!");
+                return AjaxResult.success(MessageConstants.C12003I);
             }
         } catch (Exception e) {
             // DB異常
-            AjaxResult.fatal("添加用户失败!", e);
+            AjaxResult.fatal(MessageConstants.C12004E, e);
             return null;
         }
         // 追加本数が0の場合
-        AjaxResult.error("添加用户失败!");
+        AjaxResult.error(MessageConstants.C12004E);
         return null;
     }
 
