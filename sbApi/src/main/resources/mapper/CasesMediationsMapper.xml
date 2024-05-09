@@ -27,19 +27,21 @@
     </update>
 
     <!-- 案件関連情報更新 -->
-    <update id="updAboutCasesInfo" parameterMap="ParameterMap">
+    <update id="updAboutCasesInfo" >
         UPDATE cases
         SET
+        <if test="!withReason">
             CaseStage = 6 ,
             MediatorDisclosureFlag = 0,
             MediatorNoReasonChangeDate = null,
             MediatorDisclosureDate = null,
             GroupMessageFlag1 = 0,
             GroupMessageFlag2 = 0,
-            MediatorChangeableCount1 = #{MediatorChangeableCount1},
-            MediatorChangeableCount2 = #{MediatorChangeableCount2}
+        </if>
+            MediatorChangeableCount1 = #{cases.MediatorChangeableCount1},
+            MediatorChangeableCount2 = #{cases.MediatorChangeableCount2}
         WHERE
-        cid = #{Cid}
+        cid = #{cases.Cid}
     </update>
 
     <select id="getMediatorChangeableCount" parameterType="string" resultMap="BaseResultMap">
@@ -52,4 +54,5 @@
         WHERE
         cid = #{Cid}
     </select>
+
 </mapper>

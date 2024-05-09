@@ -14,7 +14,7 @@ import com.web.app.domain.Entity.Cases;
 public interface CasesMediationsMapper {
     Boolean delAboutCasesMediations(String caseId);
 
-    Boolean updAboutCasesInfo(Cases cases);
+    Boolean updAboutCasesInfo(Cases cases, Boolean withReason);
 
     Cases getMediatorChangeableCount(String caseId);
 }

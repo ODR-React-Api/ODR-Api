@@ -20,6 +20,13 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "調停人変更画面")
 @RestController
 @RequestMapping("/CasesMediations")
+/**
+ * 調停人変更画面
+ * 
+ * @author DUC 李健
+ * @since 2024/04/29
+ * @version 1.0
+ */
 public class CasesMediationsController {
     @Autowired
     DataSource dataSource;
@@ -30,6 +37,13 @@ public class CasesMediationsController {
     @ApiOperation("調停案削除")
     @GetMapping("/delAboutCasesMediations")
     @SuppressWarnings({ "rawtypes", "unchecked" })
+    /**
+     * API_調停案削除
+     * 
+     * @param caseId セッション.案件ID
+     * @return true false
+     * @throws Exception
+     */
     public Response delAboutCasesMediations(String caseId) throws Exception {
         try {
 
@@ -55,17 +69,18 @@ public class CasesMediationsController {
     @GetMapping("/updAboutCasesInfo")
     @SuppressWarnings({ "rawtypes", "unchecked" })
     /**
+     * 案件関連情報更新
      * 
-     * @param caseId セッション.案件ID
-     * @param userType 1:申立人 2:相手方
+     * @param caseId     セッション.案件ID
+     * @param userType   1:申立人 2:相手方
+     * @param withReason true:理由あり false:理由なし
      * @return
      * @throws Exception
      */
-    public Response updAboutCasesInfo(String caseId,String userType) throws Exception {
+    public Response updAboutCasesInfo(String caseId, String userType, Boolean withReason) throws Exception {
         try {
-
             System.out.println("获取的数据库连接为:" + dataSource.getConnection());
-            Boolean resultBoolean = casesMediationsService.updAboutCasesInfo(caseId,userType);
+            Boolean resultBoolean = casesMediationsService.updAboutCasesInfo(caseId, userType, withReason);
             Response response = new Response<Boolean>();
             if (resultBoolean) {
                 response.setCode(Constants.RETCD_SUCCESS);
