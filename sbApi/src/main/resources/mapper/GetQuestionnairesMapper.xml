@@ -9,7 +9,7 @@
         <result property="UserType" column="UserType" jdbcType="INTEGER"/>
         <result property="CaseId" column="CaseId" jdbcType="VARCHAR"/>
     </resultMap>
-    <select id="questionnaieListDataSearch" resultMap="testUserResultMap">
+    <select id="questionnaieDataSearch" resultMap="testUserResultMap">
         SELECT 
             QuestionId,
             UserEmail,
@@ -22,18 +22,6 @@
     </select>
 
     <select id="questionnaieCountSearch" resultType="Integer">
-        <!-- SELECT
-            COUNT(*)
-        FROM
-            react_use.questionnaire_mails as A
-        LEFT JOIN 
-            react_use.questionnaire_results as B
-        ON
-            B.QuestionId= A.QuestionId  and
-            B.CaseId=A.CaseId and
-            B.UserType=A.UserType 
-        WHERE
-            GUID = #{Id} -->
         SELECT
             COUNT(*)
         FROM
@@ -52,27 +40,6 @@
         <result property="RequireFlag" column="RequireFlag" jdbcType="INTEGER"/>
     </resultMap>
     <select id="searchQuestionnaieList" resultMap="QuestionnaireResultMap">
-        <!-- SELECT
-              A.Description,
-              A.Type,
-              A.ActiveFlag,
-              A.Order,
-              A.RequireFlag
-        FROM
-            react_use.questionnaires as A
-        LEFT JOIN
-            react_use.questionnaire_mails as B
-        ON
-              A.QuestionId=B.QuestionId
-        WHERE
-              A.PlatformId=#{platformId} and
-              A.EffectiveDate >  CURRENT_DATE() and
-              A.Open=1 and
-              A.ActiveFlag=1 and
-              B.GUID=#{Id}
-        Order By
-              A.Order ASC -->
-
         SELECT
               A.Description,
               A.Type,

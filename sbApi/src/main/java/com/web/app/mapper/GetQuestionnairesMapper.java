@@ -10,10 +10,13 @@ import com.web.app.domain.QuestionnaireList;
 @Mapper
 public interface GetQuestionnairesMapper {
 
-    QuestionnaireData questionnaieListDataSearch(String Id);
+    // 確認画面用データ
+    QuestionnaireData questionnaieDataSearch(String Id);
 
+    // アンケート回答済みかフラグ
     int questionnaieCountSearch(String caseId, String questionId, Integer userType);
 
+    // アンケートの問題リスト
     List<QuestionnaireList> searchQuestionnaieList(String questionId, String platformId);
 
 }

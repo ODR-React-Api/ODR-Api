@@ -35,7 +35,7 @@ public class GetQuestionnairesServiceImpl implements GetQuestionnairesService {
     @Override
     public Questionnaire_Mails selectQuestionnaireData(String Id, String platformId) {
 
-        QuestionnaireData questionnaireData = testQuestionnaieMapper.questionnaieListDataSearch(Id);
+        QuestionnaireData questionnaireData = testQuestionnaieMapper.questionnaieDataSearch(Id);
         Questionnaire_Mails allQuestionnaire = new Questionnaire_Mails();
         // 確認画面用データ
         allQuestionnaire.setQuestionnaireData(questionnaireData);
