@@ -10,37 +10,37 @@ import com.web.app.service.CasesMediationsService;
 
 @Service
 public class CasesMediationsServiceImpl implements CasesMediationsService {
-  @Autowired
-  private CasesMediationsMapper casesMediationsMapper;
+    @Autowired
+    private CasesMediationsMapper casesMediationsMapper;
 
-  @Override
-  @Transactional(noRollbackFor = { ArithmeticException.class }) // 设置当出现ArithmeticException时，不回滚
-  public Boolean delAboutCasesMediations(String caseId) {
-    try {
-      return casesMediationsMapper.delAboutCasesMediations(caseId);
+    @Override
+    @Transactional(noRollbackFor = { ArithmeticException.class }) // 设置当出现ArithmeticException时，不回滚
+    public Boolean delAboutCasesMediations(String caseId) {
+        try {
+            return casesMediationsMapper.delAboutCasesMediations(caseId);
 
-    } catch (Exception e) {
-      throw e;
+        } catch (Exception e) {
+            throw e;
+        }
     }
-  }
 
-  @SuppressWarnings("unlikely-arg-type")
-  @Override
-  @Transactional(noRollbackFor = { ArithmeticException.class }) // 设置当出现ArithmeticException时，不回滚
-  public Boolean updAboutCasesInfo(String caseId, String userType, Boolean withReason) {
-    try {
-      Cases info = new Cases();
-      info.setCid(caseId);
-      Cases count = casesMediationsMapper.getMediatorChangeableCount(caseId);
-      if (userType.equals("1")) {
-        info.setMediatorChangeableCount1(count.getMediatorChangeableCount1() + 1);
-      }
-      if (userType.equals('2')) {
-        info.setMediatorChangeableCount2(count.getMediatorChangeableCount2() + 1);
-      }
-      return casesMediationsMapper.updAboutCasesInfo(info, withReason);
-    } catch (Exception e) {
-      throw e;
+    @SuppressWarnings("unlikely-arg-type")
+    @Override
+    @Transactional(noRollbackFor = { ArithmeticException.class }) // 设置当出现ArithmeticException时，不回滚
+    public Boolean updAboutCasesInfo(String caseId, String userType, Boolean withReason) {
+        try {
+            Cases info = new Cases();
+            info.setCid(caseId);
+            Cases count = casesMediationsMapper.getMediatorChangeableCount(caseId);
+            if (userType.equals("1")) {
+                info.setMediatorChangeableCount1(count.getMediatorChangeableCount1() + 1);
+            }
+            if (userType.equals('2')) {
+                info.setMediatorChangeableCount2(count.getMediatorChangeableCount2() + 1);
+            }
+            return casesMediationsMapper.updAboutCasesInfo(info, withReason);
+        } catch (Exception e) {
+            throw e;
+        }
     }
-  }
 }
