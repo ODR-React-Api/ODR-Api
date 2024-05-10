@@ -13,8 +13,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "*")
-// 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
 @Api(tags = "申立て詳細画面_概要")
+/**
+ * API_参加済状態変更
+ * 
+ * @author DUC 朱暁芳
+ * @since 2024/04/23
+ * @version 1.0
+ */
 @RestController
 public class ParticipatedStatusChangeController {
     // String caseId = "0001";
@@ -29,7 +35,7 @@ public class ParticipatedStatusChangeController {
                     .ParticipatedStatusChangeInfoSearch(caseId);
             return participatedInfo;
         } catch (Exception e) {
-            AjaxResult.fatal("查询失败!", e);
+            AjaxResult.fatal("失敗しました。", e);
             return null;
             // }
         }

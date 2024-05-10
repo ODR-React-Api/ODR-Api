@@ -10,6 +10,15 @@ import com.web.app.domain.ParticipatedStatusChangeSelectInfo;
 import com.web.app.mapper.ParticipatedStatusChangeMapper;
 import com.web.app.service.ParticipatedStatusChangeService;
 
+/**
+ * ケース詳細取得設定
+ *
+ * @param param1 取得したの申立て番号、件名、登録日付、対応期日、状態、要対応有無
+ * @param param2 API「 一覧取得」より渡された引数: 案件ID
+ * @param param3 API「 一覧取得」より渡された引数: 立場フラグ
+ * @param param4 API「 一覧取得」より渡された引数: ユーザーID
+ * @return 戻り値はAPI「 一覧取得」に返される
+ */
 @Service
 public class ParticipatedStatusChangeServiceImpl implements ParticipatedStatusChangeService {
     @Autowired
