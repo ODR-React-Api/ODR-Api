@@ -19,10 +19,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "*")
-// 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
 @Api(tags = "情報公開制限画面")
 @RestController
-@RequestMapping("/MediatorDisclosure")
+@RequestMapping("/InfoPublicSeigen")
+/**
+ * 情報公開制限画面
+ * 
+ * @author DUC 李健
+ * @since 2024/04/26
+ * @version 1.0
+ */
 public class InfoPublicSeigenController {
 
     @Autowired
@@ -34,6 +40,12 @@ public class InfoPublicSeigenController {
     @ApiOperation("調停人情報開示制限")
     @GetMapping("/updMediatorDisclosureFlag")
     @SuppressWarnings({ "rawtypes", "unchecked" })
+    /**
+     * 
+     * @param mediatorDisclosureRequest
+     * @return
+     * @throws Exception
+     */
     public Response updMediatorDisclosureFlag(MediatorDisclosureRequest mediatorDisclosureRequest) throws Exception {
         try {
 
@@ -58,6 +70,12 @@ public class InfoPublicSeigenController {
     @ApiOperation("調停人情報開示変更可能期限日")
     @GetMapping("/getMediatorDisclosureDate")
     @SuppressWarnings({ "rawtypes", "unchecked" })
+    /**
+     * 
+     * @param caseId
+     * @return
+     * @throws Exception
+     */
     public Response getMediatorDisclosureDate(String caseId) throws Exception {
         try {
 

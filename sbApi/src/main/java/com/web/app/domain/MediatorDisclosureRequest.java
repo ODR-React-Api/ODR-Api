@@ -6,7 +6,7 @@ import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
-@ApiModel // 声明当前对象是用来封装数据的对象
+@ApiModel
 @Data
 public class MediatorDisclosureRequest implements Serializable {
     private String UserId;
