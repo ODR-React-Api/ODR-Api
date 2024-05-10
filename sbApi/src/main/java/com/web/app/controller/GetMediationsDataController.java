@@ -3,7 +3,7 @@ package com.web.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.web.app.domain.ResultMediation;
+import com.web.app.domain.getMediationsData.ResultMediation;
 import com.web.app.service.GetMediationsDataService;
 import com.web.app.tool.AjaxResult;
 

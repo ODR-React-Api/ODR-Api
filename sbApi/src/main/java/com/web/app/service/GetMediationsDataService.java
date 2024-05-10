@@ -1,6 +1,6 @@
 package com.web.app.service;
 
-import com.web.app.domain.ResultMediation;
+import com.web.app.domain.getMediationsData.ResultMediation;
 
 /**
  * サービスインタフェース

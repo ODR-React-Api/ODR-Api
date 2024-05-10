@@ -1,6 +1,6 @@
 package com.web.app.service;
 
-import com.web.app.domain.Negotiation;
+import com.web.app.domain.updNegotiatDeny.Negotiation;
 
 /**
  * サービスインタフェース

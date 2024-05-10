@@ -10,8 +10,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.domain.Mediation;
-import com.web.app.domain.ResultMediation;
+import com.web.app.domain.getMediationsData.Mediation;
+import com.web.app.domain.getMediationsData.ResultMediation;
 import com.web.app.mapper.GetMediationsDataMapper;
 import com.web.app.service.GetMediationsDataService;
 

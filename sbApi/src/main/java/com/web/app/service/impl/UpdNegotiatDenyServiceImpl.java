@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.app.domain.Negotiation;
+import com.web.app.domain.updNegotiatDeny.Negotiation;
 import com.web.app.mapper.UpdNegotiatDenyMapper;
 import com.web.app.service.UpdNegotiatDenyService;
 

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.app.domain.Negotiation;
 import com.web.app.domain.Response;
+import com.web.app.domain.updNegotiatDeny.Negotiation;
 import com.web.app.service.UpdNegotiatDenyService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
