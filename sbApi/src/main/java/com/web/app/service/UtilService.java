@@ -1,5 +1,7 @@
 package com.web.app.service;
 
+import java.util.Date;
+
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.Entity.MasterPlatforms;
 import com.web.app.domain.Entity.OdrUsers;
@@ -24,4 +26,7 @@ public interface UtilService {
 
     // Guid取得
     String GetGuid();
+
+    // 指定时间加天数
+    Date AddDaysToDate(Date date, int days);
 }
