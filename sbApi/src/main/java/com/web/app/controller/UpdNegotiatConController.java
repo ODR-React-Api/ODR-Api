@@ -9,29 +9,45 @@ import com.web.app.service.UpdNegotiatConService;
 import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
+/**
+ * 和解案確認更新API Controller
+ * 
+ * @author DUC 王 エンエン
+ * @since 2024/05/07
+ * @version 1.0
+ */
 @CrossOrigin(origins = "*")
-@Api(tags = "和解案確認更新")
+@Api(tags = "和解案合意画面")
 @RestController
-@RequestMapping("/updNegotiatCon")
+@RequestMapping("/negotiatAgree")
 @SuppressWarnings("rawtypes")
 public class UpdNegotiatConController {
 
+  // サービスオブジェクト
   @Autowired
   private UpdNegotiatConService updNegotiatConService;
 
+  /**
+     * 
+     * サービスメソッドを呼び出して和解案を更新し、
+     * 更新結果を判断してページに戻る
+     * 
+     * @param updNegotiatCon 更新に使用するログィンユザと和解案idが含まれています
+     * @return Response
+     */
+  @ApiOperation("和解案確認更新")
   @PostMapping("/updNegotiatCon")
   public Response updNegotiatCon(@RequestBody UpdNegotiatCon updNegotiatCon) {
     try {
+      // 和解案が更新されたかどうかを判断する
       if (updNegotiatConService.updateNegotiatData(updNegotiatCon) != 0) {
-        System.out.println("====================successed================================");
         return AjaxResult.success("和解案已更新!");
       }
-      System.out.println("====================failed================================");
       return AjaxResult.success("和解案未更新!");
     } catch (Exception e) {
-      System.out.println("=====================throw Exception=====================");
       System.out.println(e.toString());
       AjaxResult.fatal("更新失败!", e);
       return null;
