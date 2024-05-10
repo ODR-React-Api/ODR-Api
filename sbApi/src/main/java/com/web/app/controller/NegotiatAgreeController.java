@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
-import com.web.app.domain.updNegotiatDeny.Negotiation;
-import com.web.app.service.UpdNegotiatDenyService;
+import com.web.app.domain.negotiatAgree.Negotiation;
+import com.web.app.service.NegotiatAgreeService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
- * 和解案拒否更新API Controller
+ * 和解案合意画面 Controller
  * 
  * @author DUC 徐義然
  * @since 2024/05/06
@@ -22,17 +23,19 @@ import io.swagger.annotations.Api;
  */
 
 @CrossOrigin(origins = "*")
-@Api(tags = "和解案拒否更新")
+@Api(tags = "和解案合意画面")
 @RestController
-@RequestMapping("/negotiat")
+@RequestMapping("/NegotiatAgree")
 @SuppressWarnings("rawtypes")
-public class UpdNegotiatDenyController {
+public class NegotiatAgreeController {
 
     //サービスオブジェクト
     @Autowired
-    private UpdNegotiatDenyService updNegotiatDenyService;
+    private NegotiatAgreeService updNegotiatDenyService;
 
     /**
+     * 
+     * API_ID:和解案拒否更新
      * 
      * サービスメソッドを呼び出して和解案を更新し、
      * 更新結果を判断してページに戻る
@@ -40,6 +43,7 @@ public class UpdNegotiatDenyController {
      * @param negotiation 更新に使用するログィンユザと和解案idが含まれています
      * @return Response
      */
+    @ApiOperation("和解案拒否更新")
     @PostMapping("/updNegotiatDeny")
     public Response refusalNegotiations(@RequestBody Negotiation negotiation) {
         try {

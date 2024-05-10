@@ -1,6 +1,6 @@
 package com.web.app.service;
 
-import com.web.app.domain.updNegotiatDeny.Negotiation;
+import com.web.app.domain.negotiatAgree.Negotiation;
 
 /**
  * サービスインタフェース
@@ -9,7 +9,7 @@ import com.web.app.domain.updNegotiatDeny.Negotiation;
  * @since 2024/05/06
  * @version 1.0
  */
-public interface UpdNegotiatDenyService {
+public interface NegotiatAgreeService {
 
     int updateNegotiatData(Negotiation negotiation);
 }

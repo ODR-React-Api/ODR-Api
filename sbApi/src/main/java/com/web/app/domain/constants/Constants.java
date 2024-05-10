@@ -86,6 +86,22 @@ public class Constants {
     public static final String STR_ACTION_TYPE_ABORTEDCONFIRM = "CaseAbortedConfirmMailSend";
     public static final String HELP_URL = "http://uat-odr-service.azurewebsites.net/help";
 
+
+    //2024/05/10 DUC徐義然 追加
+    //画面「S22」のエラーメッセージ
+    public static final String AGREEMENT_MESSAGE = "合意済みの調停案は、編集を行うことはできません。";
+    //画面「S22」のエラーメッセージ
+    public static final String REFUSED_MESSAGE = "拒否済みの調停案は、編集を行うことはできません。";
+    //画面「S22」のエラーメッセージ
+    public static final String CONFIRMED_MESSAGE = "確認済みの調停案は、編集を行うことはできません。";
+    //画面「S22」のエラーメッセージ
+    public static final String FINSHED_MESSAGE = "成立済みの調停案は、編集を行うことはできません。";
+
+
+
+
+
+
     // public static final Map<Object,String> SIFANGJI_SIGNAL_STATE_MAP = new
     // HashMap<Object,String>(){{
 

@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.app.domain.updNegotiatDeny.Negotiation;
+import com.web.app.domain.negotiatAgree.Negotiation;
 import com.web.app.mapper.UpdNegotiatDenyMapper;
-import com.web.app.service.UpdNegotiatDenyService;
+import com.web.app.service.NegotiatAgreeService;
 
 import org.springframework.stereotype.Service;
 
@@ -20,16 +20,17 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  */
 @Service
-public class UpdNegotiatDenyServiceImpl implements UpdNegotiatDenyService {
+public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
 
-    //マッパーオブジェクト
+    //和解案拒否更新マッパーオブジェクト
     @Autowired
     private UpdNegotiatDenyMapper updNegotiatDenyMapper;
 
     /**
      * 
-     * データを処理してDBを更新する
+     * API_ID:和解案拒否更新
      * 
+     * データを処理してDBを更新する
      * 
      * @param negotiation 更新に使用するログィンユザと和解案idが含まれています
      * @return DB更新に成功したレコード

@@ -10,10 +10,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.domain.getMediationsData.Mediation;
-import com.web.app.domain.getMediationsData.ResultMediation;
+import com.web.app.domain.constants.Constants;
+import com.web.app.domain.mediationsMake.Mediation;
+import com.web.app.domain.mediationsMake.ResultMediation;
+import com.web.app.domain.mediationsMake.SubsidiaryFile;
 import com.web.app.mapper.GetMediationsDataMapper;
-import com.web.app.service.GetMediationsDataService;
+import com.web.app.mapper.SaveMeditonMapper;
+import com.web.app.service.MediationsMakeService;
 
 /**
  * サービス実装クラス
@@ -23,21 +26,31 @@ import com.web.app.service.GetMediationsDataService;
  * @version 1.0
  */
 @Service
-public class GetMediationsDataServiceImpl implements GetMediationsDataService {
-
-    private static final String AGREEMENT_MESSAGE = "合意済みの調停案は、編集を行うことはできません。";
-
-    private static final String REFUSED_MESSAGE = "拒否済みの調停案は、編集を行うことはできません。";
-
-    private static final String CONFIRMED_MESSAGE = "確認済みの調停案は、編集を行うことはできません。";
-
-    private static final String FINSHED_MESSAGE = "成立済みの調停案は、編集を行うことはできません。";
+public class MediationsMakeServiceImpl implements MediationsMakeService {
     
-    //マッパーオブジェクト
+    //調停案データ取得マッパーオブジェクト
     @Autowired
     private GetMediationsDataMapper getMediationsDataMapper;
 
+    //調停案データ更新マッパーオブジェクト
+    @Autowired
+    private SaveMeditonMapper saveMeditonMapper;
+
     /**
+     * 
+     * API_ID:調停案データ更新
+     * 
+     * @param mediationId:調停案id
+     * @return この調停案idがDBに存在する個数
+     */
+    @Override
+    public int isExistMediations(String mediationId){
+        return saveMeditonMapper.isExistMediations(mediationId);
+    }
+
+    /**
+     * 
+     * API_ID:調停案データ取得
      * 
      * DBを検索して処理後のデータをコントローラに渡す
      * 
@@ -57,6 +70,9 @@ public class GetMediationsDataServiceImpl implements GetMediationsDataService {
 
 
     /**
+     * 
+     * API_ID:調停案データ取得
+     * 
      * 取得したList結果をフロントエンドが使用するエンティティークラスに変換する
      * 
      * @param mediation:检索结果
@@ -64,14 +80,18 @@ public class GetMediationsDataServiceImpl implements GetMediationsDataService {
      * @return resultMediation
      */
     private ResultMediation setResult(List<Mediation> mediation,ResultMediation resultMediation){
+        resultMediation.setFiles(null);
+        List<SubsidiaryFile> files = new ArrayList<SubsidiaryFile>();
         Iterator<Mediation> iterator = mediation.iterator();
         //カウンタカウンタ
         int count = 0;
         //集合を反復器で巡回し、resultMediationに順次渡す
         while (iterator.hasNext()) {
             Mediation next = iterator.next();
-            resultMediation.getFiles().get(count).setFileName(next.getFileName());
-            resultMediation.getFiles().get(count).setFileUrl(next.getFileUrl());
+            SubsidiaryFile file = new SubsidiaryFile();
+            file.setFileName(next.getFileName());
+            file.setFileUrl(next.getFileUrl());
+            files.add(file);
             //コレクション内の添付ファイル以外のフィールドはすべて同じなので、値は1回だけとります
             if (count == 0) {
                 //文字列をカンマで分割
@@ -84,13 +104,13 @@ public class GetMediationsDataServiceImpl implements GetMediationsDataService {
                 //設定エラーメッセージ
                 resultMediation.setStatus(next.getStatus());
                 if (resultMediation.getStatus() == 2 || resultMediation.getStatus() == 3 || resultMediation.getStatus() == 4) {
-                    resultMediation.setMeg(AGREEMENT_MESSAGE);
+                    resultMediation.setMeg(Constants.AGREEMENT_MESSAGE);
                 }else if(resultMediation.getStatus() == 5 || resultMediation.getStatus() == 6){
-                    resultMediation.setMeg(REFUSED_MESSAGE);
+                    resultMediation.setMeg(Constants.REFUSED_MESSAGE);
                 }else if(resultMediation.getStatus() == 7 || resultMediation.getStatus() == 8){
-                    resultMediation.setMeg(CONFIRMED_MESSAGE);
+                    resultMediation.setMeg(Constants.CONFIRMED_MESSAGE);
                 }else if(resultMediation.getStatus() == 9){
-                    resultMediation.setMeg(FINSHED_MESSAGE);
+                    resultMediation.setMeg(Constants.FINSHED_MESSAGE);
                 }else{
                     resultMediation.setMeg(null);
                 }
@@ -125,7 +145,10 @@ public class GetMediationsDataServiceImpl implements GetMediationsDataService {
                 resultMediation.setSpecialItem(next.getSpecialItem());
                 resultMediation.setUserId(next.getUserId());
             }
+            count++;
+
         }
+        resultMediation.setFiles(files);
         return resultMediation;
     }
 }

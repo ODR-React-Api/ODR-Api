@@ -1,4 +1,4 @@
-package com.web.app.domain.updNegotiatDeny;
+package com.web.app.domain.negotiatAgree;
 
 import java.io.Serializable;
 

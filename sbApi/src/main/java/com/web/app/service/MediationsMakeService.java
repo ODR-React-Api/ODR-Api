@@ -1,6 +1,6 @@
 package com.web.app.service;
 
-import com.web.app.domain.getMediationsData.ResultMediation;
+import com.web.app.domain.mediationsMake.ResultMediation;
 
 /**
  * サービスインタフェース
@@ -9,7 +9,9 @@ import com.web.app.domain.getMediationsData.ResultMediation;
  * @since 2024/05/07
  * @version 1.0
  */
-public interface GetMediationsDataService {
+public interface MediationsMakeService {
     
     ResultMediation getResultMediation(ResultMediation resultMediation);
+    
+    int isExistMediations(String mediationId);
 }

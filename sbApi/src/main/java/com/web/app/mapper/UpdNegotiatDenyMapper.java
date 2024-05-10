@@ -2,7 +2,7 @@ package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.updNegotiatDeny.Negotiation;
+import com.web.app.domain.negotiatAgree.Negotiation;
 
 /**
  * マッパー
