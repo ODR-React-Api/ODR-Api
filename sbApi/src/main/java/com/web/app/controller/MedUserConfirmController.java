@@ -41,8 +41,8 @@ public class MedUserConfirmController {
      * @throws Exception 調整案ステータス取得失敗
      */
     @ApiOperation("調停案ステータス取得")
-    @PostMapping("/getMediationStatus")
-    public String getMediationStatus(@RequestBody String CaseId) {
+    @PostMapping("/GetMediationStatus")
+    public String GetMediationStatus(@RequestBody String CaseId) {
         try {
             // 調停案ステータスを取得
             String MediationStatus = mediationService.Mediationstatus(CaseId);
