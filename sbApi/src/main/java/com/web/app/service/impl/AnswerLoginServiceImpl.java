@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.web.app.domain.PetitionsData;
 import com.web.app.mapper.GetPetitionsDataMapper;
-import com.web.app.service.GetPetitionsDataService;
+import com.web.app.service.AnswerLoginService;
 
 
 @Service
-public class GetPetitionsDataServiceImpl implements GetPetitionsDataService{
+public class AnswerLoginServiceImpl implements AnswerLoginService{
     @Autowired
     GetPetitionsDataMapper getPetitionsDataMapper;
 

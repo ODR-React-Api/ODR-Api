@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.web.app.domain.LoginUser;
 import com.web.app.mapper.LoginUserMapper;
-import com.web.app.service.LoginUserService;
+import com.web.app.service.LoginService;
 
 @Service
-public class LoginUserServiceImpl implements LoginUserService {
+public class LoginServiceImpl implements LoginService {
     @Autowired
     private LoginUserMapper loginMapper;
 

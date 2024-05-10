@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.LoginUser;
 import com.web.app.domain.MasterPlatforms2;
-import com.web.app.service.LoginUserService;
-// import com.web.app.service.UtilService;
+import com.web.app.service.LoginService;
 import com.web.app.service.UtilService;
 
 import io.swagger.annotations.Api;
@@ -19,21 +19,19 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins = "*")
 // 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
 @Api(tags = "申立データ取得1")
+@RequestMapping("/Login")
 @RestController
-public class LoginUserController {
+public class LoginController {
     @Autowired
-    LoginUserService testService;
+    LoginService loginService;
 
     @Autowired
     UtilService utilService;
 
-    // @Autowired
-    // UtilService utilService;
-
     @ApiOperation("用户登录")
     @PostMapping("/LoginUser")
     public List<LoginUser> LoginUser(String email,String passWord){
-        List<LoginUser> list = testService.Login(email, passWord);
+        List<LoginUser> list = loginService.Login(email, passWord);
         return list;
 
     }

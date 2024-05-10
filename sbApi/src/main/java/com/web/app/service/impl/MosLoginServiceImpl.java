@@ -4,10 +4,10 @@ import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
-import com.web.app.service.GetGoodsInfoService;
+import com.web.app.service.MosLoginService;
 
 @Service
-public class GetGoodsInfoServiceImpl implements GetGoodsInfoService{
+public class MosLoginServiceImpl implements MosLoginService{
 
     @Override
     public HashMap<String, String> getGoods(String goodsId) {

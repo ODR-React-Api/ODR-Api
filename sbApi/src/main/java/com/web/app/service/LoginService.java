@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.web.app.domain.LoginUser;
 
-public interface LoginUserService {
+public interface LoginService {
     List<LoginUser> Login(String email, String passWordd);
 
     boolean updateLoginDate(String email, String passWordd);

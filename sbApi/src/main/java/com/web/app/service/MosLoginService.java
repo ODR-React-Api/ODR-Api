@@ -2,6 +2,6 @@ package com.web.app.service;
 
 import java.util.HashMap;
 
-public interface GetGoodsInfoService {
+public interface MosLoginService {
     HashMap<String,String> getGoods(String goodsId);
 }

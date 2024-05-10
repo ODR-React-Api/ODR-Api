@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
 
@@ -218,5 +219,12 @@ public class UtilServiceImpl implements UtilService {
     @Override
     public MasterPlatforms2 GetMasterPlatforms2(String platFormId) {
         return commonMapper.GetMasterPlatforms2(platFormId);
+    }
+
+    @Override
+    public String GetGuid() {
+        String strGuid = UUID.randomUUID().toString();
+        strGuid = strGuid.replace("-", "").toUpperCase();
+        return strGuid;
     }
 }

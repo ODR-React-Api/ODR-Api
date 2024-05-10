@@ -23,6 +23,8 @@ public interface UtilService {
     // mail送信
     boolean SendMail(SendMailRequest SendMailRequest);
 
+    String GetGuid();
+
 
     // 根据platformID查询platform部分信息
     MasterPlatforms2 GetMasterPlatforms2(String platFormId);

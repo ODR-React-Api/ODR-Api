@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdRepliesDataMapper">
+
+    <sql id="InsertReplies">
+        (id,PlatformId,CaseId,Status,
+        replyType,replyContext,HaveCounterClaim,CounterClaimContext,
+        TraderAgent1_UserEmail,TraderAgent2_UserEmail,TraderAgent3_UserEmail,
+        TraderAgent4_UserEmail,TraderAgent5_UserEmail,Other01,Other02,Other03,
+        Other04,Other05,DeleteFlag,LastModifiedDate,LastModifiedBy)
+    </sql>
+
+    <sql id="InsertReplies_Data">
+        (#{repliesId},#{PlatformId},#{CaseId},0,#{replyType},#{replyContext},
+        #{HaveCounterClaim},#{CounterClaimContext},#{TraderAgent1_UserEmail},
+        #{TraderAgent2_UserEmail},#{TraderAgent3_UserEmail},#{TraderAgent4_UserEmail},
+        #{TraderAgent5_UserEmail},null,null,null,null,null,0,NOW(),#{loginUser})
+    </sql>
+
+    <sql id="InsertFiles">
+        (id,PlatformId,CaseId,FileName,
+        FileExtension,FileUrl,FileBlobStorageId,FileSize,
+        RegisterUserId,RegisterDate,Other01,Other02,Other03,
+        Other04,Other05,DeleteFlag,LastModifiedDate,LastModifiedBy)
+    </sql>
+
+    <sql id="InsertFiles_Data">
+        (#{filesId},#{PlatformId},#{CaseId},0,#{FileName},#{FileExtension},
+        #{FileUrl},null,#{FileSize},NOW(),null,null,null,null,null,0,NOW(),#{loginUser})
+    </sql>
+
+    <sql id="InsertFileRelations">
+        (id,PlatformId,CaseId,RelationType,
+        RelatedId,fileId,Other01,Other02,Other03,
+        Other04,Other05,DeleteFlag,LastModifiedDate,LastModifiedBy)
+    </sql>
+
+    <sql id="InsertFileRelations_Data">
+        (#{FileRelationsId},#{PlatformId},#{CaseId},#{RelationType},#{repliesId},
+        #{filesId},null,null,null,null,null,0,NOW(),#{loginUser})
+    </sql>
+
+    <sql id="UpdateReplies">
+        replyType=#{replyType},replyContext=3{replyContext},HaveCounterClaim=#{HaveCounterClaim},
+        CounterClaimContext=#{CounterClaimContext},TraderAgent1_UserEmail=#{TraderAgent1_UserEmail},
+        TraderAgent2_UserEmail=#{TraderAgent2_UserEmail},TraderAgent3_UserEmail=#{TraderAgent3_UserEmail},
+        TraderAgent4_UserEmail=#{TraderAgent4_UserEmail},TraderAgent5_UserEmail=#{TraderAgent5_UserEmail},
+        LastModifiedDate=NOW(),LastModifiedBy=#{loginUser}
+    </sql>
+
+    <select id="selectData" resultType="String">
+        select id from case_replies where PlatformId = #{platFormId} and CaseId = #{caseId}
+    </select>
+
+    <insert id="insertReplies">
+        insert into case_replies<include refid="InsertReplies"/> values <include refid="InsertReplies_Data"/>
+    </insert>
+
+    <insert id="insertFiles">
+        insert into files<include refid="InsertFiles"/> values <include refid="InsertFiles_Data"/>
+    </insert>
+
+    <insert id="insertFileRelations">
+        insert into file_relations<include refid="InsertFileRelations"/> values <include refid="InsertFileRelations_Data"/>
+    </insert>
+
+    <update id="updateReplies">
+        update case_replies set <include refid="UpdateReplies"/> where PlatformId = #{platFormId} and CaseId = #{caseId}
+    </update>
+
+    <update id="updateFiles">
+        update files set DeleteFlag=1,LastModifiedDate=NOW(),LastModifiedBy=#{loginUser} where PlatformId = #{platFormId} and id=#{updatFileId}
+    </update>
+
+    <update id="updateFileRelations">
+        update file_relations set DeleteFlag=1,LastModifiedDate=NOW(),LastModifiedBy=#{loginUser} where PlatformId = #{platFormId} and id=#{updatFileId}
+    </update>
+
+
+
+</mapper>
