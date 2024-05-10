@@ -1,25 +1,39 @@
 package com.web.app.service.impl;
 
-import com.web.app.service.GetMediationResumeService;
-
+import com.web.app.service.MedUserConfirmService;
 import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.web.app.mapper.GetMediationResumeMapper;
+import com.web.app.mapper.GetMediationStatusMapper;
 import com.web.app.domain.MediateUser;
 
+/**
+ * 調停案ステータス取得
+ * 調停人メール取得
+ * 調停人情報取得
+ * 
+ * @author DUC jiawenzhi
+ * @since 2024/05/10
+ * @version 1.0
+ */
+
 @Service
-public class GetMediationResumeServiceImpl implements GetMediationResumeService {
+public class MedUserConfirmImpl implements MedUserConfirmService {
 
     @Autowired
-    private GetMediationResumeMapper mediationMapper;
+    private GetMediationStatusMapper mediationMapper;
 
+    /**
+     * 
+     * 調停案ステータス取得
+     * 
+     * @param mediateUser 受付カウンターからの案件ID
+     * @return 調停案ステータスを取得する
+     */
     @Override
-    public MediateUser Mediationstatus(MediateUser mediateUser) {
-        MediateUser num = mediationMapper.Mediationstatus(mediateUser);
-        return num;
+    public String Mediationstatus(String CaseId) {
+        String Mediationstatus = mediationMapper.Mediationstatus(CaseId);
+        return Mediationstatus;
     }
 
     @Override
