@@ -1,4 +1,4 @@
-package com.web.app.domain.NegotiatPreview;
+package com.web.app.domain.Entity;
 
 import java.io.Serializable;
 
@@ -19,7 +19,7 @@ public class CaseFileRelations implements Serializable{
     private String CaseId;
 
     //案件種類
-    private String RelationType;
+    private Integer RelationType;
 
     //案件種類ID
     private String RelatedId;

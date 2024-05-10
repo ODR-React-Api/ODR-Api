@@ -1,4 +1,4 @@
-package com.web.app.domain.NegotiatPreview;
+package com.web.app.domain.Entity;
 
 import java.io.Serializable;
 
@@ -8,9 +8,6 @@ import lombok.Data;
 public class CaseNegotiations implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    
-    //
-    private String email;
 
     //ID
     private String id;
@@ -22,7 +19,7 @@ public class CaseNegotiations implements Serializable{
     private String CaseId;
 
     //ステータス
-    private String Status;
+    private Integer Status;
 
     //共同編集完了通知フラグ
     private String InfoStatus;
@@ -46,7 +43,7 @@ public class CaseNegotiations implements Serializable{
     private String PaymentEndDate;
 
     //返送時送料負担区分
-    private String ShipmentPayType;
+    private Integer ShipmentPayType;
 
     //返送時送料負担区分
     private String ShipmentPayValue;

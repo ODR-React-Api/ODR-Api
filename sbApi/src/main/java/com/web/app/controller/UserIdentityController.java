@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.app.domain.NegotiatPreview.NegotiationsData;
+import com.web.app.domain.S19.NegotiationsData;
 import com.web.app.service.UserIdentity.FindUserIdentityService;
 
 import io.swagger.annotations.Api;

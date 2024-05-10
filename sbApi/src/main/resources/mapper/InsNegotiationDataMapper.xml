@@ -2,18 +2,18 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.NegotiatPreview.NegotiationsDataMapper">
+<mapper namespace="com.web.app.mapper.InsNegotiationDataMapper">
     <!--  -->
-    <select id="SearchCaseNegotiations" resultType="com.web.app.domain.NegotiatPreview.CaseNegotiations">
+    <!-- <select id="SearchCaseNegotiations" resultType="com.web.app.domain.NegotiatPreview.CaseNegotiations">
         SELECT
             *
         FROM
             case_negotiations
         WHERE
             CaseId = #{caseId}
-    </select>
+    </select> -->
 
-    <insert id="AddCaseNegotiations" parameterType="com.web.app.domain.NegotiatPreview.CaseNegotiations">
+    <insert id="AddCaseNegotiations" parameterType="com.web.app.domain.Entity.CaseNegotiations">
         INSERT INTO case_negotiations(
             id,
             PlatformId,
@@ -83,7 +83,7 @@
             );
     </insert>
 
-    <insert id="AddFile" parameterType="com.web.app.domain.NegotiatPreview.File">
+    <insert id="AddFile" parameterType="com.web.app.domain.Entity.File">
         INSERT INTO files(
             id,
             PlatformId,
@@ -112,7 +112,7 @@
             #{FileUrl},
             NULL,
             #{FileSize},
-            #{UserId},
+            #{RegisterUserId},
             CURRENT_TIMESTAMP(),
             NULL,
             NULL,
@@ -121,11 +121,11 @@
             NULL,
             0,
             CURRENT_TIMESTAMP(),
-            #{UserId}
+            #{LastModifiedBy}
         );
     </insert>
 
-    <insert id="AddCaseFileRelations" parameterType="com.web.app.domain.NegotiatPreview.CaseFileRelations">
+    <insert id="AddCaseFileRelations" parameterType="com.web.app.domain.Entity.CaseFileRelations">
         INSERT INTO case_file_relations(
             id,
             PlatformId,
@@ -156,11 +156,11 @@
             NULL,
             0,
             CURRENT_TIMESTAMP(),
-            #{UserId}
+            #{LastModifiedBy}
         );
     </insert>
 
-    <update id="UpCaseNegotiations" parameterType="com.web.app.domain.NegotiatPreview.CaseNegotiations">
+    <!-- <update id="UpCaseNegotiations" parameterType="com.web.app.domain.NegotiatPreview.CaseNegotiations">
         UPDATE case_negotiations
         SET
             ExpectResloveTypeValue = #{ExpectResloveTypeValue},
@@ -198,5 +198,5 @@
             LastModifiedBy = #{UserId}
         WHERE
             fileId = #{FileId}
-    </update>
+    </update> -->
 </mapper>

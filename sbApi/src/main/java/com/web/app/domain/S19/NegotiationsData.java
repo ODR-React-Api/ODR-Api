@@ -1,4 +1,4 @@
-package com.web.app.domain.NegotiatPreview;
+package com.web.app.domain.S19;
 
 import java.io.Serializable;
 

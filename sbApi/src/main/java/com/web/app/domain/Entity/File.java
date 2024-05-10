@@ -1,4 +1,4 @@
-package com.web.app.domain.NegotiatPreview;
+package com.web.app.domain.Entity;
 
 import java.io.Serializable;
 
@@ -31,7 +31,7 @@ public class File implements Serializable {
     private String FileBlobStorageId;
 
     //ファイルサイズ
-    private String FileSize;
+    private Integer FileSize;
 
     //ユーザーID
     private String RegisterUserId;
