@@ -1,4 +1,4 @@
-package com.web.app.domain;
+package com.web.app.domain.S20;
 
 import java.io.Serializable;
 
