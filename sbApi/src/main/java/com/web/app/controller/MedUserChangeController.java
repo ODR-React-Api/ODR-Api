@@ -5,10 +5,13 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
+import com.web.app.domain.MedUserChange.InsertFileInfo;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.MedUserChangeService;
 
@@ -97,4 +100,14 @@ public class MedUserChangeController {
         }
     }
 
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("ファイル関連情報更新API")
+    @PostMapping("/insertFileInfo")
+    public Response insertFileInfo(@RequestBody InsertFileInfo insertFileInfo) {
+        int insertfileInfoNum = medUserChangeService.insertFileInfo(insertFileInfo);
+        if(insertfileInfoNum == 1) {
+            return Response.success("成功");
+        }
+        return Response.error("失败");
+    }
 }

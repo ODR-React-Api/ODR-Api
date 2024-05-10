@@ -54,5 +54,42 @@
         WHERE
         cid = #{Cid}
     </select>
+    
+    <insert id="insertFile" parameterType="com.web.app.domain.MedUserChange.InsertFileInfo">
+        INSERT INTO files (
+            id,
+            CaseId,
+            FileName,
+            FileExtension,
+            FileUrl,
+            FileSize,
+            RegisterUserId,
+            RegisterDate
+        ) VALUES (
+            #{fileId},
+            #{caseId},
+            #{fileName},
+            #{fileExtension},
+            #{fileUrl},
+            #{fileSize},
+            #{registerUserId},
+            NOW()
+        )
+    </insert>
 
+    <insert id="insertCaseFileRelations" parameterType="com.web.app.domain.MedUserChange.InsertFileInfo">
+        INSERT INTO case_file_relations (
+            id,
+            CaseId,
+            RelationType,
+            RelatedId,
+            fileId
+        ) VALUES (
+            #{caseFileRelationsId},
+            #{caseId},
+            7,
+            #{relatedId},
+            #{fileId}
+        )
+    </insert>    
 </mapper>

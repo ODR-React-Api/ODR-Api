@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.ReplyWithdrawMapper">
+    <resultMap id="replyWithdrawResultMap" type="com.web.app.domain.TestUser">
+        <result property="UserId" column="UserId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <update id="updateReplyWithdrawByCase" parameterType="com.web.app.domain.ReplyWithdraw.ReplyWithdraw">
+        UPDATE
+            cases
+        SET
+            CaseStage = 3,
+            CaseStatus = '0300',
+            NegotiationStartDate = NOW(),
+            NegotiationEndDate = #{NegotiationEndDate},
+            NegotiationEndDateChangeStatus = 0,
+            NegotiationEndDateChangeCount = 0,
+            LastModifiedDate = NOW(),
+            LastModifiedBy = #{UserId}
+        WHERE
+            cid = #{CaseId}
+            AND DeleteFlag = 0
+    </update>
+    <update id="updateReplyWithdrawByCaseReplies">
+        UPDATE
+            case_replies
+        SET
+            WithDrawDate = NOW(),
+            Status = 2,
+            LastModifiedDate = NOW(),
+            LastModifiedBy = #{UserId}
+        WHERE
+            CaseId = #{CaseId}
+            AND PlatformId = #{PlatformId}
+            AND DeleteFlag = 0
+    </update>
+</mapper>
