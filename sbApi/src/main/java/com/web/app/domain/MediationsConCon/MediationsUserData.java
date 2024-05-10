@@ -1,10 +1,10 @@
-package com.web.app.domain;
+package com.web.app.domain.MediationsConCon;
 
 import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import io.swagger.annotations.ApiModel;
 
-@ApiModel 
+@ApiModel
 @Data
 public class MediationsUserData implements Serializable{
     
