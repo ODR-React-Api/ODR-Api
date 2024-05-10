@@ -3,14 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.UpdNegotiatAgreeMapper">
-    <update id="reconciliationUpdate" parameterType="com.web.app.domain.ReconciliationUser">
+    <update id="reconciliationUpdate" parameterType="com.web.app.domain.UpdNegotiatAgree.ReconciliationUser">
         UPDATE case_negotiations
         SET
-            AgreementDate = NOW(),
+            AgreementDate = #{AgreementDate},
             HtmlContext = #{HtmlContext},
             HtmlContext2 = #{HtmlContext2},
             Status = 3,
-            LastModifiedDate = NOW(),
+            LastModifiedDate = #{LastModifiedDate},
             LastModifiedBy = #{LastModifiedBy}
         WHERE
             id = #{id}

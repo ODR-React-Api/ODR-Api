@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.MediationcaseMapper">
 
-<select id="reconciliationUserSearch" resultType="com.web.app.domain.ReconciliationUser">
+<select id="MediationcaseSearch" resultType="com.web.app.domain.Mediationcase">
  SELECT
         CaseId,
 

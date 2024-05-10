@@ -1,6 +1,6 @@
 package com.web.app.service;
 
-import com.web.app.domain.ReconciliationUser;
+import com.web.app.domain.UpdNegotiatAgree.ReconciliationUser;;
 
 /**
  * 和解案合意更新
@@ -10,8 +10,8 @@ import com.web.app.domain.ReconciliationUser;
  * @version 1.0
  */
 
-public interface UpdNegotiatAgreeService {
-    
+public interface NegotiatAgreeService {
+
     // 和解案合意更新
     int reconciliationUpdate(ReconciliationUser reconciliationuser);
 
