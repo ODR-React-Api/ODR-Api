@@ -9,11 +9,9 @@ import com.web.app.service.UpdNegotiatAgreeService;
 
 /**
  * 和解案合意更新API
- * 「アクロン履歴」新規登録
- * メール送信
  * 
  * @author DUC jiawenzhi
- * @since 2024/05/09
+ * @since 2024/05/10
  * @version 1.0
  */
 
@@ -23,53 +21,26 @@ import com.web.app.service.UpdNegotiatAgreeService;
 @RequestMapping("/updnegotiatagree")
 public class UpdNegotiatAgreeController {
 
-  @Autowired
-  private UpdNegotiatAgreeService ReconciliationSerce;
+    @Autowired
+    private UpdNegotiatAgreeService ReconciliationSerce;
 
-  /**
-   * 
-   * 和解案合意更新
-   * 「アクロン履歴」新規登録
-   * メール送信
-   * 
-   * @param reconciliationuser フォアグラウンドでんたつ
-   * @return 合意の成否を判断する
-   * @throws Exception 合意失敗
-   */
-
-  @ApiOperation("和解案合意更新")
-  @PostMapping("/reconciliationUpdate")
-  public int reconciliationUpdate(@RequestBody ReconciliationUser reconciliationuser) {
-    try {
-      // 合意更新ステータス
-      int ReconciliationUpdateStatus = 0;
-      // 「アクショー履歴」新規登録ステータス
-      int ActionHistoriesInsertStatus = 0;
-      // 送信状態
-      Boolean sendMailRequest = false;
-      // 合意状態
-      int FinalState;
-      // 和解案合意更新
-      ReconciliationUpdateStatus = ReconciliationSerce.reconciliationUpdate(reconciliationuser);
-      // アップデート成功後に「アクショー履歴」新規ログインを行う
-      if (ReconciliationUpdateStatus == 1) {
-        ActionHistoriesInsertStatus = ReconciliationSerce.ActionHistoriesInsert(reconciliationuser);
-        // 「アクショー履歴」新規登録成功後にメール配信
-        if (ActionHistoriesInsertStatus == 1) {
-          sendMailRequest = ReconciliationSerce.sendMailRequest(reconciliationuser);
+    /**
+    * 
+    * 和解案合意更新
+    * 
+    * @param reconciliationuser フォアグラウンドでんたつ
+    * @return 合意の成否を判断する
+    * @throws Exception 合意失敗
+    */
+    @ApiOperation("和解案合意更新")
+    @PostMapping("/reconciliationUpdate")
+    public int reconciliationUpdate(@RequestBody ReconciliationUser reconciliationuser) {
+        try {
+            // 和解案合意更新
+            int ReconciliationUpdateStatus = ReconciliationSerce.reconciliationUpdate(reconciliationuser);
+            return ReconciliationUpdateStatus;
+        } catch (Exception e) {
+            return 0;
         }
-      }
-      // 合意の成否を判断する
-      if (ReconciliationUpdateStatus == 1 && ActionHistoriesInsertStatus == 1 && sendMailRequest == true) {
-        // 合意成功
-        FinalState = 1;
-      } else {
-        // 合意失敗
-        FinalState = 0;
-      }
-      return FinalState;
-    } catch (Exception e) {
-      return 0;
-    }
   }
 }

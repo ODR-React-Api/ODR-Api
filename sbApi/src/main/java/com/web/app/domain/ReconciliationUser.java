@@ -7,8 +7,6 @@ import lombok.Data;
 
 /**
  * 和解案合意更新API
- * 和解案合意アクション履歴新規登録API
- * メール送信API
  * 
  * @author DUC jiawenzhi
  * @since 2024/05/09
@@ -32,10 +30,5 @@ public class ReconciliationUser implements Serializable {
     private Date LastModifiedDate;
     // 'ログインユーザ
     private String LastModifiedBy;
-    // メールアドレス
-    private String Email;
-    // 'ログインユーザ
-    private String UserId;
-    // プラットフォームID
-    private String PlatformId;
+
 }

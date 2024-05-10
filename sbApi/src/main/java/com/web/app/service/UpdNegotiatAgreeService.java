@@ -3,21 +3,16 @@ package com.web.app.service;
 import com.web.app.domain.ReconciliationUser;
 
 /**
- * 和解案合意更新API
- * 「アクロン履歴」新規登録
- * メール送信
+ * 和解案合意更新
  * 
  * @author DUC jiawenzhi
- * @since 2024/05/09
+ * @since 2024/05/10
  * @version 1.0
  */
 
 public interface UpdNegotiatAgreeService {
-
+    
+    // 和解案合意更新
     int reconciliationUpdate(ReconciliationUser reconciliationuser);
-
-    int ActionHistoriesInsert(ReconciliationUser reconciliationuser);
-
-    Boolean sendMailRequest(ReconciliationUser reconciliationuser);
 
 }

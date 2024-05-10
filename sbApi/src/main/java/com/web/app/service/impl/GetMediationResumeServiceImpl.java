@@ -1,20 +1,20 @@
 package com.web.app.service.impl;
 
-import com.web.app.service.MediationService;
+import com.web.app.service.GetMediationResumeService;
 
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.mapper.MediationMapper;
+import com.web.app.mapper.GetMediationResumeMapper;
 import com.web.app.domain.MediateUser;
 
 @Service
-public class MediationServiceImpl implements MediationService {
+public class GetMediationResumeServiceImpl implements GetMediationResumeService {
 
     @Autowired
-    private MediationMapper mediationMapper;
+    private GetMediationResumeMapper mediationMapper;
 
     @Override
     public MediateUser Mediationstatus(MediateUser mediateUser) {

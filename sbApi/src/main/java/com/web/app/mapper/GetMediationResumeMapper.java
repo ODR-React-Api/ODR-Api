@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.web.app.domain.MediateUser;
 @Mapper
-public interface MediationMapper {
+public interface GetMediationResumeMapper {
     MediateUser Mediationstatus(MediateUser mediateUser);
 
     String MediatorUserEmail(MediateUser mediateUser);
