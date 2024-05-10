@@ -15,11 +15,11 @@ import com.web.app.domain.MediateUser;
  */
 @Mapper
 public interface GetMediationStatusMapper {
-   //調停案ステータス取得
+    // 調停案ステータス取得
     String Mediationstatus(String CaseId);
 
     String MediatorUserEmail(MediateUser mediateUser);
-    
+
     String MediatorUserUid(String MediatorUserEmail);
 
     ArrayList<MediateUser> MediatorIntelligence(MediateUser MediatorIntelligence);

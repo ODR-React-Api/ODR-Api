@@ -1,14 +1,12 @@
 package com.web.app.controller;
 
 import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import com.web.app.domain.MediateUser;
@@ -46,7 +44,7 @@ public class MedUserConfirmController {
         try {
             // 調停案ステータスを取得
             String MediationStatus = mediationService.Mediationstatus(CaseId);
-            //調停案ステータス
+            // 調停案ステータス
             return MediationStatus;
         } catch (Exception e) {
             return null;
