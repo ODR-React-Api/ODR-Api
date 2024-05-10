@@ -114,7 +114,7 @@ public class NegotiationsEditController {
             negotiationsEdit.setUserId("ログインユーザ");
             negotiationsEdit.setSubmitDate(null);
             negotiationsEdit.setAgreementDate(null);
-            negotiationsEdit.setDeleteFlag(Constants.DELETED_0);
+            negotiationsEdit.setDeleteFlag(Constants.DELETE_FLAG_0);
             SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.FORMAT);
             Date date = new Date();
             String lastModifiedDate = dateFormat.format(date);
@@ -145,7 +145,7 @@ public class NegotiationsEditController {
             files.setOther03(null);
             files.setOther04(null);
             files.setOther05(null);
-            files.setDeleteFlag(Constants.DELETED_0);
+            files.setDeleteFlag(Constants.DELETE_FLAG_0);
             files.setLastModifiedDate(lastModifiedDate);
             // ログインユーザ
             files.setLastModifiedBy("ログインユーザ");
@@ -163,7 +163,7 @@ public class NegotiationsEditController {
             caseFileRelations.setOther03(null);
             caseFileRelations.setOther04(null);
             caseFileRelations.setOther05(null);
-            caseFileRelations.setDeleteFlag(Constants.DELETED_0);
+            caseFileRelations.setDeleteFlag(Constants.DELETE_FLAG_0);
             caseFileRelations.setLastModifiedDate(lastModifiedDate);
             // ログインユーザ
             caseFileRelations.setLastModifiedBy("ログインユーザ");
@@ -227,7 +227,7 @@ public class NegotiationsEditController {
 
             // 「添付ファイル」論理削除
             Files filesDelete = new Files();
-            filesDelete.setDeleteFlag(Constants.DELETED_1);
+            filesDelete.setDeleteFlag(Constants.DELETE_FLAG_1);
             filesDelete.setLastModifiedDate(lastModifiedDate);
             // ログインユーザ
             filesDelete.setLastModifiedBy("updateUser");
@@ -235,7 +235,7 @@ public class NegotiationsEditController {
 
             // 「案件-添付ファイルリレーション」論理削除
             CaseFileRelations caseFileRelationsDelete = new CaseFileRelations();
-            caseFileRelationsDelete.setDeleteFlag(Constants.DELETED_1);
+            caseFileRelationsDelete.setDeleteFlag(Constants.DELETE_FLAG_1);
             caseFileRelationsDelete.setLastModifiedDate(lastModifiedDate);
             // ログインユーザ
             caseFileRelationsDelete.setLastModifiedBy("updateUser");
@@ -263,7 +263,7 @@ public class NegotiationsEditController {
             files.setOther03(null);
             files.setOther04(null);
             files.setOther05(null);
-            files.setDeleteFlag(Constants.DELETED_0);
+            files.setDeleteFlag(Constants.DELETE_FLAG_0);
             files.setLastModifiedDate(lastModifiedDate);
             // ログインユーザ
             files.setLastModifiedBy("insertUser");
@@ -281,7 +281,7 @@ public class NegotiationsEditController {
             caseFileRelations.setOther03(null);
             caseFileRelations.setOther04(null);
             caseFileRelations.setOther05(null);
-            caseFileRelations.setDeleteFlag(Constants.DELETED_0);
+            caseFileRelations.setDeleteFlag(Constants.DELETE_FLAG_0);
             caseFileRelations.setLastModifiedDate(lastModifiedDate);
             // ログインユーザ
             caseFileRelations.setLastModifiedBy("insertUser");

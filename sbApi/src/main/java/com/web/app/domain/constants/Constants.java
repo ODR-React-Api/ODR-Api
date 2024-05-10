@@ -110,8 +110,8 @@ public class Constants {
     //ログインユーザーは相手方の場合
     public static final int POSITIONFLAG_TRADER= 2;
     //DeleteFlag
-    public static final int DELETED_0 = 0;
-    public static final int DELETED_1 = 1;
+    public static final int DELETE_FLAG_0 = 0;
+    public static final int DELETE_FLAG_1 = 1;
     //「case_file_relations.RelationType案件種類」 4:和解案
     public static final int CASE_NEGOTIATIONS =4;
 
