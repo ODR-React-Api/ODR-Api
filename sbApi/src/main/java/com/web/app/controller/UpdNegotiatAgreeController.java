@@ -20,7 +20,7 @@ import com.web.app.service.UpdNegotiatAgreeService;
 @CrossOrigin(origins = "*")
 @Api(tags = "和解案合意更新模块")
 @RestController
-@RequestMapping("/reconciliation")
+@RequestMapping("/updnegotiatagree")
 public class UpdNegotiatAgreeController {
 
   @Autowired
@@ -41,15 +41,14 @@ public class UpdNegotiatAgreeController {
   @PostMapping("/reconciliationUpdate")
   public int reconciliationUpdate(@RequestBody ReconciliationUser reconciliationuser) {
     try {
-      // ステータスの更新
+      // 合意更新ステータス
       int ReconciliationUpdateStatus = 0;
-      // ログインステータス
+      // 「アクショー履歴」新規登録ステータス
       int ActionHistoriesInsertStatus = 0;
       // 送信状態
       Boolean sendMailRequest = false;
-      // 最終状態
+      // 合意状態
       int FinalState;
-
       // 和解案合意更新
       ReconciliationUpdateStatus = ReconciliationSerce.reconciliationUpdate(reconciliationuser);
       // アップデート成功後に「アクショー履歴」新規ログインを行う
@@ -62,8 +61,10 @@ public class UpdNegotiatAgreeController {
       }
       // 合意の成否を判断する
       if (ReconciliationUpdateStatus == 1 && ActionHistoriesInsertStatus == 1 && sendMailRequest == true) {
+        // 合意成功
         FinalState = 1;
       } else {
+        // 合意失敗
         FinalState = 0;
       }
       return FinalState;
