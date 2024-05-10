@@ -5,12 +5,8 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * S04_申立て概要画面
- * API_和解内容取得
- * Dao层
  * CaseNegotiations
  * テーブル名：case_negotiations和解案
- * 和解内容の取得
  * 
  * @author DUC 張明慧
  * @since 2024/05/10

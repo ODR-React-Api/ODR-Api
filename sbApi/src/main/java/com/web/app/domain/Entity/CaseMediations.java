@@ -5,12 +5,8 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * S04_申立て概要画面
- * API_調停内容取得
- * Dao层
  * CaseMediations
  * テーブル名：case_mediations調停案
- * 調停内容の取得
  * 
  * @author DUC 張明慧
  * @since 2024/05/10
