@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.MediatorDisclosureMapper">
+<mapper namespace="com.web.app.mapper.InfoPublicSeigenMapper">
 
     <resultMap id="BaseResultMap" type="com.web.app.domain.User">
         <id property="id" column="id" jdbcType="INTEGER"/>

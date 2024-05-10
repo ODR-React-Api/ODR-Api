@@ -1,13 +1,10 @@
-package com.web.app.mapper;
+package com.web.app.service;
 
 import java.util.Date;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.web.app.domain.MediatorDisclosureRequest;
 
-@Mapper
-public interface MediatorDisclosureMapper {
+public interface InfoPublicSeigenService {
     Date getMediatorDisclosureDate(String caseId);
 
     Boolean updMediatorDisclosureFlag(MediatorDisclosureRequest mediatorDisclosureRequest);

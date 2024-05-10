@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiOperation;
 // 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
 @Api(tags = "調停人変更画面")
 @RestController
-@RequestMapping("/CasesMediations")
+@RequestMapping("/MedUserChange")
 /**
  * 調停人変更画面
  * 
@@ -40,6 +40,7 @@ public class MedUserChangeController {
     /**
      * API_調停案削除
      * 
+     * @since 2024/04/24
      * @param caseId セッション.案件ID
      * @return true false
      * @throws Exception

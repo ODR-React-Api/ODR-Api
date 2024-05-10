@@ -7,24 +7,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.domain.MediatorDisclosureRequest;
-import com.web.app.mapper.MediatorDisclosureMapper;
-import com.web.app.service.MediatorDisclosureService;
+import com.web.app.mapper.InfoPublicSeigenMapper;
+import com.web.app.service.InfoPublicSeigenService;
 
 @Service
-public class MediatorDisclosureServiceImpl implements MediatorDisclosureService {
+public class InfoPublicSeigenServiceImpl implements InfoPublicSeigenService {
     @Autowired
-    private MediatorDisclosureMapper mediatorDisclosureMapper;
+    private InfoPublicSeigenMapper infoPublicSeigenMapper;
 
     @Override
     @Transactional(noRollbackFor = { ArithmeticException.class }) // 设置当出现ArithmeticException时，不回滚
     public Boolean updMediatorDisclosureFlag(MediatorDisclosureRequest mediatorDisclosureRequest) {
         try {
             mediatorDisclosureRequest.setLastModifiedDate(new Date());
-            Boolean flg = mediatorDisclosureMapper.updMediatorDisclosureFlag(mediatorDisclosureRequest);
-            // if (flg) {
-            // // SendMailRequest
-            // // utilService.SendMail(null);
-            // }
+            Boolean flg = infoPublicSeigenMapper.updMediatorDisclosureFlag(mediatorDisclosureRequest);
             return flg;
         } catch (Exception e) {
             throw e;
@@ -32,9 +28,7 @@ public class MediatorDisclosureServiceImpl implements MediatorDisclosureService 
     }
 
     @Override
-    // @Transactional(noRollbackFor = { ArithmeticException.class }) //
-    // 设置当出现ArithmeticException时，不回滚
     public Date getMediatorDisclosureDate(String caseId) {
-        return mediatorDisclosureMapper.getMediatorDisclosureDate(caseId);
+        return infoPublicSeigenMapper.getMediatorDisclosureDate(caseId);
     }
 }

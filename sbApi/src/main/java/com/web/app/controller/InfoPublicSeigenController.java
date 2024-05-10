@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.MediatorDisclosureRequest;
 import com.web.app.domain.Response;
 import com.web.app.domain.constants.Constants;
-import com.web.app.service.MediatorDisclosureService;
+import com.web.app.service.InfoPublicSeigenService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,13 +23,13 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "情報公開制限画面")
 @RestController
 @RequestMapping("/MediatorDisclosure")
-public class MediatorDisclosureController {
+public class InfoPublicSeigenController {
 
     @Autowired
     DataSource dataSource;
 
     @Autowired
-    private MediatorDisclosureService mediatorDisclosureService;
+    private InfoPublicSeigenService infoPublicSeigenService;
 
     @ApiOperation("調停人情報開示制限")
     @GetMapping("/updMediatorDisclosureFlag")
@@ -38,7 +38,7 @@ public class MediatorDisclosureController {
         try {
 
             System.out.println("获取的数据库连接为:" + dataSource.getConnection());
-            Boolean resultBoolean = mediatorDisclosureService.updMediatorDisclosureFlag(mediatorDisclosureRequest);
+            Boolean resultBoolean = infoPublicSeigenService.updMediatorDisclosureFlag(mediatorDisclosureRequest);
             Response response = new Response<Boolean>();
             if (resultBoolean) {
                 response.setCode(Constants.RETCD_SUCCESS);
@@ -62,7 +62,7 @@ public class MediatorDisclosureController {
         try {
 
             System.out.println("获取的数据库连接为:" + dataSource.getConnection());
-            Date mediatorDisclosureDate = mediatorDisclosureService.getMediatorDisclosureDate(caseId);
+            Date mediatorDisclosureDate = infoPublicSeigenService.getMediatorDisclosureDate(caseId);
             Response response = new Response<Date>();
             if (mediatorDisclosureDate != null) {
                 response.setCode(Constants.RETCD_SUCCESS);
