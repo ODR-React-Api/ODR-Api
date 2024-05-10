@@ -1,4 +1,4 @@
-package com.web.app.service.impl.S20;
+package com.web.app.service.impl;
 
 import java.text.SimpleDateFormat;
 
@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.app.domain.S20.UpdNegotiatCon;
-import com.web.app.mapper.S20.UpdNegotiatConMapper;
-import com.web.app.service.S20.UpdNegotiatConService;
+import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
+import com.web.app.mapper.UpdNegotiatConMapper;
+import com.web.app.service.UpdNegotiatConService;
 
 /**
  * サービス実装クラス

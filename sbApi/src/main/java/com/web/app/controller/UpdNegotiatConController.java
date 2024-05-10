@@ -1,11 +1,11 @@
-package com.web.app.controller.S20;
+package com.web.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.web.app.domain.Response;
-import com.web.app.domain.S20.UpdNegotiatCon;
-import com.web.app.service.S20.UpdNegotiatConService;
+import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
+import com.web.app.service.UpdNegotiatConService;
 import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;

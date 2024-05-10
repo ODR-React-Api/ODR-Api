@@ -1,6 +1,6 @@
-package com.web.app.service.S20;
+package com.web.app.service;
 
-import com.web.app.domain.S20.UpdNegotiatCon;
+import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
 
 /**
  * 和解案確認更新API Service

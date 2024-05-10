@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.UpdNegotiatConMapper">
-    <update id="setNegotiationStatus" parameterType="com.web.app.domain.UpdNegotiatCon">
+    <update id="setNegotiationStatus" parameterType="com.web.app.domain.NegotiatAgree.UpdNegotiatCon">
         UPDATE case_negotiations
         SET
             Status = #{status},
@@ -22,7 +22,7 @@
             id = #{negotiationId}
     </select>
 
-    <resultMap id="setRelationsEmail" type="com.web.app.domain.UpdNegotiatCon">
+    <resultMap id="setRelationsEmail" type="com.web.app.domain.NegotiatAgree.UpdNegotiatCon">
         <result property="petitionUserInfoEmail" column="petitionUserInfo_Email" jdbcType="VARCHAR"/>
         <result property="agent1Email" column="agent1_Email" jdbcType="VARCHAR"/>
         <result property="agent2Email" column="agent2_Email" jdbcType="VARCHAR"/>
@@ -58,7 +58,7 @@
             caseId = #{caseId}
     </select>
 
-    <select id="getUsersEmail" resultType="com.web.app.domain.UpdNegotiatCon">
+    <select id="getUsersEmail" resultType="com.web.app.domain.NegotiatAgree.UpdNegotiatCon">
         SELECT 
             email
         FROM

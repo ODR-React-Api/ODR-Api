@@ -1,4 +1,4 @@
-package com.web.app.domain.S20;
+package com.web.app.domain.NegotiatAgree;
 
 import java.io.Serializable;
 

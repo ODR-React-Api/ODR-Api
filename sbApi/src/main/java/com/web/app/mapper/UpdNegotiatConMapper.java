@@ -1,8 +1,8 @@
-package com.web.app.mapper.S20;
+package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.S20.UpdNegotiatCon;
+import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
 
 /**
  * 和解案確認更新API Mapper
