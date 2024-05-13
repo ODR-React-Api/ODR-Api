@@ -1,93 +1,135 @@
 package com.web.app.domain.Entity;
 
-import java.sql.Date;
-
 import lombok.Data;
 
+/**
+ * ユーザ
+ * 
+ * @author DUC 耿浩哲
+ * @since 2024/05/10
+ * @version 1.0
+ */
 @Data
 public class OdrUsers {
 
-    private String Uid;
+    // ID
+    public String Uid;
 
-    private String PlatformId;
+    // プラットフォームID
+    public String PlatformId;
 
-    private String Email;
+    // サイトナンバー
+    public String RegisteredSiteNo;
 
-    private String FirstName;
+    // メールアドレス
+    public String Email;
 
-    private String MiddleName;
+    // 通知用メールアドレス
+    public String NoticeEmail;
 
-    private String LastName;
+    // 名前
+    public String FirstName;
 
-    private String FirstName_EN;
+    // ミドルネーム
+    public String MiddleName;
 
-    private String MiddleName_EN;
+    // 名字
+    public String LastName;
 
-    private String LastName_EN;
+    // 英語表示名
+    public String FirstName_EN;
 
-    private String FirstName_Kana;
+    // 英語表示ミドルネーム
+    public String MiddleName_EN;
 
-    private String MiddleName_Kana;
+    // 英語表示姓
+    public String LastName_EN;
 
-    private String LastName_Kana;
+    // 名前　カナ
+    public String FirstName_kana;
 
-    private String LanguageId;
+    // ミドルネーム　カナ
+    public String MiddleName_kana;
 
-    private int Status;
+    // 名字　カナ
+    public String LastName_kana;
 
-    private String TimeZone;
+    // 言語ID
+    public String LanguageId;
 
-    private String ThemeId;
+    // 停止　ステータス
+    public int Status;
 
-    private int TermsConfirmStatus;
+    // タイムゾーン
+    public String TimeZone;
 
-    private String ResumeFileId;
+    // メインテーマ
+    public String ThemeId;
 
-    private String SelfIntroduce;
+    // 規約確認状況
+    public int TermsConfirmStatus;
 
-    private String HistoryInfo;
+    // 規約確認状況Version
+    public int ConfirmedVersionNoOfTerms;
 
-    private String Major;
+    // プライバシーポリシー確認Version
+    public int ConfirmedVersionNoOfPolicy;
 
-    private String Position;
+    // 履歴書
+    public String ResumeFileId;
 
-    private String ProfilePictureFileId;
+    // 自己紹介
+    public String SelfIntroduce;
 
-    private int UserType;
+    // 略歴
+    public String HistoryInfo;
 
-    private String CompanyName;
+    // 専門分野
+    public String Major;
 
-    private String CompanyName_EN;
+    // 職位
+    public String Position;
 
-    private boolean ShowTuritor1;
+    // プロフィール画像
+    public String ProfilePictureFileId;
 
-    private boolean ShowTuritor2;
+    // ユーザ種類
+    public int UserType;
 
-    private boolean ShowTuritor3;
+    // 所属会社名
+    public String CompanyName;
 
-    private Date LastLoginDate;
+    // 所属会社名_英語表示
+    public String CompanyName_en;
 
-    private Date RegisterDate;
+    // チュートリアル表示（申立）
+    public Integer ShowTuritor1;
 
-    private String Other01;
+    // チュートリアル表示（回答）
+    public Integer ShowTuritor2;
 
-    private String Other02;
+    // チュートリアル表示（調停）
+    public Integer ShowTuritor3;
 
-    private String Other03;
+    // 最終ログイン日
+    public String LastLoginDate;
 
-    private String Other04;
+    // 登録日
+    public String RegisterDate;
 
-    private String Other05;
+    public String Other01;
 
-    private boolean DeleteFlag;
+    public String Other02;
 
-    private Date LastModifiedDate;
+    public String Other03;
 
-    private String LastModifiedBy;
+    public String Other04;
 
-    private int ConfirmedVersionNoOfTerms;
+    public String Other05;
 
-    private int ConfirmedVersionNoOfPolicy;
+    public Integer DeleteFlag;
 
-    private String NoticeEmail;
+    public String LastModifiedDate;
+
+    public String LastModifiedBy;
 }
