@@ -1,8 +1,6 @@
-package com.web.app.mapper;
+package com.web.app.service;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 
 import com.web.app.domain.CaseFileInfo;
 import com.web.app.domain.GetFileInfo;
@@ -15,12 +13,12 @@ import com.web.app.domain.GetFileInfo;
  * @since 2024/04/25
  * @version 1.0
  */
-@Mapper
-public interface GetFileInfoMapper {
-    // ログインユーザのロールと開示情報取得
-    GetFileInfo selectLoginUserRoleOpenInfo(String caseId);
-    // 案件添付ファイル取得
-    List<CaseFileInfo> selectCaseFileInfoList(String caseId,String id,Integer positionFlg,Integer mediatorDisclosureFlag);
+public interface MosFileListService {
 
-    
+    // ログインユーザのロールと開示情報取得
+    GetFileInfo getLoginUserRoleOpenInfo(String caseId, String id, String email);
+
+    // 案件添付ファイル取得
+    List<CaseFileInfo> getCaseFileInfo(String caseId, String id, Integer positionFlg, Integer mediatorDisclosureFlag);
+
 }

@@ -5,10 +5,11 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class GetFileInfoResult  implements Serializable {
-    //立場フラグ
-    private Integer positionFlg;
+public class Relations  implements Serializable {
+    // 戻り値
+    private String uuId;
+    private String userId;
 
     private static final long serialVersionUID = 1L;
-    
+
 }
