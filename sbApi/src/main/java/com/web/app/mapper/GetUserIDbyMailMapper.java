@@ -5,12 +5,11 @@ import org.apache.ibatis.annotations.Mapper;
 import com.web.app.domain.MediateUser;
 
 /**
- * 調停案ステータス取得
  * 調停人メール取得
- * 調停人情報取得
+ * ユーザID取得
  * 
  * @author DUC jiawenzhi
- * @since 2024/05/10
+ * @since 2024/05/13
  * @version 1.0
  */
 @Mapper
@@ -18,7 +17,7 @@ public interface GetUserIDbyMailMapper {
 
     //調停人メール取得
     String MediatorUserEmail(String mediateUser);
-
+    //ユーザID取得
     String UserUid(String MediatorUserEmail);
 
     ArrayList<MediateUser> MediatorIntelligence(MediateUser MediatorIntelligence);

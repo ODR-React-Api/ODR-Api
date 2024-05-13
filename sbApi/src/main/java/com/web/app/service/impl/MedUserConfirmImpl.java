@@ -44,8 +44,8 @@ public class MedUserConfirmImpl implements MedUserConfirmService {
      * 
      * 調停人メール取得
      * 
-     * @param mediateUser 受付カウンターからの案件ID
-     * @return 調停人メール取得
+     * @param CaseId 受付カウンターからの案件ID
+     * @return 調停者メールボックスとユーザーID
      */
     @Override
     public MediateUser GetUserIDbyMail(String CaseId) {
