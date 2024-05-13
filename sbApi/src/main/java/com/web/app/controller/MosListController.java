@@ -4,19 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.app.domain.ReturnResult;
-
-import com.web.app.domain.CaseIdListInfo;
-import com.web.app.service.CaseDetailService;
+import com.web.app.domain.MosList.CaseIdListInfo;
+import com.web.app.domain.MosList.ReturnResult;
+import com.web.app.service.MosListService;
 import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "*")
-@Api(tags = "ケース詳細模块")
 /**
  * API_検索用ケース詳細取得
  * 
@@ -24,16 +22,19 @@ import io.swagger.annotations.ApiOperation;
  * @since 2024/04/17
  * @version 1.0
  */
+@CrossOrigin(origins = "*")
+@Api(tags = "ケース詳細模块")
 @RestController
-public class CaseDetailController {
+@RequestMapping("/MosList")
+public class MosListController {
     @Autowired
-    private CaseDetailService caseDetailService;
+    private MosListService mosListService;
 
-    @ApiOperation("ケース詳細案件cases取得")
-    @PostMapping("/caseDetail")
-    public ReturnResult caseDetail(@RequestBody CaseIdListInfo caseListInfo) {
+    @ApiOperation("ケース詳細取得API")
+    @PostMapping("/getCaseDetailnfo")
+    public ReturnResult getCaseDetailnfo(@RequestBody CaseIdListInfo caseListInfo) {
         try {
-            ReturnResult caseDetail = caseDetailService.CaseDetailCasesInfoSearch(caseListInfo);
+            ReturnResult caseDetail = mosListService.CaseDetailCasesInfoSearch(caseListInfo);
             return caseDetail;
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);

@@ -1,4 +1,4 @@
-package com.web.app.domain;
+package com.web.app.domain.MosList;
 
 import java.io.Serializable;
 
@@ -11,9 +11,9 @@ public class CaseIdListInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // 案件ID
-    private String CaseId;
+    private String caseId;
     // 申立て人
-    private String PetitionUserId;
+    private String petitionUserId;
     // 立場フラグ
     private Integer flag;
     // ユーザーID

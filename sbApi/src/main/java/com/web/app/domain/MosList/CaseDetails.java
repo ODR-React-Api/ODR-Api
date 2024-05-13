@@ -1,4 +1,4 @@
-package com.web.app.domain;
+package com.web.app.domain.MosList;
 
 import java.io.Serializable;
 import lombok.Data;
@@ -9,13 +9,10 @@ public class CaseDetails implements Serializable {
 
     // ケースId
     private String caseId;
-
     // ユーザーId
     private String petitionUserId;
-
     // 立場フラグ
     private Integer flag;
-
     // セッション.ユーザID
     private String uid;
 

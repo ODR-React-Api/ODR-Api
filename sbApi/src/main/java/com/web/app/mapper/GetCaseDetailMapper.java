@@ -3,10 +3,10 @@ package com.web.app.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.web.app.domain.CaseDetailCasesSelectInfo;
+import com.web.app.domain.MosList.CaseDetailCasesSelectInfo;
 
 @Mapper
-public interface CaseDetailMapper {
+public interface GetCaseDetailMapper {
         // 「cases」、「case_negotiations」と「case_mediations」から
         // 申立て番号、件名、登録日付、対応期日、状態、要対応有無、ステータを取得した
         CaseDetailCasesSelectInfo CaseDetailCasesInforSearch(

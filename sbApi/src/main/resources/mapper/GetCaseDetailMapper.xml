@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.CaseDetailMapper">
-    <resultMap id="caseDetailCasesInfoResultMap" type="com.web.app.domain.CaseDetailCasesSelectInfo">
+<mapper namespace="com.web.app.mapper.GetCaseDetailMapper">
+    <resultMap id="caseDetailCasesInfoResultMap" type="com.web.app.domain.MosList.CaseDetailCasesSelectInfo">
         <id property="caseId" column="caseId" jdbcType="VARCHAR"/>
         <result property="cId" column="cid" jdbcType="VARCHAR"/>
         <result property="caseStage" column="CaseStage" jdbcType="INTEGER"/>

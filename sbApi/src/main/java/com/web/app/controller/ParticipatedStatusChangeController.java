@@ -12,8 +12,6 @@ import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "*")
-@Api(tags = "申立て詳細画面_概要")
 /**
  * API_参加済状態変更
  * 
@@ -21,6 +19,8 @@ import io.swagger.annotations.ApiOperation;
  * @since 2024/04/23
  * @version 1.0
  */
+@CrossOrigin(origins = "*")
+@Api(tags = "申立て詳細画面_概要")
 @RestController
 public class ParticipatedStatusChangeController {
     // String caseId = "0001";

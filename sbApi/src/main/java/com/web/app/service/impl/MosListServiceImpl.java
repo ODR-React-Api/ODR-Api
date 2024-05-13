@@ -5,11 +5,11 @@ import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.domain.ReturnResult;
-import com.web.app.domain.CaseDetailCasesSelectInfo;
-import com.web.app.domain.CaseIdListInfo;
-import com.web.app.mapper.CaseDetailMapper;
-import com.web.app.service.CaseDetailService;
+import com.web.app.domain.MosList.CaseDetailCasesSelectInfo;
+import com.web.app.domain.MosList.CaseIdListInfo;
+import com.web.app.domain.MosList.ReturnResult;
+import com.web.app.mapper.GetCaseDetailMapper;
+import com.web.app.service.MosListService;
 
 /**
  * API_検索用ケース詳細取得
@@ -19,9 +19,9 @@ import com.web.app.service.CaseDetailService;
  * @version 1.0
  */
 @Service
-public class CaseDetailServiceImpl implements CaseDetailService {
+public class MosListServiceImpl implements MosListService {
     @Autowired
-    private CaseDetailMapper caseDetailMapper;
+    private GetCaseDetailMapper caseDetailMapper;
 
     /**
      * ケース詳細取得

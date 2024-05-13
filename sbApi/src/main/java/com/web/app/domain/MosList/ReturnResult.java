@@ -1,4 +1,4 @@
-package com.web.app.domain;
+package com.web.app.domain.MosList;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class ReturnResult implements Serializable {
     private static final long serialVersionUID = 1L;
+
     // 立場フラグ
     private Integer positionFlg;
     // 申立て番号
