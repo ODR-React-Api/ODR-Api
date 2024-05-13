@@ -1,12 +1,12 @@
 package com.web.app.controller;
 
 import com.web.app.domain.Response;
-import com.web.app.domain.SessionItem;
+import com.web.app.domain.NegotiatMake.CaseFileRelations;
+import com.web.app.domain.NegotiatMake.Files;
+import com.web.app.domain.NegotiatMake.Negotiations;
+import com.web.app.domain.NegotiatMake.SessionItems;
 import com.web.app.domain.constants.Constants;
-import com.web.app.domain.CaseFileRelations;
-import com.web.app.domain.Files;
-import com.web.app.domain.NegotiationsEdit;
-import com.web.app.service.NegotiationsEditService;
+import com.web.app.service.NegotiatMakeService;
 import com.web.app.service.UtilService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
@@ -33,14 +33,14 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 @Api(tags = "和解案編集依頼")
 @RestController
-@RequestMapping("/negotiations")
-public class NegotiationsEditController {
+@RequestMapping("/negotiationsMake")
+public class NegotiatMakeController {
 
     @Autowired
     DataSource dataSource;
 
     @Autowired
-    private NegotiationsEditService negotiationsEditService;
+    private NegotiatMakeService negotiationsMakeService;
 
     @Autowired
     private UtilService utilService;
@@ -57,7 +57,7 @@ public class NegotiationsEditController {
     // @PostMapping("/statusList")
     // public Response statusList(@RequestBody NegotiationsEdit negotiationsEdit) {
     //     try {
-    //         List<Integer> status = negotiationsEditService.selectStatusList(negotiationsEdit);
+    //         List<Integer> status = negotiationsMakeService.selectStatusList(negotiationsEdit);
     //         if (status.size() == 0) {
     //             // 新規登録
     //             addNegotiationsEdit();
@@ -79,19 +79,19 @@ public class NegotiationsEditController {
      * @throws Exception 異常終了
      */
     @ApiOperation("新規登録")
-    @PostMapping("/addNegotiationsEdit")
+    @PostMapping("/insNegotiationsEdit")
     @SuppressWarnings("rawtypes")
-    public Response addNegotiationsEdit() {
+    public Response insNegotiationsEdit() {
         try {
             //session設定
-            SessionItem sessionItem = new SessionItem();
+            SessionItems sessionItem = new SessionItems();
             sessionItem.setFlag(1);
             sessionItem.setPlatformId("P025");
             sessionItem.setCaseId("0000000032");
 
             System.out.println("データアクセス：" + dataSource.getConnection());
 
-            NegotiationsEdit negotiationsEdit = new NegotiationsEdit();
+            Negotiations negotiationsEdit = new Negotiations();
             negotiationsEdit.setId(utilService.GetGuid());
             negotiationsEdit.setPlatformId(sessionItem.getPlatformId());
             negotiationsEdit.setCaseId(sessionItem.getCaseId());
@@ -168,7 +168,7 @@ public class NegotiationsEditController {
             // ログインユーザ
             caseFileRelations.setLastModifiedBy("ログインユーザ");
 
-            int num = negotiationsEditService.addNegotiationsEdit(negotiationsEdit, files, caseFileRelations);
+            int num = negotiationsMakeService.addNegotiationsEdit(negotiationsEdit, files, caseFileRelations);
 
             if (num == Constants.RESULT_STATE_ERROR) {
                 return AjaxResult.success(Constants.MSG_ERROR);
@@ -176,7 +176,7 @@ public class NegotiationsEditController {
             return AjaxResult.success(Constants.MSG_ERROR);
 
         } catch (Exception e) {
-            AjaxResult.fatal(Constants.MSG_ERROR);
+            AjaxResult.fatal(Constants.MSG_ERROR,e);
             return null;
     
         }
@@ -189,12 +189,12 @@ public class NegotiationsEditController {
      * @throws Exception 異常終了
      */
     @ApiOperation("更新登録")
-    @PostMapping("/updateNegotiationsEdit")
+    @PostMapping("/updNegotiationsEdit")
     @SuppressWarnings("rawtypes")
-    public Response updateNegotiationsEdit() {
+    public Response updNegotiationsEdit() {
         try {
             //session設定
-            SessionItem sessionItem = new SessionItem();
+            SessionItems sessionItem = new SessionItems();
             sessionItem.setId("12D99B43CD8A4E8AA0A2131240634143");
             sessionItem.setFilesId("51CFB0171C0141ACB79A5C1EC996EF90");
             sessionItem.setFlag(1);
@@ -204,7 +204,7 @@ public class NegotiationsEditController {
             System.out.println("データアクセス" + dataSource.getConnection());
             
             // 「和解案」更新
-            NegotiationsEdit negotiationsEdit = new NegotiationsEdit();
+            Negotiations negotiationsEdit = new Negotiations();
             if (sessionItem.getFlag() == Constants.POSITIONFLAG_PETITION) {
                 negotiationsEdit.setStatus(Constants.S3B14);
             } else if (sessionItem.getFlag() == Constants.POSITIONFLAG_TRADER) {
@@ -286,7 +286,7 @@ public class NegotiationsEditController {
             // ログインユーザ
             caseFileRelations.setLastModifiedBy("insertUser");
 
-            int num = negotiationsEditService.updateNegotiationsEdit(negotiationsEdit, filesDelete,
+            int num = negotiationsMakeService.updateNegotiationsEdit(negotiationsEdit, filesDelete,
                     caseFileRelationsDelete,
                     files, caseFileRelations);
 
@@ -296,7 +296,7 @@ public class NegotiationsEditController {
             return AjaxResult.success(Constants.MSG_ERROR);
 
         } catch (Exception e) {
-            AjaxResult.fatal(Constants.MSG_ERROR);
+            AjaxResult.fatal(Constants.MSG_ERROR,e);
             return null;
         }
 

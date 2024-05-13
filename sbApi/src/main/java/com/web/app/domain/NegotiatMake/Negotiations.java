@@ -1,11 +1,11 @@
-package com.web.app.domain;
+package com.web.app.domain.NegotiatMake;
 
 import java.io.Serializable;
 
 import lombok.Data;
 
 @Data
-public class NegotiationsEdit implements Serializable {
+public class Negotiations implements Serializable {
     private static final long serialVersionUID = 1L;
     public String id;
     public String caseId;

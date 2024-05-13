@@ -1,5 +1,4 @@
-package com.web.app.domain;
-
+package com.web.app.domain.NegotiatMake;
 
 import java.io.Serializable;
 
@@ -29,5 +28,4 @@ public class Files implements Serializable {
     public String lastModifiedDate;
     public String lastModifiedBy;
 
-    
 }

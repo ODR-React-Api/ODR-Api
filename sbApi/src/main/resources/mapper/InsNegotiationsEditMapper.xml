@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.InsNegotiationsEditMapper">
+    <resultMap id="NegotiationsEditResultMap" type="com.web.app.domain.NegotiatMake.Negotiations">
+        <id property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
+        <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="DeleteFlag" jdbcType="INTEGER"/>
+        <result property="status" column="Status" jdbcType="INTEGER"/>
+        <result property="expectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR"/>
+        <result property="otherContext" column="OtherContext" jdbcType="VARCHAR"/>
+        <result property="htmlContext" column="HtmlContext" jdbcType="VARCHAR"/>
+        <result property="htmlContext2" column="HtmlContext2" jdbcType="VARCHAR"/>
+        <result property="payAmount" column="PayAmount" jdbcType="DECIMAL"/>
+        <result property="counterClaimPayment" column="CounterClaimPayment" jdbcType="DECIMAL"/>
+        <result property="paymentEndDate" column="PaymentEndDate" jdbcType="VARCHAR"/>
+        <result property="shipmentPayType" column="ShipmentPayType" jdbcType="INTEGER"/>
+        <result property="specialItem" column="SpecialItem" jdbcType="VARCHAR"/>
+        <result property="userId" column="UserId" jdbcType="VARCHAR"/>
+        <result property="submitDate" column="SubmitDate" jdbcType="VARCHAR"/>
+        <result property="agreementDate" column="AgreementDate" jdbcType="VARCHAR"/>
+        <result property="lastModifiedDate" column="LastModifiedDate" jdbcType="VARCHAR"/>
+        <result property="lastModifiedBy" column="LastModifiedBy" jdbcType="VARCHAR"/>
+        <result property="fileName" column="FileName" jdbcType="VARCHAR"/>
+        <result property="fileExtension" column="FileExtension" jdbcType="VARCHAR"/>
+        <result property="fileUrl" column="FileUrl" jdbcType="VARCHAR"/>
+        <result property="fileBlobStorageId" column="FileBlobStorageId" jdbcType="VARCHAR"/>
+        <result property="fileSize" column="FileSize" jdbcType="INTEGER"/>
+        <result property="registerUserId" column="RegisterUserId" jdbcType="VARCHAR"/>
+        <result property="registerDate" column="RegisterDate" jdbcType="VARCHAR"/>
+        <result property="other01" column="Other01" jdbcType="VARCHAR"/>
+        <result property="other02" column="Other02" jdbcType="VARCHAR"/>
+        <result property="other03" column="Other03" jdbcType="VARCHAR"/>
+        <result property="other04" column="Other04" jdbcType="VARCHAR"/>
+        <result property="other05" column="Other05" jdbcType="VARCHAR"/>
+        <result property="other01" column="Other01" jdbcType="VARCHAR"/>
+        <result property="relationType" column="RelationType" jdbcType="VARCHAR"/>
+        <result property="relatedId" column="RelatedId" jdbcType="VARCHAR"/>
+        <result property="fileId" column="FileId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectStatusList" resultMap="NegotiationsEditResultMap">
+        SELECT
+            Status
+        FROM
+            case_negotiations
+        WHERE
+            CaseId = #{caseId}
+            AND PlatformId = #{platformId}
+            AND DeleteFlag = #{deleteFlag}
+    </select>
+    <insert id="insertNegotiations" parameterType="com.web.app.domain.NegotiatMake.Negotiations">
+    INSERT INTO case_negotiations (
+        ID	
+        ,PlatformId	
+        ,CaseId	
+        ,Status	
+        ,ExpectResloveTypeValue	
+        ,OtherContext	
+        ,HtmlContext	
+        ,HtmlContext2	
+        ,PayAmount	
+        ,CounterClaimPayment	
+        ,PaymentEndDate	
+        ,ShipmentPayType	
+        ,SpecialItem	
+        ,UserId	
+        ,SubmitDate	
+        ,AgreementDate	
+        ,DeleteFlag	
+        ,LastModifiedDate	
+        ,LastModifiedBy	
+
+    )
+    VALUES (
+        #{id},
+        #{platformId},
+        #{caseId},
+        #{status},
+        #{expectResloveTypeValue},
+        #{otherContext},
+        #{htmlContext},
+        #{htmlContext2},
+        #{payAmount},
+        #{counterClaimPayment},
+        #{paymentEndDate},
+        #{shipmentPayType},
+        #{specialItem},
+        #{userId},
+        #{submitDate},
+        #{agreementDate},
+        #{deleteFlag},
+        #{lastModifiedDate},
+        #{lastModifiedBy}
+
+    )
+</insert>
+<insert id="insertFiles" parameterType="com.web.app.domain.NegotiatMake.Files">
+    INSERT INTO files (
+        id	
+        ,PlatformId
+        ,CaseId
+        ,FileName
+        ,FileExtension
+        ,FileUrl
+        ,FileBlobStorageId
+        ,FileSize
+        ,RegisterUserId
+        ,RegisterDate
+        ,Other01
+        ,Other02
+        ,Other03
+        ,Other04
+        ,Other05
+        ,DeleteFlag
+        ,LastModifiedDate
+        ,LastModifiedBy
+    )
+    VALUES (
+        #{id},
+        #{platformId},
+        #{caseId},
+        #{fileName},
+        #{fileExtension},
+        #{fileUrl},
+        #{fileBlobStorageId},
+        #{fileSize},
+        #{registerUserId},
+        #{registerDate},
+        #{other01},
+        #{other02},
+        #{other03},
+        #{other04},
+        #{other05},
+        #{deleteFlag},
+        #{lastModifiedDate},
+        #{lastModifiedBy}
+    )
+</insert>
+<insert id="insertCaseFileRelations" parameterType="com.web.app.domain.NegotiatMake.CaseFileRelations">
+    INSERT INTO case_file_relations (
+        id
+        ,PlatformId
+        ,CaseId
+        ,RelationType
+        ,RelatedId
+        ,fileId
+        ,Other01
+        ,Other02
+        ,Other03
+        ,Other04
+        ,Other05
+        ,DeleteFlag
+        ,LastModifiedDate
+        ,LastModifiedBy
+
+    )
+    VALUES (
+        #{id},
+        #{platformId},
+        #{caseId},
+        #{relationType},
+        #{relatedId},
+        #{fileId},
+        #{other01},
+        #{other02},
+        #{other03},
+        #{other04},
+        #{other05},
+        #{deleteFlag},
+        #{lastModifiedDate},
+        #{lastModifiedBy}
+    )
+</insert>
+  <update id="updateNegotiations" parameterType="com.web.app.domain.NegotiatMake.Negotiations">
+        UPDATE case_negotiations
+        SET
+            ExpectResloveTypeValue = #{expectResloveTypeValue},
+            OtherContext = #{otherContext},
+            PayAmount = #{payAmount},
+            CounterClaimPayment = #{counterClaimPayment},
+            PaymentEndDate = #{paymentEndDate},
+            ShipmentPayType = #{shipmentPayType},
+            SpecialItem = #{specialItem},
+            Status = #{status},
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{lastModifiedBy}
+        WHERE
+            Id = #{id}
+    </update>
+
+    <update id="deleteFiles" parameterType="com.web.app.domain.NegotiatMake.Files">
+        UPDATE files
+        SET
+            DeleteFlag = #{deleteFlag},
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{lastModifiedBy}
+        WHERE
+            Id = #{id}
+    </update>
+    <update id="deleteCaseFileRelations" parameterType="com.web.app.domain.NegotiatMake.CaseFileRelations">
+        UPDATE case_file_relations
+        SET
+            DeleteFlag = #{deleteFlag},
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{lastModifiedBy}
+        WHERE
+            FileId = #{fileId}
+</update>
+</mapper>

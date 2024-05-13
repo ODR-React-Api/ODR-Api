@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.NegotiationsEditMapper">
-    <resultMap id="NegotiationsEditResultMap" type="com.web.app.domain.NegotiationsEdit">
+<mapper namespace="com.web.app.mapper.UpdNegotiationsEditMapper">
+    <resultMap id="NegotiationsEditResultMap" type="com.web.app.domain.NegotiatMake.Negotiations">
         <id property="id" column="ID" jdbcType="VARCHAR"/>
         <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
         <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
@@ -50,7 +50,7 @@
             AND PlatformId = #{platformId}
             AND DeleteFlag = #{deleteFlag}
     </select>
-    <insert id="insertNegotiationsEdit" parameterType="com.web.app.domain.NegotiationsEdit">
+    <insert id="insertNegotiations" parameterType="com.web.app.domain.NegotiatMake.Negotiations">
     INSERT INTO case_negotiations (
         ID	
         ,PlatformId	
@@ -96,7 +96,7 @@
 
     )
 </insert>
-<insert id="insertFiles" parameterType="com.web.app.domain.Files">
+<insert id="insertFiles" parameterType="com.web.app.domain.NegotiatMake.Files">
     INSERT INTO files (
         id	
         ,PlatformId
@@ -138,7 +138,7 @@
         #{lastModifiedBy}
     )
 </insert>
-<insert id="insertCaseFileRelations" parameterType="com.web.app.domain.CaseFileRelations">
+<insert id="insertCaseFileRelations" parameterType="com.web.app.domain.NegotiatMake.CaseFileRelations">
     INSERT INTO case_file_relations (
         id
         ,PlatformId
@@ -173,7 +173,7 @@
         #{lastModifiedBy}
     )
 </insert>
-  <update id="updateNegotiationsEdit" parameterType="com.web.app.domain.NegotiationsEdit">
+  <update id="updateNegotiations" parameterType="com.web.app.domain.NegotiatMake.Negotiations">
         UPDATE case_negotiations
         SET
             ExpectResloveTypeValue = #{expectResloveTypeValue},
@@ -190,7 +190,7 @@
             Id = #{id}
     </update>
 
-    <update id="deleteFiles" parameterType="com.web.app.domain.Files">
+    <update id="deleteFiles" parameterType="com.web.app.domain.NegotiatMake.Files">
         UPDATE files
         SET
             DeleteFlag = #{deleteFlag},
@@ -199,7 +199,7 @@
         WHERE
             Id = #{id}
     </update>
-    <update id="deleteCaseFileRelations" parameterType="com.web.app.domain.CaseFileRelations">
+    <update id="deleteCaseFileRelations" parameterType="com.web.app.domain.NegotiatMake.CaseFileRelations">
         UPDATE case_file_relations
         SET
             DeleteFlag = #{deleteFlag},

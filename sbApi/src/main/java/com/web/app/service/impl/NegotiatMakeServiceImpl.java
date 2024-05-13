@@ -1,11 +1,12 @@
 package com.web.app.service.impl;
 
-import com.web.app.domain.CaseFileRelations;
-import com.web.app.domain.Files;
-import com.web.app.domain.NegotiationsEdit;
+import com.web.app.domain.NegotiatMake.CaseFileRelations;
+import com.web.app.domain.NegotiatMake.Files;
+import com.web.app.domain.NegotiatMake.Negotiations;
 import com.web.app.domain.constants.Constants;
-import com.web.app.mapper.NegotiationsEditMapper;
-import com.web.app.service.NegotiationsEditService;
+import com.web.app.mapper.InsNegotiationsEditMapper;
+import com.web.app.mapper.UpdNegotiationsEditMapper;
+import com.web.app.service.NegotiatMakeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,13 @@ import java.util.List;
  * @version 1.0
  */
 @Service
-public class NegotiationsEditServiceImpl implements NegotiationsEditService {
+public class NegotiatMakeServiceImpl implements NegotiatMakeService {
 
     @Autowired
-    private NegotiationsEditMapper negotiationsEditMapper;
+    private UpdNegotiationsEditMapper updNegotiationsEditMapper;
+
+    @Autowired
+    private InsNegotiationsEditMapper insNegotiationsEditMapper;
     /**
      * 和解案状態を抽出
      *
@@ -32,9 +36,9 @@ public class NegotiationsEditServiceImpl implements NegotiationsEditService {
      * @return List<Integer> 
      * @throws
      */
-    public List<Integer> selectStatusList(NegotiationsEdit negotiationsEdit) {
+    public List<Integer> selectStatusList(Negotiations negotiationsEdit) {
 
-        List<Integer> status = negotiationsEditMapper.selectStatusList(negotiationsEdit.getCaseId(),
+        List<Integer> status = insNegotiationsEditMapper.selectStatusList(negotiationsEdit.getCaseId(),
                 negotiationsEdit.getPlatformId(), negotiationsEdit.getDeleteFlag());
 
         return status;
@@ -50,20 +54,20 @@ public class NegotiationsEditServiceImpl implements NegotiationsEditService {
      */
     @Transactional
     @Override
-    public int addNegotiationsEdit(NegotiationsEdit negotiationsEdit, Files files,
+    public int addNegotiationsEdit(Negotiations negotiationsEdit, Files files,
             CaseFileRelations caseFileRelations) {
         // 「和解案」新規登録
-        int result = negotiationsEditMapper.insertNegotiationsEdit(negotiationsEdit);
+        int result = insNegotiationsEditMapper.insertNegotiations(negotiationsEdit);
         if (result == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
         // 「添付ファイル」の新規登録
-        int result2 = negotiationsEditMapper.insertFiles(files);
+        int result2 = insNegotiationsEditMapper.insertFiles(files);
         if (result2 == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
         // 「案件-添付ファイルリレーション」新規登録
-        int result3 = negotiationsEditMapper.insertCaseFileRelations(caseFileRelations);
+        int result3 = insNegotiationsEditMapper.insertCaseFileRelations(caseFileRelations);
         if (result3 == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
@@ -79,32 +83,32 @@ public class NegotiationsEditServiceImpl implements NegotiationsEditService {
      */
     @Transactional
     @Override
-    public int updateNegotiationsEdit(NegotiationsEdit negotiationsEdit, Files filesDelete,
+    public int updateNegotiationsEdit(Negotiations negotiationsEdit, Files filesDelete,
             CaseFileRelations caseFileRelationsDelete, Files files,
             CaseFileRelations caseFileRelations) {
 
         // 「和解案」新規登録
-        int result = negotiationsEditMapper.updateNegotiationsEdit(negotiationsEdit);
+        int result = updNegotiationsEditMapper.updateNegotiations(negotiationsEdit);
         if (result == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
         // 「添付ファイル」論理削除
-        int resultDeleteFiles = negotiationsEditMapper.deleteFiles(filesDelete);
+        int resultDeleteFiles = updNegotiationsEditMapper.deleteFiles(filesDelete);
         if (resultDeleteFiles == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
         // 「案件-添付ファイルリレーション」論理削除
-        int resultDeleteCaseFileRelations = negotiationsEditMapper.deleteCaseFileRelations(caseFileRelationsDelete);
+        int resultDeleteCaseFileRelations = updNegotiationsEditMapper.deleteCaseFileRelations(caseFileRelationsDelete);
         if (resultDeleteCaseFileRelations == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
         // 「添付ファイル」の新規登録
-        int result2 = negotiationsEditMapper.insertFiles(files);
+        int result2 = insNegotiationsEditMapper.insertFiles(files);
         if (result2 == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
         // 「案件-添付ファイルリレーション」新規登録
-        int result3 = negotiationsEditMapper.insertCaseFileRelations(caseFileRelations);
+        int result3 = insNegotiationsEditMapper.insertCaseFileRelations(caseFileRelations);
         if (result3 == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
