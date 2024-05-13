@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import com.web.app.domain.MediateUser;
+
+import com.web.app.domain.medUserConfirm.MediateUser;
 import com.web.app.service.MedUserConfirmService;
 
 /**
  * 調停案ステータス取得
- * 調停人メール取得
+ * 調停者メールとユザーIDを取得
  * 調停人情報取得
  * 
  * @author DUC 賈文志
@@ -53,20 +54,20 @@ public class MedUserConfirmController {
 
     /**
      * 
-     * 調停人メール取得
+     * 調停者メールとユザーIDを取得
      * 
      * @param CaseId
-     * @return 調停者メールボックスとユーザーID
+     * @return 調停者メールとユザーID
      * @throws Exception 調停者メール取得失敗
      */
     @ApiOperation("調停人メール取得")
     @PostMapping("/GetUserIDbyMail")
     public MediateUser GetUserIDbyMail(@RequestBody String CaseId) {
         try {
-            //調停人メール取得
-            MediateUser GetUserIDbyMail = medUserConfirmService.getUserIDbyMail(CaseId);
-            //調停者メールボックスとユーザーID
-            return GetUserIDbyMail;   
+            //調停者メールとユザーIDを取得
+            MediateUser getUserIDbyMail = medUserConfirmService.getUserIDbyMail(CaseId);
+            //調停者メールとユザーID
+            return getUserIDbyMail;   
         } catch(Exception e) {
             return null;
         }

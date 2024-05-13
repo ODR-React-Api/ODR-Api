@@ -4,13 +4,14 @@ import com.web.app.service.MedUserConfirmService;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.web.app.domain.medUserConfirm.MediateUser;
 import com.web.app.mapper.GetMediationStatusMapper;
 import com.web.app.mapper.GetUserIDbyMailMapper;
-import com.web.app.domain.MediateUser;
 
 /**
  * 調停案ステータス取得
- * 調停人メール取得
+ * 調停者メールとユザーIDを取得
  * 調停人情報取得
  * 
  * @author DUC 賈文志
@@ -35,14 +36,14 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
      */
     @Override
     public String getMediationStatus(String CaseId) {
-        //調停案ステータス取得
+        // 調停案ステータス取得
         String getMediationStatus = getMediationStatusMapper.getMediationStatus(CaseId);
         return getMediationStatus;
     }
 
     /**
      * 
-     * 調停人メール取得
+     * 調停者メールとユザーIDを取得
      * 
      * @param CaseId 受付カウンターからの案件ID
      * @return 調停者メールボックスとユーザーID
@@ -50,20 +51,20 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
     @Override
     public MediateUser getUserIDbyMail(String CaseId) {
         // 取得したコーディネータメールボックスとユーザーIDを保存する
-        MediateUser MediationEmail = new MediateUser();
+        MediateUser getUserIDbyMail = new MediateUser();
         // 調停人メール取得
-        String MediatorUserEmail = getUserIDbyMailMapper.MediatorUserEmail(CaseId);
-        MediationEmail.setMediatorUserEmail(MediatorUserEmail);
+        String getMail = getUserIDbyMailMapper.mediatorUserEmail(CaseId);
+        getUserIDbyMail.setMediatorUserEmail(getMail);
         // 調停者メールボックスからユーザUidを取得する
-        String MediatorUserUid = getUserIDbyMailMapper.UserUid(MediatorUserEmail);
-        MediationEmail.setUid(MediatorUserUid);
+        String userUid = getUserIDbyMailMapper.userUid(getMail);
+        getUserIDbyMail.setUid(userUid);
         // 取得した調停者メールボックスとユーザーUidを返す
-        return MediationEmail;
+        return getUserIDbyMail;
     }
 
     @Override
     public ArrayList<MediateUser> getMediatorInfo(String CaseId) {
-        ArrayList<MediateUser> MediatorIntelligence = getUserIDbyMailMapper.GetMediatorInfo(CaseId);
+        ArrayList<MediateUser> MediatorIntelligence = getUserIDbyMailMapper.getMediatorInfo(CaseId);
         return MediatorIntelligence;
     }
 }

@@ -1,4 +1,4 @@
-package com.web.app.domain;
+package com.web.app.domain.medUserConfirm;
 
 import java.io.Serializable;
 
