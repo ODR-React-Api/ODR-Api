@@ -1,4 +1,4 @@
-package com.web.app.domain.UpdNegotiatAgree;
+package com.web.app.domain.negotiatAgree;
 
 import java.io.Serializable;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class ReconciliationUser implements Serializable {
+public class UpdNegotiatAgree implements Serializable {
     
     // 缓冲
     private static final long serialVersionUID = 1L;

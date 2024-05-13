@@ -4,7 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.web.app.domain.UpdNegotiatAgree.ReconciliationUser;
+
+import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;
 import com.web.app.service.NegotiatAgreeService;
 
 /**
@@ -28,17 +29,17 @@ public class NegotiatAgreeController {
      * 
      * 和解案合意更新
      * 
-     * @param reconciliationuser フォアグラウンドでんたつ
+     * @param updNegotiatAgree フォアグラウンドでんたつ
      * @return 和解案合意更新状態 1：更新に成功しました,0：更新失败
      * @throws Exception 和解案合意更新失敗
      */
     @ApiOperation("和解案合意更新")
     @PostMapping("/UpdNegotiatAgree")
-    public int UpdNegotiatAgree(@RequestBody ReconciliationUser reconciliationuser) {
+    public int UpdNegotiatAgree(@RequestBody UpdNegotiatAgree updNegotiatAgree) {
         try {
             // 和解案合意更新
-            int updNegotiatAgree = negotiatAgreeService.updNegotiatAgree(reconciliationuser);
-            return updNegotiatAgree;
+            int updateCount = negotiatAgreeService.updNegotiatAgree(updNegotiatAgree);
+            return updateCount;
         } catch (Exception e) {
             return 0;
         }

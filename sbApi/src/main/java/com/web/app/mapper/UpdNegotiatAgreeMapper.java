@@ -2,7 +2,7 @@ package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.UpdNegotiatAgree.ReconciliationUser;
+import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;
 
 /**
  * 和解案合意更新API
@@ -16,5 +16,5 @@ import com.web.app.domain.UpdNegotiatAgree.ReconciliationUser;
 public interface UpdNegotiatAgreeMapper {
 
     // 和解案合意更新API
-    int updateCount(ReconciliationUser reconciliationUser);
+    int updateCount(UpdNegotiatAgree updNegotiatAgree);
 }

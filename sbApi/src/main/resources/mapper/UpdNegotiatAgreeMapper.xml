@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.UpdNegotiatAgreeMapper">
-    <update id="updateCount" parameterType="com.web.app.domain.UpdNegotiatAgree.ReconciliationUser">
+    <update id="updateCount" parameterType="com.web.app.domain.negotiatAgree.UpdNegotiatAgree">
         UPDATE case_negotiations
         SET
             AgreementDate = #{AgreementDate},

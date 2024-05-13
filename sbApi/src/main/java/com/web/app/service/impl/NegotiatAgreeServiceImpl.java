@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.app.domain.UpdNegotiatAgree.ReconciliationUser;
+import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;
 import com.web.app.mapper.UpdNegotiatAgreeMapper;
 
 /**
@@ -24,14 +24,14 @@ public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
     /**
      * 和解案合意更新
      * 
-     * @param reconciliationuser 前台伝出のデータ
+     * @param updNegotiatAgree 前台伝出のデータ
      * @return 和解案合意更新状態
      */
     @Transactional
     @Override
-    public int updNegotiatAgree(ReconciliationUser reconciliationuser) {
+    public int updNegotiatAgree(UpdNegotiatAgree updNegotiatAgree) {
         // 和解案合意更新
-        int updateCount = updNegotiatAgreeMapper.updateCount(reconciliationuser);
+        int updateCount = updNegotiatAgreeMapper.updateCount(updNegotiatAgree);
         return updateCount;
     }
 }
