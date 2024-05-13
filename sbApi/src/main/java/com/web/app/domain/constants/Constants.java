@@ -85,6 +85,14 @@ public class Constants {
     public static final String STR_CASE_STATUS_ABORTEDCONFIRM = "1300";
     public static final String STR_ACTION_TYPE_ABORTEDCONFIRM = "CaseAbortedConfirmMailSend";
     public static final String HELP_URL = "http://uat-odr-service.azurewebsites.net/help";
+    public static final int NUM_1 = 1;
+    //申立人立場フラグ
+    public static final int POSITIONFLAG_PETITION = 1;
+    //相手方立場フラグ
+    public static final int POSITIONFLAG_TRADER = 2;
+    //調停人立場フラグ
+    public static final int POSITIONFLAG_MEDIATOR = 3;
+
 
     // public static final Map<Object,String> SIFANGJI_SIGNAL_STATE_MAP = new
     // HashMap<Object,String>(){{

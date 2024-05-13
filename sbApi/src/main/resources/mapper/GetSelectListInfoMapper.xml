@@ -3,15 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetSelectListInfoMapper">
-    <resultMap id="testMosResultMap" type="com.web.app.domain.TestMos">
-        <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
-        <result property="petitionUserId" column="PetitionUserId" jdbcType="VARCHAR"/>
-    </resultMap>
-    <resultMap id="testOdrUsersResultMap" type="com.web.app.domain.GetEmail">
-        <result property="email" column="Email" jdbcType="VARCHAR"/>
+    <resultMap id="testMosResultMap" type="com.web.app.domain.MosList.TestMos">
     </resultMap>
     <!-- ユーザ情報を取得する -->
-    <select id="testOdrUsersSearch" resultMap="testOdrUsersResultMap">
+    <select id="testOdrUsersSearch" resultType="String">
         SELECT 
             Email
         FROM
