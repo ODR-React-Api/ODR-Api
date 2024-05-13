@@ -81,11 +81,11 @@ public class MedUserConfirmController {
      * @throws Exception 調停者メール取得失敗
      */
     @ApiOperation("調停人情報取得")
-    @PostMapping("/MediatorIntelligence")
-    public ArrayList<MediateUser> MediatorIntelligence(@RequestBody String CaseId) {
+    @PostMapping("/GetMediatorInfo")
+    public ArrayList<MediateUser> GetMediatorInfo(@RequestBody String CaseId) {
         try {
-            ArrayList<MediateUser> MediatorIntelligence = mediationService.MediatorIntelligence(CaseId);
-            return MediatorIntelligence;
+            ArrayList<MediateUser> GetMediatorInfo = mediationService.GetMediatorInfo(CaseId);
+            return GetMediatorInfo;
         } catch (Exception e) {
             return null;
         }

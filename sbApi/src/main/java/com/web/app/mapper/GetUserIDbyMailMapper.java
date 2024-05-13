@@ -20,5 +20,5 @@ public interface GetUserIDbyMailMapper {
     //ユーザID取得
     String UserUid(String MediatorUserEmail);
 
-    ArrayList<MediateUser> MediatorIntelligence(String CaseId);
+    ArrayList<MediateUser> GetMediatorInfo(String CaseId);
 }

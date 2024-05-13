@@ -28,7 +28,7 @@
             Email = #{MediatorUserEmail}
     </select>
 
-    <select id="MediatorIntelligence" resultMap="MediateUserMap">
+    <select id="GetMediatorInfo" resultMap="MediateUserMap">
         SELECT
             userId,
             Status
