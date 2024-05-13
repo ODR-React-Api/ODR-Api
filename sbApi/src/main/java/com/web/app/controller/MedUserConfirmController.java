@@ -72,11 +72,19 @@ public class MedUserConfirmController {
         }
     }
 
+    /**
+     * 
+     * 調停人情報取得
+     * 
+     * @param CaseId
+     * @return 調停者メールボックスとユーザーID
+     * @throws Exception 調停者メール取得失敗
+     */
     @ApiOperation("調停人情報取得")
     @PostMapping("/MediatorIntelligence")
-    public ArrayList<MediateUser> MediatorIntelligence(@RequestBody MediateUser mediateUser) {
+    public ArrayList<MediateUser> MediatorIntelligence(@RequestBody String CaseId) {
         try {
-            ArrayList<MediateUser> MediatorIntelligence = mediationService.MediatorIntelligence(mediateUser);
+            ArrayList<MediateUser> MediatorIntelligence = mediationService.MediatorIntelligence(CaseId);
             return MediatorIntelligence;
         } catch (Exception e) {
             return null;

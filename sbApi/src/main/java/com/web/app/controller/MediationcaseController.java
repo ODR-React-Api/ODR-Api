@@ -20,7 +20,7 @@ public class MediationcaseController {
     private MediationcaseService mediationcaseService;
 
     @ApiOperation("調停案データ新規登録")
-    @PostMapping("/Mediationstatus")
+    @PostMapping("/MediationcaseInsert")
     public int MediationcaseInsert(@RequestBody Mediationcase mediationcase) {
         try {
             //判断数据是否已经存在

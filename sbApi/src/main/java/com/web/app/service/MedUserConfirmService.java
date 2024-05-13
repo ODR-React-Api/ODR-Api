@@ -21,5 +21,5 @@ public interface MedUserConfirmService {
     MediateUser GetUserIDbyMail(String CaseId);
 
     // 調停人情報取得
-    ArrayList<MediateUser> MediatorIntelligence(MediateUser mediateUser);
+    ArrayList<MediateUser> MediatorIntelligence(String CaseId);
 }

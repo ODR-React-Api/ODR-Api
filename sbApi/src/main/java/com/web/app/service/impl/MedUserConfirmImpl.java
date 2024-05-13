@@ -62,8 +62,8 @@ public class MedUserConfirmImpl implements MedUserConfirmService {
     }
 
     @Override
-    public ArrayList<MediateUser> MediatorIntelligence(MediateUser mediateUser) {
-        ArrayList<MediateUser> MediatorIntelligence = getUserIDbyMailMapper.MediatorIntelligence(mediateUser);
+    public ArrayList<MediateUser> MediatorIntelligence(String CaseId) {
+        ArrayList<MediateUser> MediatorIntelligence = getUserIDbyMailMapper.MediatorIntelligence(CaseId);
         return MediatorIntelligence;
     }
 }
