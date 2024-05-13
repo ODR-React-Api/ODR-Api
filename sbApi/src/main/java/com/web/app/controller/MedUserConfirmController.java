@@ -34,7 +34,7 @@ public class MedUserConfirmController {
      * 
      * 調停案ステータス取得
      * 
-     * @param mediateUser 受付カウンターからの案件ID
+     * @param CaseId 受付カウンターからの案件ID
      * @return 調停案ステータスを取得する
      * @throws Exception 調整案ステータス取得失敗
      */
@@ -55,7 +55,7 @@ public class MedUserConfirmController {
      * 
      * 調停人メール取得
      * 
-     * @param mediateUser
+     * @param CaseId
      * @return 調停者メールボックスとユーザーID
      * @throws Exception 調停者メール取得失敗
      */
