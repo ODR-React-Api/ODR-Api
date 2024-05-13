@@ -13,6 +13,6 @@ import com.web.app.domain.UpdNegotiatAgree.ReconciliationUser;;
 public interface NegotiatAgreeService {
 
     // 和解案合意更新
-    int reconciliationUpdate(ReconciliationUser reconciliationuser);
+    int updNegotiatAgree(ReconciliationUser reconciliationuser);
 
 }

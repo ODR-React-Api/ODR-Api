@@ -8,7 +8,7 @@ import com.web.app.domain.UpdNegotiatAgree.ReconciliationUser;
  * 和解案合意更新API
  * 
  * @author DUC 賈文志
- * @since 2024/05/10
+ * @since 2024/05/13
  * @version 1.0
  */
 
@@ -16,5 +16,5 @@ import com.web.app.domain.UpdNegotiatAgree.ReconciliationUser;
 public interface UpdNegotiatAgreeMapper {
 
     // 和解案合意更新API
-    int reconciliationUpdate(ReconciliationUser reconciliationUser);
+    int updateCount(ReconciliationUser reconciliationUser);
 }

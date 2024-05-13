@@ -19,7 +19,7 @@ import com.web.app.mapper.UpdNegotiatAgreeMapper;
 public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
 
     @Autowired
-    private UpdNegotiatAgreeMapper ReconciliationUpdate;
+    private UpdNegotiatAgreeMapper updNegotiatAgreeMapper;
 
     /**
      * 和解案合意更新
@@ -29,9 +29,9 @@ public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
      */
     @Transactional
     @Override
-    public int reconciliationUpdate(ReconciliationUser reconciliationuser) {
+    public int updNegotiatAgree(ReconciliationUser reconciliationuser) {
         // 和解案合意更新
-        int ReconciliationUpdateStatus = ReconciliationUpdate.reconciliationUpdate(reconciliationuser);
-        return ReconciliationUpdateStatus;
+        int updateCount = updNegotiatAgreeMapper.updateCount(reconciliationuser);
+        return updateCount;
     }
 }

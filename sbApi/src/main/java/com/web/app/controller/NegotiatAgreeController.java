@@ -22,7 +22,7 @@ import com.web.app.service.NegotiatAgreeService;
 public class NegotiatAgreeController {
 
     @Autowired
-    private NegotiatAgreeService ReconciliationSerce;
+    private NegotiatAgreeService negotiatAgreeService;
 
     /**
      * 
@@ -37,8 +37,8 @@ public class NegotiatAgreeController {
     public int UpdNegotiatAgree(@RequestBody ReconciliationUser reconciliationuser) {
         try {
             // 和解案合意更新
-            int ReconciliationUpdateStatus = ReconciliationSerce.reconciliationUpdate(reconciliationuser);
-            return ReconciliationUpdateStatus;
+            int updNegotiatAgree = negotiatAgreeService.updNegotiatAgree(reconciliationuser);
+            return updNegotiatAgree;
         } catch (Exception e) {
             return 0;
         }
