@@ -26,9 +26,9 @@ public class UpdCaseEstablishServiceImpl implements UpdCaseEstablishService {
             Cases cases = new Cases();
             //金銭の支払い有無
             if (caseNegotiations.getPayAmount() > 0) {
-                cases.setPayFlag(true);
+                cases.setPayFlag(1);
             }else {
-                cases.setPayFlag(false);
+                cases.setPayFlag(0);
             }
             //ID
             cases.setCid(caseEstablish.getCasesId());

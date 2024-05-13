@@ -1,79 +1,76 @@
 package com.web.app.domain.InsRepliesTemp;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-
 import lombok.Data;
 
 @Data
 public class CasePetitions {
 
-    //ID
+    // ID
     public String id;
 
-    //プラットフォームID
-    public String platformId;
+    // プラットフォームID
+    public String PlatformId;
 
-    //案件ID
-    public String caseId;
-    
-    //ステータス
+    // 案件ID
+    public String CaseId;
+
+    // ステータス
     public Integer Status;
-    
-    //商品名
-    public String productName;
-    
-    //商品ID
-    public String productId;
-    
-    //販売元名称
-    public String traderName;
-    
-    //販売元メールアドレス
-    public String traderMail;
-    
-    //販売元ＵＲＬ
-    public String traderUrl;
-    
-    //購入日
-    public Date boughtDate;
-    
-    //購入金額
-    public BigDecimal price;
-    
-    //申立ての種類
-    public String petitionTypeValue;
-    
-    //申立ての種類　その他
-    public String petitionTypeOther;
-    
-    //申立て内容
-    public String petitionContext;
-    
-    //希望する解決方法
-    public String expectResloveTypeValue;
-    
-    //希望する解決方法　その他
-    public String expectResloveTypeOther;
-    
-    //その他項目
-    public String other;
-    
-    public String other01;
-    
-    public String other02;
-    
-    public String other03;
-    
-    public String other04;
-    
-    public String other05;
-    
-    public boolean deleteFlag;
-    
-    public Date lastModifiedDate;
-    
-    public String lastModifiedBy;
 
-    public boolean isTemp;
+    // 商品名
+    public String productName;
+
+    // 商品ID
+    public String ProductId;
+
+    // 販売元名称
+    public String TraderName;
+
+    // 販売元メールアドレス
+    public String TraderMail;
+
+    // 販売元ＵＲＬ
+    public String TraderUrl;
+
+    // 購入日
+    public String BoughtDate;
+
+    // 購入金額
+    public Double Price;
+
+    // 申立ての種類
+    public String petitionTypeValue;
+
+    // 申立ての種類 その他
+    public String petitionTypeOther;
+
+    // 申立て内容
+    public String petitionContext;
+
+    // 希望する解決方法
+    public String ExpectResloveTypeValue;
+
+    // 希望する解決方法 その他
+    public String ExpectResloveTypeOther;
+
+    // その他項目
+    public String Other;
+
+    public String Other01;
+
+    public String Other02;
+
+    public String Other03;
+
+    public String Other04;
+
+    public String Other05;
+
+    public Integer DeleteFlag;
+
+    public String LastModifiedDate;
+
+    public String LastModifiedBy;
+
+    public Integer IsTemp;
 }

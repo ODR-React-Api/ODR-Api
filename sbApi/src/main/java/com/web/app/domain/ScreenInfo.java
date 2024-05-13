@@ -1,7 +1,5 @@
 package com.web.app.domain;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -26,9 +24,9 @@ public class ScreenInfo  implements Serializable{
     //画面.販売者ＵＲＬ
     private String useproductUrl;
     //画面.購入日
-    private Date commoditydate;
+    private String commoditydate;
     //画面.購入金額
-    private BigDecimal purchaseamount;
+    private Double purchaseamount;
     //画面.申立ての種類
     private String petitionKind;
     //画面.申立て内容

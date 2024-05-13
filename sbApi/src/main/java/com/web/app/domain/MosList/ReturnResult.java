@@ -4,6 +4,13 @@ import java.io.Serializable;
 
 import lombok.Data;
 
+/**
+ * 一覧画面表示用のデータ（相手方、申立人、調停人のケース詳細内容）
+ * 
+ * @author DUC 馮淑慧
+ * @since 2024/04/18
+ * @version 1.0
+ */
 @Data
 public class ReturnResult implements Serializable {
     private static final long serialVersionUID = 1L;

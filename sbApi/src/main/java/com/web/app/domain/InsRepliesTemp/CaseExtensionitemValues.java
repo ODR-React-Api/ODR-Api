@@ -1,44 +1,42 @@
 package com.web.app.domain.InsRepliesTemp;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
 public class CaseExtensionitemValues {
 
-    //ID
+    // ID
     public String id;
 
-    //プラットフォームID
-    public String platformId;
+    // プラットフォームID
+    public String PlatformId;
 
-    //案件ID
-    public String caseId;
-    
-    //申立てID
+    // 案件ID
+    public String CaseId;
+
+    // 申立てID
     public String case_petitionId;
-    
-    //拡張項目ID
-    public String extensionitemId;
-    
-    //拡張項目値
-    public String extensionitemValue;
- 
-    //その他項目    
-    public String other01;
-    
-    public String other02;
-    
-    public String other03;
-    
-    public String other04;
-    
-    public String other05;
-    
-    public boolean deleteFlag;
-    
-    public Date lastModifiedDate;
-    
-    public String lastModifiedBy;
+
+    // 拡張項目ID
+    public String ExtensionitemId;
+
+    // 拡張項目値
+    public String ExtensionitemValue;
+
+    // その他項目
+    public String Other01;
+
+    public String Other02;
+
+    public String Other03;
+
+    public String Other04;
+
+    public String Other05;
+
+    public Integer DeleteFlag;
+
+    public String LastModifiedDate;
+
+    public String LastModifiedBy;
 }

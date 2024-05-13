@@ -3,26 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetPlatformMapper">
-    <resultMap id="petitionResultMap" type="com.web.app.domain.PetitionType">
-        <result property="value" column="Value" jdbcType="VARCHAR"/>
-        <result property="displayName" column="DisplayName" jdbcType="VARCHAR"/>
-        <result property="orderNo" column="OrderNo" jdbcType="INTEGER"/>
-        <result property="required" column="Required" jdbcType="INTEGER"/>
-        <result property="languageId" column="LanguageId" jdbcType="VARCHAR"/>
+    <resultMap id="odrUsersResultMap" type="com.web.app.domain.Entity.OdrUsers">
     </resultMap>
-    <resultMap id="statusResultMap" type="com.web.app.domain.Status">
-        <result property="userProductId" column="UserProductId" jdbcType="INTEGER"/>
-        <result property="useTraderName" column="UseTraderName" jdbcType="INTEGER"/>
-        <result property="useProductUrl" column="UseProductUrl" jdbcType="INTEGER"/>
-        <result property="useOther" column="UseOther" jdbcType="INTEGER"/>
+    <resultMap id="petitionResultMap" type="com.web.app.domain.Entity.MasterTypes">
     </resultMap>
-    <resultMap id="expandResultMap" type="com.web.app.domain.ExpandItems">
+    <resultMap id="statusResultMap" type="com.web.app.domain.Entity.MasterPlatforms">
+    </resultMap>
+    <resultMap id="expandResultMap" type="com.web.app.domain.MosLogin.ExpandItems">
         <result property="itemDisplayName" column="ItemDisplayName" jdbcType="VARCHAR"/>
         <result property="itemType" column="ItemType" jdbcType="INTEGER"/>
         <result property="isRequired" column="IsRequired" jdbcType="INTEGER"/>
     </resultMap>
     <!-- ユーザ情報を取得する -->
-    <select id="selectOdrUsers"  resultType="String">
+    <select id="selectOdrUsers"  resultMap="odrUsersResultMap">
         SELECT 
             PlatformId
         FROM

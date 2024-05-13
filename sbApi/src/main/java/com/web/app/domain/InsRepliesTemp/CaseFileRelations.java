@@ -1,44 +1,42 @@
 package com.web.app.domain.InsRepliesTemp;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
 public class CaseFileRelations {
 
-    //ID
+    // ID
     public String id;
 
-    //プラットフォームID
-    public String platformId;
+    // プラットフォームID
+    public String PlatformId;
 
-    //案件ID
-    public String caseId;
-    
-    //案件種類
-    public String relationType;
-    
-    //案件種類ID
-    public String relatedId;
-    
-    //ファイルID
+    // 案件ID
+    public String CaseId;
+
+    // 案件種類
+    public String RelationType;
+
+    // 案件種類ID
+    public String RelatedId;
+
+    // ファイルID
     public String fileId;
- 
-    //その他項目    
-    public String other01;
-    
-    public String other02;
-    
-    public String other03;
-    
-    public String other04;
-    
-    public String other05;
-    
-    public boolean deleteFlag;
-    
-    public Date lastModifiedDate;
-    
-    public String lastModifiedBy;
+
+    // その他項目
+    public String Other01;
+
+    public String Other02;
+
+    public String Other03;
+
+    public String Other04;
+
+    public String Other05;
+
+    public Integer DeleteFlag;
+
+    public String LastModifiedDate;
+
+    public String LastModifiedBy;
 }

@@ -1,5 +1,6 @@
 package com.web.app.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,10 @@ public class InsRepliesTempServiceImpl implements InsRepliesTempService {
     //⓵ユーザ情報の取得項目
     UserInfo userInfo = new UserInfo();
     //システム日付
-    Date sysDate = new Date();
+    Date date = new Date();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    String sysDate = sdf.format(date);
+
     //⓶TBL「申立（case_petitions）」の更新戻り値
     int updateNum1 = 0;
     //⓷TBL「案件別個人情報リレーション（case_relations）」の更新戻り値
@@ -225,7 +229,7 @@ public class InsRepliesTempServiceImpl implements InsRepliesTempService {
     }
 
     //TBL「添付ファイル（files）」を新規登録する
-    private int  insertFiles(String fileMaxId1,UserInfo userInfo,ScreenInfo screenInfo,Date sysDate) {
+    private int  insertFiles(String fileMaxId1,UserInfo userInfo,ScreenInfo screenInfo,String sysDate) {
         // 登録用数据初始化
         Files files = new Files();
         //ID
@@ -254,7 +258,7 @@ public class InsRepliesTempServiceImpl implements InsRepliesTempService {
     }
 
     //TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する
-    private int  insertCaseFileRelations(UserInfo userInfo,String case_petitions_id, String fileMaxId1,Date sysDate,ScreenInfo screenInfo) {
+    private int  insertCaseFileRelations(UserInfo userInfo,String case_petitions_id, String fileMaxId1,String sysDate,ScreenInfo screenInfo) {
         // 自動採番のid（Guid取得）
         String caseFileRelationsMaxId1 = utilService.GetGuid();
         //登録用数据初始化

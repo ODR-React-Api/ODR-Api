@@ -4,6 +4,13 @@ import java.io.Serializable;
 
 import lombok.Data;
 
+/**
+ * 検索サブ画面で入力の画面項目
+ * 
+ * @author DUC 馮淑慧
+ * @since 2024/04/18
+ * @version 1.0
+ */
 @Data
 public class Position implements Serializable {
     private static final long serialVersionUID = 1L;

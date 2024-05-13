@@ -1,56 +1,54 @@
 package com.web.app.domain.InsRepliesTemp;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
 public class Files {
 
-    //ID
+    // ID
     public String id;
 
-    //プラットフォームID
-    public String platformId;
+    // プラットフォームID
+    public String PlatformId;
 
-    //案件ID
-    public String caseId;
-    
-    //ファイル名
-    public String fileName;
-    
-    //拡張子
-    public String fileExtension;
-    
-    //URL
-    public String fileUrl;
-    
-    //ストレージID
-    public String fileBlobStorageId;
-    
-    //ファイルサイズ
-    public Integer fileSize;
-    
-    //ユーザーID
-    public String registerUserId;
-    
-    //登録日
-    public Date registerDate;
-    
-    //その他項目    
-    public String other01;
-    
-    public String other02;
-    
-    public String other03;
-    
-    public String other04;
-    
-    public String other05;
-    
-    public boolean deleteFlag;
-    
-    public Date lastModifiedDate;
-    
-    public String lastModifiedBy;
+    // 案件ID
+    public String CaseId;
+
+    // ファイル名
+    public String FileName;
+
+    // 拡張子
+    public String FileExtension;
+
+    // URL
+    public String FileUrl;
+
+    // ストレージID
+    public String FileBlobStorageId;
+
+    // ファイルサイズ
+    public Integer FileSize;
+
+    // ユーザーID
+    public String RegisterUserId;
+
+    // 登録日
+    public String RegisterDate;
+
+    // その他項目
+    public String Other01;
+
+    public String Other02;
+
+    public String Other03;
+
+    public String Other04;
+
+    public String Other05;
+
+    public Integer DeleteFlag;
+
+    public String LastModifiedDate;
+
+    public String LastModifiedBy;
 }
