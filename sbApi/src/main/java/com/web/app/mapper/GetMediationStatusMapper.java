@@ -13,5 +13,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface GetMediationStatusMapper {
 
     // 調停案ステータス取得
-    String GetMediationStatus(String CaseId);
+    String getMediationStatus(String CaseId);
 }

@@ -15,11 +15,11 @@ import com.web.app.domain.MediateUser;
 
 public interface MedUserConfirmService {
     // 調停案ステータス取得
-    String GetMediationStatus(String CaseId);
+    String getMediationStatus(String CaseId);
 
     // 調停人メール取得
-    MediateUser GetUserIDbyMail(String CaseId);
+    MediateUser getUserIDbyMail(String CaseId);
 
     // 調停人情報取得
-    ArrayList<MediateUser> GetMediatorInfo(String CaseId);
+    ArrayList<MediateUser> getMediatorInfo(String CaseId);
 }

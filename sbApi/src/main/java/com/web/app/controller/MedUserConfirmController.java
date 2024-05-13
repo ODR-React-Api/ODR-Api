@@ -28,7 +28,7 @@ import com.web.app.service.MedUserConfirmService;
 @RequestMapping("/MedUserConfirm")
 public class MedUserConfirmController {
     @Autowired
-    private MedUserConfirmService mediationService;
+    private MedUserConfirmService medUserConfirmService;
 
     /**
      * 
@@ -43,9 +43,9 @@ public class MedUserConfirmController {
     public String GetMediationStatus(@RequestBody String CaseId) {
         try {
             // 調停案ステータスを取得
-            String MediationStatus = mediationService.GetMediationStatus(CaseId);
+            String getMediationStatus = medUserConfirmService.getMediationStatus(CaseId);
             // 調停案ステータス
-            return MediationStatus;
+            return getMediationStatus;
         } catch (Exception e) {
             return null;
         }
@@ -64,7 +64,7 @@ public class MedUserConfirmController {
     public MediateUser GetUserIDbyMail(@RequestBody String CaseId) {
         try {
             //調停人メール取得
-            MediateUser GetUserIDbyMail = mediationService.GetUserIDbyMail(CaseId);
+            MediateUser GetUserIDbyMail = medUserConfirmService.getUserIDbyMail(CaseId);
             //調停者メールボックスとユーザーID
             return GetUserIDbyMail;   
         } catch(Exception e) {
@@ -84,7 +84,7 @@ public class MedUserConfirmController {
     @PostMapping("/GetMediatorInfo")
     public ArrayList<MediateUser> GetMediatorInfo(@RequestBody String CaseId) {
         try {
-            ArrayList<MediateUser> GetMediatorInfo = mediationService.GetMediatorInfo(CaseId);
+            ArrayList<MediateUser> GetMediatorInfo = medUserConfirmService.getMediatorInfo(CaseId);
             return GetMediatorInfo;
         } catch (Exception e) {
             return null;
