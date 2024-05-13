@@ -2,6 +2,13 @@ package com.web.app.domain.Entity;
 
 import lombok.Data;
 
+/**
+ * 添付ファイル
+ * 
+ * @author DUC 馮淑慧
+ * @since 2024/05/10
+ * @version 1.0
+ */
 @Data
 public class Files {
 

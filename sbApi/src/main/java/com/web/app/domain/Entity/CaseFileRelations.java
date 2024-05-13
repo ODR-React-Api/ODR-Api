@@ -2,6 +2,13 @@ package com.web.app.domain.Entity;
 
 import lombok.Data;
 
+/**
+ * 案件-添付ファイルリレーション
+ * 
+ * @author DUC 馮淑慧
+ * @since 2024/05/10
+ * @version 1.0
+ */
 @Data
 public class CaseFileRelations {
 
@@ -15,7 +22,7 @@ public class CaseFileRelations {
     public String CaseId;
 
     // 案件種類
-    public String RelationType;
+    public Integer RelationType;
 
     // 案件種類ID
     public String RelatedId;

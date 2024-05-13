@@ -2,6 +2,13 @@ package com.web.app.domain.Entity;
 
 import lombok.Data;
 
+/**
+ * 拡張項目設定値
+ * 
+ * @author DUC 馮淑慧
+ * @since 2024/05/10
+ * @version 1.0
+ */
 @Data
 public class CaseExtensionitemValues {
 
