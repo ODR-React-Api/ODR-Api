@@ -43,7 +43,7 @@ public class MedUserConfirmController {
     public String GetMediationStatus(@RequestBody String CaseId) {
         try {
             // 調停案ステータスを取得
-            String MediationStatus = mediationService.Mediationstatus(CaseId);
+            String MediationStatus = mediationService.GetMediationStatus(CaseId);
             // 調停案ステータス
             return MediationStatus;
         } catch (Exception e) {

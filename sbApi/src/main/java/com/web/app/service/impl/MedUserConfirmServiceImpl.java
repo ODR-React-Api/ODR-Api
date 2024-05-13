@@ -34,9 +34,9 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
      * @return 調停案ステータスを取得する
      */
     @Override
-    public String Mediationstatus(String CaseId) {
+    public String GetMediationStatus(String CaseId) {
         //調停案ステータス取得
-        String Mediationstatus = getMediationStatusMapper.Mediationstatus(CaseId);
+        String Mediationstatus = getMediationStatusMapper.GetMediationStatus(CaseId);
         return Mediationstatus;
     }
 

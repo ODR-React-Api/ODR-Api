@@ -15,7 +15,7 @@ import com.web.app.domain.MediateUser;
 
 public interface MedUserConfirmService {
     // 調停案ステータス取得
-    String Mediationstatus(String CaseId);
+    String GetMediationStatus(String CaseId);
 
     // 調停人メール取得
     MediateUser GetUserIDbyMail(String CaseId);
