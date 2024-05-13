@@ -9,6 +9,7 @@ import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.Entity.File;
 import com.web.app.domain.NegotiatPreview.NegotiatPreview;
 import com.web.app.domain.constants.Constants;
+import com.web.app.domain.constants.Num;
 import com.web.app.mapper.InsNegotiationDataMapper;
 import com.web.app.mapper.UpdNegotiationsDataMapper;
 import com.web.app.service.NegotiatPreviewService;
@@ -43,22 +44,23 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     public int NegotiatPreview(NegotiatPreview negotiatPreview) {
         CaseNegotiations cNegotiations = updNegotiationsDataMapper.SearchCaseNegotiations(negotiatPreview.getCaseId());
         if (cNegotiations != null) {
-            if (cNegotiations.getStatus().equals(0) ||
-                    cNegotiations.getStatus().equals(1) ||
-                    cNegotiations.getStatus().equals(2)) {
-                negotiatPreview.setStatus(2);
-            } else if (cNegotiations.getStatus().equals(7) ||
-                    cNegotiations.getStatus().equals(8) ||
-                    cNegotiations.getStatus().equals(9)) {
-                negotiatPreview.setStatus(9);
-            } else if (cNegotiations.getStatus().equals(10) ||
-                    cNegotiations.getStatus().equals(11) ||
-                    cNegotiations.getStatus().equals(12)) {
-                negotiatPreview.setStatus(12);
-            } else if (cNegotiations.getStatus().equals(13) ||
-                    cNegotiations.getStatus().equals(14) ||
-                    cNegotiations.getStatus().equals(15)) {
-                negotiatPreview.setStatus(15);
+            //未マージ
+            if (cNegotiations.getStatus().equals(Num.NUM0) ||
+                    cNegotiations.getStatus().equals(Num.NUM1) ||
+                    cNegotiations.getStatus().equals(Num.NUM2)) {
+                negotiatPreview.setStatus(Num.NUM2);
+            } else if (cNegotiations.getStatus().equals(Num.NUM7) ||
+                    cNegotiations.getStatus().equals(Num.NUM8) ||
+                    cNegotiations.getStatus().equals(Num.NUM9)) {
+                negotiatPreview.setStatus(Num.NUM9);
+            } else if (cNegotiations.getStatus().equals(Num.NUM10) ||
+                    cNegotiations.getStatus().equals(Num.NUM11) ||
+                    cNegotiations.getStatus().equals(Num.NUM12)) {
+                negotiatPreview.setStatus(Num.NUM12);
+            } else if (cNegotiations.getStatus().equals(Num.NUM13) ||
+                    cNegotiations.getStatus().equals(Num.NUM14) ||
+                    cNegotiations.getStatus().equals(Num.NUM15)) {
+                negotiatPreview.setStatus(Num.NUM15);
             }
             UpdNegotiationsData(negotiatPreview);
         } else {
