@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
-import com.web.app.service.UpdNegotiatConService;
+import com.web.app.service.NegotiatAgreeService;
 import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
@@ -24,11 +24,11 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @RestController
 @RequestMapping("/negotiatAgree")
 @SuppressWarnings("rawtypes")
-public class UpdNegotiatConController {
+public class NegotiatAgreeController {
 
   // サービスオブジェクト
   @Autowired
-  private UpdNegotiatConService updNegotiatConService;
+  private NegotiatAgreeService updNegotiatConService;
 
   /**
      * 

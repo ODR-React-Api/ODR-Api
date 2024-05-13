@@ -9,7 +9,7 @@ import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
  * @since 2024/05/06
  * @version 1.0
  */
-public interface UpdNegotiatConService {
+public interface NegotiatAgreeService {
     
     int updateNegotiatData(UpdNegotiatCon updNegotiatCon);
 

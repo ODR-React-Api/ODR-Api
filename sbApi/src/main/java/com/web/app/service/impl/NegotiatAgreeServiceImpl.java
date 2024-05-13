@@ -8,17 +8,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
 import com.web.app.mapper.UpdNegotiatConMapper;
-import com.web.app.service.UpdNegotiatConService;
+import com.web.app.service.NegotiatAgreeService;
 
 /**
- * サービス実装クラス
+ * 和解案確認更新 サービス実装クラス
  * 
  * @author DUC 王 エンエン
  * @since 2024/05/06
  * @version 1.0
  */
 @Service
-public class UpdNegotiatConServiceImpl implements UpdNegotiatConService {
+public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
 
     // マッパーオブジェクト
     @Autowired
