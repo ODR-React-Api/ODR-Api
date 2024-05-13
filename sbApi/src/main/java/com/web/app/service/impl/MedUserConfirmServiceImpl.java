@@ -30,6 +30,7 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
     private GetUserIDbyMailMapper getUserIDbyMailMapper;
     @Autowired
     private GetMediatorInfoMapper getMediatorInfoMapper;
+
     /**
      * 
      * 調停案ステータス取得

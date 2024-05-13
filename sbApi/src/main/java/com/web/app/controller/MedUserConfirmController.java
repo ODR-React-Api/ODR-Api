@@ -65,11 +65,11 @@ public class MedUserConfirmController {
     @PostMapping("/GetUserIDbyMail")
     public GetUserIDbyMail GetUserIDbyMail(@RequestBody String CaseId) {
         try {
-            //調停者メールとユザーIDを取得
+            // 調停者メールとユザーIDを取得
             GetUserIDbyMail getUserIDbyMail = medUserConfirmService.getUserIDbyMail(CaseId);
-            //調停者メールとユザーID
-            return getUserIDbyMail;   
-        } catch(Exception e) {
+            // 調停者メールとユザーID
+            return getUserIDbyMail;
+        } catch (Exception e) {
             return null;
         }
     }

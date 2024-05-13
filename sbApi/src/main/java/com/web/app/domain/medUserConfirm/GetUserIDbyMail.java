@@ -12,12 +12,12 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class GetUserIDbyMail implements Serializable{
-
+public class GetUserIDbyMail implements Serializable {
+    // 缓冲
     private static final long serialVersionUID = 1L;
-
+    // 調停人
     private String MediatorUserEmail;
-
+    // ID
     private String Uid;
 
 }
