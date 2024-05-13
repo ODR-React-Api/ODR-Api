@@ -11,8 +11,8 @@ import com.web.app.mapper.UpdNegotiatAgreeMapper;
 /**
  * 和解案合意更新API
  * 
- * @author DUC jiawenzhi
- * @since 2024/05/10
+ * @author DUC 賈文志
+ * @since 2024/05/13
  * @version 1.0
  */
 @Service

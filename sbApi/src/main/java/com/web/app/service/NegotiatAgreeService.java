@@ -5,8 +5,8 @@ import com.web.app.domain.UpdNegotiatAgree.ReconciliationUser;;
 /**
  * 和解案合意更新
  * 
- * @author DUC jiawenzhi
- * @since 2024/05/10
+ * @author DUC 賈文志
+ * @since 2024/05/13
  * @version 1.0
  */
 

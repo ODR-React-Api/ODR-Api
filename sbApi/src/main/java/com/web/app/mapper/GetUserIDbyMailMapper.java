@@ -8,7 +8,7 @@ import com.web.app.domain.MediateUser;
  * 調停人メール取得
  * ユーザID取得
  * 
- * @author DUC jiawenzhi
+ * @author DUC 賈文志
  * @since 2024/05/13
  * @version 1.0
  */

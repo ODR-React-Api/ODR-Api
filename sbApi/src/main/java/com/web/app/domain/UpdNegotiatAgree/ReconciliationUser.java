@@ -6,8 +6,8 @@ import lombok.Data;
 /**
  * 和解案合意更新API
  * 
- * @author DUC jiawenzhi
- * @since 2024/05/09
+ * @author DUC 賈文志
+ * @since 2024/05/13
  * @version 1.0
  */
 @Data
