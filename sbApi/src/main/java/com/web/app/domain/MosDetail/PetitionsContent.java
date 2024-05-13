@@ -1,7 +1,9 @@
-package com.web.app.domain;
+package com.web.app.domain.MosDetail;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.web.app.domain.Entity.CasePetitions;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;

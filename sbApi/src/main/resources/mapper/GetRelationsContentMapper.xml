@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.RelationsContentMapper">
-    <resultMap id="RelationsContent" type="com.web.app.domain.Users">
-        <id property="firstName" column="FirstName" jdbcType="VARCHAR"/>
-        <result property="lastName" column="LastName" jdbcType="VARCHAR"/>
-        <result property="firstNamekana" column="FirstName_kana" jdbcType="VARCHAR"/>
-        <result property="lastNamekana" column="LastName_kana" jdbcType="VARCHAR"/>
-        <result property="companyName" column="CompanyName" jdbcType="VARCHAR"/>
+<mapper namespace="com.web.app.mapper.GetRelationsContentMapper">
+    <resultMap id="RelationsContent" type="com.web.app.domain.Entity.OdrUsers">
+        <id property="FirstName" column="FirstName" jdbcType="VARCHAR"/>
+        <result property="LastName" column="LastName" jdbcType="VARCHAR"/>
+        <result property="FirstName_kana" column="FirstName_kana" jdbcType="VARCHAR"/>
+        <result property="LastName_kana" column="LastName_kana" jdbcType="VARCHAR"/>
+        <result property="CompanyName" column="CompanyName" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="RelationsContentListDataSearch" resultMap="RelationsContent">
         SELECT 

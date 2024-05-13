@@ -5,19 +5,19 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.app.domain.Questionnaire_Mails;
 import com.web.app.domain.Response;
-import com.web.app.service.GetQuestionnairesService;
+import com.web.app.domain.QuesAnswer.Questionnaire_Mails;
+import com.web.app.service.QuesAnswerService;
 
 import io.swagger.annotations.Api;
 
 @CrossOrigin(origins = "*")
 @Api(tags = "アンケート情報取得")
 @RestController
-public class GetQuestionnairesController {
+public class QuesAnswerController {
 
     @Autowired
-    private GetQuestionnairesService getQuestionnairesService;
+    private QuesAnswerService getQuestionnairesService;
 
     @SuppressWarnings("rawtypes")
     @GetMapping("/getQuestionnaires")

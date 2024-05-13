@@ -2,14 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.QuestionnaireMapper">
-    <resultMap id="testUserResultMap" type="com.web.app.domain.QuestionnaireData">
-        <id property="QuestionId" column="QuestionId" jdbcType="VARCHAR"/>
-        <result property="UserEmail" column="UserEmail" jdbcType="VARCHAR"/>
-        <result property="UserType" column="UserType" jdbcType="INTEGER"/>
-        <result property="CaseId" column="CaseId" jdbcType="VARCHAR"/>
-    </resultMap>
-    <select id="questionnaieDataSearch" resultMap="testUserResultMap">
+<mapper namespace="com.web.app.mapper.GetQuestionnairesMapper">
+    <select id="questionnaieDataSearch" resultType="com.web.app.domain.QuesAnswer.QuestionnaireData">
         SELECT 
             QuestionId,
             UserEmail,
@@ -32,14 +26,7 @@
             A.UserType=#{userType} 
     </select>
 
-    <resultMap id="QuestionnaireResultMap" type="com.web.app.domain.QuestionnaireList">
-        <id property="Description" column="Description" jdbcType="VARCHAR"/>
-        <result property="Type" column="Type" jdbcType="INTEGER"/>
-        <result property="ActiveFlag" column="ActiveFlag" jdbcType="INTEGER"/>
-        <result property="Order" column="Order" jdbcType="INTEGER"/>
-        <result property="RequireFlag" column="RequireFlag" jdbcType="INTEGER"/>
-    </resultMap>
-    <select id="searchQuestionnaieList" resultMap="QuestionnaireResultMap">
+    <select id="searchQuestionnaieList" resultType="com.web.app.domain.QuesAnswer.QuestionnaireList">
         SELECT
               A.Description,
               A.Type,

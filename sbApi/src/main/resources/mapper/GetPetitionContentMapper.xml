@@ -2,23 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.PetitioncontentMapper">
-    <resultMap id="PetitionList" type="com.web.app.domain.CasePetitions">
-        <id property="caseId" column="CaseId" jdbcType="VARCHAR"/>
-        <result property="productName" column="productName" jdbcType="VARCHAR"/>
-        <result property="productId" column="ProductId" jdbcType="VARCHAR"/>
-        <result property="traderName" column="TraderName" jdbcType="VARCHAR"/>
-        <result property="traderMail" column="TraderMail" jdbcType="VARCHAR"/>
-        <result property="traderUrl" column="TraderUrl" jdbcType="VARCHAR"/>
-        <result property="boughtDate" column="BoughtDate" jdbcType="DATE"/>
-        <result property="price" column="Price" jdbcType="DECIMAL"/>
-        <result property="petitionTypeValue" column="petitionTypeValue" jdbcType="VARCHAR"/>
-        <result property="petitionContext" column="petitionContext" jdbcType="VARCHAR"/>
-        <result property="expectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR"/>
-        <result property="other" column="Other" jdbcType="VARCHAR"/>
-        <result property="lastModifiedDate" column="LastModifiedDate" jdbcType="DATE"/>
-    </resultMap>
-    <select id="PetitionListDataSearch" resultMap="PetitionList">
+<mapper namespace="com.web.app.mapper.GetPetitionContentMapper">
+    <select id="PetitionListDataSearch" resultType="com.web.app.domain.Entity.CasePetitions">
         SELECT 
             CaseId,
             productName,
@@ -41,7 +26,7 @@
 
     </select>
 
-    <resultMap id="PetitionFile" type="com.web.app.domain.AttachedFile">
+    <resultMap id="PetitionFile" type="com.web.app.domain.MosDetail.AttachedFile">
         <id property="filename" column="FileName" jdbcType="VARCHAR"/>
         <result property="fileUrl" column="FileUrl" jdbcType="VARCHAR"/>
     </resultMap>
@@ -62,7 +47,7 @@
             AND A.DeleteFlag=0
     </select>
 
-    <resultMap id="PetitionExtensionitem" type="com.web.app.domain.ExtensionItem">
+    <resultMap id="PetitionExtensionitem" type="com.web.app.domain.MosDetail.ExtensionItem">
         <id property="itemDisplayName" column="ItemDisplayName" jdbcType="VARCHAR"/>
         <result property="ExtensionitemValue" column="ExtensionitemValue" jdbcType="VARCHAR"/>
     </resultMap>

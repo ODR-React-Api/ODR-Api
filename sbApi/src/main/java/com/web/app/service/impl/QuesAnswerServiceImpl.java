@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.domain.QuestionnaireData;
-import com.web.app.domain.QuestionnaireList;
-import com.web.app.domain.Questionnaire_Mails;
+import com.web.app.domain.QuesAnswer.QuestionnaireData;
+import com.web.app.domain.QuesAnswer.QuestionnaireList;
+import com.web.app.domain.QuesAnswer.Questionnaire_Mails;
 import com.web.app.mapper.GetQuestionnairesMapper;
-import com.web.app.service.GetQuestionnairesService;
+import com.web.app.service.QuesAnswerService;
 
 /**
  * アンケート情報取得データ
@@ -20,7 +20,7 @@ import com.web.app.service.GetQuestionnairesService;
  */
 
 @Service
-public class GetQuestionnairesServiceImpl implements GetQuestionnairesService {
+public class QuesAnswerServiceImpl implements QuesAnswerService {
     /**
      * アンケート情報取得
      *

@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.QuestionnaireData;
-import com.web.app.domain.QuestionnaireList;
+import com.web.app.domain.QuesAnswer.QuestionnaireData;
+import com.web.app.domain.QuesAnswer.QuestionnaireList;
 
 @Mapper
 public interface GetQuestionnairesMapper {

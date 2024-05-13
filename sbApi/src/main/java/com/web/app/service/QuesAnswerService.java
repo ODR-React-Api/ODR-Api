@@ -1,8 +1,8 @@
 package com.web.app.service;
 
-import com.web.app.domain.Questionnaire_Mails;
+import com.web.app.domain.QuesAnswer.Questionnaire_Mails;
 
-public interface GetQuestionnairesService {
+public interface QuesAnswerService {
 
     Questionnaire_Mails selectQuestionnaireData(String Id, String platformId);
 }
