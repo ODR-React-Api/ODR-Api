@@ -51,10 +51,18 @@ public class MedUserConfirmController {
         }
     }
 
+    /**
+     * 
+     * 調停人メール取得
+     * 
+     * @param mediateUser 
+     * @return 調停案ステータスを取得する
+     * @throws Exception 調整案ステータス取得失敗
+     */
     @ApiOperation("調停人メール取得")
-    @PostMapping("/MediationEmail")
-    public MediateUser MediationEmail(@RequestBody MediateUser mediateUser) {
-        MediateUser mediationemail = mediationService.MediationEmail(mediateUser);
+    @PostMapping("/GetUserIDbyMail")
+    public MediateUser GetUserIDbyMail(@RequestBody String CaseId) {
+        MediateUser mediationemail = mediationService.MediationEmail(CaseId);
         return mediationemail;
     }
 
