@@ -85,6 +85,7 @@ public class MedUserConfirmController {
     @PostMapping("/GetMediatorInfo")
     public ArrayList<GetMediatorInfo> GetMediatorInfo(@RequestBody String CaseId) {
         try {
+            // 調停人情報取得
             ArrayList<GetMediatorInfo> getMediatorInfo = medUserConfirmService.getMediatorInfo(CaseId);
             return getMediatorInfo;
         } catch (Exception e) {

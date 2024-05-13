@@ -1,7 +1,6 @@
 package com.web.app.service;
 
 import java.util.ArrayList;
-
 import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
 import com.web.app.domain.medUserConfirm.GetMediatorInfo;
 
@@ -14,7 +13,6 @@ import com.web.app.domain.medUserConfirm.GetMediatorInfo;
  * @since 2024/05/13
  * @version 1.0
  */
-
 public interface MedUserConfirmService {
     // 調停案ステータス取得
     String getMediationStatus(String CaseId);

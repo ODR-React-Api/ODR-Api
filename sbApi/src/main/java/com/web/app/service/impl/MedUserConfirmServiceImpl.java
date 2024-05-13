@@ -75,6 +75,7 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
      */
     @Override
     public ArrayList<GetMediatorInfo> getMediatorInfo(String CaseId) {
+        // 調停人情報取得
         ArrayList<GetMediatorInfo> getMediatorInfo = getMediatorInfoMapper.getMediatorInfo(CaseId);
         return getMediatorInfo;
     }

@@ -13,6 +13,6 @@ import com.web.app.domain.medUserConfirm.GetMediatorInfo;
  */
 @Mapper
 public interface GetMediatorInfoMapper {
-
+    // 調停人情報取得
     ArrayList<GetMediatorInfo> getMediatorInfo(String CaseId);
 }
