@@ -13,9 +13,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface GetUserIDbyMailMapper {
 
     // 調停人メール取得
-    String mediatorUserEmail(String mediateUser);
+    String mediatorUserEmail(String CaseId);
 
     // ユーザID取得
-    String userUid(String MediatorUserEmail);
+    String userUid(String mediatorUserEmail);
 
 }

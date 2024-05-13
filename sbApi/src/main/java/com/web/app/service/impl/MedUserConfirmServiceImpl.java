@@ -56,10 +56,10 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
         // 取得したコーディネータメールボックスとユーザーIDを保存する
         GetUserIDbyMail getUserIDbyMail = new GetUserIDbyMail();
         // 調停人メール取得
-        String MediatorUserEmail = getUserIDbyMailMapper.mediatorUserEmail(CaseId);
-        getUserIDbyMail.setMediatorUserEmail(MediatorUserEmail);
+        String mediatorUserEmail = getUserIDbyMailMapper.mediatorUserEmail(CaseId);
+        getUserIDbyMail.setMediatorUserEmail(mediatorUserEmail);
         // 調停者メールボックスからユーザUidを取得する
-        String userUid = getUserIDbyMailMapper.userUid(MediatorUserEmail);
+        String userUid = getUserIDbyMailMapper.userUid(mediatorUserEmail);
         getUserIDbyMail.setUid(userUid);
         // 取得した調停者メールボックスとユーザーUidを返す
         return getUserIDbyMail;

@@ -19,6 +19,6 @@
         FROM
             odr_users
         WHERE
-            Email = #{MediatorUserEmail}
+            Email = #{mediatorUserEmail}
     </select>
 </mapper>
