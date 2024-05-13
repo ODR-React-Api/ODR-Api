@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.app.domain.Entity.CaseFileRelations;
 import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.Entity.File;
+import com.web.app.domain.NegotiatPreview.NegotiatPreview;
 import com.web.app.domain.constants.Constants;
 import com.web.app.mapper.InsNegotiationDataMapper;
 import com.web.app.mapper.UpdNegotiationsDataMapper;
@@ -33,35 +34,35 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     /**
      * 和解案が存在するかどうかを判断する
      *
-     * @param CaseNegotiations 和解案、 File ファイル
+     * @param NegotiatPreview セッション値
      * @return 存在->和解案データ更新、存在しない->和解案データ新規登録
      * @throws Exception エラーの説明内容
      */
     @Transactional
     @Override
-    public int NegotiatPreview(CaseNegotiations caseNegotiations, File file) {
-        CaseNegotiations cNegotiations = updNegotiationsDataMapper.SearchCaseNegotiations(caseNegotiations.getCaseId());
+    public int NegotiatPreview(NegotiatPreview negotiatPreview) {
+        CaseNegotiations cNegotiations = updNegotiationsDataMapper.SearchCaseNegotiations(negotiatPreview.getCaseId());
         if (cNegotiations != null) {
             if (cNegotiations.getStatus().equals(0) ||
                     cNegotiations.getStatus().equals(1) ||
                     cNegotiations.getStatus().equals(2)) {
-                caseNegotiations.setStatus(2);
+                negotiatPreview.setStatus(2);
             } else if (cNegotiations.getStatus().equals(7) ||
                     cNegotiations.getStatus().equals(8) ||
                     cNegotiations.getStatus().equals(9)) {
-                caseNegotiations.setStatus(9);
+                negotiatPreview.setStatus(9);
             } else if (cNegotiations.getStatus().equals(10) ||
                     cNegotiations.getStatus().equals(11) ||
                     cNegotiations.getStatus().equals(12)) {
-                caseNegotiations.setStatus(12);
+                negotiatPreview.setStatus(12);
             } else if (cNegotiations.getStatus().equals(13) ||
                     cNegotiations.getStatus().equals(14) ||
                     cNegotiations.getStatus().equals(15)) {
-                caseNegotiations.setStatus(15);
+                negotiatPreview.setStatus(15);
             }
-            UpdNegotiationsData(caseNegotiations, file);
+            UpdNegotiationsData(negotiatPreview);
         } else {
-            InsNegotiationData(caseNegotiations, file);
+            InsNegotiationData(negotiatPreview);
         }
         return 1;
     }
@@ -69,55 +70,148 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     /**
      * 和解案データ新規登録
      *
-     * @param CaseNegotiations 和解案、 File ファイル
+     * @param NegotiatPreview セッション値
      * @return メソッドが正常に実行されたかどうか
      * @throws Exception エラーの説明内容
      */
     @Transactional
     @Override
-    public int InsNegotiationData(CaseNegotiations caseNegotiations, File file) {
+    public int InsNegotiationData(NegotiatPreview negotiatPreview) {
+        //「和解案」新規登録
+        CaseNegotiations caseNegotiations = new CaseNegotiations();
         caseNegotiations.setId(utilServiceImpl.GetGuid());
-        file.setId(utilServiceImpl.GetGuid());
+        caseNegotiations.setPlatformId(negotiatPreview.getPlatformId());
+        caseNegotiations.setCaseId(negotiatPreview.getCaseId());
+        caseNegotiations.setStatus(negotiatPreview.getStatus());
+        caseNegotiations.setExpectResloveTypeValue(negotiatPreview.getExpectResloveTypeValue());
+        caseNegotiations.setOtherContext(negotiatPreview.getOtherContext());
+        caseNegotiations.setHtmlContext(negotiatPreview.getHtmlContext());
+        caseNegotiations.setHtmlContext2(negotiatPreview.getHtmlContext2());
+        caseNegotiations.setPayAmount(negotiatPreview.getPayAmount());
+        caseNegotiations.setCounterClaimPayment(negotiatPreview.getCounterClaimPayment());
+        caseNegotiations.setPaymentEndDate(negotiatPreview.getPaymentEndDate());
+        caseNegotiations.setShipmentPayType(negotiatPreview.getShipmentPayType());
+        caseNegotiations.setSpecialItem(negotiatPreview.getSpecialItem());
+        caseNegotiations.setUserId(negotiatPreview.getUserId());
+        caseNegotiations.setSubmitDate(negotiatPreview.getSubmitDate());
+        caseNegotiations.setAgreementDate(negotiatPreview.getAgreementDate());
+        caseNegotiations.setLastModifiedDate(negotiatPreview.getLastModifiedDate());
+        caseNegotiations.setLastModifiedBy(negotiatPreview.getLastModifiedBy());
         int addCaseNegotiationsStatus = insNegotiationDataMapper.AddCaseNegotiations(caseNegotiations);
-        int addFileStatus = insNegotiationDataMapper.AddFile(file);
+        if (addCaseNegotiationsStatus == Constants.RESULT_STATE_ERROR) {
+            return Constants.RESULT_STATE_ERROR;
+        }
 
+        //「添付ファイル」の新規登録
+        File file = new File();
+        file.setId(utilServiceImpl.GetGuid());
+        file.setPlatformId(negotiatPreview.getPlatformId());
+        file.setCaseId(negotiatPreview.getCaseId());
+        file.setFileName(negotiatPreview.getFileName());
+        file.setFileExtension(negotiatPreview.getFileExtension());
+        file.setFileUrl(negotiatPreview.getFileUrl());
+        file.setFileBlobStorageId(negotiatPreview.getFileBlobStorageId());
+        file.setFileSize(negotiatPreview.getFileSize());
+        file.setRegisterUserId(negotiatPreview.getRegisterUserId());
+        file.setRegisterDate(negotiatPreview.getRegisterDate());
+        file.setLastModifiedDate(negotiatPreview.getLastModifiedDate());
+        file.setLastModifiedBy(negotiatPreview.getLastModifiedBy());
+        int addFileStatus = insNegotiationDataMapper.AddFile(file);
+        if (addFileStatus == Constants.RESULT_STATE_ERROR) {
+            return Constants.RESULT_STATE_ERROR;
+        }
+
+        //「案件-添付ファイルリレーション」新規登録
         CaseFileRelations caseFileRelations = new CaseFileRelations();
         caseFileRelations.setId(utilServiceImpl.GetGuid());
-        caseFileRelations.setPlatformId(caseNegotiations.getPlatformId());
-        caseFileRelations.setCaseId(caseNegotiations.getCaseId());
+        caseFileRelations.setPlatformId(negotiatPreview.getPlatformId());
+        caseFileRelations.setCaseId(negotiatPreview.getCaseId());
         caseFileRelations.setRelatedId(caseNegotiations.getId());
         caseFileRelations.setFileId(file.getId());
         int addCaseFileRelationsStatus = insNegotiationDataMapper.AddCaseFileRelations(caseFileRelations);
-        if (addCaseNegotiationsStatus == 1 && addFileStatus == 1 && addCaseFileRelationsStatus == 1) {
-            return Constants.RESULT_STATE_SUCCESS;
-        } else {
+        if (addCaseFileRelationsStatus == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
+        return Constants.RESULT_STATE_SUCCESS;
     }
 
     /**
      * 和解案データ更新
      *
-     * @param CaseNegotiations 和解案、 File ファイル
+     * @param NegotiatPreview セッション値
      * @return メソッドが正常に実行されたかどうか
      * @throws Exception エラーの説明内容
      */
     @Transactional
     @Override
-    public int UpdNegotiationsData(CaseNegotiations caseNegotiations, File file) {
-        int upCaseNegotiationsStatus = updNegotiationsDataMapper.UpCaseNegotiations(caseNegotiations);
-        int upFileStatus = updNegotiationsDataMapper.UpFile(file);
-        CaseFileRelations caseFileRelations = new CaseFileRelations();
-        caseFileRelations.setFileId(file.getId());
-        int upCaseFileRelationsStatus = updNegotiationsDataMapper.UpCaseFileRelations(caseFileRelations);
-
-        int addFileStatus = insNegotiationDataMapper.AddFile(file);
-        int addCaseFileRelationsStatus = insNegotiationDataMapper.AddCaseFileRelations(caseFileRelations);
-        if (upCaseNegotiationsStatus == 1 && upFileStatus == 1 && upCaseFileRelationsStatus == 1 && addFileStatus == 1
-                && addCaseFileRelationsStatus == 1) {
-            return Constants.RESULT_STATE_SUCCESS;
-        } else {
+    public int UpdNegotiationsData(NegotiatPreview negotiatPreview) {
+        //「和解案」更新
+        CaseNegotiations upCaseNegotiations = new CaseNegotiations();
+        upCaseNegotiations.setId(negotiatPreview.getId());
+        upCaseNegotiations.setExpectResloveTypeValue(negotiatPreview.getExpectResloveTypeValue());
+        upCaseNegotiations.setOtherContext(negotiatPreview.getOtherContext());
+        upCaseNegotiations.setPayAmount(negotiatPreview.getPayAmount());
+        upCaseNegotiations.setCounterClaimPayment(negotiatPreview.getCounterClaimPayment());
+        upCaseNegotiations.setPaymentEndDate(negotiatPreview.getPaymentEndDate());
+        upCaseNegotiations.setShipmentPayType(negotiatPreview.getShipmentPayType());
+        upCaseNegotiations.setSpecialItem(negotiatPreview.getSpecialItem());
+        upCaseNegotiations.setHtmlContext(negotiatPreview.getHtmlContext());
+        upCaseNegotiations.setHtmlContext2(negotiatPreview.getHtmlContext2());
+        upCaseNegotiations.setSubmitDate(negotiatPreview.getSubmitDate());
+        upCaseNegotiations.setStatus(negotiatPreview.getStatus());
+        upCaseNegotiations.setLastModifiedDate(negotiatPreview.getLastModifiedDate());
+        upCaseNegotiations.setLastModifiedBy(negotiatPreview.getLastModifiedBy());
+        int upCaseNegotiationsStatus = updNegotiationsDataMapper.UpCaseNegotiations(upCaseNegotiations);
+        if (upCaseNegotiationsStatus == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
+
+        //「添付ファイル」論理削除
+        File upFile = new File();
+        upFile.setId(negotiatPreview.getFileId());
+        int upFileStatus = updNegotiationsDataMapper.UpFile(upFile);
+        if (upFileStatus == Constants.RESULT_STATE_ERROR) {
+            return Constants.RESULT_STATE_ERROR;
+        }
+
+        //「案件-添付ファイルリレーション」論理削除
+        CaseFileRelations upCaseFileRelations = new CaseFileRelations();
+        upCaseFileRelations.setFileId(negotiatPreview.getFileId());
+        int upCaseFileRelationsStatus = updNegotiationsDataMapper.UpCaseFileRelations(upCaseFileRelations);
+        if (upCaseFileRelationsStatus == Constants.RESULT_STATE_ERROR) {
+            return Constants.RESULT_STATE_ERROR;
+        }
+
+        //「添付ファイル」の新規登録
+        File addFile = new File();
+        addFile.setId(utilServiceImpl.GetGuid());
+        addFile.setPlatformId(negotiatPreview.getPlatformId());
+        addFile.setCaseId(negotiatPreview.getCaseId());
+        addFile.setFileName(negotiatPreview.getFileName());
+        addFile.setFileExtension(negotiatPreview.getFileExtension());
+        addFile.setFileUrl(negotiatPreview.getFileUrl());
+        addFile.setFileBlobStorageId(negotiatPreview.getFileBlobStorageId());
+        addFile.setFileSize(negotiatPreview.getFileSize());
+        addFile.setRegisterUserId(negotiatPreview.getRegisterUserId());
+        addFile.setRegisterDate(negotiatPreview.getRegisterDate());
+        addFile.setLastModifiedDate(negotiatPreview.getLastModifiedDate());
+        addFile.setLastModifiedBy(negotiatPreview.getLastModifiedBy());
+        int addFileStatus = insNegotiationDataMapper.AddFile(addFile);
+        if (addFileStatus == Constants.RESULT_STATE_ERROR) {
+            return Constants.RESULT_STATE_ERROR;
+        }
+
+        //「案件-添付ファイルリレーション」新規登録
+        CaseFileRelations addCaseFileRelations = new CaseFileRelations();
+        addCaseFileRelations.setId(utilServiceImpl.GetGuid());
+        addCaseFileRelations.setPlatformId(negotiatPreview.getPlatformId());
+        addCaseFileRelations.setCaseId(negotiatPreview.getCaseId());
+        addCaseFileRelations.setRelatedId(upCaseNegotiations.getId());
+        addCaseFileRelations.setFileId(addFile.getId());
+        int addCaseFileRelationsStatus = insNegotiationDataMapper.AddCaseFileRelations(addCaseFileRelations);
+        if (addCaseFileRelationsStatus == Constants.RESULT_STATE_ERROR) {
+            return Constants.RESULT_STATE_ERROR;
+        }
+        return Constants.RESULT_STATE_SUCCESS;
     }
 }

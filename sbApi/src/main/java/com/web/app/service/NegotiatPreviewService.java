@@ -1,11 +1,10 @@
 package com.web.app.service;
-import com.web.app.domain.Entity.CaseNegotiations;
-import com.web.app.domain.Entity.File;
+import com.web.app.domain.NegotiatPreview.NegotiatPreview;
 
 public interface NegotiatPreviewService {
-    int NegotiatPreview(CaseNegotiations caseNegotiations, File file);
+    int NegotiatPreview(NegotiatPreview negotiatPreview);
 
-    int InsNegotiationData(CaseNegotiations caseNegotiations, File file);
+    int InsNegotiationData(NegotiatPreview negotiatPreview);
 
-    int UpdNegotiationsData(CaseNegotiations caseNegotiations, File file);
+    int UpdNegotiationsData(NegotiatPreview negotiatPreview);
 }

@@ -13,153 +13,6 @@
             CaseId = #{caseId}
     </select>
 
-    <!-- <insert id="AddCaseNegotiations" parameterType="com.web.app.domain.Entity.CaseNegotiations">
-        INSERT INTO case_negotiations(
-            id,
-            PlatformId,
-            CaseId,
-            Status,
-            InfoStatus,
-            ExpectResloveTypeValue,
-            OtherContext,
-            HtmlContext,
-            HtmlContext2,
-            PayAmount,
-            PaymentEndDate,
-            ShipmentPayType,
-            ShipmentPayValue,
-            SpecialItem,
-            UserId,
-            SubmitDate,
-            AgreementDate,
-            TemplateFileName,
-            CounterClaimType,
-            CounterClaimContext,
-            CounterClaimPayment,
-            PaymentUser,
-            EditAbleUser,
-            LanguageId,
-            Other01,
-            Other02,
-            Other03,
-            Other04,
-            Other05,
-            DeleteFlag,
-            LastModifiedDate,
-            LastModifiedBy
-        )VALUES(
-            #{id},
-            #{PlatformId},
-            #{CaseId},
-            Status,
-            NULL,
-            #{ExpectResloveTypeValue},
-            #{OtherContext},
-            #{HtmlContext},
-            #{HtmlContext2},
-            #{PayAmount},
-            #{PaymentEndDate},
-            #{ShipmentPayType},
-            ShipmentPayValue,
-            #{SpecialItem},
-            #{UserId},
-            #{SubmitDate},
-            NUll,
-            NULL,
-            NULL,
-            NULL,
-            #{CounterClaimPayment},
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            0,
-            CURRENT_TIMESTAMP(),
-            #{UserId}
-            );
-    </insert>
-
-    <insert id="AddFile" parameterType="com.web.app.domain.Entity.File">
-        INSERT INTO files(
-            id,
-            PlatformId,
-            CaseId,
-            FileName,
-            FileExtension,
-            FileUrl,
-            FileBlobStorageId,
-            FileSize,
-            RegisterUserId,
-            RegisterDate,
-            Other01,
-            Other02,
-            Other03,
-            Other04,
-            Other05,
-            DeleteFlag,
-            LastModifiedDate,
-            LastModifiedBy)
-        VALUE(
-            #{id},
-            #{PlatformId},
-            #{CaseId},
-            #{FileName},
-            #{FileExtension},
-            #{FileUrl},
-            NULL,
-            #{FileSize},
-            #{UserId},
-            CURRENT_TIMESTAMP(),
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            0,
-            CURRENT_TIMESTAMP(),
-            #{UserId}
-        );
-    </insert>
-
-    <insert id="AddCaseFileRelations" parameterType="com.web.app.domain.Entity.CaseFileRelations">
-        INSERT INTO case_file_relations(
-            id,
-            PlatformId,
-            CaseId,
-            RelationType,
-            RelatedId,
-            fileId,
-            Other01,
-            Other02,
-            Other03,
-            Other04,
-            Other05,
-            DeleteFlag,
-            LastModifiedDate,
-            LastModifiedBy
-            )
-        VALUE(
-            #{id},
-            #{PlatformId},
-            #{CaseId},
-            4,
-            (SELECT id FROM case_negotiations WHERE CaseId = #{CaseId}),
-            (SELECT id FROM files WHERE DeleteFlag = 0 AND CaseId = #{CaseId}),
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            0,
-            CURRENT_TIMESTAMP(),
-            #{UserId}
-        );
-    </insert> -->
-
     <update id="UpCaseNegotiations" parameterType="com.web.app.domain.Entity.CaseNegotiations">
         UPDATE case_negotiations
         SET
@@ -177,7 +30,7 @@
             LastModifiedDate = CURRENT_TIMESTAMP(),
             LastModifiedBy = #{UserId}
         WHERE
-            CaseId = #{CaseId}
+            id = #{id}
     </update>
 
     <update id="UpFile" parameterType="com.web.app.domain.Entity.File">
@@ -185,9 +38,9 @@
         SET
             DeleteFlag = 1,
             LastModifiedDate = CURRENT_TIMESTAMP(),
-            LastModifiedBy = #{UserId}
+            LastModifiedBy = #{LastModifiedBy}
         WHERE
-            id = #{FileId}
+            id = #{id}
     </update>
 
     <update id="UpCaseFileRelations" parameterType="com.web.app.domain.Entity.CaseFileRelations">
@@ -195,8 +48,8 @@
         SET
             DeleteFlag = 1,
             LastModifiedDate = CURRENT_TIMESTAMP(),
-            LastModifiedBy = #{UserId}
+            LastModifiedBy = #{LastModifiedBy}
         WHERE
-            fileId = #{FileId}
+            fileId = #{fileId}
     </update>
 </mapper>
