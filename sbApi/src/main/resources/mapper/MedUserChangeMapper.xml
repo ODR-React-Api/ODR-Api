@@ -12,7 +12,7 @@
     </resultMap>
 
     <parameterMap id="ParameterMap" type="com.web.app.domain.Entity.Cases">
-        <parameter property="Cid" jdbcType="VARCHAR"/>
+        <parameter property="cid" jdbcType="VARCHAR"/>
         <parameter property="MediatorChangeableCount1" jdbcType="INTEGER"/>
         <parameter property="MediatorChangeableCount2" jdbcType="INTEGER"/>
         <parameter property="MediatorNoReasonChangeDate" jdbcType="DATE"/>
@@ -54,7 +54,7 @@
         WHERE
         cid = #{Cid}
     </select>
-    
+
     <insert id="insertFile" parameterType="com.web.app.domain.MedUserChange.InsertFileInfo">
         INSERT INTO files (
             id,
