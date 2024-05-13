@@ -19,7 +19,7 @@ import com.web.app.domain.MediateUser;
  */
 
 @Service
-public class MedUserConfirmImpl implements MedUserConfirmService {
+public class MedUserConfirmServiceImpl implements MedUserConfirmService {
 
     @Autowired
     private GetMediationStatusMapper getMediationStatusMapper;
