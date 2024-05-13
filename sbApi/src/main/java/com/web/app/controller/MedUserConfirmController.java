@@ -55,7 +55,7 @@ public class MedUserConfirmController {
      * 
      * 調停人メール取得
      * 
-     * @param mediateUser 
+     * @param mediateUser
      * @return 調停案ステータスを取得する
      * @throws Exception 調整案ステータス取得失敗
      */
