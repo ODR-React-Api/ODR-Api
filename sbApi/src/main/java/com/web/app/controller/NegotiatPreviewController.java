@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
  * @version 1.0
  */
 @CrossOrigin(origins = "*")
-@Api(tags = "和解案データ登録")
+@Api(tags = "和解案プレビュー画面")
 @RestController
 @RequestMapping("/SettlementPlan")
 public class NegotiatPreviewController {
@@ -45,9 +45,8 @@ public class NegotiatPreviewController {
      * @return Response
      * @throws Exception 和解案提出失敗
      */
-    @ApiOperation("和解案登録")
+    @ApiOperation("和解案プレビュー画面")
     @PostMapping("NegotiatPreview")
-    //@SuppressWarnings("")
     public Response NegotiatPreview(NegotiatPreview negotiatPreview){
         try{
             int status = negotiatPreviewService.NegotiatPreview(negotiatPreview);

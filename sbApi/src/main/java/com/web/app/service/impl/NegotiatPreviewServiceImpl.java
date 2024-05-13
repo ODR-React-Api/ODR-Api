@@ -44,7 +44,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     public int NegotiatPreview(NegotiatPreview negotiatPreview) {
         CaseNegotiations cNegotiations = updNegotiationsDataMapper.SearchCaseNegotiations(negotiatPreview.getCaseId());
         if (cNegotiations != null) {
-            //未マージ
+            // 未マージ
             if (cNegotiations.getStatus().equals(Num.NUM0) ||
                     cNegotiations.getStatus().equals(Num.NUM1) ||
                     cNegotiations.getStatus().equals(Num.NUM2)) {
@@ -79,7 +79,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     @Transactional
     @Override
     public int InsNegotiationData(NegotiatPreview negotiatPreview) {
-        //「和解案」新規登録
+        // 「和解案」新規登録
         CaseNegotiations caseNegotiations = new CaseNegotiations();
         caseNegotiations.setId(utilServiceImpl.GetGuid());
         caseNegotiations.setPlatformId(negotiatPreview.getPlatformId());
@@ -104,7 +104,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
             return Constants.RESULT_STATE_ERROR;
         }
 
-        //「添付ファイル」の新規登録
+        // 「添付ファイル」の新規登録
         File file = new File();
         file.setId(utilServiceImpl.GetGuid());
         file.setPlatformId(negotiatPreview.getPlatformId());
@@ -123,7 +123,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
             return Constants.RESULT_STATE_ERROR;
         }
 
-        //「案件-添付ファイルリレーション」新規登録
+        // 「案件-添付ファイルリレーション」新規登録
         CaseFileRelations caseFileRelations = new CaseFileRelations();
         caseFileRelations.setId(utilServiceImpl.GetGuid());
         caseFileRelations.setPlatformId(negotiatPreview.getPlatformId());
@@ -147,7 +147,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     @Transactional
     @Override
     public int UpdNegotiationsData(NegotiatPreview negotiatPreview) {
-        //「和解案」更新
+        // 「和解案」更新
         CaseNegotiations upCaseNegotiations = new CaseNegotiations();
         upCaseNegotiations.setId(negotiatPreview.getId());
         upCaseNegotiations.setExpectResloveTypeValue(negotiatPreview.getExpectResloveTypeValue());
@@ -168,7 +168,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
             return Constants.RESULT_STATE_ERROR;
         }
 
-        //「添付ファイル」論理削除
+        // 「添付ファイル」論理削除
         File upFile = new File();
         upFile.setId(negotiatPreview.getFileId());
         int upFileStatus = updNegotiationsDataMapper.UpFile(upFile);
@@ -176,7 +176,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
             return Constants.RESULT_STATE_ERROR;
         }
 
-        //「案件-添付ファイルリレーション」論理削除
+        // 「案件-添付ファイルリレーション」論理削除
         CaseFileRelations upCaseFileRelations = new CaseFileRelations();
         upCaseFileRelations.setFileId(negotiatPreview.getFileId());
         int upCaseFileRelationsStatus = updNegotiationsDataMapper.UpCaseFileRelations(upCaseFileRelations);
@@ -184,7 +184,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
             return Constants.RESULT_STATE_ERROR;
         }
 
-        //「添付ファイル」の新規登録
+        // 「添付ファイル」の新規登録
         File addFile = new File();
         addFile.setId(utilServiceImpl.GetGuid());
         addFile.setPlatformId(negotiatPreview.getPlatformId());
@@ -203,7 +203,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
             return Constants.RESULT_STATE_ERROR;
         }
 
-        //「案件-添付ファイルリレーション」新規登録
+        // 「案件-添付ファイルリレーション」新規登録
         CaseFileRelations addCaseFileRelations = new CaseFileRelations();
         addCaseFileRelations.setId(utilServiceImpl.GetGuid());
         addCaseFileRelations.setPlatformId(negotiatPreview.getPlatformId());

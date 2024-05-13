@@ -1,4 +1,5 @@
 package com.web.app.service;
+
 import com.web.app.domain.NegotiatPreview.NegotiatPreview;
 
 public interface NegotiatPreviewService {
