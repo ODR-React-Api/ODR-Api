@@ -30,11 +30,12 @@ public class MedUserConfirmImpl implements MedUserConfirmService {
      * 
      * 調停案ステータス取得
      * 
-     * @param mediateUser 受付カウンターからの案件ID
+     * @param CaseId 受付カウンターからの案件ID
      * @return 調停案ステータスを取得する
      */
     @Override
     public String Mediationstatus(String CaseId) {
+        //調停案ステータス取得
         String Mediationstatus = getMediationStatusMapper.Mediationstatus(CaseId);
         return Mediationstatus;
     }
@@ -47,14 +48,14 @@ public class MedUserConfirmImpl implements MedUserConfirmService {
      * @return 調停人メール取得
      */
     @Override
-    public MediateUser MediationEmail(String CaseId) {
+    public MediateUser GetUserIDbyMail(String CaseId) {
         // 取得したコーディネータメールボックスとユーザーIDを保存する
         MediateUser MediationEmail = new MediateUser();
         // 調停人メール取得
         String MediatorUserEmail = getUserIDbyMailMapper.MediatorUserEmail(CaseId);
         MediationEmail.setMediatorUserEmail(MediatorUserEmail);
         // 調停者メールボックスからユーザUidを取得する
-        String MediatorUserUid = getUserIDbyMailMapper.MediatorUserUid(MediatorUserEmail);
+        String MediatorUserUid = getUserIDbyMailMapper.UserUid(MediatorUserEmail);
         MediationEmail.setUid(MediatorUserUid);
         // 取得した調停者メールボックスとユーザーUidを返す
         return MediationEmail;

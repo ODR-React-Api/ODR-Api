@@ -19,7 +19,7 @@
             CaseId = #{CaseId}
     </select>
 
-    <select id="MediatorUserUid" resultType="string">
+    <select id="UserUid" resultType="string">
         SELECT
             Uid
         FROM

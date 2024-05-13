@@ -19,7 +19,7 @@ public interface GetUserIDbyMailMapper {
     //調停人メール取得
     String MediatorUserEmail(String mediateUser);
 
-    String MediatorUserUid(String MediatorUserEmail);
+    String UserUid(String MediatorUserEmail);
 
     ArrayList<MediateUser> MediatorIntelligence(MediateUser MediatorIntelligence);
 }

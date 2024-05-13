@@ -57,15 +57,16 @@ public class MedUserConfirmController {
      * 
      * @param mediateUser
      * @return 調停者メールボックスとユーザーID
-     * @throws Exception 調整案ステータス取得失敗
+     * @throws Exception 調停者メール取得失敗
      */
     @ApiOperation("調停人メール取得")
     @PostMapping("/GetUserIDbyMail")
     public MediateUser GetUserIDbyMail(@RequestBody String CaseId) {
         try {
-            MediateUser GetUserIDbyMail = mediationService.MediationEmail(CaseId);
-            
-            return GetUserIDbyMail;
+            //調停人メール取得
+            MediateUser GetUserIDbyMail = mediationService.GetUserIDbyMail(CaseId);
+            //調停者メールボックスとユーザーID
+            return GetUserIDbyMail;   
         } catch(Exception e) {
             return null;
         }
