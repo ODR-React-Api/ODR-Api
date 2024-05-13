@@ -1,28 +1,49 @@
 package com.web.app.domain.Entity;
 
-import java.sql.Date;
-
 import lombok.Data;
 
+/**
+ * 種類マスタ
+ * 
+ * @author DUC 耿浩哲
+ * @since 2024/05/10
+ * @version 1.0
+ */
 @Data
 public class MasterTypes {
+    
+    // ID
     public String Id;
 
-    public String PlatformId;
+    // プラットフォームID
+    public String platformId;
 
-    public String Type;
+    // 申立種類、希望する解決方法種類、回答種類、対応方法の種類など
+    public String type;
 
+    // 値
     public String Value;
 
+    // 表示名
     public String DisplayName;
 
+    // オーダー番号
     public int OrderNo;
 
-    public Boolean Required;
+    // 必須制御
+    public Integer Required;
 
-    public Boolean IsActive;
+    // 利用・停止制御
+    public Integer IsActive;
 
+    // master_lang.id
     public String LanguageId;
+
+    // 作成者
+    public String Creator;
+
+    // 作成日
+    public String CreateDate;
 
     public String Other01;
 
@@ -34,9 +55,9 @@ public class MasterTypes {
 
     public String Other05;
 
-    public Boolean DeleteFlag;
+    public Integer DeleteFlag;
 
-    public Date LastModifiedDate;
+    public String LastModifiedDate;
 
     public String LastModifiedBy;
 }
