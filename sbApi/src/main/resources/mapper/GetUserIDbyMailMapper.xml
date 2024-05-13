@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace="com.web.app.mapper.GetUserIDbyMailMapper">
-    <resultMap id="MediateUserMap" type="com.web.app.domain.medUserConfirm.MediateUser">
+    <resultMap id="MediateUserMap" type="com.web.app.domain.medUserConfirm.GetMediatorInfo">
         <id property="id" column="id" jdbcType="VARCHAR"/>
         <result property="userId" column="userId" jdbcType="VARCHAR"/>
         <result property="Status" column="Status" jdbcType="INTEGER"/>
@@ -25,7 +25,7 @@
         FROM
             odr_users
         WHERE
-            Email = #{getMail}
+            Email = #{MediatorUserEmail}
     </select>
 
     <select id="getMediatorInfo" resultMap="MediateUserMap">

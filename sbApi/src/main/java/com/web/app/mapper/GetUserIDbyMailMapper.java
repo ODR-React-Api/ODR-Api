@@ -3,7 +3,7 @@ package com.web.app.mapper;
 import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.medUserConfirm.MediateUser;
+import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
 
 /**
  * 調停者メールボックスからユーザUidを取得する
@@ -19,7 +19,7 @@ public interface GetUserIDbyMailMapper {
     String mediatorUserEmail(String mediateUser);
 
     // ユーザID取得
-    String userUid(String getMail);
+    String userUid(String MediatorUserEmail);
 
-    ArrayList<MediateUser> getMediatorInfo(String CaseId);
+    ArrayList<GetUserIDbyMail> getMediatorInfo(String CaseId);
 }

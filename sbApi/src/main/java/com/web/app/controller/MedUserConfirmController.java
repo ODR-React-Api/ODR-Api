@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-import com.web.app.domain.medUserConfirm.MediateUser;
+import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
 import com.web.app.service.MedUserConfirmService;
 
 /**
@@ -62,10 +62,10 @@ public class MedUserConfirmController {
      */
     @ApiOperation("調停人メール取得")
     @PostMapping("/GetUserIDbyMail")
-    public MediateUser GetUserIDbyMail(@RequestBody String CaseId) {
+    public GetUserIDbyMail GetUserIDbyMail(@RequestBody String CaseId) {
         try {
             //調停者メールとユザーIDを取得
-            MediateUser getUserIDbyMail = medUserConfirmService.getUserIDbyMail(CaseId);
+            GetUserIDbyMail getUserIDbyMail = medUserConfirmService.getUserIDbyMail(CaseId);
             //調停者メールとユザーID
             return getUserIDbyMail;   
         } catch(Exception e) {
@@ -78,14 +78,14 @@ public class MedUserConfirmController {
      * 調停人情報取得
      * 
      * @param CaseId
-     * @return 調停者メールボックスとユーザーID
+     * @return 調停人情報取得
      * @throws Exception 調停者メール取得失敗
      */
     @ApiOperation("調停人情報取得")
     @PostMapping("/GetMediatorInfo")
-    public ArrayList<MediateUser> GetMediatorInfo(@RequestBody String CaseId) {
+    public ArrayList<GetUserIDbyMail> GetMediatorInfo(@RequestBody String CaseId) {
         try {
-            ArrayList<MediateUser> GetMediatorInfo = medUserConfirmService.getMediatorInfo(CaseId);
+            ArrayList<GetUserIDbyMail> GetMediatorInfo = medUserConfirmService.getMediatorInfo(CaseId);
             return GetMediatorInfo;
         } catch (Exception e) {
             return null;

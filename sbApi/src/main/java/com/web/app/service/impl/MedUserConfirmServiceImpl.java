@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.domain.medUserConfirm.MediateUser;
+import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
 import com.web.app.mapper.GetMediationStatusMapper;
 import com.web.app.mapper.GetUserIDbyMailMapper;
 
@@ -49,22 +49,22 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
      * @return 調停者メールボックスとユーザーID
      */
     @Override
-    public MediateUser getUserIDbyMail(String CaseId) {
+    public GetUserIDbyMail getUserIDbyMail(String CaseId) {
         // 取得したコーディネータメールボックスとユーザーIDを保存する
-        MediateUser getUserIDbyMail = new MediateUser();
+        GetUserIDbyMail getUserIDbyMail = new GetUserIDbyMail();
         // 調停人メール取得
-        String getMail = getUserIDbyMailMapper.mediatorUserEmail(CaseId);
-        getUserIDbyMail.setMediatorUserEmail(getMail);
+        String MediatorUserEmail = getUserIDbyMailMapper.mediatorUserEmail(CaseId);
+        getUserIDbyMail.setMediatorUserEmail(MediatorUserEmail);
         // 調停者メールボックスからユーザUidを取得する
-        String userUid = getUserIDbyMailMapper.userUid(getMail);
+        String userUid = getUserIDbyMailMapper.userUid(MediatorUserEmail);
         getUserIDbyMail.setUid(userUid);
         // 取得した調停者メールボックスとユーザーUidを返す
         return getUserIDbyMail;
     }
 
     @Override
-    public ArrayList<MediateUser> getMediatorInfo(String CaseId) {
-        ArrayList<MediateUser> MediatorIntelligence = getUserIDbyMailMapper.getMediatorInfo(CaseId);
+    public ArrayList<GetUserIDbyMail> getMediatorInfo(String CaseId) {
+        ArrayList<GetUserIDbyMail> MediatorIntelligence = getUserIDbyMailMapper.getMediatorInfo(CaseId);
         return MediatorIntelligence;
     }
 }
