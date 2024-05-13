@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
+import com.web.app.domain.medUserConfirm.GetMediatorInfo;
 import com.web.app.mapper.GetMediationStatusMapper;
 import com.web.app.mapper.GetUserIDbyMailMapper;
+import com.web.app.mapper.GetMediatorInfoMapper;
 
 /**
  * 調停案ステータス取得
@@ -26,7 +28,8 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
     private GetMediationStatusMapper getMediationStatusMapper;
     @Autowired
     private GetUserIDbyMailMapper getUserIDbyMailMapper;
-
+    @Autowired
+    private GetMediatorInfoMapper getMediatorInfoMapper;
     /**
      * 
      * 調停案ステータス取得
@@ -62,9 +65,16 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
         return getUserIDbyMail;
     }
 
+    /**
+     * 
+     * 調停人情報取得
+     * 
+     * @param CaseId 受付カウンターからの案件ID
+     * @return 調停人情報
+     */
     @Override
-    public ArrayList<GetUserIDbyMail> getMediatorInfo(String CaseId) {
-        ArrayList<GetUserIDbyMail> MediatorIntelligence = getUserIDbyMailMapper.getMediatorInfo(CaseId);
-        return MediatorIntelligence;
+    public ArrayList<GetMediatorInfo> getMediatorInfo(String CaseId) {
+        ArrayList<GetMediatorInfo> getMediatorInfo = getMediatorInfoMapper.getMediatorInfo(CaseId);
+        return getMediatorInfo;
     }
 }

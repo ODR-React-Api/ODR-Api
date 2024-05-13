@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
+import com.web.app.domain.medUserConfirm.GetMediatorInfo;
 import com.web.app.service.MedUserConfirmService;
 
 /**
@@ -58,7 +59,7 @@ public class MedUserConfirmController {
      * 
      * @param CaseId
      * @return 調停者メールとユザーID
-     * @throws Exception 調停者メール取得失敗
+     * @throws Exception 調停者メールとユザーIDを取得失敗
      */
     @ApiOperation("調停人メール取得")
     @PostMapping("/GetUserIDbyMail")
@@ -79,14 +80,14 @@ public class MedUserConfirmController {
      * 
      * @param CaseId
      * @return 調停人情報取得
-     * @throws Exception 調停者メール取得失敗
+     * @throws Exception 調停人情報取得失敗
      */
     @ApiOperation("調停人情報取得")
     @PostMapping("/GetMediatorInfo")
-    public ArrayList<GetUserIDbyMail> GetMediatorInfo(@RequestBody String CaseId) {
+    public ArrayList<GetMediatorInfo> GetMediatorInfo(@RequestBody String CaseId) {
         try {
-            ArrayList<GetUserIDbyMail> GetMediatorInfo = medUserConfirmService.getMediatorInfo(CaseId);
-            return GetMediatorInfo;
+            ArrayList<GetMediatorInfo> getMediatorInfo = medUserConfirmService.getMediatorInfo(CaseId);
+            return getMediatorInfo;
         } catch (Exception e) {
             return null;
         }
