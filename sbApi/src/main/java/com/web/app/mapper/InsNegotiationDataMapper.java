@@ -8,13 +8,8 @@ import com.web.app.domain.Entity.File;
 
 @Mapper
 public interface InsNegotiationDataMapper {
-    //CaseNegotiations SearchCaseNegotiations(String caseId);
 
     int AddCaseNegotiations(CaseNegotiations caseNegotiations);
     int AddFile(File file);
     int AddCaseFileRelations(CaseFileRelations caseFileRelations);
-
-    // int UpCaseNegotiations(CaseNegotiations caseNegotiations);
-    // int UpFile(File file);
-    // int UpCaseFileRelations(CaseFileRelations caseFileRelations);
 }
