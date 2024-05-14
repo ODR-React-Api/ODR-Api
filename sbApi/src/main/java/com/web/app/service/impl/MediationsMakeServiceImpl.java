@@ -1,5 +1,6 @@
 package com.web.app.service.impl;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,9 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
     private InsMediationsDataMapper mediationcaseMapper;
 
     @Override
-    public List<InsMediationsData> mediationsDataSearch(InsMediationsData mediationcase) {
+    public ArrayList<InsMediationsData> mediationsDataSearch(InsMediationsData mediationcase) {
 
-        List<InsMediationsData> mList = mediationcaseMapper.MediationcaseSearch(mediationcase);
+        ArrayList<InsMediationsData> mList = mediationcaseMapper.MediationcaseSearch(mediationcase);
 
         return mList;
     }

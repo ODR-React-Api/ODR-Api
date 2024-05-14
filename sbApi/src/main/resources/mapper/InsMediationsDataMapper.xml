@@ -6,8 +6,7 @@
 
 <select id="MediationcaseSearch" resultType="com.web.app.domain.mediationsMake.InsMediationsData">
  SELECT
-        CaseId,
-
+        CaseId
         FROM
             case_negotiations
         WHERE

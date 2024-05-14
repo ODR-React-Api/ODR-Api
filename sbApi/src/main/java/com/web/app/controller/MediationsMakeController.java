@@ -1,5 +1,7 @@
 package com.web.app.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,11 +26,14 @@ public class MediationsMakeController {
     @PostMapping("/InsMediationsData")
     public int InsMediationsData(@RequestBody InsMediationsData insMediationsData) {
         try {
+            ArrayList<InsMediationsData> aa =new ArrayList<InsMediationsData>();
             // 判断数据是否已经存在
-            List<InsMediationsData> mediationsData = mediationsMakeService.mediationsDataSearch(insMediationsData);
+            ArrayList<InsMediationsData> mediationsData = mediationsMakeService.mediationsDataSearch(insMediationsData);
 
-            int num = mediationsMakeService.MediationcaseInsert(insMediationsData);
-            return num;
+            aa=mediationsData;
+            
+            // int num = mediationsMakeService.MediationcaseInsert(insMediationsData);
+            return 1;
         } catch (Exception e) {
             return 0;
         }
