@@ -1,43 +1,57 @@
 package com.web.app.domain.Entity;
 
-import java.sql.Date;
-
 import lombok.Data;
 
+/**
+ * メールテンプレート
+ * 
+ * @author DUC 耿浩哲
+ * @since 2024/05/10
+ * @version 1.0
+ */
 @Data
 public class MailTemplates {
-    private String Id;
 
-    private String PlatformId;
+    // ID
+    public String Id;
 
-    private String TemplateNo;
+    // プラットフォームID
+    public String PlatformId;
 
-    private String SendFromMail;
+    // テンプレート番号
+    public String TemplateNo;
 
-    private String SendFromName;
+    public String SendFromMail;
 
-    private String Subject;
-    
-    private String HtmlContent;
+    // 送信元名
+    public String SendFromName;
 
-    private String TextContent;
-    
-    private String LanguageId;
-    
-    private String Other01;
-    
-    private String Other02;
-    
-    private String Other03;
-    
-    private String Other04;
-    
-    private String Other05;
-    
-    private boolean DeleteFlag;
-    
-    private Date LastModifiedDate;
-    
-    private String LastModifiedBy;
+    // タイトル
+    public String Subject;
+
+    // HTML内容
+    public String HtmlContent;
+
+    // Plain本文内容
+    public String TextContent;
+
+    //言語ID
+    public String LanguageId;
+
+    public String Other01;
+
+    public String Other02;
+
+    public String Other03;
+
+    public String Other04;
+
+    public String Other05;
+
+    public Integer DeleteFlag;
+
+    public String LastModifiedDate;
+
+    public String LastModifiedBy;
 
 }
