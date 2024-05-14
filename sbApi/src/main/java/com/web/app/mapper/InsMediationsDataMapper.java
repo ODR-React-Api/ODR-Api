@@ -9,7 +9,7 @@ import com.web.app.domain.mediationsMake.InsMediationsData;
 
 @Mapper
 public interface InsMediationsDataMapper {
-    int insMediationsData2(InsMediationsData mediationcase);
+    int insMediationsData2(CaseMediations CaseMediations);
 
     CaseMediations mediationCount(InsMediationsData mediationcase);
 

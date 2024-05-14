@@ -35,17 +35,29 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
 
     @Transactional
     @Override
-    public int insMediationsData2(InsMediationsData mediationcase) {
+    public int insMediationsData2(InsMediationsData insMediationsData) {
 
-        // id赋予
+        CaseMediations caseMediations = new CaseMediations();
+        // id付与
         UUID uuid = UUID.randomUUID();
         String id = uuid.toString().replaceAll("-", "");
+        caseMediations.setId(id);
+        // 属性赋予
+        caseMediations.setPlatformId(insMediationsData.getPlatformId());
+        caseMediations.setCaseId(insMediationsData.getCaseId());
+        caseMediations.setExpectResloveTypeValue(insMediationsData.getExpectResloveTypeValue());
+        caseMediations.setPayAmount(insMediationsData.getPayAmount());
+        caseMediations.setCounterClaimPayment(insMediationsData.getCounterClaimPayment());
+        caseMediations.setPaymentEndDate(insMediationsData.getPaymentEndDate());
+        caseMediations.setShipmentPayType(insMediationsData.getShipmentPayType());
+        caseMediations.setSpecialItem(insMediationsData.getSpecialItem());
+        caseMediations.setUserId(insMediationsData.getUserId());
+        caseMediations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
+        caseMediations.setLastModifiedBy(insMediationsData.getLastModifiedBy());
+        // 「調停案」は、レコード新規登録（insert）で行う
+        int MediationcaseInsert = mediationcaseMapper.insMediationsData2(caseMediations);
 
-        mediationcase.setId(id);
-
-        int MediationcaseInsertStatus = mediationcaseMapper.insMediationsData2(mediationcase);
-
-        return MediationcaseInsertStatus;
+        return MediationcaseInsert;
     }
 
 }
