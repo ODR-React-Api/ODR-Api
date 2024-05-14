@@ -46,7 +46,7 @@ public class MosListController {
     @ApiOperation("検索用ケース詳細取得")
     public ReturnResult searchDetail(@RequestBody SelectCondition searchCase) {
         // 詳細caseを呼び出してサービスを取得する
-        ReturnResult result = mosListService.searchSetailCase(searchCase);
+        ReturnResult result = mosListService.searchDetailCase(searchCase);
 
         return result;
     }
@@ -70,4 +70,24 @@ public class MosListController {
         return Response.success(returnResults);
 
     }
+
+    /**
+     * API「 曖昧検索用一覧取得」より渡された引数で、DBからケース詳細を取得する。
+     *
+     * @param caseId CaseId
+     * @param petitionUserId case申立て人
+     * @param positionFlag 立場フラグ
+     * @param queryString 画面.検索Box入力文字列
+     * @return 取得されたケース情報リスト
+     */
+    @PostMapping("/FuzzyQueryDetailCase")
+    @ApiOperation("曖昧検索用ケース詳細取得")
+    public ReturnResult fuzzyQueryDetailCase(String caseId, String petitionUserId, int positionFlag, String queryString) {
+        // サービスの呼び出し
+        ReturnResult returnResult = mosListService.getFuzzyQueryDetailCase(caseId, petitionUserId, positionFlag,
+                queryString);
+        return returnResult;
+    }
+
+
 }

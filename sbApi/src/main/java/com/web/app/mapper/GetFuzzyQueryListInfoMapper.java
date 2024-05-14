@@ -10,7 +10,7 @@ import com.web.app.domain.MosList.SelectUserInfoForCase;
  * 曖昧検索用一覧取得Mapper
  * 
  * @author DUC 張万超
- * @since 2024/04/29
+ * @since 2024/04/23
  * @version 1.0
  */
 

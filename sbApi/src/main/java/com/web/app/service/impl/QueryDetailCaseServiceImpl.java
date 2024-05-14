@@ -8,14 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.domain.MosList.SearchDetail;
-import com.web.app.mapper.QueryDetailCaseMapper;
+import com.web.app.mapper.FuzzyQueryDetailCaseMapper;
 import com.web.app.service.QueryDetailCaseService;
 
 @Service
 public class QueryDetailCaseServiceImpl implements QueryDetailCaseService {
 
     @Autowired
-    private QueryDetailCaseMapper queryDetailCaseMapper;
+    private FuzzyQueryDetailCaseMapper queryDetailCaseMapper;
 
     @Override
     @Transactional
@@ -158,13 +158,13 @@ public class QueryDetailCaseServiceImpl implements QueryDetailCaseService {
                 // ステージ：6 調停人指名中（未受理の場合
                 if ("6".equals(queryDetailCase.getCaseStatus())) {
                     if (queryDetailCaseMapper.getMediatorDisclosureFlag(caseId) == 1) {
-                        notReadedCnt = queryDetailCaseMapper.getMsgCountByFlag1(caseId, petitionUserId);
+                        notReadedCnt = queryDetailCaseMapper.getMsgCountByFlag(caseId, petitionUserId);
                     } else {
-                        notReadedCnt = queryDetailCaseMapper.getMsgCountByFlagNo1(caseId, petitionUserId);
+                        notReadedCnt = queryDetailCaseMapper.getMsgCountByFlagNo(caseId, petitionUserId);
                     }
                 }
             } else {
-                notReadedCnt = queryDetailCaseMapper.getMsgCountByFlag1(caseId, petitionUserId);
+                notReadedCnt = queryDetailCaseMapper.getMsgCountByFlag(caseId, petitionUserId);
             }
 
             if (notReadedCnt > 0) {

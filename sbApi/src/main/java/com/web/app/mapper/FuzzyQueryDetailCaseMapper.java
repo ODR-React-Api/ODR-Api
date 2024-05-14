@@ -3,27 +3,26 @@ package com.web.app.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.web.app.domain.MosList.SearchDetail;
-import com.web.app.domain.MosList.SelectCondition;
 
 /**
- * API「 検索用一覧取得」より渡された引数によって、DBからケース詳細を取得するMapper
+ * 曖昧検索用ケース詳細取得Mapper
  * 
  * @author DUC 張万超
- * @since 2024/4/22
+ * @since 2024/04/23
  * @version 1.0
  */
 
 @Mapper
-public interface SearchDetailCaseMapper {
+public interface FuzzyQueryDetailCaseMapper {
 
     /**
      * 申立て番号、件名、登録日付、対応期日、状態、要対応有無の取得
      *
-     * @param searchCase API「 検索用一覧取得」より渡された引数
-     * @return case详细情报
+     * @param caseId CaseId
+     * @param queryString 画面.検索Box入力文字列
+     * @return 取得されたケース情報リスト
      */
-
-    public SearchDetail searchDetail(SelectCondition searchCase);
+    SearchDetail getQueryDetailCase(String caseId, String queryString);
 
     /**
      * 調停人情報開示フラグを取得
@@ -31,8 +30,7 @@ public interface SearchDetailCaseMapper {
      * @param caseId 引数.CaseId
      * @return 調停人情報開示フラグ
      */
-
-    public Integer getMediatorDisclosureFlag(String caseId);
+    int getMediatorDisclosureFlag(String caseId);
 
     /**
      * 未読メッセージ件数取得 （調停人＋受理後＋未開示）
@@ -41,8 +39,7 @@ public interface SearchDetailCaseMapper {
      * @param petitionUserId case申立て人
      * @return 未読メッセージ件数
      */
-
-    public Integer getMsgCountByFlag(String caseId, String petitionUserId);
+    int getMsgCountByFlag(String caseId, String petitionUserId);
 
     /**
      * 未読メッセージ取得（申立人・相手方・調停人受理開示後）
@@ -51,6 +48,6 @@ public interface SearchDetailCaseMapper {
      * @param petitionUserId case申立て人
      * @return 未読メッセージ件数
      */
+    int getMsgCountByFlagNo(String caseId, String petitionUserId);
 
-    public Integer getMsgCountByFlagNo(String caseId, String petitionUserId);
 }

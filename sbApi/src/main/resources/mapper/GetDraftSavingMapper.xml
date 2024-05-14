@@ -24,33 +24,33 @@
         <result property="expectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR"/>
         <result property="other" column="Other" jdbcType="VARCHAR"/>
     </resultMap>
-  <select id="getDraftSavingData" resultMap="DraftSavingDataMap">
-    SELECT
-        relations.PetitionUserId,
-        relations.CasePetition,
-        relations.PetitionUserInfo_Email,
-        relations.Agent1_Email,
-        relations.Agent2_Email,
-        relations.Agent3_Email,
-        relations.Agent4_Email,
-        relations.Agent5_Email,
-        relations.TraderUserEmail,
-        petitions.productName,
-        petitions.ProductId,
-        petitions.TraderName,
-        petitions.TraderUrl,
-        petitions.BoughtDate,
-        petitions.Price,
-        petitions.petitionTypeValue,
-        petitions.petitionContext,
-        petitions.ExpectResloveTypeValue,
-        petitions.Other
-    FROM
-        react_use.case_relations relations,
-        react_use.case_petitions petitions
-    WHERE
-        relations.CasePetition = petitions.id
-    AND relations.PetitionUserId = #{uid}
-    AND petitions.Status = '0'
-  </select>
+    <select id="getDraftSavingData" resultMap="DraftSavingDataMap">
+        SELECT
+            relations.PetitionUserId,
+            relations.CasePetition,
+            relations.PetitionUserInfo_Email,
+            relations.Agent1_Email,
+            relations.Agent2_Email,
+            relations.Agent3_Email,
+            relations.Agent4_Email,
+            relations.Agent5_Email,
+            relations.TraderUserEmail,
+            petitions.productName,
+            petitions.ProductId,
+            petitions.TraderName,
+            petitions.TraderUrl,
+            petitions.BoughtDate,
+            petitions.Price,
+            petitions.petitionTypeValue,
+            petitions.petitionContext,
+            petitions.ExpectResloveTypeValue,
+            petitions.Other
+        FROM
+            react_use.case_relations relations,
+            react_use.case_petitions petitions
+        WHERE
+            relations.CasePetition = petitions.id
+        AND relations.PetitionUserId = #{uid}
+        AND petitions.Status = '0'
+    </select>
 </mapper>

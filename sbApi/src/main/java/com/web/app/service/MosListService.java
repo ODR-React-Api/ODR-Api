@@ -19,7 +19,7 @@ public interface MosListService {
      * @param searchCase API「 検索用一覧取得」より渡された引数
      * @return case詳細
      */
-    public ReturnResult searchSetailCase(SelectCondition searchCase);
+    public ReturnResult searchDetailCase(SelectCondition searchCase);
 
     /**
      * 検索Boxに入力した文字列で申立て番号と件名の一部検索条件として、ユーザに関連するすべてのケースをDBから検索する。
@@ -29,4 +29,15 @@ public interface MosListService {
      * @return 取得されたケース情報リスト
      */
     public List<ReturnResult> getFuzzyQueryListInfo(String uid, String queryString);
+
+    /**
+     * API「 曖昧検索用一覧取得」より渡された引数で、DBからケース詳細を取得する。
+     *
+     * @param caseId CaseId
+     * @param petitionUserId case申立て人
+     * @param positionFlag 立場フラグ
+     * @param queryString 画面.検索Box入力文字列
+     * @return 取得されたケース情報リスト
+     */
+    public ReturnResult getFuzzyQueryDetailCase(String caseId, String petitionUserId, Integer positionFlag, String queryString);
 }
