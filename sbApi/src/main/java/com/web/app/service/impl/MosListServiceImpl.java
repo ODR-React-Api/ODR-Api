@@ -12,7 +12,7 @@ import com.web.app.mapper.GetCaseDetailMapper;
 import com.web.app.service.MosListService;
 
 /**
- * 申立て一覧画面
+ * 申立て一覧画面ServiceImpl
  * 
  * @author DUC 朱暁芳
  * @since 2024/04/17
@@ -41,9 +41,13 @@ public class MosListServiceImpl implements MosListService {
         // 「case_negotiations」から「ステータス」を取得した
         // 「case_mediations」から「ステータス」を取得した
         CaseDetailCasesSelectInfo caseDetailCasesInfo = getCaseDetailMapper.caseDetailCasesInforSearch(caseId);
-        // ケース詳細調停案で「case_mediations」を取得
-        ReturnResult caseInfo = caseDetailMediationsInfoSearch(caseDetailCasesInfo, caseId, idFlag, userId);
-        return caseInfo;
+        if (caseDetailCasesInfo != null) {
+            // ケース詳細調停案で「case_mediations」を取得
+            ReturnResult caseInfo = caseDetailMediationsInfoSearch(caseDetailCasesInfo, caseId, idFlag, userId);
+            return caseInfo;
+        } else {
+            return null;
+        }
     }
 
     /**

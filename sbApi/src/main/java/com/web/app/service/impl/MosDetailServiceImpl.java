@@ -11,7 +11,7 @@ import com.web.app.mapper.UpdCasesStatusMapper;
 import com.web.app.service.MosDetailService;
 
 /**
- * 申立て詳細画面_概要
+ * 申立て詳細画面_概要ServiceImpl
  * 
  * @author DUC 朱暁芳
  * @since 2024/04/23
@@ -40,15 +40,15 @@ public class MosDetailServiceImpl implements MosDetailService {
         ParticipatedStatusChangeResultInfo participatedFlag = new ParticipatedStatusChangeResultInfo();
         // 2.ケースの状態の更新
         if (participationSel != null) {
-            participatedFlag = participatedCaseStatusChangeUpdate(participationSel,
-                    caseId);
+            participatedFlag = participatedCaseStatusChangeUpdate(participationSel, caseId);
             if (participatedFlag != null) {
                 return participatedFlag;
             } else {
                 return null;
             }
+        } else {
+            return null;
         }
-        return null;
     }
 
     /**
