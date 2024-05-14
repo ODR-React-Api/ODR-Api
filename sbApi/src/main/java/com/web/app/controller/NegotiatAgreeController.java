@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.web.app.domain.Response;
 import com.web.app.domain.negotiatAgree.Negotiation;
 import com.web.app.service.NegotiatAgreeService;
@@ -31,7 +30,7 @@ public class NegotiatAgreeController {
 
     //サービスオブジェクト
     @Autowired
-    private NegotiatAgreeService updNegotiatDenyService;
+    private NegotiatAgreeService negotiatAgreeService;
 
     /**
      * 
@@ -48,7 +47,7 @@ public class NegotiatAgreeController {
     public Response refusalNegotiations(@RequestBody Negotiation negotiation) {
         try {
             // 和解案が更新されたかどうかを判断する
-            if (updNegotiatDenyService.updateNegotiatData(negotiation) != 0) {
+            if (negotiatAgreeService.updNegotiatDeny(negotiation) != 0) {
                 return AjaxResult.success("和解案が更新されました!");
             }
             return AjaxResult.success("和解案が更新されませんでした!");

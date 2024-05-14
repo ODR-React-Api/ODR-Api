@@ -1,7 +1,6 @@
 package com.web.app.domain.negotiatAgree;
 
 import java.io.Serializable;
-
 import lombok.Data;
 
 /**

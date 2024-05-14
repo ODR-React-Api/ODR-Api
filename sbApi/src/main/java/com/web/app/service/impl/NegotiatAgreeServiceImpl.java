@@ -1,19 +1,21 @@
 package com.web.app.service.impl;
 
 import java.text.SimpleDateFormat;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.web.app.domain.negotiatAgree.Negotiation;
 import com.web.app.mapper.UpdNegotiatDenyMapper;
 import com.web.app.service.NegotiatAgreeService;
-
 import org.springframework.stereotype.Service;
 
 
 /**
- * サービス実装クラス
+ * 
+ * 和解案合意画面
+ * 
+ * 本画面は、和解案のプレビュー表示と
+ * 確認書表示画面です。作成した和解案の合意、
+ * 拒否および確認を行う。
  * 
  * @author DUC 徐義然
  * @since 2024/05/06
@@ -37,7 +39,7 @@ public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
      */
     @Override
     @Transactional
-    public int updateNegotiatData(Negotiation negotiation){
+    public int updNegotiatDeny(Negotiation negotiation){
         //和解案のステータスの取得
         Integer status = updNegotiatDenyMapper.getNegotiationStatus(negotiation.getNegotiationId());
         //更新前Status=２，１２の場合、７で更新する

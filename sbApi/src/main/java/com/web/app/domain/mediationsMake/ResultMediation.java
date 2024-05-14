@@ -3,7 +3,6 @@ package com.web.app.domain.mediationsMake;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import lombok.Data;
 
 /**
@@ -16,7 +15,9 @@ import lombok.Data;
 @Data
 public class ResultMediation implements Serializable {
     //バッファリング
-    private static final long serialVersionUID = 1L;   
+    private static final long serialVersionUID = 1L;  
+    //調停案id
+    private String mediationId; 
     //案件ID
     private String caseId;
     //プラットフォームID
@@ -39,6 +40,8 @@ public class ResultMediation implements Serializable {
     private Date agreementDate;
     //特記事項
     private String specialItem;
+    //更新日
+    private String lastModifiedDate;
     //提出ユーザ
     private String userId;
     //添付ファイル
