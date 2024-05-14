@@ -9,59 +9,59 @@
     </resultMap>
 
     <select id="getUserInfo" resultType="String">
-    SELECT
-        Email
-    FROM
-        react_use.odr_users
-    WHERE
-        Uid = #{uid}
-    AND DeleteFlag = '0'
+        SELECT
+            Email
+        FROM
+            react_use.odr_users
+        WHERE
+            Uid = #{uid}
+        AND DeleteFlag = '0'
     </select>
 
     <select id="selectUserInfoForCasesFromPetiton" resultMap="SelectUserInfoForCasetMap">
-    SELECT
-        CaseId,
-        petitionUserId
-    FROM
-        react_use.case_relations
-    WHERE
-        PetitionUserInfo_Email = #{email}
-    OR  Agent1_Email = #{email}
-    OR  Agent2_Email = #{email}
-    OR  Agent3_Email = #{email}
-    OR  Agent4_Email = #{email}
-    OR  Agent5_Email = #{email}
-    AND DeleteFlag = '0'
-    ORDER BY CaseId
+        SELECT
+            CaseId,
+            petitionUserId
+        FROM
+            react_use.case_relations
+        WHERE
+            PetitionUserInfo_Email = #{email}
+        OR  Agent1_Email = #{email}
+        OR  Agent2_Email = #{email}
+        OR  Agent3_Email = #{email}
+        OR  Agent4_Email = #{email}
+        OR  Agent5_Email = #{email}
+        AND DeleteFlag = '0'
+        ORDER BY CaseId
     </select>
 
     <select id="selectUserInfoForCasesFromTrader" resultMap="SelectUserInfoForCasetMap">
-    SELECT
-        CaseId,
-        petitionUserId
-    FROM
-        react_use.case_relations
-    WHERE
-        TraderUserEmail = #{email}
-    OR  TraderAgent1_UserEmail = #{email}
-    OR  TraderAgent2_UserEmail = #{email}
-    OR  TraderAgent3_UserEmail = #{email}
-    OR  TraderAgent4_UserEmail = #{email}
-    OR  TraderAgent5_UserEmail = #{email}
-    AND DeleteFlag = '0'
-    ORDER BY CaseId
+        SELECT
+            CaseId,
+            petitionUserId
+        FROM
+            react_use.case_relations
+        WHERE
+            TraderUserEmail = #{email}
+        OR  TraderAgent1_UserEmail = #{email}
+        OR  TraderAgent2_UserEmail = #{email}
+        OR  TraderAgent3_UserEmail = #{email}
+        OR  TraderAgent4_UserEmail = #{email}
+        OR  TraderAgent5_UserEmail = #{email}
+        AND DeleteFlag = '0'
+        ORDER BY CaseId
     </select>
 
     <select id="selectUserInfoForCasesFromMediator" resultMap="SelectUserInfoForCasetMap">
-    SELECT
-        CaseId,
-        petitionUserId
-    FROM
-        react_use.case_relations
-    WHERE
-        MediatorUserEmail = '2805781183@qq.com'
-    AND DeleteFlag = '0'
-    ORDER BY CaseId
+        SELECT
+            CaseId,
+            petitionUserId
+        FROM
+            react_use.case_relations
+        WHERE
+            MediatorUserEmail = '2805781183@qq.com'
+        AND DeleteFlag = '0'
+        ORDER BY CaseId
     </select>
 
 </mapper>
