@@ -3,15 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.InsNegotiationDataMapper">
-    <!--  -->
-    <!-- <select id="SearchCaseNegotiations" resultType="com.web.app.domain.NegotiatPreview.CaseNegotiations">
-        SELECT
-            *
-        FROM
-            case_negotiations
-        WHERE
-            CaseId = #{caseId}
-    </select> -->
 
     <insert id="AddCaseNegotiations" parameterType="com.web.app.domain.Entity.CaseNegotiations">
         INSERT INTO case_negotiations(
