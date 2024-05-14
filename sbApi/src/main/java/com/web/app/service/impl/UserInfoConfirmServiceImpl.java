@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.web.app.domain.UserInfoModel;
 import com.web.app.domain.UserInsertModel;
+import com.web.app.domain.Entity.OdrUsers;
+import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.constants.MessageConstants;
 import com.web.app.domain.util.SendMailRequest;
 import com.web.app.mapper.RegisterUserMapper;
-import com.web.app.service.RegisterUserService;
+import com.web.app.service.UserInfoConfirmService;
 import com.web.app.service.UtilService;
 
 /**
@@ -25,9 +27,9 @@ import com.web.app.service.UtilService;
  */
 
 @Service
-public class RegisterUserServiceImpl implements RegisterUserService {
+public class UserInfoConfirmServiceImpl implements UserInfoConfirmService {
 
-    private static final Logger log = LogManager.getLogger(RegisterUserServiceImpl.class);
+    private static final Logger log = LogManager.getLogger(UserInfoConfirmServiceImpl.class);
 
     @Autowired
     private RegisterUserMapper registerUserMapper;
@@ -46,25 +48,25 @@ public class RegisterUserServiceImpl implements RegisterUserService {
     public Integer registerUser(UserInfoModel userInfo) {
 
         // 新規ユーザー情報の処理
-        UserInsertModel userInsert = new UserInsertModel();
+        OdrUsers userInsert = new OdrUsers();
         userInsert.setUid(utilService.GetGuid());
         userInsert.setEmail(userInfo.getEmail());
         userInsert.setFirstName(userInfo.getFirstName());
-        userInsert.setFirstNameKana(userInfo.getFirstNameKana());
+        userInsert.setFirstName_kana(userInfo.getFirstNameKana());
         userInsert.setLastName(userInfo.getLastName());
-        userInsert.setLastNameKana(userInfo.getLastNameKana());
+        userInsert.setLastName_kana(userInfo.getLastNameKana());
         userInsert.setMiddleName(userInfo.getMiddleName());
-        userInsert.setMiddleNameKana(userInfo.getMiddleNameKana());
+        userInsert.setMiddleName_kana(userInfo.getMiddleNameKana());
         userInsert.setCompanyName(userInfo.getCompanyName());
         userInsert.setPassword(userInfo.getPassword());
         userInsert.setLastModifiedBy(userInfo.getLastModifiedBy());
-        userInsert.setStatus(0);
-        userInsert.setMessageFrequency("100");
-        userInsert.setTermsConfirmed(1);
-        userInsert.setUserType(0);
-        userInsert.setDeleteFlag(0);
-        userInsert.setPlatformId("0001");
-        userInsert.setLanguageId("jp");
+        userInsert.setStatus(Constants.STR_ODR_USERS_INSERT_STATUS);
+        userInsert.setMessageFrequency(Constants.STR_ODR_USERS_INSERT_MESSAGEFREQUENCY);
+        userInsert.setTermsConfirmed(Constants.STR_ODR_USERS_INSERT_TERMSCONFIRMED);
+        userInsert.setUserType(Constants.STR_ODR_USERS_INSERT_USERTYPE);
+        userInsert.setDeleteFlag(Constants.STR_ODR_USERS_INSERT_DELETEFLAG);
+        userInsert.setPlatformId(Constants.STR_ODR_USERS_INSERT_PLATFORMID);
+        userInsert.setLanguageId(Constants.STR_ODR_USERS_INSERT_LANGUAGEID);
 
         // 新規ユーザーMapperの呼び出し
         int rerturnCount = registerUserMapper.registerUser(userInsert);
@@ -73,8 +75,8 @@ public class RegisterUserServiceImpl implements RegisterUserService {
         if (rerturnCount != 0) {
 
             SendMailRequest sendMailRequest = new SendMailRequest();
-            sendMailRequest.setPlatformId("0001");
-            sendMailRequest.setLanguageId("JP");
+            sendMailRequest.setPlatformId(Constants.STR_ODR_USERS_INSERT_PLATFORMID);
+            sendMailRequest.setLanguageId(Constants.STR_ODR_USERS_INSERT_LANGUAGEID);
             sendMailRequest.setTempId(MailConstants.MailId_M002);
 
             ArrayList<String> recipientEmail = new ArrayList<String>();
@@ -82,12 +84,12 @@ public class RegisterUserServiceImpl implements RegisterUserService {
             sendMailRequest.setRecipientEmail(recipientEmail);
 
             ArrayList<String> parameter = new ArrayList<>();
-            parameter.add(userInfo.getLastName() + " " + userInfo.getFirstName());
-            parameter.add("http://localhost:3000/");
+            parameter.add(userInfo.getLastName() + Constants.SPACE_STRING + userInfo.getFirstName());
+            parameter.add(Constants.REGISTERUSER_MAILID_M002_URL);
             sendMailRequest.setParameter(parameter);
 
-            sendMailRequest.setUserId("ODR_Front");
-            sendMailRequest.setControlType(2);
+            sendMailRequest.setUserId(Constants.REGISTERUSER_SENDMAIL_USERID);
+            sendMailRequest.setControlType(Constants.REGISTERUSER_SENDMAIL_CONTROLTYPE);
 
             boolean bool = utilService.SendMail(sendMailRequest);
 

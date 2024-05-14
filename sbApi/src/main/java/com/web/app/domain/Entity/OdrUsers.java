@@ -15,6 +15,12 @@ public class OdrUsers {
     // ID
     public String Uid;
 
+    // パスワード
+    public String password;
+
+    // 規約確認状況
+    public int TermsConfirmed;
+
     // プラットフォームID
     public String PlatformId;
 
@@ -132,4 +138,6 @@ public class OdrUsers {
     public String LastModifiedDate;
 
     public String LastModifiedBy;
+
+    public String MessageFrequency;
 }

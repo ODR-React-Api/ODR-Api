@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.UserInfoModel;
+import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.MessageConstants;
-import com.web.app.service.RegisterUserService;
+import com.web.app.service.UserInfoConfirmService;
 import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
@@ -27,10 +28,10 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "用户登陆模块")
 @RestController
 @RequestMapping("/")
-public class RegisterUserController {
+public class UserInfoConfirmController {
 
     @Autowired
-    private RegisterUserService registerUserService;
+    private UserInfoConfirmService registerUserService;
 
     /**
      * ユーザ新規登録API
@@ -48,7 +49,7 @@ public class RegisterUserController {
             // 新規ユーザーサービスの呼び出し
             int userInsertRep = registerUserService.registerUser(userInfo);
             // 追加された状態の判断
-            if (userInsertRep != 0) {
+            if (userInsertRep != Constants.STR_ODR_USERS_INSERTFLAG) {
                 return AjaxResult.success(MessageConstants.C12003I);
             }
         } catch (Exception e) {

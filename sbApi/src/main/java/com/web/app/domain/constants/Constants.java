@@ -105,4 +105,50 @@ public class Constants {
     // { "ddd.444@gmail.com", "ABCマート" },
     // { "eee.555@icloud.com", "ドン・キホーテ" },
     // };
+    public static final int STR_ODR_USERS_INSERTFLAG = 0;
+    public static final int STR_ODR_USERS_INSERT_STATUS = 0;
+    public static final String STR_ODR_USERS_INSERT_MESSAGEFREQUENCY = "100";
+    public static final int STR_ODR_USERS_INSERT_TERMSCONFIRMED = 1;
+    public static final int STR_ODR_USERS_INSERT_USERTYPE = 0;
+    public static final int STR_ODR_USERS_INSERT_DELETEFLAG = 0;
+    public static final String STR_ODR_USERS_INSERT_PLATFORMID = "1";
+    public static final String STR_ODR_USERS_INSERT_LANGUAGEID = "JP";
+    public static final String REGISTERUSER_MAILID_M002_URL = "http://localhost:3000/";
+    public static final String REGISTERUSER_SENDMAIL_USERID = "ODR_Front";
+    public static final int STR_CASES_CASESTAGE_0 = 0;
+    public static final int STR_CASES_CASESTAGE_2 = 2;
+    public static final int STR_CASES_CASESTAGE_3 = 3;
+    public static final int STR_CASES_CASESTAGE_6 = 6;
+    public static final int STR_CASES_CASESTAGE_7 = 7;
+    public static final int POSITIONFLAG_PETITION = 1;
+    public static final int POSITIONFLAG_TRADER = 2;
+    public static final int POSITIONFLAG_MEDIATOR = 3;
+    public static final String DEFAULT_CORRESPONDDATE = "99999999";
+    public static final int NUM_0 = 0;
+    public static final int NUM_1 = 1;
+    public static final int NUM_2 = 2;
+    public static final int NUM_3 = 3;
+    public static final int NUM_4 = 4;
+    public static final int NUM_5 = 5;
+    public static final int NUM_6 = 6;
+    public static final int NUM_7 = 7;
+    public static final int NUM_8 = 8;
+    public static final int NUM_9 = 9;
+    public static final int NUM_10 = 10;
+    public static final int NUM_11 = 11;
+    public static final int NUM_12 = 12;
+    public static final int NUM_13 = 13;
+    public static final int NUM_14 = 14;
+    public static final int NUM_15 = 15;
+    public static final String CORRESPONDENCE_1 = "1";
+    public static final String CORRESPONDENCE_0 = "0";
+    public static final String STR_CASES_CASESTATUS_2 = "2";
+    public static final String STR_CASES_CASESTATUS_3 = "3";
+    public static final String STR_CASES_CASESTATUS_6 = "6";
+    public static final String STR_CASES_CASESTATUS_7 = "7";
+    public static final String STR_CASES_CASESTATUS_0 = "0";
+    public static final int REGISTERUSER_SENDMAIL_CONTROLTYPE = 2;
+
+    public static final String SPACE_STRING = " ";
+
 }

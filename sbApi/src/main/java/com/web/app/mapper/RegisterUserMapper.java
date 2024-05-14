@@ -2,7 +2,7 @@ package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.UserInsertModel;
+import com.web.app.domain.Entity.OdrUsers;
 
 /**
  * ユーザ新規登録Mapper
@@ -21,6 +21,6 @@ public interface RegisterUserMapper {
      * @param userInsert 画面項目情報
      * @return 追加されたデータのエントリ数
      */
-    public Integer registerUser(UserInsertModel userInsert);
+    public Integer registerUser(OdrUsers userInsert);
 
 }
