@@ -2,7 +2,7 @@ package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.SearchDetail;
+import com.web.app.domain.MosList.SearchDetail;
 
 @Mapper
 public interface QueryDetailCaseMapper {

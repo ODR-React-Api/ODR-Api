@@ -2,7 +2,7 @@ package com.web.app.service;
 
 import java.util.List;
 
-import com.web.app.domain.ReturnResult;
+import com.web.app.domain.MosList.ReturnResult;
 
 public interface GetQueryListInfoService {
 

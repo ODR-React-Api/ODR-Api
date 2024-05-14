@@ -2,8 +2,8 @@ package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.SearchDetail;
-import com.web.app.domain.SelectCondition;
+import com.web.app.domain.MosList.SearchDetail;
+import com.web.app.domain.MosList.SelectCondition;
 
 /**
  * API「 検索用一覧取得」より渡された引数によって、DBからケース詳細を取得するMapper

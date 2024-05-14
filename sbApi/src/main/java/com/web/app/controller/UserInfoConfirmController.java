@@ -17,7 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * ユーザ新規登録API
+ * 会員情報確認画面
  * 
  * @author DUC 張万超
  * @since 2024/04/17

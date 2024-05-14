@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.controller.QueryDetailCaseController;
-import com.web.app.domain.ReturnResult;
 import com.web.app.domain.SelectUserInfoForCase;
+import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.mapper.GetQueryListInfoMapper;
 import com.web.app.service.GetQueryListInfoService;
 

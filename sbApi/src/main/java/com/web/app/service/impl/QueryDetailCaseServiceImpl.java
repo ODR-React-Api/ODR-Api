@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.app.domain.ReturnResult;
-import com.web.app.domain.SearchDetail;
+import com.web.app.domain.MosList.ReturnResult;
+import com.web.app.domain.MosList.SearchDetail;
 import com.web.app.mapper.QueryDetailCaseMapper;
 import com.web.app.service.QueryDetailCaseService;
 

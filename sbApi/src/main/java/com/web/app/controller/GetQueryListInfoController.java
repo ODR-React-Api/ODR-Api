@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
-import com.web.app.domain.ReturnResult;
+import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.service.GetQueryListInfoService;
 
 import io.swagger.annotations.Api;

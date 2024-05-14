@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.SearchDetailCaseMapper">
-    <resultMap id="SearchDetailCase" type="com.web.app.domain.SearchDetail">
+    <resultMap id="SearchDetailCase" type="com.web.app.domain.MosList.SearchDetail">
         <id property="cid" column="cid" jdbcType="VARCHAR"/>
         <result property="caseStage" column="CaseStage" jdbcType="INTEGER"/>
         <result property="caseStatus" column="CaseStatus" jdbcType="VARCHAR"/>

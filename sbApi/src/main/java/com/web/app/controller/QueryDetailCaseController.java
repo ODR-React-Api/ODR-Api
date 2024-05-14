@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.app.domain.ReturnResult;
+import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.service.QueryDetailCaseService;
 
 import io.swagger.annotations.Api;

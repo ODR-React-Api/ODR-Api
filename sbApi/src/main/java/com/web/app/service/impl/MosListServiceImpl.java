@@ -6,15 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.app.domain.ReturnResult;
-import com.web.app.domain.SearchDetail;
-import com.web.app.domain.SelectCondition;
+import com.web.app.domain.MosList.ReturnResult;
+import com.web.app.domain.MosList.SearchDetail;
+import com.web.app.domain.MosList.SelectCondition;
 import com.web.app.domain.constants.Constants;
 import com.web.app.mapper.SearchDetailCaseMapper;
-import com.web.app.service.SearchDetailCaseService;
+import com.web.app.service.MosListService;
 
 /**
- * API「 検索用一覧取得」より渡された引数によって、DBからケース詳細を取得するService
+ * 申立て一覧画面
  * 
  * @author DUC 張万超
  * @since 2024/4/22
@@ -22,13 +22,14 @@ import com.web.app.service.SearchDetailCaseService;
  */
 
 @Service
-public class SearchDetailCaseServiceImpl implements SearchDetailCaseService {
+public class MosListServiceImpl implements MosListService {
 
+    // API「検索用一覧取得」
     @Autowired
     private SearchDetailCaseMapper searchDetailCaseMapper;
 
     /**
-     * API「 検索用一覧取得」より渡された引数によって、DBからケース詳細を取得する
+     * API「検索用一覧取得」より渡された引数によって、DBからケース詳細を取得する
      *
      * @param searchCase API「 検索用一覧取得」より渡された引数
      * @return case詳細
@@ -193,4 +194,5 @@ public class SearchDetailCaseServiceImpl implements SearchDetailCaseService {
 
         return returnResult;
     }
+
 }
