@@ -11,12 +11,9 @@ import com.web.app.service.UtilService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,32 +41,6 @@ public class NegotiatMakeController {
 
     @Autowired
     private UtilService utilService;
-
-    // /**
-    //  * 和解案状抽出
-    //  *
-    //  * @param param1 和解案
-    //  * @return Response
-    //  * @throws Exception 異常終了
-    //  */
-    // @SuppressWarnings("rawtypes")
-    // @ApiOperation("和解案状抽出")
-    // @PostMapping("/statusList")
-    // public Response statusList(@RequestBody NegotiationsEdit negotiationsEdit) {
-    //     try {
-    //         List<Integer> status = negotiationsMakeService.selectStatusList(negotiationsEdit);
-    //         if (status.size() == 0) {
-    //             // 新規登録
-    //             addNegotiationsEdit();
-    //         } else if (status.contains(Constants.S3B7) || status.contains(Constants.S3B8) || status.contains(Constants.S3B13) || status.contains(Constants.S3B14)) {
-    //             // 更新登録
-    //             updateNegotiationsEdit();
-    //         }
-    //         return AjaxResult.success("申立の状態が別ユーザより更新されました。申立一覧画面から確認するようにお願いします。");
-    //     } catch (Exception e) {
-    //         return AjaxResult.success("申立の状態が別ユーザより更新されました。申立一覧画面から確認するようにお願いします。");
-    //     }
-    // }
 
     /**
      * 新規登録

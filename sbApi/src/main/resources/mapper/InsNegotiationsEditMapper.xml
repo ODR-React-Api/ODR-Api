@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.InsNegotiationsEditMapper">
-    <resultMap id="NegotiationsEditResultMap" type="com.web.app.domain.NegotiatMake.Negotiations">
+    <resultMap id="InsNegotiationsEditResultMap" type="com.web.app.domain.NegotiatMake.Negotiations">
         <id property="id" column="ID" jdbcType="VARCHAR"/>
         <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
         <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
@@ -40,17 +40,7 @@
         <result property="relatedId" column="RelatedId" jdbcType="VARCHAR"/>
         <result property="fileId" column="FileId" jdbcType="VARCHAR"/>
     </resultMap>
-    <select id="selectStatusList" resultMap="NegotiationsEditResultMap">
-        SELECT
-            Status
-        FROM
-            case_negotiations
-        WHERE
-            CaseId = #{caseId}
-            AND PlatformId = #{platformId}
-            AND DeleteFlag = #{deleteFlag}
-    </select>
-    <insert id="insertNegotiations" parameterType="com.web.app.domain.NegotiatMake.Negotiations">
+<insert id="insertNegotiations" parameterType="com.web.app.domain.NegotiatMake.Negotiations">
     INSERT INTO case_negotiations (
         ID	
         ,PlatformId	
@@ -173,39 +163,4 @@
         #{lastModifiedBy}
     )
 </insert>
-  <update id="updateNegotiations" parameterType="com.web.app.domain.NegotiatMake.Negotiations">
-        UPDATE case_negotiations
-        SET
-            ExpectResloveTypeValue = #{expectResloveTypeValue},
-            OtherContext = #{otherContext},
-            PayAmount = #{payAmount},
-            CounterClaimPayment = #{counterClaimPayment},
-            PaymentEndDate = #{paymentEndDate},
-            ShipmentPayType = #{shipmentPayType},
-            SpecialItem = #{specialItem},
-            Status = #{status},
-            LastModifiedDate = #{lastModifiedDate},
-            LastModifiedBy = #{lastModifiedBy}
-        WHERE
-            Id = #{id}
-    </update>
-
-    <update id="deleteFiles" parameterType="com.web.app.domain.NegotiatMake.Files">
-        UPDATE files
-        SET
-            DeleteFlag = #{deleteFlag},
-            LastModifiedDate = #{lastModifiedDate},
-            LastModifiedBy = #{lastModifiedBy}
-        WHERE
-            Id = #{id}
-    </update>
-    <update id="deleteCaseFileRelations" parameterType="com.web.app.domain.NegotiatMake.CaseFileRelations">
-        UPDATE case_file_relations
-        SET
-            DeleteFlag = #{deleteFlag},
-            LastModifiedDate = #{lastModifiedDate},
-            LastModifiedBy = #{lastModifiedBy}
-        WHERE
-            FileId = #{fileId}
-</update>
 </mapper>

@@ -7,12 +7,9 @@ import com.web.app.domain.constants.Constants;
 import com.web.app.mapper.InsNegotiationsEditMapper;
 import com.web.app.mapper.UpdNegotiationsEditMapper;
 import com.web.app.service.NegotiatMakeService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * 和解案編集依頼サビース
@@ -29,21 +26,6 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
 
     @Autowired
     private InsNegotiationsEditMapper insNegotiationsEditMapper;
-    /**
-     * 和解案状態を抽出
-     *
-     * @param param1 和解案
-     * @return List<Integer> 
-     * @throws
-     */
-    public List<Integer> selectStatusList(Negotiations negotiationsEdit) {
-
-        List<Integer> status = insNegotiationsEditMapper.selectStatusList(negotiationsEdit.getCaseId(),
-                negotiationsEdit.getPlatformId(), negotiationsEdit.getDeleteFlag());
-
-        return status;
-
-    }
 
     /**
      * 新規登録

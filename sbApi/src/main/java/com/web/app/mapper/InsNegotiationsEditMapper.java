@@ -6,12 +6,8 @@ import com.web.app.domain.NegotiatMake.CaseFileRelations;
 import com.web.app.domain.NegotiatMake.Files;
 import com.web.app.domain.NegotiatMake.Negotiations;
 
-import java.util.List;
-
 @Mapper
 public interface InsNegotiationsEditMapper {
-
-    List<Integer> selectStatusList(String caseId, String platformId, int deleteFlag);
 
     int insertNegotiations(Negotiations negotiationsEdit);
 
