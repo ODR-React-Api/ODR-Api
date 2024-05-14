@@ -5,13 +5,24 @@
 <mapper namespace="com.web.app.mapper.InsMediationsDataMapper">
 
 <select id="MediationcaseSearch" resultType="com.web.app.domain.mediationsMake.InsMediationsData">
- SELECT
-        CaseId
-        FROM
-            case_negotiations
-        WHERE
-            CaseId = #{CaseId}
-            AND DeleteFlag = false
+    SELECT
+        c.CaseId
+    FROM 
+        case_mediations c
+    LEFT JOIN
+        case_file_relations r 
+        on c.CaseId = r.CaseId and c.id =r.RelatedId
+    LEFT JOIN
+        files f
+        on r.fileId = f.id
+    WHERE
+        c.CaseId =#{CaseId} AND
+        c.PlatformId ='001'AND
+        c.DeleteFlag = 0 AND
+        r.PlatformId='001'AND
+        r.RelationType =5 AND
+        r.DeleteFlag = 0 AND
+        r.PlatformId='001'
 </select>
 
 
