@@ -26,14 +26,27 @@ public class MediationsMakeController {
     @PostMapping("/InsMediationsData")
     public int InsMediationsData(@RequestBody InsMediationsData insMediationsData) {
         try {
-            ArrayList<InsMediationsData> aa =new ArrayList<InsMediationsData>();
-            // 判断数据是否已经存在
-            ArrayList<InsMediationsData> mediationsData = mediationsMakeService.mediationsDataSearch(insMediationsData);
+            int id;
+            // 「調停案」、「案件-添付ファイル」、「添付ファイル」テーブルを関連付けてデータが存在するかどうかを判断する
+            ArrayList<InsMediationsData> dataSearch = mediationsMakeService.dataSearch(insMediationsData);
 
-            aa=mediationsData;
-            
-            // int num = mediationsMakeService.MediationcaseInsert(insMediationsData);
-            return 1;
+            // 表関連データが存在しない場合
+            if (dataSearch.isEmpty()) {
+                // 「調停案」にデータが存在するかどうかを判断する（ファイルが添付されていない場合がある）
+                InsMediationsData mediationsCount = mediationsMakeService.mediationDataCount(insMediationsData);
+                //「調停案」データが存在する場合
+                if ( mediationsCount != null) {
+                    //調停案データ更新API
+                    id = 1;
+                }else{
+                    //「調停案」は、レコード新規登録（insert）で行う
+                    int insMediationsData2 = mediationsMakeService.insMediationsData2(insMediationsData);
+                    id=2;
+                }
+            } else {
+                id = 3;
+            }
+            return id;
         } catch (Exception e) {
             return 0;
         }

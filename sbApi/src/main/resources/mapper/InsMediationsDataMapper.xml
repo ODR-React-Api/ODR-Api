@@ -4,9 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.InsMediationsDataMapper">
 
-<select id="MediationcaseSearch" resultType="com.web.app.domain.mediationsMake.InsMediationsData">
+<select id="dataSearch" resultType="com.web.app.domain.mediationsMake.InsMediationsData">
     SELECT
-        c.CaseId
+        c.CaseId,
+        r.RelatedId,
+        f.id
     FROM 
         case_mediations c
     LEFT JOIN
@@ -18,16 +20,30 @@
     WHERE
         c.CaseId =#{CaseId} AND
         c.PlatformId ='001'AND
-        c.DeleteFlag = 0 AND
+        c.DeleteFlag = 0  AND
         r.PlatformId='001'AND
         r.RelationType =5 AND
         r.DeleteFlag = 0 AND
         r.PlatformId='001'
 </select>
 
+<select id="mediationCount" resultType="com.web.app.domain.mediationsMake.InsMediationsData">
+    SELECT
+        PlatformId,
+        CaseId,
+        PayAmount,
+        CounterClaimPayment,
+        PaymentEndDate,
+        ShipmentPayType,
+        SpecialItem,
+        UserId   
+    FROM 
+        case_mediations
+    WHERE
+        CaseId =#{CaseId}    
+</select>
 
-
-<insert id="MediationcaseInsert" parameterType="com.web.app.domain.mediationsMake.InsMediationsData">
+<insert id="insMediationsData2" parameterType="com.web.app.domain.mediationsMake.InsMediationsData">
         INSERT INTO case_mediations (
         id,
         CaseId
