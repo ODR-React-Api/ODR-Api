@@ -25,21 +25,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/PoliciesConfirm")
 public class PoliciesConfirmController {
 
-  @Autowired
-  DataSource dataSource;
+    @Autowired
+    DataSource dataSource;
 
-  @Autowired
-  private PoliciesConfirmService policiesConfirmService;
+    @Autowired
+    private PoliciesConfirmService policiesConfirmService;
 
-  @ApiOperation("利用規約情報取得")
-  @PostMapping("/GetPoliciesInfo")
-  public List<PoliciesInfo> getPoliciesInfo() {
-    try {
-      List<PoliciesInfo> policiesInfoList = policiesConfirmService.getPoliciesInfoList();
-      return policiesInfoList;
-    } catch (Exception e) {
-      AjaxResult.fatal("利用規約情報取得失败!", e);
-      return null;
+    @ApiOperation("利用規約情報取得")
+    @PostMapping("/GetPoliciesInfo")
+    public List<PoliciesInfo> getPoliciesInfo() {
+        try {
+            List<PoliciesInfo> policiesInfoList = policiesConfirmService.getPoliciesInfoList();
+            return policiesInfoList;
+        } catch (Exception e) {
+            AjaxResult.fatal("利用規約情報取得失败!", e);
+            return null;
+        }
     }
-  }
 }

@@ -20,9 +20,9 @@ import com.web.app.service.PoliciesConfirmService;
 @Service
 public class PoliciesConfirmServiceImpl implements PoliciesConfirmService {
     // セッション情報.ConfirmedVersionNoOfTerms
-    private static final String confirmedVersionNoOfTerms = "14";
+    // private static final String confirmedVersionNoOfTerms = "14";
     // セッション情報.ConfirmedVersionNoOfPolicy
-    private static final String confirmedVersionNoOfPolicy = "14";
+    // private static final String confirmedVersionNoOfPolicy = "14";
 
     @Autowired
     private GetPoliciesInfoMapper getPoliciesInfoMapper;
@@ -31,7 +31,7 @@ public class PoliciesConfirmServiceImpl implements PoliciesConfirmService {
     public List<PoliciesInfo> getPoliciesInfoList() {
         List<PoliciesInfo> policiesInfoList = new ArrayList<>();
         PoliciesInfo policiesInfo = new PoliciesInfo();
-        PoliciesInfo privacyPolicyInfo = new PoliciesInfo();
+        // PoliciesInfo privacyPolicyInfo = new PoliciesInfo();
         try {
             // 利用規約情報取得
             policiesInfo = getPoliciesInfoMapper.selectPoliciesInfo();
@@ -39,29 +39,29 @@ public class PoliciesConfirmServiceImpl implements PoliciesConfirmService {
         } catch (Exception e) {
             System.out.println("エラー画面(404)へ遷移");
         }
-        try {
-            // プライバシーポリシー情報取得
-            privacyPolicyInfo = getPoliciesInfoMapper.selectPrivacyPolicyInfo();
-            policiesInfoList.add(privacyPolicyInfo);
-        } catch (Exception e) {
-            System.out.println("エラー画面(404)へ遷移");
-        }
-        String policiesVersionNo = policiesInfo.getVersionNo();
-        String privacyPolicyVersionNo = privacyPolicyInfo.getVersionNo();
-        // 利用規約のみが更新された場合
-        if (!policiesVersionNo.equals(confirmedVersionNoOfTerms)
-                && privacyPolicyVersionNo.equals(confirmedVersionNoOfPolicy)) {
-            System.out.println("利用規約のみが更新された場合VersionNo:" + policiesInfo.getVersionNo());
-            // プライバシーポリシーのみが更新された場合
-        } else if (!privacyPolicyVersionNo.equals(confirmedVersionNoOfPolicy)
-                && policiesVersionNo.equals(confirmedVersionNoOfTerms)) {
-            System.out.println("プライバシーポリシーのみが更新された場合VersionNo:" + privacyPolicyInfo.getVersionNo());
-            // 利用規約とプライバシーポリシーが更新された場合
-        } else if (!policiesVersionNo.equals(confirmedVersionNoOfTerms)
-                && !privacyPolicyVersionNo.equals(confirmedVersionNoOfPolicy)) {
-            System.out.println("利用規約とプライバシーポリシーが更新された場合VersionNo:" + policiesInfo.getVersionNo() + ","
-                    + privacyPolicyInfo.getVersionNo());
-        }
+        // try {
+        //     // プライバシーポリシー情報取得
+        //     privacyPolicyInfo = getPoliciesInfoMapper.selectPrivacyPolicyInfo();
+        //     policiesInfoList.add(privacyPolicyInfo);
+        // } catch (Exception e) {
+        //     System.out.println("エラー画面(404)へ遷移");
+        // }
+        // String policiesVersionNo = policiesInfo.getVersionNo();
+        // String privacyPolicyVersionNo = privacyPolicyInfo.getVersionNo();
+        // // 利用規約のみが更新された場合
+        // if (!policiesVersionNo.equals(confirmedVersionNoOfTerms)
+        //         && privacyPolicyVersionNo.equals(confirmedVersionNoOfPolicy)) {
+        //     System.out.println("利用規約のみが更新された場合VersionNo:" + policiesInfo.getVersionNo());
+        //     // プライバシーポリシーのみが更新された場合
+        // } else if (!privacyPolicyVersionNo.equals(confirmedVersionNoOfPolicy)
+        //         && policiesVersionNo.equals(confirmedVersionNoOfTerms)) {
+        //     System.out.println("プライバシーポリシーのみが更新された場合VersionNo:" + privacyPolicyInfo.getVersionNo());
+        //     // 利用規約とプライバシーポリシーが更新された場合
+        // } else if (!policiesVersionNo.equals(confirmedVersionNoOfTerms)
+        //         && !privacyPolicyVersionNo.equals(confirmedVersionNoOfPolicy)) {
+        //     System.out.println("利用規約とプライバシーポリシーが更新された場合VersionNo:" + policiesInfo.getVersionNo() + ","
+        //             + privacyPolicyInfo.getVersionNo());
+        // }
         return policiesInfoList;
     }
 }
