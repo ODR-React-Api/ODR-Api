@@ -3,12 +3,13 @@ package com.web.app.service;
 import com.web.app.domain.MosDetail.ParticipatedStatusChangeResultInfo;
 
 /**
- * 参加済状態変更
+ * 申立て詳細画面_概要Service
  * 
  * @author DUC 朱暁芳
- * @since 2024/04/23
+ * @since 2024/04/17
  * @version 1.0
  */
 public interface MosDetailService {
-    ParticipatedStatusChangeResultInfo ParticipatedStatusChangeInfoSearch(String caseId);
+    // 参加済状態変更
+    ParticipatedStatusChangeResultInfo participatedStatusChangeInfoSearch(String caseId);
 }

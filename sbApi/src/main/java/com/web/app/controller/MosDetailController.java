@@ -14,7 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 参加済状態変更
+ * 申立て詳細画面_概要Controller
  * 
  * @author DUC 朱暁芳
  * @since 2024/04/23
@@ -28,12 +28,19 @@ public class MosDetailController {
     @Autowired
     private MosDetailService mosDetailService;
 
+    /**
+     * 参加済状態変更
+     * 
+     * @param param1 参加表明する渡された引数: 案件ID
+     * @return 戻り値は「 参照表明更新済FLG」に返される
+     * @throws Exception エラーの説明内容
+     */
     @ApiOperation("参加済状態変更")
     @PostMapping("/participation")
     public ParticipatedStatusChangeResultInfo participation(String caseId) {
         try {
             ParticipatedStatusChangeResultInfo participatedInfo = mosDetailService
-                    .ParticipatedStatusChangeInfoSearch(caseId);
+                    .participatedStatusChangeInfoSearch(caseId);
             return participatedInfo;
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);

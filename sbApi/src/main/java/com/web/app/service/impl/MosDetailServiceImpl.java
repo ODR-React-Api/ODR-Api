@@ -11,7 +11,7 @@ import com.web.app.mapper.UpdCasesStatusMapper;
 import com.web.app.service.MosDetailService;
 
 /**
- * 参加済状態変更
+ * 申立て詳細画面_概要
  * 
  * @author DUC 朱暁芳
  * @since 2024/04/23
@@ -23,23 +23,24 @@ public class MosDetailServiceImpl implements MosDetailService {
     private ElevantPersonnelEmailAddressController elevantPersonnelEmailAddressController;
 
     @Autowired
-    private UpdCasesStatusMapper participatedStatusChangeMapper;
+    private UpdCasesStatusMapper updCasesStatusMapper;
 
     /**
+     * 参加済状態変更
      * 参加表明対象ケースの状態の取得
-     *
+     * 
      * @param param1 参加表明する渡された引数: 案件ID
      * @return 戻り値は「 参照表明更新済FLG」に返される
      */
     @Override
-    public ParticipatedStatusChangeResultInfo ParticipatedStatusChangeInfoSearch(String caseId) {
+    public ParticipatedStatusChangeResultInfo participatedStatusChangeInfoSearch(String caseId) {
         // 1.参加表明対象ケースの状態の取得判定
-        Cases participationSel = participatedStatusChangeMapper
-                .participatedStatusChangeInfoSearch(caseId);
+        Cases participationSel = updCasesStatusMapper.participatedStatusChangeInfoSearch(caseId);
 
+        ParticipatedStatusChangeResultInfo participatedFlag = new ParticipatedStatusChangeResultInfo();
         // 2.ケースの状態の更新
         if (participationSel != null) {
-            ParticipatedStatusChangeResultInfo participatedFlag = participatedCaseStatusChangeUpdate(participationSel,
+            participatedFlag = participatedCaseStatusChangeUpdate(participationSel,
                     caseId);
             if (participatedFlag != null) {
                 return participatedFlag;
@@ -51,8 +52,9 @@ public class MosDetailServiceImpl implements MosDetailService {
     }
 
     /**
+     * 参加済状態変更
      * ケース状態の更新
-     *
+     * 
      * @param param1 引数：参加表明対象ケースの状態に取得された
      * @return 戻り値は「 参照表明更新済FLG」に返される
      */
@@ -70,7 +72,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         // テーブル「案件」から取得したCaseStageが0（回答） かつ CaseStatusが0000（申立後-参加待ち）の場合、以下の処理を実行
         if (caseStage == 0 && ("0000".equals(status))) {
             // ケース状態の更新
-            int updateNum = participatedStatusChangeMapper.caseStatusChangeUpdate(cid);
+            int updateNum = updCasesStatusMapper.caseStatusChangeUpdate(cid);
 
             // ケース状態の更新の件数が0じゃない場合
             if (updateNum != 0) {

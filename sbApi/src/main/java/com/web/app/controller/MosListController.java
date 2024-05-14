@@ -16,7 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * API_検索用ケース詳細取得
+ * 申立て一覧画面Controller
  * 
  * @author DUC 朱暁芳
  * @since 2024/04/17
@@ -30,11 +30,18 @@ public class MosListController {
     @Autowired
     private MosListService mosListService;
 
+    /**
+     * ケース詳細取得
+     *
+     * @param param1 API「 一覧取得」より渡された引数
+     * @return 戻り値はAPI「 一覧取得」に返される
+     * @throws Exception エラーの説明内容
+     */
     @ApiOperation("ケース詳細取得API")
     @PostMapping("/getCaseDetailnfo")
     public ReturnResult getCaseDetailnfo(@RequestBody CaseIdListInfo caseListInfo) {
         try {
-            ReturnResult caseDetail = mosListService.CaseDetailCasesInfoSearch(caseListInfo);
+            ReturnResult caseDetail = mosListService.caseDetailCasesInfoSearch(caseListInfo);
             return caseDetail;
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
