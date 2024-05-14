@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 import com.web.app.domain.MediationsConCon.MediationsTemplate;
 
 /**
- * 調停案テンプレート取得API Mapper
+ * S24_調停案内容確認画面
+ * Mapper层
+ * GetMediationsTemplateMapper
  * 
  * @author DUC 王 エンエン
  * @since 2024/05/12
@@ -15,6 +17,6 @@ import com.web.app.domain.MediationsConCon.MediationsTemplate;
  */
 @Mapper
 public interface GetMediationsTemplateMapper {
+    // API_調停案テンプレート取得
     List<MediationsTemplate> findMediationsTemplate(String platformId,String languageId);
-
 }

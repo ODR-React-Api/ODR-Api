@@ -37,11 +37,9 @@ public class UpdCasesForMediationEndDateServiceImpl implements UpdCasesForMediat
     @Transactional
     public int updCasesForMediationEndDate(CasesForMediationEndDate casesForMediationEndDate) {
         Date mediationEndDate = casesForMediationEndDate.getMediationEndDate();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss.SSS");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         String date = sdf.format(mediationEndDate);
-        System.out.println("================date===============");
-        System.out.println(date);
-
+        
         return updCasesForMediationEndDateMapper.setUpdCasesForMediationEndDate(date,casesForMediationEndDate.getCid());
     }
     

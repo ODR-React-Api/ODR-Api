@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UpdCasesForMediationEndDateMapper {
-    Integer setUpdCasesForMediationEndDate(String mediationEndDate,String string);
+    Integer setUpdCasesForMediationEndDate(String mediationEndDate,String cid);
 }
