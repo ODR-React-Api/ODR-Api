@@ -1,13 +1,11 @@
 package com.web.app.controller;
 
 import java.util.UUID;
-
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.web.app.domain.Relations;
 import com.web.app.service.MosLoginService;
 import com.web.app.tool.AjaxResult;

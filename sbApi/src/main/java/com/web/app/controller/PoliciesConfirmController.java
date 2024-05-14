@@ -3,12 +3,9 @@ package com.web.app.controller;
 import com.web.app.domain.PoliciesInfo;
 import com.web.app.service.PoliciesConfirmService;
 import com.web.app.tool.AjaxResult;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
 import java.util.List;
-
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

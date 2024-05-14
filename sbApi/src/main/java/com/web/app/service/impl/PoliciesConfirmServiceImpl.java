@@ -2,10 +2,8 @@ package com.web.app.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.web.app.domain.PoliciesInfo;
 import com.web.app.mapper.GetPoliciesInfoMapper;
 import com.web.app.service.PoliciesConfirmService;
