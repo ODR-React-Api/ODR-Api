@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.GetRelationsContentMapper">
+<mapper namespace="com.web.app.mapper.GetPetitionsContentMapper">
     <resultMap id="RelationsContent" type="com.web.app.domain.Entity.OdrUsers">
         <id property="FirstName" column="FirstName" jdbcType="VARCHAR"/>
         <result property="LastName" column="LastName" jdbcType="VARCHAR"/>

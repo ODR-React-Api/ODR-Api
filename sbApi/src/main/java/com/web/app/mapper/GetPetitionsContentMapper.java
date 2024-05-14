@@ -9,7 +9,7 @@ import com.web.app.domain.MosDetail.AttachedFile;
 import com.web.app.domain.MosDetail.ExtensionItem;
 
 @Mapper
-public interface GetPetitionContentMapper {
+public interface GetPetitionsContentMapper {
 
   CasePetitions PetitionListDataSearch(String caseId);
 

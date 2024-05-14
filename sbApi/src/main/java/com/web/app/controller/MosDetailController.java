@@ -40,8 +40,8 @@ public class MosDetailController {
 
     @ApiOperation("申立ての内容取得")
     @SuppressWarnings("rawtypes")
-    @GetMapping("/getPetitionContent")
-    public Response getPetitionContent(String caseId) {
+    @GetMapping("/getPetitionsContent")
+    public Response getPetitionsContent(String caseId) {
 
         // 申立ての内容取得
         PetitionsContent petitionsContent = mosDetailService.selectPetitionData(caseId);

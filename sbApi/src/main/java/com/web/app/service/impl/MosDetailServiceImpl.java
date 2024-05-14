@@ -2,7 +2,6 @@ package com.web.app.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,14 +17,14 @@ import com.web.app.domain.MosDetail.RelationsContent;
 import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.util.SendMailRequest;
 import com.web.app.mapper.CaseRelationsMapper;
+import com.web.app.mapper.GetPetitionsContentMapper;
 import com.web.app.mapper.MediatorResignMapper;
-import com.web.app.mapper.GetPetitionContentMapper;
 import com.web.app.mapper.GetRelationsContentMapper;
 import com.web.app.service.MosDetailService;
 import com.web.app.service.UtilService;
 
 /**
- * 申立ての内容取得
+ * 申立て詳細画面_概要
  * 
  * @author DUC 王亞テイ
  * @since 2024/04/23
@@ -36,7 +35,7 @@ import com.web.app.service.UtilService;
 public class MosDetailServiceImpl implements MosDetailService {
 
     @Autowired
-    private GetPetitionContentMapper petitionsContentMapper;
+    private GetPetitionsContentMapper petitionsContentMapper;
 
     private static final Logger log = LogManager.getLogger(MosDetailServiceImpl.class);
 
@@ -85,6 +84,13 @@ public class MosDetailServiceImpl implements MosDetailService {
 
         return caseRelations;
     }
+
+    /**
+     * 関係者内容取得
+     *
+     * @param caseId フロントエンド転送
+     * @return 関係者内容取得の取得必要なすべてのデータ
+     */
 
     @Override
     public RelationsContent selectRelationsContentData(String caseId) {
@@ -251,6 +257,16 @@ public class MosDetailServiceImpl implements MosDetailService {
         return relationsContent;
     }
 
+    /**
+     * 調停人退出メッセージ登録
+     *
+     * @param caseId フロントエンド転送
+     * @param uid フロントエンド転送
+     * @param platformId フロントエンド転送
+     * @param messageGroupId フロントエンド転送
+     * @return 調停人退出メッセージ登録
+     */
+
     @Override
     public int updateMediatorHistoriesData(String caseId, String uid, String platformId, String messageGroupId) {
 
@@ -291,7 +307,7 @@ public class MosDetailServiceImpl implements MosDetailService {
 
             int updateNum = mediatorHistoriesMapper.mediatorHistoriesUpdate(caseId, uid);
 
-            String id = UUID.randomUUID().toString();
+            String id = utilService.GetGuid();
             int insertMessageNum = mediatorHistoriesMapper.messagesInsert(caseId, uid, id);
             System.out.println("insertMessageNum:" + insertMessageNum);
 
@@ -299,7 +315,7 @@ public class MosDetailServiceImpl implements MosDetailService {
 
             for (String item : result) {
                 UsersMessages usersMessages = new UsersMessages();
-                usersMessages.setId(UUID.randomUUID().toString());
+                usersMessages.setId(utilService.GetGuid());
                 usersMessages.setMessageId(id);
                 usersMessages.setUserId(item);
                 usersMessages.setCaseId(caseId);
