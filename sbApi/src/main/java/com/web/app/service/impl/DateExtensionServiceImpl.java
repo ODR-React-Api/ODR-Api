@@ -30,7 +30,7 @@ public class DateExtensionServiceImpl implements DateExtensionService {
      * @throws Exception エラーの説明内容
      */
     @Override
-    public Date getCaseInfo(String CaseId, String PlatformId) throws Exception {
+    public Date getCaseInfo (String CaseId, String PlatformId) throws Exception {
         return dateExtensionMapper.getCaseInfo(CaseId, PlatformId);
     }
 }

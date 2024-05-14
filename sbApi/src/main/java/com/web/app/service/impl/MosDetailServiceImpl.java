@@ -28,7 +28,7 @@ public class MosDetailServiceImpl implements MosDetailService {
      * @throws Exception エラーの説明内容
      */
     @Override
-    public CaseRelations getCaseRelations(String CaseId) throws Exception {
+    public CaseRelations getCaseRelations (String CaseId) throws Exception {
         return getCaseRelationsMapper.getCaseRelations(CaseId);
     }
 }

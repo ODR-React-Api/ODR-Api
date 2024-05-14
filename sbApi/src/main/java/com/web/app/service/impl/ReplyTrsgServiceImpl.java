@@ -37,7 +37,7 @@ public class ReplyTrsgServiceImpl implements ReplyTrsgService {
      */
     @Transactional
     @Override
-    public int replyWithdraw(ReplyWithdraw replyWithdraw) throws Exception {
+    public int replyWithdraw (ReplyWithdraw replyWithdraw) throws Exception {
         replyWithdraw.setNegotiationEndDate(utilService.AddDaysToDate(new Date(), utilService.GetMasterPlatforms(replyWithdraw.getPlatformId()).getNegotiationLimitDays()));
         int updateCaseNum = replyWithdrawMapper.updateReplyWithdrawByCase(replyWithdraw);
         int updateCaseReplies = replyWithdrawMapper.updateReplyWithdrawByCaseReplies(replyWithdraw);

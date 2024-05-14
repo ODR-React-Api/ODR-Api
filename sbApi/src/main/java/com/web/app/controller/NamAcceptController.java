@@ -27,7 +27,7 @@ public class NamAcceptController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停人変更履歴変更API")
     @PostMapping("/updMediatorHistories")
-    public Response updMediatorHistories(@RequestBody UpdMediatorHistories updMediatorHistories) {
+    public Response updMediatorHistories (@RequestBody UpdMediatorHistories updMediatorHistories) {
 
         int updMediatorHistoriesNum = namAcceptService.UpdMediatorHistories(updMediatorHistories);
 

@@ -1,5 +1,6 @@
 package com.web.app.domain.MedUserChange;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Data;
@@ -12,7 +13,9 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class InsertFileInfo {
+public class InsertFileInfo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     // ファイルID
     private String fileId;

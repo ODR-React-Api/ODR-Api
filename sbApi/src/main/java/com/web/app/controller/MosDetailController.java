@@ -40,7 +40,7 @@ public class MosDetailController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("関係者メアド取得")
     @PostMapping("/getCaseRelations")
-    public Response getCaseRelations(String CaseId) {
+    public Response getCaseRelations (String CaseId) {
         try {
             CaseRelations caseRelations = mosDetailService.getCaseRelations(CaseId);
             if(caseRelations != null) {

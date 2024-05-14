@@ -35,7 +35,7 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
      */
     @Transactional
     @Override
-    public int insertFileInfo(InsertFileInfo insertFileInfo) throws Exception {
+    public int insertFileInfo (InsertFileInfo insertFileInfo) throws Exception {
         insertFileInfo.setFileId(utilService.GetGuid());
         insertFileInfo.setCaseFileRelationsId(utilService.GetGuid());
 

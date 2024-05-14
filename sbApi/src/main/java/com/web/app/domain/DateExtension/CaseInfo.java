@@ -1,5 +1,6 @@
 package com.web.app.domain.DateExtension;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Data;
@@ -12,7 +13,9 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class CaseInfo {
+public class CaseInfo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     // 案件ID
     private String CaseId;
