@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.NamAccept.UpdMediatorHistories;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.NamAcceptService;
 
 import io.swagger.annotations.Api;
@@ -31,9 +32,9 @@ public class NamAcceptController {
         int updMediatorHistoriesNum = namAcceptService.UpdMediatorHistories(updMediatorHistories);
 
         if(updMediatorHistoriesNum == 1) {
-            return Response.success("成功");
+            return Response.success(Constants.RETCD_OK);
         }
-        return Response.error("失败");
+        return Response.error(Constants.RETCD_NG);
     }
 
 }

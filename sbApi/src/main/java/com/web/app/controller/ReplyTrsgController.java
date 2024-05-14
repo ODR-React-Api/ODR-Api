@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.ReplyTrsg.ReplyWithdraw;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.ReplyTrsgService;
 
 import io.swagger.annotations.Api;
@@ -44,9 +45,9 @@ public class ReplyTrsgController {
         try {
             int num = replyWithdrawService.replyWithdraw(replyWithdraw);
             if(num == 1) {
-                return Response.success("成功");
+                return Response.success(Constants.RETCD_OK);
             }
-            return Response.error("失败");
+            return Response.error(Constants.RETCD_NG);
         } catch (Exception e) {
             return Response.error(e.getMessage());
         }

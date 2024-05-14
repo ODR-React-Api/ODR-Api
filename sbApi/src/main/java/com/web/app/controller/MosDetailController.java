@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.CaseRelations;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.MosDetailService;
 
 import io.swagger.annotations.Api;
@@ -45,7 +46,7 @@ public class MosDetailController {
             if(caseRelations != null) {
                 return Response.success(caseRelations);
             }
-            return Response.error("失败");
+            return Response.error(Constants.RETCD_NG);
         } catch (Exception e) {
             return Response.error(e.getMessage());
         }
