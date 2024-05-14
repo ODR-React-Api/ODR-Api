@@ -26,8 +26,8 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "*")
 @Api(tags = "用户登陆模块")
-@RestController
 @RequestMapping("/")
+@RestController
 public class UserInfoConfirmController {
 
     @Autowired

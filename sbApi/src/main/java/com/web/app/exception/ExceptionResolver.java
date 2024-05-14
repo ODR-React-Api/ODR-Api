@@ -21,24 +21,24 @@ import javax.servlet.http.HttpServletResponse;
 //@Component
 public class ExceptionResolver implements HandlerExceptionResolver {
 
-  @Override
-  public ModelAndView resolveException(HttpServletRequest request,
-      HttpServletResponse response,
-      Object handler,
-      Exception ex) {
+    @Override
+    public ModelAndView resolveException(HttpServletRequest request,
+            HttpServletResponse response,
+            Object handler,
+            Exception ex) {
 
-    System.out.println("捕获到了异常：" + ex);
+        System.out.println("捕获到了异常：" + ex);
 
-    // 根据异常类型，确定异常处理方式
-    ModelAndView mv = new ModelAndView();
-    if (ex instanceof NullPointerException) {
-      mv.addObject("msg", "发生了空指针异常");
-    } else if (ex instanceof ArithmeticException) {
-      mv.addObject("msg", "发生了算数运算异常");
-    } else {
-      mv.addObject("msg", ex.getMessage());
+        // 根据异常类型，确定异常处理方式
+        ModelAndView mv = new ModelAndView();
+        if (ex instanceof NullPointerException) {
+            mv.addObject("msg", "发生了空指针异常");
+        } else if (ex instanceof ArithmeticException) {
+            mv.addObject("msg", "发生了算数运算异常");
+        } else {
+            mv.addObject("msg", ex.getMessage());
+        }
+        mv.setViewName("error");
+        return mv;
     }
-    mv.setViewName("error");
-    return mv;
-  }
 }
