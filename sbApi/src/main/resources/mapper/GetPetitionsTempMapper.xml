@@ -3,41 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetPetitionsTempMapper">
-    <resultMap id="petitionTempResultMap" type="com.web.app.domain.PetitionTemp">
-        <result property="petitionUserId" column="PetitionUserId" jdbcType="VARCHAR"/>
-        <result property="casePetition" column="CasePetition" jdbcType="VARCHAR"/>
-        <result property="petitionUserInfo_Email" column="PetitionUserInfo_Email" jdbcType="INTEGER"/>
-        <result property="agent1_Email" column="Agent1_Email" jdbcType="INTEGER"/>
-        <result property="agent2_Email" column="Agent2_Email" jdbcType="VARCHAR"/>
-        <result property="agent3_Email" column="Agent3_Email" jdbcType="VARCHAR"/>
-        <result property="agent4_Email" column="Agent4_Email" jdbcType="VARCHAR"/>
-        <result property="agent5_Email" column="Agent5_Email" jdbcType="VARCHAR"/>
-        <result property="traderUserEmail" column="TraderUserEmail" jdbcType="VARCHAR"/>
-        <result property="productName" column="productName" jdbcType="VARCHAR"/>
-        <result property="productId" column="ProductId" jdbcType="VARCHAR"/>
-        <result property="traderName" column="TraderName" jdbcType="VARCHAR"/>
-        <result property="traderUrl" column="TraderUrl" jdbcType="VARCHAR"/>
-        <result property="boughtDate" column="BoughtDate" jdbcType="TIMESTAMP"/>
-        <result property="price" column="Price" jdbcType="DECIMAL"/>
-        <result property="petitionTypeValue" column="petitionTypeValue" jdbcType="VARCHAR"/>
-        <result property="petitionContext" column="petitionContext" jdbcType="VARCHAR"/>
-        <result property="expectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR"/>
-        <result property="other" column="Other" jdbcType="VARCHAR"/>
+    <resultMap id="petitionTempResultMap" type="com.web.app.domain.MosLogin.PetitionTemp">
     </resultMap>
-    <resultMap id="infoResultMap" type="com.web.app.domain.PetitionInfo">
-        <result property="firstName" column="FirstName" jdbcType="VARCHAR"/>
-        <result property="lastName" column="LastName" jdbcType="VARCHAR"/>
-        <result property="firstName_kana" column="FirstName_kana" jdbcType="VARCHAR"/>
-        <result property="lastName_kana" column="LastName_kana" jdbcType="VARCHAR"/>
-        <result property="companyName" column="CompanyName" jdbcType="VARCHAR"/>   
+    <resultMap id="infoResultMap" type="com.web.app.domain.Entity.OdrUsers"> 
     </resultMap>
-    <resultMap id="fileIdResultMap" type="com.web.app.domain.FileId">
-        <result property="fileName" column="FileName" jdbcType="VARCHAR"/>
-        <result property="fileUrl" column="FileUrl" jdbcType="VARCHAR"/>
+    <resultMap id="fileIdResultMap" type="com.web.app.domain.MosLogin.FileId">
     </resultMap>
-    <resultMap id="scaleItemsResultMap" type="com.web.app.domain.ScaleItems">
-        <result property="extensionitemId" column="ExtensionitemId" jdbcType="VARCHAR"/>
-        <result property="extensionitemValue" column="ExtensionitemValue" jdbcType="VARCHAR"/>
+    <resultMap id="scaleItemsResultMap" type="com.web.app.domain.MosLogin.ScaleItems">
     </resultMap>
     <!-- 下書き保存のデータを取得する -->
     <select id="selectPetitionsTemp"  resultMap="petitionTempResultMap">

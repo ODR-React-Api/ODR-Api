@@ -7,7 +7,7 @@
         <result property="languageId" column="LanguageId" jdbcType="VARCHAR"/>
         <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
     </resultMap>
-    <resultMap id="scaleItemsResultMap" type="com.web.app.domain.ScaleItems">
+    <resultMap id="scaleItemsResultMap" type="com.web.app.domain.MosLogin.ScaleItems">
         <result property="extensionitemId" column="ExtensionitemId" jdbcType="VARCHAR"/>
         <result property="extensionitemValue" column="ExtensionitemValue" jdbcType="VARCHAR"/>
     </resultMap>

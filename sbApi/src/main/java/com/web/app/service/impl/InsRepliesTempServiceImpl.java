@@ -6,7 +6,6 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.domain.ScaleItems;
 import com.web.app.domain.ScreenInfo;
 import com.web.app.domain.UserInfo;
 import com.web.app.domain.InsRepliesTemp.CaseExtensionitemValues;
@@ -14,6 +13,7 @@ import com.web.app.domain.InsRepliesTemp.CaseFileRelations;
 import com.web.app.domain.InsRepliesTemp.CasePetitions;
 import com.web.app.domain.InsRepliesTemp.CaseRelations;
 import com.web.app.domain.InsRepliesTemp.Files;
+import com.web.app.domain.MosLogin.ScaleItems;
 import com.web.app.mapper.InsRepliesTempMapper;
 import com.web.app.service.InsRepliesTempService;
 import com.web.app.service.UtilService;

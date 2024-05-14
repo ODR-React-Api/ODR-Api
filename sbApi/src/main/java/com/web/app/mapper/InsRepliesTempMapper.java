@@ -2,13 +2,13 @@ package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.ScaleItems;
 import com.web.app.domain.UserInfo;
 import com.web.app.domain.InsRepliesTemp.CaseExtensionitemValues;
 import com.web.app.domain.InsRepliesTemp.CaseFileRelations;
 import com.web.app.domain.InsRepliesTemp.CasePetitions;
 import com.web.app.domain.InsRepliesTemp.CaseRelations;
 import com.web.app.domain.InsRepliesTemp.Files;
+import com.web.app.domain.MosLogin.ScaleItems;
 
 
 @Mapper

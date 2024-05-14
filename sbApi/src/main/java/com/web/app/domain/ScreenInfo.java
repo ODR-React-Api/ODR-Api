@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import com.web.app.domain.MosLogin.ScaleItems;
+
 import lombok.Data;
 
 @Data

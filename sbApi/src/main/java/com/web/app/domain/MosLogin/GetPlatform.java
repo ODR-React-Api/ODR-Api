@@ -3,7 +3,6 @@ package com.web.app.domain.MosLogin;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.Data;
 
 /**

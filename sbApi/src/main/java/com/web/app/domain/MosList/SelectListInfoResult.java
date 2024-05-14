@@ -1,7 +1,6 @@
 package com.web.app.domain.MosList;
 
 import java.io.Serializable;
-
 import lombok.Data;
 
 /**
@@ -12,7 +11,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class ReturnResult implements Serializable {
+public class SelectListInfoResult implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // 立場フラグ
