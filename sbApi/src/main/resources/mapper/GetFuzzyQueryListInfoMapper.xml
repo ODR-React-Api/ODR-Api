@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.GetQueryListInfoMapper">
-  <resultMap id="SelectUserInfoForCasetMap" type="com.web.app.domain.SelectUserInfoForCase">
+<mapper namespace="com.web.app.mapper.GetFuzzyQueryListInfoMapper">
+    <resultMap id="SelectUserInfoForCasetMap" type="com.web.app.domain.MosList.SelectUserInfoForCase">
         <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
         <result property="petitionUserId" column="petitionUserId" jdbcType="VARCHAR"/>
     </resultMap>
 
-  <select id="getUserInfo" resultType="String">
+    <select id="getUserInfo" resultType="String">
     SELECT
         Email
     FROM
@@ -16,9 +16,9 @@
     WHERE
         Uid = #{uid}
     AND DeleteFlag = '0'
-  </select>
+    </select>
 
-  <select id="selectUserInfoForCase1" resultMap="SelectUserInfoForCasetMap">
+    <select id="selectUserInfoForCasesFromPetiton" resultMap="SelectUserInfoForCasetMap">
     SELECT
         CaseId,
         petitionUserId
@@ -33,9 +33,9 @@
     OR  Agent5_Email = #{email}
     AND DeleteFlag = '0'
     ORDER BY CaseId
-  </select>
+    </select>
 
-  <select id="selectUserInfoForCase2" resultMap="SelectUserInfoForCasetMap">
+    <select id="selectUserInfoForCasesFromTrader" resultMap="SelectUserInfoForCasetMap">
     SELECT
         CaseId,
         petitionUserId
@@ -50,9 +50,9 @@
     OR  TraderAgent5_UserEmail = #{email}
     AND DeleteFlag = '0'
     ORDER BY CaseId
-  </select>
+    </select>
 
-  <select id="selectUserInfoForCase3" resultMap="SelectUserInfoForCasetMap">
+    <select id="selectUserInfoForCasesFromMediator" resultMap="SelectUserInfoForCasetMap">
     SELECT
         CaseId,
         petitionUserId
@@ -62,6 +62,6 @@
         MediatorUserEmail = '2805781183@qq.com'
     AND DeleteFlag = '0'
     ORDER BY CaseId
-  </select>
+    </select>
 
 </mapper>

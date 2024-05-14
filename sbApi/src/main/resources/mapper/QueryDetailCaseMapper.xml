@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.QueryDetailCaseMapper">
-<resultMap id="SearchDetailCase" type="com.web.app.domain.MosList.SearchDetail">
+    <resultMap id="SearchDetailCase" type="com.web.app.domain.MosList.SearchDetail">
         <id property="cid" column="cid" jdbcType="VARCHAR"/>
         <result property="caseStage" column="CaseStage" jdbcType="INTEGER"/>
         <result property="caseStatus" column="CaseStatus" jdbcType="VARCHAR"/>
@@ -18,52 +18,52 @@
         <result property="mediationsStatus" column="mediations_status" jdbcType="INTEGER"/>
         <result property="groupMessageFlag1" column="GroupMessageFlag1" jdbcType="INTEGER"/>
         <result property="groupMessageFlag2" column="GroupMessageFlag2" jdbcType="INTEGER"/>
-  </resultMap>
+    </resultMap>
 
-  <select id="getQueryDetailCase" resultMap="SearchDetailCase">
+    <select id="getQueryDetailCase" resultMap="SearchDetailCase">
     SELECT 
-          cases.cid,
-          cases.CaseStage,
-          cases.CaseStatus,
-          cases.CaseTitle,
-          cases.PetitionDate,
-          cases.ReplyEndDate,
-          cases.CounterclaimEndDate,
-          cases.NegotiationEndDate,
-          cases.MediationEndDate,
-          cases.NegotiationEndDateChangeStatus,
-          case_negotiations.Status,
-          case_mediations.Status as mediations_status,
-          cases.GroupMessageFlag1,
-          cases.GroupMessageFlag2
-      From
-          react_use.cases cases 
-      LEFT JOIN
-          react_use.case_negotiations case_negotiations
-      ON
-          cases.cid = case_negotiations.CaseId
-      LEFT JOIN
-          react_use.case_mediations case_mediations
-      ON
-          case_mediations.CaseId = cases.Cid
-          AND case_mediations.PlatformId = cases.PlatformId
-      WHERE cases.cid = #{caseId}
-      AND (cases.cid LIKE concat('%',#{queryString},'%')
-      OR cases.CaseTitle LIKE concat('%',#{queryString},'%'))
-      AND cases.DeleteFlag = '0'
-      AND case_negotiations.DeleteFlag = '0'
-  </select>
+            cases.cid,
+            cases.CaseStage,
+            cases.CaseStatus,
+            cases.CaseTitle,
+            cases.PetitionDate,
+            cases.ReplyEndDate,
+            cases.CounterclaimEndDate,
+            cases.NegotiationEndDate,
+            cases.MediationEndDate,
+            cases.NegotiationEndDateChangeStatus,
+            case_negotiations.Status,
+            case_mediations.Status as mediations_status,
+            cases.GroupMessageFlag1,
+            cases.GroupMessageFlag2
+        From
+            react_use.cases cases 
+        LEFT JOIN
+            react_use.case_negotiations case_negotiations
+        ON
+            cases.cid = case_negotiations.CaseId
+        LEFT JOIN
+            react_use.case_mediations case_mediations
+        ON
+            case_mediations.CaseId = cases.Cid
+            AND case_mediations.PlatformId = cases.PlatformId
+        WHERE cases.cid = #{caseId}
+        AND (cases.cid LIKE concat('%',#{queryString},'%')
+        OR cases.CaseTitle LIKE concat('%',#{queryString},'%'))
+        AND cases.DeleteFlag = '0'
+        AND case_negotiations.DeleteFlag = '0'
+    </select>
 
-  <select id="getMediatorDisclosureFlag" resultType="Integer">
+    <select id="getMediatorDisclosureFlag" resultType="Integer">
     SELECT
         MediatorDisclosureFlag
     FROM
         react_use.cases
     WHERE
         cid = #{caseId}
-  </select>
+    </select>
 
-  <select id="getMsgCountByFlag1" resultType="Integer">
+    <select id="getMsgCountByFlag1" resultType="Integer">
     SELECT
         COUNT(*) as notReadedCnt
     FROM
@@ -73,9 +73,9 @@
     AND userId = #{petitionUserId}
     AND ReadFlag = '0'
     AND DeleteFlag = '0'
-  </select>
+    </select>
 
-  <select id="getMsgCountByFlagNo1" resultType="Integer">
+    <select id="getMsgCountByFlagNo1" resultType="Integer">
     SELECT
         COUNT(*) as notReadedCnt
     FROM
@@ -90,5 +90,5 @@
     AND user_messages.DeleteFlag = '0'
     AND messages.DeleteFlag = '0'
     AND messages.CaseStage > '3'
-  </select>
+    </select>
 </mapper>
