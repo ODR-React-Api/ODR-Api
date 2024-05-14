@@ -18,6 +18,9 @@ public class OdrUsers {
     // プラットフォームID
     public String PlatformId;
 
+    // パスワード
+    public String password;
+
     // サイトナンバー
     public String RegisteredSiteNo;
 
@@ -74,6 +77,11 @@ public class OdrUsers {
 
     // プライバシーポリシー確認Version
     public int ConfirmedVersionNoOfPolicy;
+
+    public String MessageFrequency;
+
+    // 規約確認状況
+    public String TermsConfirmed;
 
     // 履歴書
     public String ResumeFileId;
