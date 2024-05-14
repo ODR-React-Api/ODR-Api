@@ -47,7 +47,7 @@ public class MosListController {
     try {
       // 検索用一覧取得
       List<SelectListInfoResult> selectListList = mosListService.getSelectListInfo(position);
-      if (selectListList != null) {
+      if (selectListList.size() > 0) {
         return AjaxResult.success("検索成功!", selectListList);
       } else {
         return AjaxResult.success("検索0件!");
