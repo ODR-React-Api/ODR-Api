@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.web.app.service.MediationsMakeService;
 import com.web.app.controller.List;
-import com.web.app.domain.Mediationcase;
+import com.web.app.domain.mediationsMake.InsMediationsData;
 import com.web.app.mapper.InsMediationsDataMapper;;
 
 @Service
@@ -15,7 +15,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
     private InsMediationsDataMapper mediationcaseMapper;
 
     @Override
-    public int MediationcaseInsert(Mediationcase mediationcase) {
+    public int MediationcaseInsert(InsMediationsData mediationcase) {
 
         // id赋予
         UUID uuid = UUID.randomUUID();
@@ -29,9 +29,9 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
     }
 
     @Override
-    public List<Mediationcase> MediationcaseSearch(Mediationcase mediationcase) {
+    public List<InsMediationsData> MediationcaseSearch(InsMediationsData mediationcase) {
 
-        List<Mediationcase> mList =mediationcaseMapper.MediationcaseSearch(mediationcase);
+        List<InsMediationsData> mList =mediationcaseMapper.MediationcaseSearch(mediationcase);
         
         return mList;
 }
