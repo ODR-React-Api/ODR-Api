@@ -27,7 +27,7 @@
         r.PlatformId='001'
 </select>
 
-<select id="mediationCount" resultType="com.web.app.domain.mediationsMake.InsMediationsData">
+<select id="mediationCount" resultType="com.web.app.domain.Entity.CaseMediations">
     SELECT
         PlatformId,
         CaseId,

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.service.MediationsMakeService;
+import com.web.app.domain.Entity.CaseMediations;
 import com.web.app.domain.mediationsMake.InsMediationsData;
 import com.web.app.mapper.InsMediationsDataMapper;;
 
@@ -25,9 +26,9 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
     }
 
     @Override
-    public InsMediationsData mediationDataCount(InsMediationsData mediationcase) {
+    public CaseMediations mediationDataCount(InsMediationsData mediationcase) {
 
-        InsMediationsData mediationCount = mediationcaseMapper.mediationCount(mediationcase);
+        CaseMediations mediationCount = mediationcaseMapper.mediationCount(mediationcase);
 
         return mediationCount;
     }

@@ -13,6 +13,7 @@ import com.web.app.domain.mediationsMake.InsMediationsData;
 import com.web.app.service.MediationsMakeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import com.web.app.domain.Entity.CaseMediations;
 
 @CrossOrigin(origins = "*")
 @Api(tags = "調停案作成模块")
@@ -33,7 +34,7 @@ public class MediationsMakeController {
             // 表関連データが存在しない場合
             if (dataSearch.isEmpty()) {
                 // 「調停案」にデータが存在するかどうかを判断する（ファイルが添付されていない場合がある）
-                InsMediationsData mediationsCount = mediationsMakeService.mediationDataCount(insMediationsData);
+                CaseMediations mediationsCount = mediationsMakeService.mediationDataCount(insMediationsData);
                 //「調停案」データが存在する場合
                 if ( mediationsCount != null) {
                     //調停案データ更新API
