@@ -178,6 +178,12 @@ public class Constants {
     public static final int S7B6 = 6;
 
     // 案件種類
+    // 「case_file_relations.RelationType案件種類」 0:申立て
+    public static final int CASE_PETITIONS = 0;
+    // 「case_file_relations.RelationType案件種類」 1:回答
+    public static final int CASE_REPLIES_REPLY = 1;
+    // 「case_file_relations.RelationType案件種類」 2:反訴
+    public static final int CASE_REPLIES_COUNTERCLAIM = 2;
     // 「case_file_relations.RelationType案件種類」 3:反訴への回答
     public static final int CASE_CLAIMREPLIES = 3;
     // 「case_file_relations.RelationType案件種類」 4:和解案
