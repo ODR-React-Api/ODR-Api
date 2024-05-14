@@ -16,9 +16,11 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 /**
- * 調停期日延長画面_案件情報更新API Controller
+ * S24_調停期日延長画面
+ * Controller层
+ * UpdCasesForMediationEndDateController
  * 
- * @author DUC王エンエン
+ * @author DUC 王 エンエン
  * @since 2024/05/09
  * @version 1.0
  */

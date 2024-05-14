@@ -5,6 +5,15 @@ import java.io.Serializable;
 
 import io.swagger.annotations.ApiModel;
 
+/**
+ * S24_調停期日延長画面 調停案更新API
+ * domain层
+ * MediationsContentDB
+ * 
+ * @author DUC 王 エンエン
+ * @since 2024/05/09
+ * @version 1.0
+ */
 @ApiModel 
 @Data
 public class MediationsContentDB implements Serializable{
