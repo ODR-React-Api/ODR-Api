@@ -8,5 +8,6 @@ import com.web.app.domain.mediationsMake.InsMediationsData;
 @Mapper
 public interface InsMediationsDataMapper {
     int MediationcaseInsert(InsMediationsData mediationcase);
+
     List<InsMediationsData> MediationcaseSearch(InsMediationsData mediationcase);
 }

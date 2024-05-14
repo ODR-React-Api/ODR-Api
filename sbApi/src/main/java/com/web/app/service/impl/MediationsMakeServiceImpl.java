@@ -15,11 +15,19 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
     private InsMediationsDataMapper mediationcaseMapper;
 
     @Override
+    public List<InsMediationsData> mediationsDataSearch(InsMediationsData mediationcase) {
+
+        List<InsMediationsData> mList = mediationcaseMapper.MediationcaseSearch(mediationcase);
+
+        return mList;
+    }
+
+    @Override
     public int MediationcaseInsert(InsMediationsData mediationcase) {
 
         // id赋予
         UUID uuid = UUID.randomUUID();
-        String id = uuid.toString().replaceAll("-","");
+        String id = uuid.toString().replaceAll("-", "");
 
         mediationcase.setId(id);
 
@@ -27,13 +35,5 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
 
         return MediationcaseInsertStatus;
     }
-
-    @Override
-    public List<InsMediationsData> MediationcaseSearch(InsMediationsData mediationcase) {
-
-        List<InsMediationsData> mList =mediationcaseMapper.MediationcaseSearch(mediationcase);
-        
-        return mList;
-}
 
 }

@@ -18,16 +18,16 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/MediationsMake")
 public class MediationsMakeController {
     @Autowired
-    private MediationsMakeService mediationcaseService;
+    private MediationsMakeService mediationsMakeService;
 
     @ApiOperation("調停案データ新規登録")
     @PostMapping("/InsMediationsData")
-    public int MediationcaseInsert(@RequestBody InsMediationsData mediationcase) {
+    public int InsMediationsData(@RequestBody InsMediationsData insMediationsData) {
         try {
-            //判断数据是否已经存在
-            List<InsMediationsData> mediationcaseSearch = mediationcaseService.MediationcaseSearch(mediationcase);
+            // 判断数据是否已经存在
+            List<InsMediationsData> mediationsData = mediationsMakeService.mediationsDataSearch(insMediationsData);
 
-            int num = mediationcaseService.MediationcaseInsert(mediationcase);
+            int num = mediationsMakeService.MediationcaseInsert(insMediationsData);
             return num;
         } catch (Exception e) {
             return 0;
