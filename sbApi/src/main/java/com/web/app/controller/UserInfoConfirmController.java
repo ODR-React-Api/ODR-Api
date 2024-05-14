@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
-import com.web.app.domain.UserInfoModel;
+import com.web.app.domain.UserInfoConfirm.UserInfoModel;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.MessageConstants;
 import com.web.app.service.UserInfoConfirmService;
@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
  */
 
 @CrossOrigin(origins = "*")
-@Api(tags = "用户登陆模块")
+@Api(tags = "UserInfoConfirm")
 @RequestMapping("/")
 @RestController
 public class UserInfoConfirmController {

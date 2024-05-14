@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.RegisterUserMapper">
-    <insert id="registerUser" parameterType="com.web.app.domain.UserInsertModel">
+    <insert id="registerUser" parameterType="com.web.app.domain.Entity.OdrUsers">
         INSERT INTO odr_users (
             Uid,
             password,
@@ -34,9 +34,9 @@
             #{firstName},
             #{middleName},
             #{lastName},
-            #{firstNameKana},
-            #{middleNameKana},
-            #{lastNameKana},
+            #{FirstName_kana},
+            #{MiddleName_kana},
+            #{LastName_kana},
             #{companyName},
             #{platformId},
             #{languageId},

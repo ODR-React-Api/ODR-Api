@@ -7,9 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.domain.UserInfoModel;
-import com.web.app.domain.UserInsertModel;
 import com.web.app.domain.Entity.OdrUsers;
+import com.web.app.domain.UserInfoConfirm.UserInfoModel;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.constants.MessageConstants;
