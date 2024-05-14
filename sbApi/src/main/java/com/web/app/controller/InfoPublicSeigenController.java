@@ -71,9 +71,10 @@ public class InfoPublicSeigenController {
     @GetMapping("/getMediatorDisclosureDate")
     @SuppressWarnings({ "rawtypes", "unchecked" })
     /**
+     * 調停人情報開示変更可能期限日
      * 
      * @param caseId
-     * @return
+     * @return Response
      * @throws Exception
      */
     public Response getMediatorDisclosureDate(String caseId) throws Exception {

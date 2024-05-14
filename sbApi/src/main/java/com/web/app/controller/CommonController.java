@@ -36,7 +36,16 @@ public class CommonController {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @ApiOperation("案件別個人情報リレーションデータ取得(申立人/相手方)")
     @GetMapping("/GetUserDataFromCaseIdentity")
-    // identity = true 申立人;identity = false 相手方
+    /**
+     * 案件別個人情報リレーションデータ取得(申立人/相手方)
+     * 
+     * @param identity   = true 申立人;identity = false 相手方
+     * @param languageId
+     * @param platformId
+     * @param caseId
+     * @return
+     * @throws Exception
+     */
     public Response GetUserDataFromCaseIdentity(Boolean identity, String languageId, String platformId, String caseId)
             throws Exception {
         try {
