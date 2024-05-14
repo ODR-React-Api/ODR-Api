@@ -4,15 +4,15 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.web.app.service.MediationcaseService;
+import com.web.app.service.MediationsMakeService;
 import com.web.app.controller.List;
 import com.web.app.domain.Mediationcase;
-import com.web.app.mapper.MediationcaseMapper;;
+import com.web.app.mapper.InsMediationsDataMapper;;
 
 @Service
-public class MediationcaseServiceImpl implements MediationcaseService {
+public class MediationsMakeServiceImpl implements MediationsMakeService {
     @Autowired
-    private MediationcaseMapper mediationcaseMapper;
+    private InsMediationsDataMapper mediationcaseMapper;
 
     @Override
     public int MediationcaseInsert(Mediationcase mediationcase) {

@@ -6,7 +6,7 @@ import com.web.app.controller.List;
 import com.web.app.domain.Mediationcase;
 
 @Mapper
-public interface MediationcaseMapper {
+public interface InsMediationsDataMapper {
     int MediationcaseInsert(Mediationcase mediationcase);
     List<Mediationcase> MediationcaseSearch(Mediationcase mediationcase);
 }

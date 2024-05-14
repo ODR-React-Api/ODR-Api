@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Mediationcase;
-import com.web.app.service.MediationcaseService;
+import com.web.app.service.MediationsMakeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -15,9 +15,9 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "調停案作成模块")
 @RestController
 @RequestMapping("/mediationcase")
-public class MediationcaseController {
+public class MediationsMakeController {
     @Autowired
-    private MediationcaseService mediationcaseService;
+    private MediationsMakeService mediationcaseService;
 
     @ApiOperation("調停案データ新規登録")
     @PostMapping("/MediationcaseInsert")

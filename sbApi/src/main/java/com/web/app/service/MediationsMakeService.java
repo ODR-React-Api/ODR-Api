@@ -2,7 +2,7 @@ package com.web.app.service;
 import com.web.app.controller.List;
 import com.web.app.domain.Mediationcase;
 
-public interface MediationcaseService {
+public interface MediationsMakeService {
 
  int MediationcaseInsert(Mediationcase mediationcase);
 
