@@ -1,5 +1,7 @@
 package com.web.app.domain.Entity;
 
+import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -13,7 +15,9 @@ import lombok.Data;
 
 @ApiModel
 @Data
-public class UsersMessages {
+public class UsersMessages implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     // ID
     private String id;
@@ -33,7 +37,7 @@ public class UsersMessages {
     // ユーザーID
     private String userId;
 
-    //既読フラグ
+    // 既読フラグ
     private Integer ReadFlag;
 
     private String Other01;
