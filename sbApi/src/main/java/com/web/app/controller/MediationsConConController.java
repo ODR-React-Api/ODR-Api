@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
+import com.web.app.domain.MediationsConCon.MediationsContent;
 import com.web.app.domain.MediationsConCon.MediationsTemplate;
 import com.web.app.domain.MediationsConCon.MediationsUserData;
 import com.web.app.service.MediationsConConService;
@@ -18,11 +19,14 @@ import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 /**
- * 調停案テンプレート取得API Controller
+ * S24_調停案内容確認画面
+ * Controller层
+ * MediationsConConController
  * 
- * @author DUC王エンエン
+ * @author DUC 王 エンエン
  * @since 2024/05/09
  * @version 1.0
  */
@@ -32,54 +36,74 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/mediationsConCon")
 public class MediationsConConController {
 
-    @Autowired
-    DataSource dataSource;
+  @Autowired
+  DataSource dataSource;
 
-    @Autowired
-    // サービスオブジェクト
-    private MediationsConConService mediationsConConService;
+  // サービスオブジェクト
+  @Autowired
+  private MediationsConConService mediationsConConService;
 
-    /**
-     * 
-     * テンプレートマスタから＜調停合意書テンプレート＞を取得する
-     * 
-     * @param XXX XXXXX
-     * @return Response
-     */
-    @SuppressWarnings("rawtypes")
-    @ApiOperation("調停案テンプレート取得")
-    @PostMapping("/getMediationsTemplate")
-    public Response getMediationsTemplate(String platformId, String languageId) {
-
-        try {
-            ArrayList<MediationsTemplate> mediationsTemplateList = new ArrayList<MediationsTemplate>();
-            mediationsTemplateList = (ArrayList<MediationsTemplate>) mediationsConConService
-                    .findMediationsTemplate(platformId, languageId);
-            return AjaxResult.success("请求成功", mediationsTemplateList);
-        } catch (Exception e) {
-            AjaxResult.fatal("查询失败!", e);
-            return null;
-        }
+  /**
+   * API_調停案テンプレート取得
+   * テンプレートマスタから＜調停合意書テンプレート＞を取得する
+   * 
+   * @param platformId、languageId API_調停案テンプレート取得の引数
+   * @return mediationsTemplateList 呼び出すData
+   */
+  @SuppressWarnings("rawtypes")
+  @ApiOperation("調停案テンプレート取得")
+  @PostMapping("/getMediationsTemplate")
+  public Response getMediationsTemplate(String platformId, String languageId) {
+    try {
+      ArrayList<MediationsTemplate> mediationsTemplateList = new ArrayList<MediationsTemplate>();
+      mediationsTemplateList = (ArrayList<MediationsTemplate>) mediationsConConService
+          .findMediationsTemplate(platformId, languageId);
+      return AjaxResult.success("请求成功", mediationsTemplateList);
+    } catch (Exception e) {
+      AjaxResult.fatal("查询失败!", e);
+      return null;
     }
+  }
 
-    /**
-     * 
-     * ユーザデータ取得
-     * 
-     * @param XXX XXXXX
-     * @return Response
-     */
+  /**
+   * API_ユーザデータ取得
+   * 
+   * @param caseId、platformId API_ユーザデータ取得の引数
+   * @return mediationsUserDataList 呼び出すData
+   */
   @SuppressWarnings("rawtypes")
   @ApiOperation("ユーザデータ取得")
   @PostMapping("/getMediationsUserData")
   public Response getMediationsUserData(String caseId, String platformId) {
-
     try {
       ArrayList<MediationsUserData> mediationsUserDataList = new ArrayList<MediationsUserData>();
       mediationsUserDataList = (ArrayList<MediationsUserData>) mediationsConConService.findAllUser(caseId, platformId);
       return AjaxResult.success("请求成功", mediationsUserDataList);
     } catch (Exception e) {
       AjaxResult.fatal("查询失败!", e);
+      return null;
+    }
+  }
+
+  /**
+   * API_調停案更新
+   * 当案件の調停案下書きデータを更新し、ステータスを「提出済」にする
+   * 
+   * @param mediationsContent API_調停案データ更新の引数
+   * @return Response 調停案データ更新の状況
+   */
+  @ApiOperation("調停案更新")
+  @PostMapping("/updMediationsContent")
+  public Response updNegotiatCon(@RequestBody MediationsContent mediationsContent) {
+    try {
+      // 和解案が更新されたかどうかを判断する
+      if (mediationsConConService.upMediationsContent(mediationsContent) != 0) {
+        return AjaxResult.success("調停案已更新!");
+      }
+      return AjaxResult.success("調停案未更新!");
+    } catch (Exception e) {
+      System.out.println(e.toString());
+      AjaxResult.fatal("更新失败!", e);
       return null;
     }
   }
