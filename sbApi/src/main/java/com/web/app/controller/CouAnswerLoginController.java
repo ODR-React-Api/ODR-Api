@@ -1,17 +1,14 @@
 package com.web.app.controller;
 import com.github.pagehelper.PageInfo;
 import com.web.app.domain.User;
-import com.web.app.domain.GetPreUserData;
+import com.web.app.domain.userLogin.GetPreUserData;
 import com.web.app.domain.GetReplies;
 import com.web.app.domain.GetRepliesContext;
 import com.web.app.service.GetRepliesContextService;
-import com.web.app.service.UserService;
 import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 
 import javax.sql.DataSource;
 
@@ -27,7 +24,7 @@ import com.web.app.domain.Response;
 @Api(tags = "反诉回答数据取得模块")
 @RestController
 @RequestMapping("/GetRepliesContext")
-public class GetRepliesContextController {
+public class CouAnswerLoginController {
     @Autowired
   DataSource dataSource;
 

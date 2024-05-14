@@ -1,6 +1,6 @@
 package com.web.app.service.impl;
 
-import com.web.app.domain.CasesByCid;
+import com.web.app.domain.CouAnswerLogin.CasesByCid;
 import com.web.app.mapper.CasesByCidMapper;
 import com.web.app.service.CasesByCidService;
 import org.springframework.beans.factory.annotation.Autowired;

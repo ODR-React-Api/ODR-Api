@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 @RestController
 @RequestMapping("/GetReplies")
 
-public class GetRepliesController {
+public class AnswerLoginController {
   @Autowired
   DataSource dataSource;
 

@@ -30,7 +30,7 @@
             and l.DeleteFlag = 0
             and f.id = l.fileId
             and f.PlatformId = #{PlatformId} 
-            and c.cid = '1000000011' 
+            and c.cid = #{PlatformId}
             order by f.LastModifiedDate asc;
     </select>
 </mapper>

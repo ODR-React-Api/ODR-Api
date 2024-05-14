@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.web.app.controller.GetRepliesContextController;
+import com.web.app.controller.CouAnswerLoginController;
 import com.web.app.domain.GetReplies;
 import com.web.app.domain.GetRepliesContext;
 import com.web.app.mapper.GetRepliesContextMapper;
@@ -22,18 +22,3 @@ public class GetRepliesContextServiceImpl implements GetRepliesContextService {
 
 }
 }
-
-// @Service
-// public class GetRepliesServiceImpl  implements GetRepliesService {
-
-//     @Autowired
-//     private GetRepliesMapper getRepliesMapper;
-    
-//     @Override
-//     public List<GetReplies> getReplies(String CaseId,String PlatformId) {
-//     List<GetReplies> list = new ArrayList<GetReplies>();
-//     // list = getPreUserDataMapper.getUserPre(guid);
-//     list = getRepliesMapper.getReplies(CaseId,PlatformId);
-//     return list;
-//   }
-// }
