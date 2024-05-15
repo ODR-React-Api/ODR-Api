@@ -42,7 +42,9 @@ public class MediationsConConServiceImpl implements MediationsConConService {
     /**
      * 当案件の調停案下書きデータを更新し、ステータスを「提出済」にする
      * 
-     * @param platformId、languageId API_調停案テンプレート取得の引数
+     * @param platformId   API_調停案テンプレート取得の引数「案件ID」
+     * @param languageId   API_調停案テンプレート取得の引数「言語」
+     * @param templateType API_調停案テンプレート取得の引数「テンプレートの種類」
      * @return list DBから取得の状況
      */
     @Override
@@ -57,7 +59,8 @@ public class MediationsConConServiceImpl implements MediationsConConService {
     /**
      * FirstName、MiddleName、LastNameとCompanyName取得
      * 
-     * @param caseId、platformId API_ユーザデータ取得の引数
+     * @param caseId     API_ユーザデータ取得の引数「案件ID」
+     * @param platformId API_ユーザデータ取得の引数「プラットフォームID」
      * @return list DBから取得の状況
      */
     @Override

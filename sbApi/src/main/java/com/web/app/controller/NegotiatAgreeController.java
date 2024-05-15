@@ -31,13 +31,13 @@ public class NegotiatAgreeController {
   private NegotiatAgreeService negotiatAgreeService;
 
   /**
-     * 
-     * サービスメソッドを呼び出して和解案を更新し、
-     * 更新結果を判断してページに戻る
-     * 
-     * @param updNegotiatCon 更新に使用するログィンユザと和解案idが含まれています
-     * @return Response
-     */
+   * 
+   * サービスメソッドを呼び出して和解案を更新し、
+   * 更新結果を判断してページに戻る
+   * 
+   * @param updNegotiatCon 更新に使用するログィンユザと和解案idが含まれています
+   * @return Response
+   */
   @ApiOperation("和解案確認更新")
   @PostMapping("/updNegotiatCon")
   public Response updNegotiatCon(@RequestBody UpdNegotiatCon updNegotiatCon) {

@@ -47,7 +47,9 @@ public class MediationsConConController {
    * API_調停案テンプレート取得
    * テンプレートマスタから＜調停合意書テンプレート＞を取得する
    * 
-   * @param platformId、languageId API_調停案テンプレート取得の引数
+   * @param platformId   API_調停案テンプレート取得の引数「案件ID」
+   * @param languageId   API_調停案テンプレート取得の引数「言語」
+   * @param templateType API_調停案テンプレート取得の引数「テンプレートの種類」
    * @return mediationsTemplateList 呼び出すData
    */
   @SuppressWarnings("rawtypes")
@@ -68,7 +70,8 @@ public class MediationsConConController {
   /**
    * API_ユーザデータ取得
    * 
-   * @param caseId、platformId API_ユーザデータ取得の引数
+   * @param caseId     API_ユーザデータ取得の引数「案件ID」
+   * @param platformId API_ユーザデータ取得の引数「プラットフォームID」
    * @return mediationsUserDataList 呼び出すData
    */
   @SuppressWarnings("rawtypes")
