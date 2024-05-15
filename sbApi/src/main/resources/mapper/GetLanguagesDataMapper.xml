@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.LanguagesMapper">
+<mapper namespace="com.web.app.mapper.GetLanguagesDataMapper">
 
-    <resultMap id="BaseResultMap" type="com.web.app.domain.Languages">
+    <resultMap id="BaseResultMap" type="com.web.app.domain.Nav.LanguagesData">
             <id property="id" column="id" jdbcType="VARCHAR"/>
             <result property="languageName" column="LanguageName" jdbcType="VARCHAR"/>
     </resultMap>
