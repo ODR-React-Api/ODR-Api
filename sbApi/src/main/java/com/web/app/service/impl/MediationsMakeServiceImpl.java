@@ -18,54 +18,61 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
     @Autowired
     private InsMediationsDataMapper mediationcaseMapper;
 
-    @Override
-    public ArrayList<InsMediationsData> dataSearch(InsMediationsData mediationcase) {
-
-        ArrayList<InsMediationsData> mList = mediationcaseMapper.dataSearch(mediationcase);
-
-        return mList;
-    }
-
-    @Override
-    public CaseMediations mediationDataCount(InsMediationsData mediationcase) {
-
-        CaseMediations mediationCount = mediationcaseMapper.mediationCount(mediationcase);
-
-        return mediationCount;
-    }
-
     @Transactional
     @Override
-    public int insMediationsData2(InsMediationsData insMediationsData) {
+    public int insMediationsData(InsMediationsData insMediationsData) {
+        int a;
+        // 「調停案」にデータが存在するかどうかを判断する（ファイルが添付されていない場合がある）
+        CaseMediations mediationsCount = mediationcaseMapper.mediationCount(insMediationsData);
 
-        CaseMediations caseMediations = new CaseMediations();
-        // id付与
-        UUID uuid = UUID.randomUUID();
-        String id = uuid.toString().replaceAll("-", "");
-        caseMediations.setId(id);
-        // 属性赋予
-        caseMediations.setPlatformId(insMediationsData.getPlatformId());
-        caseMediations.setCaseId(insMediationsData.getCaseId());
-        caseMediations.setExpectResloveTypeValue(insMediationsData.getExpectResloveTypeValue());
-        caseMediations.setPayAmount(insMediationsData.getPayAmount());
+        // 「調停案」データが存在する場合
+        if (mediationsCount != null) {
+            // 「調停案」、「案件-添付ファイル」、「添付ファイル」テーブルを関連付けてデータが存在するかどうかを判断する
+            int dataSearch = mediationcaseMapper.dataSearch(insMediationsData);
+            // 表関連データが存在しない場合
+            if (dataSearch == 0) {
+                // 調停案データ更新API
+                a = 1;
+            } else {
+                // 「案件-添付ファイルリレーション」は、添付ファイルの数に等しいレコード新規登録(insert)で行う
+                // 「添付ファイル」は、添付ファイルの数に等しいレコード新規登録(insert)で行う
+                a = 2;
+            }
+            // 調停案データ更新API
+        } else {
+            // 「調停案」は、レコード新規登録（insert）で行う
+            CaseMediations caseMediations = new CaseMediations();
+            // id付与
+            UUID uuid = UUID.randomUUID();
+            String id = uuid.toString().replaceAll("-", "");
+            caseMediations.setId(id);
+            // 属性赋予
+            caseMediations.setPlatformId(insMediationsData.getPlatformId());
+            caseMediations.setCaseId(insMediationsData.getCaseId());
+            caseMediations.setExpectResloveTypeValue(insMediationsData.getExpectResloveTypeValue());
+            caseMediations.setPayAmount(insMediationsData.getPayAmount());
 
-        //CounterClaimPayment（反訴の支払金額）を設定するための申請の反訴があるかどうかを判断する
-        if (insMediationsData.getCounterclaim()==1) {
-            caseMediations.setCounterClaimPayment(insMediationsData.getCounterClaimPayment());
-        }else{
-            caseMediations.setCounterClaimPayment(1.00);
+            // CounterClaimPayment（反訴の支払金額）を設定するための申請の反訴があるかどうかを判断する
+            if (insMediationsData.getCounterclaim() == 1) {
+                caseMediations.setCounterClaimPayment(insMediationsData.getCounterClaimPayment());
+            } else {
+                caseMediations.setCounterClaimPayment(null);
+            }
+
+            caseMediations.setPaymentEndDate(insMediationsData.getPaymentEndDate());
+            caseMediations.setShipmentPayType(insMediationsData.getShipmentPayType());
+            caseMediations.setSpecialItem(insMediationsData.getSpecialItem());
+            caseMediations.setUserId(insMediationsData.getUserId());
+            caseMediations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
+            caseMediations.setLastModifiedBy(insMediationsData.getLastModifiedBy());
+            // 「調停案」は、レコード新規登録（insert）で行う
+            int MediationcaseInsert = mediationcaseMapper.insMediationsData2(caseMediations);
+
+            a = 3;
+            // 「案件-添付ファイルリレーション」は、添付ファイルの数に等しいレコード新規登録(insert)で行う
+            // 「添付ファイル」は、添付ファイルの数に等しいレコード新規登録(insert)で行う
         }
-
-        caseMediations.setPaymentEndDate(insMediationsData.getPaymentEndDate());
-        caseMediations.setShipmentPayType(insMediationsData.getShipmentPayType());
-        caseMediations.setSpecialItem(insMediationsData.getSpecialItem());
-        caseMediations.setUserId(insMediationsData.getUserId());
-        caseMediations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
-        caseMediations.setLastModifiedBy(insMediationsData.getLastModifiedBy());
-        // 「調停案」は、レコード新規登録（insert）で行う
-        int MediationcaseInsert = mediationcaseMapper.insMediationsData2(caseMediations);
-
-        return MediationcaseInsert;
+        return a;
     }
 
 }

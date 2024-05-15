@@ -13,5 +13,5 @@ public interface InsMediationsDataMapper {
 
     CaseMediations mediationCount(InsMediationsData mediationcase);
 
-    ArrayList<InsMediationsData> dataSearch(InsMediationsData mediationcase);
+    int dataSearch(InsMediationsData mediationcase);
 }

@@ -7,10 +7,6 @@ import com.web.app.domain.mediationsMake.InsMediationsData;
 
 public interface MediationsMakeService {
 
-    ArrayList<InsMediationsData> dataSearch(InsMediationsData mediationcase);
-
-    CaseMediations mediationDataCount (InsMediationsData mediationcase);
-
-    int insMediationsData2(InsMediationsData mediationcase);
+    int insMediationsData(InsMediationsData mediationcase);
 
 }

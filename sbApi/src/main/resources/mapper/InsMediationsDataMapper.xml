@@ -4,11 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.InsMediationsDataMapper">
 
-<select id="dataSearch" resultType="com.web.app.domain.mediationsMake.InsMediationsData">
+<select id="dataSearch" resultType="int">
     SELECT
-        c.CaseId,
-        r.RelatedId,
-        f.id
+        Count(1)
     FROM 
         case_mediations c
     LEFT JOIN
