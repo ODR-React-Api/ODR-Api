@@ -3,16 +3,13 @@ package com.web.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import com.web.app.domain.userLogin.GetPreUserData;
 import com.web.app.domain.Response;
 import com.web.app.service.UserLoginService;
 import com.web.app.tool.AjaxResult;
 import javax.sql.DataSource;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +20,7 @@ import java.util.List;
  * @since 2024/04/18
  * @version 1.0
  */
+
 @CrossOrigin(origins = "*")
 @Api(tags = "会員登録フォーム画面")
 @RestController

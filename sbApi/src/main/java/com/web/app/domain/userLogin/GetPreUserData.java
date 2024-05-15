@@ -1,9 +1,7 @@
 package com.web.app.domain.userLogin;
 
 import io.swagger.annotations.ApiModel;
-
 import java.io.Serializable;
-
 import lombok.Data;
 
 /**

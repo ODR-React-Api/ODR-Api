@@ -1,9 +1,7 @@
 package com.web.app.mapper;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
-
 import com.web.app.domain.userLogin.GetPreUserData;
 
 /**
@@ -13,6 +11,7 @@ import com.web.app.domain.userLogin.GetPreUserData;
  * @since 2024/04/18
  * @version 1.0
  */
+
 @Mapper
 public interface GetPreUserDataMapper {
   GetPreUserData getPreUserDataSearch(String guid, String registerDate);
