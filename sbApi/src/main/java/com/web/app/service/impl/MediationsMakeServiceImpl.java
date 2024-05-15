@@ -1,15 +1,16 @@
 package com.web.app.service.impl;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.mediationsMake.Mediation;
 import com.web.app.domain.mediationsMake.ResultMediation;
@@ -17,9 +18,10 @@ import com.web.app.domain.mediationsMake.SubsidiaryFile;
 import com.web.app.mapper.GetMediationsDataMapper;
 import com.web.app.mapper.SaveMeditonMapper;
 import com.web.app.service.MediationsMakeService;
+import com.web.app.service.UtilService;
 
 /**
- * サービス実装クラス
+ * 調停案作成画面
  * 
  * @author DUC 徐義然
  * @since 2024/05/07
@@ -36,6 +38,10 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
     @Autowired
     private SaveMeditonMapper saveMeditonMapper;
 
+    //utilサービス
+    @Autowired
+    private UtilService utilService; 
+
     /**
      * 
      * API_ID:調停案データ更新
@@ -50,6 +56,111 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
 
     /**
      * 
+     * API_ID:調停案データ更新
+     * 
+     * 処理後のデータをDBに更新する
+     * 
+     * @param resultMediation:更新用調停案データ
+     * @return 調停案データ更新結果
+     * @throws SQLException 
+     */
+    @Override
+    @Transactional
+    public void saveMediton(ResultMediation resultMediation) throws SQLException {
+        //調停案データ更新結果
+        boolean updateFlg = false;
+        //フロントに添付ファイル
+        List<SubsidiaryFile> files = resultMediation.getFiles();
+        //調停案更新
+        updateFlg = saveMeditonMapper.updateMediations(setMediation(resultMediation, null, true)) > 0;
+        //SQL文が更新されない場合は例外をスローし、DBが更新されないようにトランザクションをロールバックさせる
+        if (!updateFlg) {
+            throw new SQLException();
+        }
+        if(files == null || files.isEmpty()){
+            return;
+        }else{
+            Mediation mediation = null;
+            for (SubsidiaryFile file : files) {
+                int deleteFlag = file.getDeleteFlag();
+                switch (deleteFlag) {
+                    //添付ファイルを削除
+                    case 1:
+                        mediation = setMediation(resultMediation, file, false);
+                        updateFlg = saveMeditonMapper.deleteFiles(mediation) > 0 && saveMeditonMapper.deleteFileRelations(mediation) > 0;
+                        if (!updateFlg) {
+                            throw new SQLException();
+                        }
+                        break;
+                    //追加添付ファイル
+                    case 2:
+                        mediation = setMediation(resultMediation, file, false);
+                        updateFlg = saveMeditonMapper.addFiles(mediation) > 0 && saveMeditonMapper.addFileRelations(mediation) > 0;
+                        if (!updateFlg) {
+                            throw new SQLException();
+                        }
+                        break;
+                    //添付ファイルは変更されていません
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+
+
+    /**
+     * 
+     * API_ID:調停案データ更新
+     * 
+     * 取得したデータをDBで使用できるエンティティークラスに変換する
+     * 
+     * @param resultMediation:更新用調停案データ
+     * @param files:更新が必要なファイル
+     * @return DB更新用データ
+     */
+    private Mediation setMediation(ResultMediation resultMediation,SubsidiaryFile file,boolean isMediation){
+        Mediation mediation = new Mediation();
+        //時間フォーマットの変換
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        String nowDate = sdf.format(System.currentTimeMillis());
+        mediation.setLastModifiedDate(nowDate);
+        mediation.setPlatformId(resultMediation.getPlatformId());
+        mediation.setUserId(resultMediation.getUserId());
+        if (isMediation) {
+            mediation.setExpectResloveTypeValue(
+                StringUtils.join(resultMediation.getExpectResloveTypeValue(),",")
+            );
+            mediation.setOtherContext(resultMediation.getOtherContext());
+            mediation.setPayAmount(resultMediation.getPayAmount());
+            mediation.setCounterClaimPayment(resultMediation.getCounterClaimPayment());
+            mediation.setPaymentEndDate(sdf.format(resultMediation.getPaymentEndDate()));
+            mediation.setShipmentPayType(resultMediation.getShipmentPayType());
+            mediation.setSpecialItem(resultMediation.getSpecialItem());
+            mediation.setMediationId(resultMediation.getMediationId());
+            return mediation;
+        }
+        if(file.getDeleteFlag() == 1){
+            mediation.setFileId(file.getFileId());
+        }else{
+            mediation.setFileId(utilService.GetGuid());
+            mediation.setCaseId(resultMediation.getCaseId());
+            mediation.setFileName(file.getFileName());
+            mediation.setFileExtension(file.getFileExtension());
+            mediation.setFileUrl(file.getFileUrl());
+            mediation.setFileSize(file.getFileSize());
+            mediation.setFileRelationId(utilService.GetGuid());
+            mediation.setMediationId(resultMediation.getMediationId());
+        }
+        return mediation;
+    }
+
+
+
+
+    /**
+     * 
      * API_ID:調停案データ取得
      * 
      * DBを検索して処理後のデータをコントローラに渡す
@@ -58,7 +169,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
      * @return DB検索result
      */
     @Override
-    public ResultMediation getResultMediation(ResultMediation resultMediation){
+    public ResultMediation getMediationsData(ResultMediation resultMediation){
         //DBデータ取得
         List<Mediation> mediation = getMediationsDataMapper.selectMediationsData(resultMediation.getCaseId(), resultMediation.getPlatformId());
         if (mediation != null && !mediation.isEmpty()) {
@@ -146,7 +257,6 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                 resultMediation.setUserId(next.getUserId());
             }
             count++;
-
         }
         resultMediation.setFiles(files);
         return resultMediation;

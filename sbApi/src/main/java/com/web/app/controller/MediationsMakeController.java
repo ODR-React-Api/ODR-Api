@@ -1,17 +1,16 @@
 package com.web.app.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.web.app.domain.Response;
 import com.web.app.domain.mediationsMake.ResultMediation;
-import com.web.app.domain.mediationsMake.SaveMeditonData;
 import com.web.app.service.MediationsMakeService;
 import com.web.app.tool.AjaxResult;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -50,7 +49,7 @@ public class MediationsMakeController {
     public ResultMediation returnMediationsDetails(@RequestBody ResultMediation resultMediation){
         try {
             //DBデータ取得
-            resultMediation = mediationsMakeService.getResultMediation(resultMediation);
+            resultMediation = mediationsMakeService.getMediationsData(resultMediation);
             return resultMediation;
         } catch (Exception e) {
             AjaxResult.fatal("取得に失敗しました!", e);
@@ -68,25 +67,21 @@ public class MediationsMakeController {
      */
     @ApiOperation("調停案データ更新")
     @PostMapping("/saveMediton")
-    public Response UpdateMediton(@RequestBody SaveMeditonData saveMeditonData){
-        
-        if (mediationsMakeService.isExistMediations(saveMeditonData.getMediationId()) != 0) {
+    public Response UpdateMediton(@RequestBody ResultMediation resultMediation, HttpServletRequest request,HttpServletResponse response){
+        if (mediationsMakeService.isExistMediations(resultMediation.getMediationId()) != 0) {
             try {
-                if (1 != 0) {
-                    System.out.println("====================");
-                    System.out.println("====和解案已更新!=====");
-                    return AjaxResult.success("和解案已更新!");
-                }
-                System.out.println("====================");
-                System.out.println("====和解案未更新!=====");
-                return AjaxResult.success("和解案未更新!");
+                mediationsMakeService.saveMediton(resultMediation);
+                return AjaxResult.success("調停案が更新されました!");
             } catch (Exception e) {
-                System.out.println("====================");
-                System.out.println("====和解案未更新!=====");
-                AjaxResult.fatal("更新失败!", e);
+                AjaxResult.fatal("更新に失敗しました!", e);
                 return null;
             }
         }
-        return AjaxResult.success("请添加和解案!");
+        try {
+            request.getRequestDispatcher("/mediationsMake/MediationcaseInsert").forward(request, response);
+            return AjaxResult.success("調停案を追加してください!");
+        } catch (Exception e) {
+            return AjaxResult.success("調停案を追加してください!");
+        }
     }
 }

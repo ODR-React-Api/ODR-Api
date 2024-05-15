@@ -1,7 +1,6 @@
 package com.web.app.domain.mediationsMake;
 
 import java.io.Serializable;
-
 import lombok.Data;
 
 /**
@@ -15,6 +14,8 @@ import lombok.Data;
 public class Mediation implements Serializable {
     //バッファリング
     private static final long serialVersionUID = 1L;
+    //調停案id
+    private String mediationId;
     //案件ID
     private String caseId;
     //プラットフォームID
@@ -37,10 +38,22 @@ public class Mediation implements Serializable {
     private String agreementDate;
     //特記事項
     private String specialItem;
+    //更新日
+    private String lastModifiedDate;
     //提出ユーザ
     private String userId;
+    //ファイルid
+    private String fileId;
     //ファイル名
     private String fileName;
+    //ファイル拡張子
+    private String fileExtension;
     //ファイルURL
     private String fileUrl;
+    //ファイルサイズ
+    private String fileSize;
+    //案件-添付ファイルリレーションid
+    private String fileRelationId;
+    //ファイル削除フラグ
+    private int deleteFlag;
 }
