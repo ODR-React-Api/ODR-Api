@@ -5,19 +5,19 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
-@ApiModel // 声明当前对象是用来封装数据的对象
+@ApiModel
 @Data
 public class GetFileInfo implements Serializable {
     // 調停人情報開示フラグ
-    private Integer mediatorDisclosureFlag;
+    private Integer MediatorDisclosureFlag;
     // 申立て人
-    private String petitionUserId;
+    private String PetitionUserId;
     // 相手方メール
-    private String traderUserEmail;
+    private String TraderUserEmail;
     // 調停人
-    private String mediatorUserEmail;
+    private String MediatorUserEmail;
     //立場フラグ
-    private Integer positionFlg;
+    private Integer PositionFlg;
 
     private static final long serialVersionUID = 1L;
     

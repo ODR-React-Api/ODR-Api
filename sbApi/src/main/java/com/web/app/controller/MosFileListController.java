@@ -1,7 +1,6 @@
 package com.web.app.controller;
 
 import java.util.List;
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +16,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * API_ ログインユーザのロールと開示情報取得
- * API_案件添付ファイル取得
+ * S7_ 申立てファイル一覧画面
+ * Controller層
+ * MosFileListController
  * 
  * @author DUC 閆文静
  * @since 2024/04/25
@@ -28,9 +28,6 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/MosFileList")
 public class MosFileListController {
-
-    @Autowired
-    DataSource dataSource;
 
     @Autowired
     private MosFileListService mosFileListService;
@@ -82,7 +79,6 @@ public class MosFileListController {
       try {
           List<CaseFileInfo> caseFileInfoList = mosFileListService.getCaseFileInfo(caseId, id, positionFlg,
               mediatorDisclosureFlag);
-          System.out.println(caseId + "##" + id + "##" + positionFlg + "##" + mediatorDisclosureFlag);
           return caseFileInfoList;
       } catch (Exception e) {
           AjaxResult.fatal("案件添付ファイル取得失败!", e);

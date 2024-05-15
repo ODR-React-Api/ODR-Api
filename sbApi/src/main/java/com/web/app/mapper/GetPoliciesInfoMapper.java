@@ -12,8 +12,6 @@ import com.web.app.domain.PoliciesInfo;
  */
 @Mapper
 public interface GetPoliciesInfoMapper {
-    PoliciesInfo selectPoliciesInfo();
-
-    PoliciesInfo selectPrivacyPolicyInfo();
-    
+    // 利用規約情報取得
+    PoliciesInfo selectPoliciesInfo();  
 }

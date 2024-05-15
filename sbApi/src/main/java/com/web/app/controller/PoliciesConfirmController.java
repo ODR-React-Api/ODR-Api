@@ -5,13 +5,13 @@ import com.web.app.service.PoliciesConfirmService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * API_利用規約情報取得
+ * S1_利用規約確認画面
+ * Controller層
+ * PoliciesConfirmController
  * 
  * @author DUC 閆文静
  * @since 2024/04/19
@@ -23,17 +23,20 @@ import org.springframework.web.bind.annotation.*;
 public class PoliciesConfirmController {
 
     @Autowired
-    DataSource dataSource;
-
-    @Autowired
     private PoliciesConfirmService policiesConfirmService;
 
+    /**
+     * 利用規約情報取得
+     *
+     * @return 利用規約情報
+     * @throws Exception 利用規約情報取得失败!
+     */
     @ApiOperation("利用規約情報取得")
     @PostMapping("/GetPoliciesInfo")
-    public List<PoliciesInfo> getPoliciesInfo() {
+    public PoliciesInfo getPoliciesInfo() {
         try {
-            List<PoliciesInfo> policiesInfoList = policiesConfirmService.getPoliciesInfoList();
-            return policiesInfoList;
+            PoliciesInfo policiesInfo = policiesConfirmService.getPoliciesInfo();
+            return policiesInfo;
         } catch (Exception e) {
             AjaxResult.fatal("利用規約情報取得失败!", e);
             return null;

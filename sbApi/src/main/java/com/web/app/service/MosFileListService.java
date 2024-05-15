@@ -5,8 +5,9 @@ import com.web.app.domain.CaseFileInfo;
 import com.web.app.domain.GetFileInfo;
 
 /**
- * API_ ログインユーザのロールと開示情報取得
- * API_案件添付ファイル取得
+ * S7_申立てファイル一覧画面
+ * Service層
+ * MosFileListService
  * 
  * @author DUC 閆文静
  * @since 2024/04/25

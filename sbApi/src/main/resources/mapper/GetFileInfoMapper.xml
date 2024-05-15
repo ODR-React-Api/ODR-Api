@@ -4,19 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetFileInfoMapper">
 
-<resultMap id="loginUserRoleOpenInfoMap" type="com.web.app.domain.GetFileInfo">
-    <result property="mediatorDisclosureFlag" column="MediatorDisclosureFlag" jdbcType="INTEGER"/>
-    <result property="petitionUserId" column="PetitionUserId" jdbcType="VARCHAR"/>
-    <result property="traderUserEmail" column="TraderUserEmail" jdbcType="VARCHAR"/>
-    <result property="mediatorUserEmail" column="MediatorUserEmail" jdbcType="VARCHAR"/>
-</resultMap>
-<resultMap id="caseFileInfoMap" type="com.web.app.domain.CaseFileInfo">
-    <result property="fileName" column="FileName" jdbcType="VARCHAR"/>
-    <result property="fileUrl" column="FileUrl" jdbcType="VARCHAR"/>
-    <result property="registerUserId" column="RegisterUserId" jdbcType="VARCHAR"/>
-    <result property="registerDate" column="RegisterDate" jdbcType="VARCHAR"/>
-</resultMap>
-<select id="selectLoginUserRoleOpenInfo" resultMap="loginUserRoleOpenInfoMap">
+<select id="selectLoginUserRoleOpenInfo" resultMap="com.web.app.domain.GetFileInfo">
     SELECT
         MediatorDisclosureFlag, 
         PetitionUserId,
@@ -33,7 +21,7 @@
         AND t1.DeleteFlag = '0'
         AND t2.DeleteFlag = '0';
 </select>
-<select id="selectCaseFileInfoList" resultMap="caseFileInfoMap">
+<select id="selectCaseFileInfoList" resultMap="com.web.app.domain.CaseFileInfo">
     SELECT
         FileName,
         FileUrl,

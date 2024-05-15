@@ -11,8 +11,9 @@ import com.web.app.mapper.GetFileInfoMapper;
 import com.web.app.service.MosFileListService;
 
 /**
- * API_ ログインユーザのロールと開示情報取得
- * API_案件添付ファイル取得
+ * S7_申立てファイル一覧画面
+ * Service層実現類
+ * MosFileListServiceImpl
  * 
  * @author DUC 閆文静
  * @since 2024/04/25
@@ -37,12 +38,8 @@ public class MosFileListServiceImpl implements MosFileListService {
     public GetFileInfo getLoginUserRoleOpenInfo(String caseId, String id, String email) {
         GetFileInfo loginUserRoleOpenInfo = new GetFileInfo();
         GetFileInfoResult loginUserRoleOpenInfoResult = new GetFileInfoResult();
-        try {
-            // ログインユーザのロールと開示情報取得API
-            loginUserRoleOpenInfo = loginUserRoleOpenInfoMapper.selectLoginUserRoleOpenInfo(caseId);
-        } catch (Exception e) {
-            System.out.println("ログインユーザのロールと開示情報取得失敗");
-        }
+        // ログインユーザのロールと開示情報取得API
+        loginUserRoleOpenInfo = loginUserRoleOpenInfoMapper.selectLoginUserRoleOpenInfo(caseId);
 
         // ログインユーザIdがPetitionUserIdと一致すれば、申立人とする
         if (loginUserRoleOpenInfo.getPetitionUserId().equals(id)) {
@@ -75,14 +72,11 @@ public class MosFileListServiceImpl implements MosFileListService {
     public List<CaseFileInfo> getCaseFileInfo(String caseId, String id, Integer positionFlg,
             Integer mediatorDisclosureFlag) {
         List<CaseFileInfo> caseFileInfoList = new ArrayList<>();
-        try {
-            // 案件添付ファイル取得
-            caseFileInfoList = loginUserRoleOpenInfoMapper.selectCaseFileInfoList(caseId, id, positionFlg,
-                    mediatorDisclosureFlag);
 
-        } catch (Exception e) {
-            System.out.println("エラー画面(404)へ遷移");
-        }
+        // 案件添付ファイル取得
+        caseFileInfoList = loginUserRoleOpenInfoMapper.selectCaseFileInfoList(caseId, id, positionFlg,
+                mediatorDisclosureFlag);
+
         return caseFileInfoList;
     }
 }
