@@ -41,7 +41,7 @@ public class ReplyTrsgController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("反訴取り下げAPI")
     @PostMapping("/ReplyWithdraw")
-    public Response ReplyWithdraw (@RequestBody ReplyWithdraw replyWithdraw) {
+    public Response ReplyWithdraw(@RequestBody ReplyWithdraw replyWithdraw) {
         try {
             int num = replyWithdrawService.replyWithdraw(replyWithdraw);
             if(num == 1) {

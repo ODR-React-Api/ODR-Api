@@ -4,8 +4,15 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.web.app.domain.NamAccept.UpdMediatorHistories;
 
+/**
+ * 調停人変更履歴変更Mapper
+ * 
+ * @author DUC 耿浩哲
+ * @since 2024/05/08
+ * @version 1.0
+ */
 @Mapper
-public interface NamAcceptMapper {
+public interface UpdMediatorHistoriesMapper {
 
     int UpdMediatorHistories(UpdMediatorHistories updMediatorHistories);
 

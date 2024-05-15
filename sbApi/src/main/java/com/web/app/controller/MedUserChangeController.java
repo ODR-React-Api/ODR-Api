@@ -42,7 +42,7 @@ public class MedUserChangeController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("ファイル関連情報更新API")
     @PostMapping("/insertFileInfo")
-    public Response insertFileInfo (@RequestBody InsertFileInfo insertFileInfo) {
+    public Response insertFileInfo(@RequestBody InsertFileInfo insertFileInfo) {
         try {
             int insertfileInfoNum = medUserChangeService.insertFileInfo(insertFileInfo);
             if(insertfileInfoNum == 1) {
