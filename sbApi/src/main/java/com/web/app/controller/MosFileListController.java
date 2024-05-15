@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.GetFileInfo;
+import com.web.app.domain.Response;
 import com.web.app.domain.CaseFileInfo;
 import com.web.app.service.MosFileListService;
 import com.web.app.tool.AjaxResult;
@@ -49,12 +50,13 @@ public class MosFileListController {
    * @return 取得したログインユーザのロールと開示情報
    * @throws Exception ログインユーザのロールと開示情報取得失败!
    */
+  @SuppressWarnings("rawtypes")
   @ApiOperation("ログインユーザのロールと開示情報取得")
   @GetMapping("/loginUser")
-  public GetFileInfo selectLoginUserRoleOpenInfo(String caseId, String id, String email) {
+  public Response selectLoginUserRoleOpenInfo(String caseId, String id, String email) {
       try {
           loginUserRoleOpenInfo = mosFileListService.getLoginUserRoleOpenInfo(caseId, id, email);
-          return loginUserRoleOpenInfo;
+          return AjaxResult.success("ログインユーザのロールと開示情報取得成功!", loginUserRoleOpenInfo);
       } catch (Exception e) {
           AjaxResult.fatal("ログインユーザのロールと開示情報取得失败!", e);
           return null;
@@ -69,9 +71,10 @@ public class MosFileListController {
    * @return 取得した案件添付ファイル
    * @throws Exception 案件添付ファイル取得失败!
    */
+  @SuppressWarnings("rawtypes")
   @ApiOperation("案件添付ファイル取得")
   @PostMapping("/getFileInfo")
-  public List<CaseFileInfo> getFileInfo(String caseId, String id) {
+  public Response getFileInfo(String caseId, String id) {
       // 立場フラグ
       Integer positionFlg = loginUserRoleOpenInfo.getPositionFlg();
       // 調停人情報開示フラグ
@@ -79,7 +82,7 @@ public class MosFileListController {
       try {
           List<CaseFileInfo> caseFileInfoList = mosFileListService.getCaseFileInfo(caseId, id, positionFlg,
               mediatorDisclosureFlag);
-          return caseFileInfoList;
+          return AjaxResult.success("案件添付ファイル取得成功!", caseFileInfoList);
       } catch (Exception e) {
           AjaxResult.fatal("案件添付ファイル取得失败!", e);
           return null;

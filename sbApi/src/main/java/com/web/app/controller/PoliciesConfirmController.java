@@ -1,6 +1,7 @@
 package com.web.app.controller;
 
 import com.web.app.domain.PoliciesInfo;
+import com.web.app.domain.Response;
 import com.web.app.service.PoliciesConfirmService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
@@ -31,12 +32,13 @@ public class PoliciesConfirmController {
      * @return 利用規約情報
      * @throws Exception 利用規約情報取得失败!
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("利用規約情報取得")
     @PostMapping("/GetPoliciesInfo")
-    public PoliciesInfo getPoliciesInfo() {
+    public Response getPoliciesInfo() {
         try {
             PoliciesInfo policiesInfo = policiesConfirmService.getPoliciesInfo();
-            return policiesInfo;
+            return AjaxResult.success("利用規約情報取得成功!", policiesInfo);
         } catch (Exception e) {
             AjaxResult.fatal("利用規約情報取得失败!", e);
             return null;
