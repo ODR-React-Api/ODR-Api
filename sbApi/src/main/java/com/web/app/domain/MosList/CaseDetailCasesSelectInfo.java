@@ -5,6 +5,13 @@ import java.util.Date;
 
 import lombok.Data;
 
+/**
+ * テーブル「cases」、「case_negotiations」と「case_mediations」から取得した
+ * 
+ * @author DUC 朱暁芳
+ * @since 2024/04/17
+ * @version 1.0
+ */
 @Data
 public class CaseDetailCasesSelectInfo implements Serializable {
     private static final long serialVersionUID = 1L;

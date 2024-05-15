@@ -5,6 +5,13 @@ import java.util.Date;
 
 import lombok.Data;
 
+/**
+ * API_一覧取得に返されるパラメータ
+ * 
+ * @author DUC 朱暁芳
+ * @since 2024/04/17
+ * @version 1.0
+ */
 @Data
 public class ReturnResult implements Serializable {
     private static final long serialVersionUID = 1L;

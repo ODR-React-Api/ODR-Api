@@ -5,6 +5,13 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+/**
+ * API_一覧取得より渡された引数
+ * 
+ * @author DUC 朱暁芳
+ * @since 2024/04/17
+ * @version 1.0
+ */
 @Data
 @ApiModel
 public class CaseIdListInfo implements Serializable {
