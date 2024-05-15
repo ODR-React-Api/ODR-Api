@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.GetDraftSavingMapper">
-    <resultMap id="DraftSavingDataMap" type="com.web.app.domain.DraftSavingDate">
+<mapper namespace="com.web.app.mapper.GetSaveDataInfoMapper">
+    <resultMap id="DraftSavingDataMap" type="com.web.app.domain.MosList.DraftSavingDate">
         <result property="petitionUserId" column="PetitionUserId" jdbcType="VARCHAR"/>
         <result property="casePetition" column="CasePetition" jdbcType="VARCHAR"/>
         <result property="petitionUserInfoEmail" column="PetitionUserInfo_Email" jdbcType="VARCHAR"/>
@@ -24,7 +24,7 @@
         <result property="expectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR"/>
         <result property="other" column="Other" jdbcType="VARCHAR"/>
     </resultMap>
-    <select id="getDraftSavingData" resultMap="DraftSavingDataMap">
+    <select id="getSaveDataInfo" resultMap="DraftSavingDataMap">
         SELECT
             relations.PetitionUserId,
             relations.CasePetition,

@@ -89,5 +89,24 @@ public class MosListController {
         return returnResult;
     }
 
+    /**
+     * テーブルより下書き保存のデータを取得する。
+     *
+     * @param uid ユーザID
+     * @return 申立て登録下書き保存データ有無
+     */
+
+    @PostMapping("/GetSaveDataInfo")
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("申立て登録下書き保存データ取得")
+    public Response getSaveDataInfo(String uid) {
+        // サービスの呼び出し
+        Integer res = mosListService.getSaveDataInfo(uid);
+        if (res != null) {
+            return Response.success(res);
+        }
+        return Response.error("失敗");
+    }
+
 
 }

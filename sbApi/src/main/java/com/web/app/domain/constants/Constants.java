@@ -148,7 +148,8 @@ public class Constants {
     public static final String STR_CASES_CASESTATUS_7 = "7";
     public static final String STR_CASES_CASESTATUS_0 = "0";
     public static final int REGISTERUSER_SENDMAIL_CONTROLTYPE = 2;
-
     public static final String SPACE_STRING = " ";
+    public static final int REGISTRATION_REGISTRATION = 1;
+    public static final int REGISTRATION_REGISTRATION_UNREGISTERED = 0;
 
 }

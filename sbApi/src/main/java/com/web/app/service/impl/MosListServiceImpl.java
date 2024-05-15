@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.web.app.domain.MosList.DraftSavingDate;
 import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.domain.MosList.SearchDetail;
 import com.web.app.domain.MosList.SelectCondition;
 import com.web.app.domain.MosList.SelectUserInfoForCase;
 import com.web.app.domain.constants.Constants;
-import com.web.app.mapper.GetFuzzyQueryListInfoMapper;
 import com.web.app.mapper.FuzzyQueryDetailCaseMapper;
+import com.web.app.mapper.GetFuzzyQueryListInfoMapper;
+import com.web.app.mapper.GetSaveDataInfoMapper;
 import com.web.app.mapper.SearchDetailCaseMapper;
 import com.web.app.service.MosListService;
 
@@ -35,11 +37,15 @@ public class MosListServiceImpl implements MosListService {
 
     // API_曖昧検索用一覧取得
     @Autowired
-    private GetFuzzyQueryListInfoMapper queryMapper;
+    private GetFuzzyQueryListInfoMapper getFuzzyQueryListInfoMapper;
 
     // API_曖昧検索用ケース詳細取得
     @Autowired
-    private FuzzyQueryDetailCaseMapper queryDetailCaseMapper;
+    private FuzzyQueryDetailCaseMapper fuzzyQueryDetailCaseMapper;
+
+    // API_申立て登録下書き保存データ取得
+    @Autowired
+    private GetSaveDataInfoMapper getSaveDataInfoMapper;
 
     /**
      * API「検索用一覧取得」より渡された引数によって、DBからケース詳細を取得する
@@ -246,10 +252,10 @@ public class MosListServiceImpl implements MosListService {
         List<ReturnResult> results = new ArrayList<>();
 
         // ユーザ情報を取得
-        String email = queryMapper.getUserInfo(uid);
+        String email = getFuzzyQueryListInfoMapper.getUserInfo(uid);
 
         // ケースの取得
-        List<SelectUserInfoForCase> selectUserInfoForCasesFromPetiton = queryMapper
+        List<SelectUserInfoForCase> selectUserInfoForCasesFromPetiton = getFuzzyQueryListInfoMapper
                 .selectUserInfoForCasesFromPetiton(email);
 
         // ユーザが申立人とするケースの取得
@@ -264,7 +270,7 @@ public class MosListServiceImpl implements MosListService {
             }
         }
 
-        List<SelectUserInfoForCase> selectUserInfoForCasesFromTrader = queryMapper
+        List<SelectUserInfoForCase> selectUserInfoForCasesFromTrader = getFuzzyQueryListInfoMapper
                 .selectUserInfoForCasesFromTrader(email);
 
         // ユーザが相手方とするケースの取得
@@ -280,7 +286,7 @@ public class MosListServiceImpl implements MosListService {
             }
         }
 
-        List<SelectUserInfoForCase> selectUserInfoForCasesFromMediator = queryMapper
+        List<SelectUserInfoForCase> selectUserInfoForCasesFromMediator = getFuzzyQueryListInfoMapper
                 .selectUserInfoForCasesFromMediator(email);
 
         // ユーザが調停人とするケースの取得
@@ -314,7 +320,7 @@ public class MosListServiceImpl implements MosListService {
         // データを返すオブジェクトを作成する
         ReturnResult returnResult = new ReturnResult();
         // 申立て番号、件名、登録日付、対応期日、状態、要対応有無の取得
-        SearchDetail queryDetailCase = queryDetailCaseMapper.getQueryDetailCase(caseId, queryString);
+        SearchDetail queryDetailCase = fuzzyQueryDetailCaseMapper.getQueryDetailCase(caseId, queryString);
         if (queryDetailCase != null) {
             // データアセンブリ
             returnResult.setPetitionDate(queryDetailCase.getPetitonDate());
@@ -447,14 +453,14 @@ public class MosListServiceImpl implements MosListService {
             if (positionFlag == Constants.POSITIONFLAG_MEDIATOR) {
                 // ステージ：6 調停人指名中(未受理の場合)
                 if (Constants.STR_CASES_CASESTATUS_6.equals(queryDetailCase.getCaseStatus())) {
-                    if (queryDetailCaseMapper.getMediatorDisclosureFlag(caseId) == Constants.NUM_1) {
-                        notReadedCnt = queryDetailCaseMapper.getMsgCountByFlag(caseId, petitionUserId);
+                    if (fuzzyQueryDetailCaseMapper.getMediatorDisclosureFlag(caseId) == Constants.NUM_1) {
+                        notReadedCnt = fuzzyQueryDetailCaseMapper.getMsgCountByFlag(caseId, petitionUserId);
                     } else {
-                        notReadedCnt = queryDetailCaseMapper.getMsgCountByFlagNo(caseId, petitionUserId);
+                        notReadedCnt = fuzzyQueryDetailCaseMapper.getMsgCountByFlagNo(caseId, petitionUserId);
                     }
                 }
             } else {
-                notReadedCnt = queryDetailCaseMapper.getMsgCountByFlag(caseId, petitionUserId);
+                notReadedCnt = fuzzyQueryDetailCaseMapper.getMsgCountByFlag(caseId, petitionUserId);
             }
 
             if (notReadedCnt > Constants.NUM_0) {
@@ -469,4 +475,44 @@ public class MosListServiceImpl implements MosListService {
         return null;
     }
 
+    /**
+     * テーブルより下書き保存のデータを取得する。
+     *
+     * @param uid ユーザID
+     * @return 申立て登録下書き保存データ有無
+     */
+
+    @Override
+    public Integer getSaveDataInfo(String uid) {
+        
+        // 関連ユーザの下書き保存のデータを取得する
+        DraftSavingDate draftSavingDate = getSaveDataInfoMapper.getSaveDataInfo(uid);
+        
+        // 必須項目が存在するかどうかを判断する
+        if (draftSavingDate != null && requiredItemIsNull(draftSavingDate)) {
+            return Constants.REGISTRATION_REGISTRATION;
+        } else {
+            return Constants.REGISTRATION_REGISTRATION_UNREGISTERED;
+        }
+    }
+
+    /**
+     * 申立て登録下書き保存データ有無の判定
+     *
+     * @param draftSavingDate サービスの呼び出し
+     * @return 申立て登録下書き保存データ有無
+     */
+    private boolean requiredItemIsNull(DraftSavingDate draftSavingDate) {
+        if (draftSavingDate.getTraderUserEmail() != null
+                && draftSavingDate.getProductName() != null
+                && draftSavingDate.getBoughtDate() != null
+                && draftSavingDate.getPrice() != null
+                && draftSavingDate.getPetitionTypeValue() != null
+                && draftSavingDate.getPetitionContext() != null
+                && draftSavingDate.getExpectResloveTypeValue() != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

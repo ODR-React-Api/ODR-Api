@@ -3,29 +3,24 @@ package com.web.app.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.domain.DraftSavingDate;
-import com.web.app.domain.DraftSavingReturn;
-import com.web.app.mapper.GetDraftSavingMapper;
+import com.web.app.domain.MosList.DraftSavingDate;
+import com.web.app.mapper.GetSaveDataInfoMapper;
 import com.web.app.service.GetDraftSavingService;
 
 @Service
 public class GetDraftSavingServiceImpl implements GetDraftSavingService {
 
     @Autowired
-    private GetDraftSavingMapper getDraftSavingMapper;
+    private GetSaveDataInfoMapper getDraftSavingMapper;
 
     @Override
-    public DraftSavingReturn getgetDraftSaving(String uid) {
-        DraftSavingReturn draftSavingReturn = new DraftSavingReturn();
-        DraftSavingDate draftSavingDate = getDraftSavingMapper.getDraftSavingData(uid);
-        draftSavingReturn.setDraftSavingDate(draftSavingDate);
+    public Integer getgetDraftSaving(String uid) {
+        DraftSavingDate draftSavingDate = getDraftSavingMapper.getSaveDataInfo(uid);
         if (draftSavingDate != null && requiredItemIsNull(draftSavingDate)) {
-            draftSavingReturn.setDraftSavingFlag(1);
+            return 1;
         } else {
-            draftSavingReturn.setDraftSavingFlag(0);
+            return 0;
         }
-
-        return draftSavingReturn;
     }
 
     private boolean requiredItemIsNull(DraftSavingDate draftSavingDate) {

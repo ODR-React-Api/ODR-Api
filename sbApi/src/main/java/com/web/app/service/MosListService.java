@@ -40,4 +40,12 @@ public interface MosListService {
      * @return 取得されたケース情報リスト
      */
     public ReturnResult getFuzzyQueryDetailCase(String caseId, String petitionUserId, Integer positionFlag, String queryString);
+
+    /**
+     * テーブルより下書き保存のデータを取得する。
+     *
+     * @param uid ユーザID
+     * @return 申立て登録下書き保存データ有無
+     */
+    public Integer getSaveDataInfo(String uid);
 }
