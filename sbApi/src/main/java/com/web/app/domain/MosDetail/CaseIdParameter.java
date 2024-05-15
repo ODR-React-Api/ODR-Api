@@ -1,12 +1,11 @@
 package com.web.app.domain.MosDetail;
 
 import java.io.Serializable;
-
 import lombok.Data;
 
 /**
  * S04_申立て概要画面
- * Dao层
+ * Dao層
  * CaseIdParameter
  * 引数: 渡し項目.CaseId
  * 

@@ -1,13 +1,12 @@
 package com.web.app.domain.MosDetail;
 
 import java.io.Serializable;
-
 import lombok.Data;
 
 /**
  * S04_申立て概要画面
  * API_案件状態取得
- * Dao层
+ * Dao層
  * CaseInfo
  * API「案件状態取得」を呼び出すData
  * 

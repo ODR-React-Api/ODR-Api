@@ -1,13 +1,12 @@
 package com.web.app.domain.MosDetail;
 
 import java.io.Serializable;
-
 import lombok.Data;
 
 /**
  * S04_申立て概要画面
  * API_チュートリアル表示制御変更
- * Dao层
+ * Dao層
  * UpdShowTuritorParameter
  * API_チュートリアル表示制御変更の引数
  * 

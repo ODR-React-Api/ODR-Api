@@ -2,13 +2,12 @@ package com.web.app.domain.MosDetail;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import lombok.Data;
 
 /**
  * S04_申立て概要画面
  * API_案件状態取得
- * Dao层
+ * Dao層
  * CasesData
  * テーブル名：cases案件, case_relations案件別個人情報リレーション, case_negotiations和解案,
  * case_mediations調停案

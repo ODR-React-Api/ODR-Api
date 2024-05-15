@@ -2,15 +2,13 @@ package com.web.app.domain.MosDetail;
 
 import java.io.Serializable;
 import java.util.List;
-
 import com.web.app.domain.Entity.Files;
-
 import lombok.Data;
 
 /**
  * S04_申立て概要画面
  * API_和解内容取得
- * Dao层
+ * Dao層
  * GetNegotiationsData
  * API「和解内容取得」を呼び出すData
  * 
