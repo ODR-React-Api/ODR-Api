@@ -7,7 +7,7 @@ import com.web.app.domain.MosDetail.CaseNegotiationsData;
 
 /**
  * S04_申立て概要画面
- * Service层
+ * Service層
  * MosDetailService
  * 
  * @author DUC 張明慧

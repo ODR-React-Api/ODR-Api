@@ -5,10 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.web.app.domain.Entity.CaseMediations;
 import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.Entity.Files;
@@ -28,7 +26,7 @@ import com.web.app.service.MosDetailService;
 
 /**
  * S04_申立て概要画面
- * Service层实现类
+ * Service層実装クラス
  * MosDetailServiceImpl
  * 
  * @author DUC 張明慧
@@ -127,16 +125,12 @@ public class MosDetailServiceImpl implements MosDetailService {
             if (caseNegotiations.getCaseId() != null) {
                 // 和解案 添付資料の取得
                 List<Files> files = getCaseNegotiationsDataMapper.getFiles(caseNegotiations.getCaseId());
-                if (files != null) {
-                    // 添付資料リストの設定
-                    caseNegotiationsData.setFile(files);
-                }
+                // 添付資料リストの設定
+                caseNegotiationsData.setFile(files);
             }
-
-            return caseNegotiationsData;
-        } else {
-            return null;
         }
+
+        return caseNegotiationsData;
     }
 
     /**
@@ -158,16 +152,12 @@ public class MosDetailServiceImpl implements MosDetailService {
             if (caseMediations.getCaseId() != null) {
                 // 調停案 添付資料の取得
                 List<Files> files = getCaseMediationsDataMapper.getFiles(caseMediations.getCaseId());
-                if (files != null) {
-                    // 添付資料リストの設定
-                    caseMediationsData.setFile(files);
-                }
+                // 添付資料リストの設定
+                caseMediationsData.setFile(files);
             }
-
-            return caseMediationsData;
-        } else {
-            return null;
         }
+
+        return caseMediationsData;
     }
 
     /**
@@ -348,25 +338,21 @@ public class MosDetailServiceImpl implements MosDetailService {
         // 期日用項目の設定
         if (replyEndDate != null) {
             caseInfo.setReplyEndDate(stringToStringFormat(dateToString(replyEndDate)));
-            ;
         }
         if (counterclaimEndDate != null) {
             caseInfo.setCounterclaimEndDate(stringToStringFormat(dateToString(counterclaimEndDate)));
-            ;
         }
         if (cancelDate != null) {
             caseInfo.setCancelDate(stringToStringFormat(dateToString(cancelDate)));
         }
         if (resolutionDate != null) {
             caseInfo.setResolutionDate(stringToStringFormat(dateToString(resolutionDate)));
-            ;
         }
         if (negotiationEndDate != null) {
             caseInfo.setNegotiationEndDate(stringToStringFormat(dateToString(negotiationEndDate)));
         }
         if (mediationEndDate != null) {
             caseInfo.setMediationEndDate(stringToStringFormat(dateToString(mediationEndDate)));
-            ;
         }
 
         return caseInfo;
@@ -470,9 +456,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
         caseNegotiationsData.setShipmentPayType(shipmentPayType);
         caseNegotiationsData.setSpecialItem(specialItem);
-        if (lastModifiedDate != null) {
-            caseNegotiationsData.setLastModifiedDate(lastModifiedDate);
-        }
+        caseNegotiationsData.setLastModifiedDate(lastModifiedDate);
 
         return caseNegotiationsData;
     }
@@ -524,9 +508,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
         caseMediationsData.setShipmentPayType(shipmentPayType);
         caseMediationsData.setSpecialItem(specialItem);
-        if (lastModifiedDate != null) {
-            caseMediationsData.setLastModifiedDate(lastModifiedDate);
-        }
+        caseMediationsData.setLastModifiedDate(lastModifiedDate);
 
         return caseMediationsData;
     }

@@ -40,5 +40,6 @@
         AND case_file_relations.DeleteFlag = 0
         AND files.id = case_file_relations.fileId
         AND files.DeleteFlag = 0
+        ORDER BY files.LastModifiedDate
     </select>
 </mapper>
