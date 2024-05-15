@@ -36,6 +36,13 @@ public class UserLoginController {
     @Autowired
     private UserLoginService getPreUserDataService;
 
+    /**
+     * API_ID:ケース詳細取得
+     *
+     * @param param1 API「C12_会員仮登録画面」より渡された引数
+     * @return 戻り値は「_C02_会員登録フォーム画面」に返される
+     * @throws Exception エラーの説明内容
+     */
     @SuppressWarnings("rawtypes")
     @ApiOperation("会員登録取得")
     @GetMapping("/getPreUserData")
