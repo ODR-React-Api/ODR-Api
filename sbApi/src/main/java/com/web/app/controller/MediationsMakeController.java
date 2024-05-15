@@ -67,7 +67,7 @@ public class MediationsMakeController {
      */
     @ApiOperation("調停案データ更新")
     @PostMapping("/saveMediton")
-    public Response UpdateMediton(@RequestBody ResultMediation resultMediation, HttpServletRequest request,HttpServletResponse response){
+    public Response SaveMediton(@RequestBody ResultMediation resultMediation, HttpServletRequest request,HttpServletResponse response){
         if (mediationsMakeService.isExistMediations(resultMediation.getMediationId()) != 0) {
             try {
                 mediationsMakeService.saveMediton(resultMediation);
@@ -78,7 +78,7 @@ public class MediationsMakeController {
             }
         }
         try {
-            request.getRequestDispatcher("/mediationsMake/MediationcaseInsert").forward(request, response);
+            request.getRequestDispatcher("/mediationsMake/insMediationsData").forward(request, response);
             return AjaxResult.success("調停案を追加してください!");
         } catch (Exception e) {
             return AjaxResult.success("調停案を追加してください!");
