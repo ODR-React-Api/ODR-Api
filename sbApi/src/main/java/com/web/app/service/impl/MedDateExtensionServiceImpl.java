@@ -9,28 +9,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.domain.MedDateExtension.CasesForMediationEndDate;
 import com.web.app.mapper.UpdCasesForMediationEndDateMapper;
-import com.web.app.service.UpdCasesForMediationEndDateService;
+import com.web.app.service.MedDateExtensionService;
 
 /**
- * サービス実装クラス
+ * S29_調停期日延長画面
+ * ServiceImpl层
+ * MedDateExtensionServiceImpl
  * 
  * @author DUC 王 エンエン
- * @since 2024/05/20
+ * @since 2024/05/16
  * @version 1.0
  */
 @Service
-public class UpdCasesForMediationEndDateServiceImpl implements UpdCasesForMediationEndDateService{
+public class MedDateExtensionServiceImpl implements MedDateExtensionService{
 
     // マッパーオブジェクト
     @Autowired
     private UpdCasesForMediationEndDateMapper updCasesForMediationEndDateMapper;
 
     /**
-     * 
+     * API_案件情報更新
      * データを処理してDBを更新する
      * 
-     * 
-     * @param negotiation 更新に使用する案件idが含まれています
+     * @param casesForMediationEndDate 更新に使用する案件idが含まれています
      * @return DB更新に成功したレコード
      */
     @Override

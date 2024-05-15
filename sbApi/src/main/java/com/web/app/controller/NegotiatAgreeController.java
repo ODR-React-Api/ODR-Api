@@ -28,7 +28,7 @@ public class NegotiatAgreeController {
 
   // サービスオブジェクト
   @Autowired
-  private NegotiatAgreeService updNegotiatConService;
+  private NegotiatAgreeService negotiatAgreeService;
 
   /**
      * 
@@ -43,13 +43,13 @@ public class NegotiatAgreeController {
   public Response updNegotiatCon(@RequestBody UpdNegotiatCon updNegotiatCon) {
     try {
       // 和解案が更新されたかどうかを判断する
-      if (updNegotiatConService.updateNegotiatData(updNegotiatCon) != 0) {
-        return AjaxResult.success("和解案已更新!");
+      if (negotiatAgreeService.updateNegotiatData(updNegotiatCon) != 0) {
+        return AjaxResult.success("和解案が更新されました!");
       }
-      return AjaxResult.success("和解案未更新!");
+      return AjaxResult.success("和解案が更新されませんでした!");
     } catch (Exception e) {
       System.out.println(e.toString());
-      AjaxResult.fatal("更新失败!", e);
+      AjaxResult.fatal("更新に失敗しました!", e);
       return null;
     }
   }

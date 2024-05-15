@@ -28,5 +28,7 @@ public class MediationsTemplate implements Serializable{
     // 言語
     private String languageId;
 
+    // テンプレートの種類
+    private int templateType;
 
 }

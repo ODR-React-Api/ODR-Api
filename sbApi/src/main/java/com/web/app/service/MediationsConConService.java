@@ -7,7 +7,7 @@ import com.web.app.domain.MediationsConCon.MediationsTemplate;
 import com.web.app.domain.MediationsConCon.MediationsUserData;
 
 /**
- * 調停案内容確認画面 
+ * 調停案内容確認画面
  * Service层
  * MediationsConConService
  * 
@@ -21,7 +21,7 @@ public interface MediationsConConService {
     List<MediationsUserData> findAllUser(String caseId, String platformId);
 
     // API_調停案テンプレート取得
-    List<MediationsTemplate> findMediationsTemplate(String platformId,String languageId);
+    List<MediationsTemplate> findMediationsTemplate(String platformId, String languageId, Integer templateType);
 
     // API_調停案更新
     int upMediationsContent(MediationsContent mediationsContent);

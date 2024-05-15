@@ -18,5 +18,5 @@ import com.web.app.domain.MediationsConCon.MediationsTemplate;
 @Mapper
 public interface GetMediationsTemplateMapper {
     // API_調停案テンプレート取得
-    List<MediationsTemplate> findMediationsTemplate(String platformId,String languageId);
+    List<MediationsTemplate> findMediationsTemplate(String platformId,String languageId,Integer templateType);
 }

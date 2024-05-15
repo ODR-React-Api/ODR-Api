@@ -46,9 +46,11 @@ public class MediationsConConServiceImpl implements MediationsConConService {
      * @return list DBから取得の状況
      */
     @Override
-    public List<MediationsTemplate> findMediationsTemplate(String platformId, String languageId) {
+    public List<MediationsTemplate> findMediationsTemplate(String platformId, String languageId, Integer templateType) {
         List<MediationsTemplate> list = new ArrayList<MediationsTemplate>();
-        list = getMediationsTemplateMapper.findMediationsTemplate(platformId, languageId);
+        // 初期画面templateType=1 調停案を提出templateType=4
+        templateType = 4;
+        list = getMediationsTemplateMapper.findMediationsTemplate(platformId, languageId, templateType);
         return list;
     }
 

@@ -11,7 +11,7 @@
         WHERE
             platformId = #{platformId} and
             DeleteFlag = 0 and
-            templateType = 4 and
+            templateType = #{templateType} and
             LanguageId = #{languageId} 
     </select>
 </mapper>

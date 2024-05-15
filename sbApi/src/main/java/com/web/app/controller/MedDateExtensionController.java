@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.MedDateExtension.CasesForMediationEndDate;
-import com.web.app.service.UpdCasesForMediationEndDateService;
+import com.web.app.service.MedDateExtensionService;
 import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
@@ -16,12 +16,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 /**
- * S24_調停期日延長画面
+ * S29_調停期日延長画面
  * Controller层
- * UpdCasesForMediationEndDateController
+ * MedDateExtensionController
  * 
  * @author DUC 王 エンエン
- * @since 2024/05/09
+ * @since 2024/05/16
  * @version 1.0
  */
 @CrossOrigin(origins = "*")
@@ -29,17 +29,17 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @RestController
 @RequestMapping("/medDateExtension")
 @SuppressWarnings("rawtypes")
-public class UpdCasesForMediationEndDateController {
+public class MedDateExtensionController {
      @Autowired
-     private UpdCasesForMediationEndDateService updCasesForMediationEndDateService;
+     private MedDateExtensionService updCasesForMediationEndDateService;
      
      /**
-     * 
+     * API_案件情報更新
      * サービスメソッドを呼び出して案件を更新し、
      * 更新結果を判断してページに戻る
      * 
-     * @param updNegotiatCon 更新に使用するログィンユザと和解案idが含まれています
-     * @return Response
+     * @param casesForMediationEndDateResult 案件情報更新の引数
+     * @return Response 案件情報更新の状況
      */
      @ApiOperation("案件情報更新")
      @PostMapping("/updCasesForMediationEndDate")
@@ -47,14 +47,14 @@ public class UpdCasesForMediationEndDateController {
     try {
       if (updCasesForMediationEndDateService.updCasesForMediationEndDate(casesForMediationEndDateResult) != 0) {
         System.out.println("====================successed================================");
-        return AjaxResult.success("案件情報已更新!");
+        return AjaxResult.success("案件情報が更新されました!");
       }
       System.out.println("====================failed================================");
-      return AjaxResult.success("案件情報未更新!");
+      return AjaxResult.success("案件情報が更新されませんでした!");
     } catch (Exception e) {
       System.out.println("=====================throw Exception=====================");
       System.out.println(e.toString());
-      AjaxResult.fatal("更新失败!", e);
+      AjaxResult.fatal("更新に失敗しました!", e);
       return null;
     }
   }

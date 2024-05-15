@@ -53,14 +53,14 @@ public class MediationsConConController {
   @SuppressWarnings("rawtypes")
   @ApiOperation("調停案テンプレート取得")
   @PostMapping("/getMediationsTemplate")
-  public Response getMediationsTemplate(String platformId, String languageId) {
+  public Response getMediationsTemplate(String platformId, String languageId, Integer templateType) {
     try {
       ArrayList<MediationsTemplate> mediationsTemplateList = new ArrayList<MediationsTemplate>();
       mediationsTemplateList = (ArrayList<MediationsTemplate>) mediationsConConService
-          .findMediationsTemplate(platformId, languageId);
-      return AjaxResult.success("请求成功", mediationsTemplateList);
+          .findMediationsTemplate(platformId, languageId, templateType);
+      return AjaxResult.success("調停案テンプレート取得成功", mediationsTemplateList);
     } catch (Exception e) {
-      AjaxResult.fatal("查询失败!", e);
+      AjaxResult.fatal("取得に失敗しました!", e);
       return null;
     }
   }
@@ -78,9 +78,9 @@ public class MediationsConConController {
     try {
       ArrayList<MediationsUserData> mediationsUserDataList = new ArrayList<MediationsUserData>();
       mediationsUserDataList = (ArrayList<MediationsUserData>) mediationsConConService.findAllUser(caseId, platformId);
-      return AjaxResult.success("请求成功", mediationsUserDataList);
+      return AjaxResult.success("ユーザデータ取得成功", mediationsUserDataList);
     } catch (Exception e) {
-      AjaxResult.fatal("查询失败!", e);
+      AjaxResult.fatal("取得に失敗しました!", e);
       return null;
     }
   }
@@ -92,18 +92,19 @@ public class MediationsConConController {
    * @param mediationsContent API_調停案データ更新の引数
    * @return Response 調停案データ更新の状況
    */
+  @SuppressWarnings("rawtypes")
   @ApiOperation("調停案更新")
   @PostMapping("/updMediationsContent")
-  public Response updNegotiatCon(@RequestBody MediationsContent mediationsContent) {
+  public Response UpdMediationsContent(@RequestBody MediationsContent mediationsContent) {
     try {
       // 和解案が更新されたかどうかを判断する
       if (mediationsConConService.upMediationsContent(mediationsContent) != 0) {
-        return AjaxResult.success("調停案已更新!");
+        return AjaxResult.success("調停案が更新されました!");
       }
-      return AjaxResult.success("調停案未更新!");
+      return AjaxResult.success("調停案が更新されませんでした!");
     } catch (Exception e) {
       System.out.println(e.toString());
-      AjaxResult.fatal("更新失败!", e);
+      AjaxResult.fatal("更新に失敗しました!", e);
       return null;
     }
   }
