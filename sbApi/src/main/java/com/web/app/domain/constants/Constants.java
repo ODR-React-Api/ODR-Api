@@ -114,6 +114,17 @@ public class Constants {
     public static final int DELETE_FLAG_1 = 1;
     //「case_file_relations.RelationType案件種類」 4:和解案
     public static final int CASE_NEGOTIATIONS =4;
+    //master_templatesテンプレートの種類
+    //0:和解案,
+    public static final int TEMPLATE_TYPE_0 = 0;
+    //1:調停案,
+    public static final int TEMPLATE_TYPE_1 = 1;
+    //2:仲裁案,
+    public static final int TEMPLATE_TYPE_2 = 2;
+    //3:和解案合意書, 
+    public static final int TEMPLATE_TYPE_3 = 3;
+    //4: 調停案合意書
+    public static final int TEMPLATE_TYPE_4 = 4;
 
     // public static final Map<Object,String> SIFANGJI_SIGNAL_STATE_MAP = new
     // HashMap<Object,String>(){{
