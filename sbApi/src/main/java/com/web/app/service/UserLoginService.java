@@ -12,12 +12,6 @@ import java.util.List;
  */
 public interface UserLoginService {
 
-    //guid取得
+    // guid取得
     List<GetPreUserData> getUserPre(String guid);
 }
-
-
-
-
-
-

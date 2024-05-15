@@ -44,10 +44,10 @@ public class UserLoginaController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("案件データ取得")
     @GetMapping("/CasesByCid")
-    public Response casesByCid(String CaseId,String PlatformId) {
+    public Response casesByCid(String CaseId, String PlatformId) {
         try {
             List<CasesByCid> userContextList = new ArrayList<CasesByCid>();
-            userContextList = casesByCidService.casesByCid(CaseId,PlatformId);
+            userContextList = casesByCidService.casesByCid(CaseId, PlatformId);
             return AjaxResult.success("请求成功", userContextList);
         } catch (Exception e) {
             AjaxResult.fatal("查询失败!", e);
@@ -56,4 +56,3 @@ public class UserLoginaController {
     }
 
 }
-

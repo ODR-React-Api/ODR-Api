@@ -13,16 +13,11 @@ import lombok.Data;
  * @since 2024/04/18
  * @version 1.0
  */
-@ApiModel 
+@ApiModel
 @Data
 public class GetPreUserData implements Serializable {
-    //バッファリング
+    // バッファリング
     private static final long serialVersionUID = 1L;
     // Eメール
     private String email;
 }
-
-
-
-
-
