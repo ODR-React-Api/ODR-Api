@@ -3,13 +3,10 @@ package com.web.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
-import com.web.app.domain.Entity.CaseNegotiations;
-import com.web.app.domain.Entity.File;
 import com.web.app.domain.NegotiatPreview.NegotiatPreview;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.NegotiatPreviewService;
@@ -17,8 +14,6 @@ import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
-//import org.springframework.web.bind.annotation.*;
 
 /**
  * 和解案データ登録
@@ -30,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins = "*")
 @Api(tags = "和解案プレビュー画面")
 @RestController
-@RequestMapping("/SettlementPlan")
+@RequestMapping("/NegotiatPreview")
 public class NegotiatPreviewController {
     @Autowired
     private NegotiatPreviewService negotiatPreviewService;
@@ -39,7 +34,7 @@ public class NegotiatPreviewController {
     private SendMailController sendMailController;
 
     /**
-     * メソッドの説明内容
+     * 和解案提出登録/更新
      *
      * @param NegotiatPreview セッション値
      * @return Response

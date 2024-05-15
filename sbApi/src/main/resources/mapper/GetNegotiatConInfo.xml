@@ -2,14 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.">
+<mapper namespace="com.web.app.mapper.GetNegotiatConInfoMapper">
 
-    <select id="" resultType="">
+    <select id="selCaseNegotiations" resultType="com.web.app.domain.Entity.CaseNegotiations">
         SELECT 
-            HtmlContext,
+            <!-- HtmlContext,
             HtmlContext2,
             AgreementDate,
-            Status
+            Status -->
+            *
         FROM
             case_negotiations
         WHERE 
