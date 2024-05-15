@@ -9,6 +9,7 @@ import com.web.app.domain.MosDetail.CasesData;
  * S04_申立て概要画面
  * Mapper層
  * GetCaseInfoMapper
+ * API_案件状態取得
  * 
  * @author DUC 張明慧
  * @since 2024/05/10

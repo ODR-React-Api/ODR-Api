@@ -9,6 +9,7 @@ import com.web.app.domain.Entity.Files;
  * S04_申立て概要画面
  * Mapper層
  * GetCaseNegotiationsDataMapper
+ * API_和解内容取得
  * 
  * @author DUC 張明慧
  * @since 2024/05/10
