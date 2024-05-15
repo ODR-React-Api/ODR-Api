@@ -44,7 +44,8 @@
 </select>
 
 <insert id="insMediationsData2" parameterType="com.web.app.domain.mediationsMake.InsMediationsData">
-        INSERT INTO case_mediations (
+        INSERT INTO case_mediations 
+            (
             id,
             PlatformId,
             CaseId,
@@ -62,7 +63,6 @@
             AgreementDate,
             CounterClaimType,
             CounterClaimContext,
-            CounterClaimPayment,
             PaymentUser,
             PetitionUserAgreeStatus,
             PetitionUserAgreeDate,
@@ -76,10 +76,37 @@
             DeleteFlag,
             LastModifiedDate,
             LastModifiedBy
-        )VALUES
-        (
-        #{id},
-        #{CaseId}
+        )VALUES(
+            #{id},
+            #{PlatformId},
+            #{CaseId},
+            0,
+            #{ExpectResloveTypeValue},
+            NULL,
+            NULL,
+            #{PayAmount},
+            #{CounterClaimPayment},
+            #{PaymentEndDate},
+            #{ShipmentPayType},
+            #{SpecialItem},
+            #{UserId},
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            0,
+            NULL,
+            0,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            0,
+            #{LastModifiedDate},
+            #{LastModifiedBy}
         )
 </insert>
 </mapper>

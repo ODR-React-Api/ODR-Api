@@ -3,6 +3,7 @@ package com.web.app.service.impl;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.apache.commons.lang.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +48,14 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
         caseMediations.setCaseId(insMediationsData.getCaseId());
         caseMediations.setExpectResloveTypeValue(insMediationsData.getExpectResloveTypeValue());
         caseMediations.setPayAmount(insMediationsData.getPayAmount());
-        caseMediations.setCounterClaimPayment(insMediationsData.getCounterClaimPayment());
+
+        //CounterClaimPayment（反訴の支払金額）を設定するための申請の反訴があるかどうかを判断する
+        if (insMediationsData.getCounterclaim()==1) {
+            caseMediations.setCounterClaimPayment(insMediationsData.getCounterClaimPayment());
+        }else{
+            caseMediations.setCounterClaimPayment(1.00);
+        }
+
         caseMediations.setPaymentEndDate(insMediationsData.getPaymentEndDate());
         caseMediations.setShipmentPayType(insMediationsData.getShipmentPayType());
         caseMediations.setSpecialItem(insMediationsData.getSpecialItem());
