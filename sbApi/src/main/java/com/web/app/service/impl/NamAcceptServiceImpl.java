@@ -6,7 +6,9 @@ import com.web.app.mapper.UpdCaseStatusForAcceptMapper;
 import com.web.app.service.NamAcceptService;
 
 /**
- * API_案件ステータス更新
+ * S33_指名受理画面
+ * Service層実現類
+ * NamAcceptServiceImpl
  * 
  * @author DUC 閆文静
  * @since 2024/05/14

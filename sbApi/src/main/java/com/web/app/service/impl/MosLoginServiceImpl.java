@@ -6,7 +6,9 @@ import com.web.app.mapper.InsRelationsTempMapper;
 import com.web.app.service.MosLoginService;
 
 /**
- * API_下書き用準備データ登録
+ * S8_申立登録画面
+ * Service層実現類
+ * MosLoginServiceImpl
  * 
  * @author DUC 閆文静
  * @since 2024/05/08

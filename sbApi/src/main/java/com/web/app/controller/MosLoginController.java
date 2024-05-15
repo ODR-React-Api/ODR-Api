@@ -1,11 +1,11 @@
 package com.web.app.controller;
 
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Relations;
+import com.web.app.domain.Response;
 import com.web.app.service.MosLoginService;
 import com.web.app.service.UtilService;
 import com.web.app.tool.AjaxResult;
@@ -15,7 +15,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * API_下書き用準備データ登録
+ * S8_申立登録画面
+ * Controller層
+ * MosLoginController
  * 
  * @author DUC 閆文静
  * @since 2024/05/08
@@ -26,9 +28,6 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/MosLogin")
 public class MosLoginController {
-
-    @Autowired
-    DataSource dataSource;
 
     @Autowired
     private MosLoginService mosLoginService;
@@ -49,9 +48,10 @@ public class MosLoginController {
      * @return case_petitions.idとcase_relations.PetitionUserId
      * @throws Exception TBL「申立（case_petitions）、案件別個人情報リレーション（case_relations）」の新規登録失败!
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("下書き用準備データ登録")
     @GetMapping("/insRelationsTemp")
-    public Relations insRelationsTemp(String loginUser, String userId) {
+    public Response insRelationsTemp(String loginUser, String userId) {
         try {
             // 自動採番
             String uuId = utilService.GetGuid();
@@ -62,7 +62,7 @@ public class MosLoginController {
             mosLoginService.insCasePetitions(uuId, loginUser);
             // TBL「案件別個人情報リレーション（case_relations）」の新規登録
             mosLoginService.insCaseRelations(uuId, loginUser, userId);
-            return relations;
+            return AjaxResult.success("登録成功!", relations);
         } catch (Exception e) {
             AjaxResult.fatal("TBL「申立（case_petitions）、案件別個人情報リレーション（case_relations）」の新規登録失败!", e);
             return null;

@@ -1,7 +1,9 @@
 package com.web.app.service;
 
 /**
- * API_下書き用準備データ登録
+ * S8_申立登録画面
+ * Service層
+ * MosLoginService
  * 
  * @author DUC 閆文静
  * @since 2024/05/08

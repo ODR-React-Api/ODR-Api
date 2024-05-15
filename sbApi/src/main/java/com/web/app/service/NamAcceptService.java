@@ -1,7 +1,9 @@
 package com.web.app.service;
 
 /**
- * API_案件ステータス更新
+ * S33_指名受理画面
+ * Service層
+ * NamAcceptService
  * 
  * @author DUC 閆文静
  * @since 2024/05/14
