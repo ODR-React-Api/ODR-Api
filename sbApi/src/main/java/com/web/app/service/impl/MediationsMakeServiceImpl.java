@@ -79,9 +79,12 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                     filesData.get(i).setCaseId(insMediationsData.getCaseId());
                     filesData.get(i).setRegisterUserId(insMediationsData.getUid());
                     filesData.get(i).setDeleteFlag(0);
-                    filesData.get(i).setLastModifiedBy(insMediationsData.getUid());
-                    
-                    ArrayList<Files> insertFiles = mediationcaseMapper.insertFiles(filesData.get(i));
+                    filesData.get(i).setRegisterDate(insMediationsData.getRegisterDate());
+                    filesData.get(i).setLastModifiedDate(insMediationsData.getLastModifiedDate()); 
+                    filesData.get(i).setLastModifiedBy(insMediationsData.getUid());  
+                    int insertFiles = mediationcaseMapper.insertFiles(filesData.get(i));
+
+                    int b=insertFiles;
                 }
             }
             a = 3;

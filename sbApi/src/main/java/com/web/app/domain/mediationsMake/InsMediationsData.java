@@ -51,6 +51,8 @@ public class InsMediationsData implements Serializable {
     //反訴
     private Integer Counterclaim;
 
+    private String RegisterDate;
+
     private ArrayList<Files> insertFiles;
 
 }

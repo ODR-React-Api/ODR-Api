@@ -107,4 +107,48 @@
             #{LastModifiedBy}
         )
 </insert>
+
+<insert id="insertFiles" parameterType="com.web.app.domain.Entity.Files">
+    INSERT INTO files
+     (
+        id,
+        PlatformId,
+        CaseId,
+        FileName,
+        FileExtension,
+        FileUrl,
+        FileBlobStorageId,
+        FileSize,
+        RegisterUserId,
+        RegisterDate,
+        Other01,
+        Other02,
+        Other03,
+        Other04,
+        Other05,
+        DeleteFlag,
+        LastModifiedDate,
+        LastModifiedBy
+     )
+     VALUES(
+        #{id},
+        #{PlatformId},
+        #{CaseId},
+        #{FileName},
+        #{FileExtension},
+        #{FileUrl},
+        NULL,
+        #{FileSize},
+        #{RegisterUserId},
+        #{RegisterDate},
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        0,
+        #{LastModifiedDate},
+        #{LastModifiedBy}
+     )
+</insert>
 </mapper>
