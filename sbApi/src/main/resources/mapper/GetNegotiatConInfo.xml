@@ -6,11 +6,10 @@
 
     <select id="selCaseNegotiations" resultType="com.web.app.domain.Entity.CaseNegotiations">
         SELECT 
-            <!-- HtmlContext,
+            HtmlContext,
             HtmlContext2,
             AgreementDate,
-            Status -->
-            *
+            Status
         FROM
             case_negotiations
         WHERE 

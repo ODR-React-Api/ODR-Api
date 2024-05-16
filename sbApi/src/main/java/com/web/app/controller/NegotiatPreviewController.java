@@ -16,7 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 和解案データ登録
+ * 和解案プレビュー画面
  * 
  * @author DUC 李志文
  * @since 2024/05/10

@@ -42,9 +42,10 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     @Transactional
     @Override
     public int NegotiatPreview(NegotiatPreview negotiatPreview) {
+        //和解案抽出
         CaseNegotiations cNegotiations = updNegotiationsDataMapper.SearchCaseNegotiations(negotiatPreview.getCaseId());
         if (cNegotiations != null) {
-            // 未マージ
+            // Num未マージ
             if (cNegotiations.getStatus().equals(Num.NUM0) ||
                     cNegotiations.getStatus().equals(Num.NUM1) ||
                     cNegotiations.getStatus().equals(Num.NUM2)) {
@@ -61,6 +62,8 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
                     cNegotiations.getStatus().equals(Num.NUM14) ||
                     cNegotiations.getStatus().equals(Num.NUM15)) {
                 negotiatPreview.setStatus(Num.NUM15);
+            }else{
+                return 1;
             }
             UpdNegotiationsData(negotiatPreview);
         } else {

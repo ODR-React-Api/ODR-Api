@@ -104,15 +104,4 @@ public class NegotiatPreview implements Serializable{
 
     //LastModifiedBy
     private String LastModifiedBy;
-
-    // private String TemplateFileName;
-    // private String CounterClaimType;
-    // private String ShipmentPayValue;
-    // private String InfoStatus;
-    // private String CounterClaimContext;
-    // private String PaymentUser;
-    // private String EditAbleUser;
-    // private String LanguageId;
-    // private String RelationType;
-    // private String RelatedId;
 }

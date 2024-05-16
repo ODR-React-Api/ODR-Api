@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
+import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.NegotiatAgree.NegotiatAgree;
 import com.web.app.service.NegotiatAgreeService;
+import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,10 +42,10 @@ public class NegotiatAgreeController {
     @PostMapping("NegotiatAgree")
     public Response NegotiatAgree(@RequestBody NegotiatAgree negotiatAgree) {
         try {
-            negotiatAgreeService.selCaseNegotiations(negotiatAgree);
-            return null;
+            CaseNegotiations caseNegotiations = negotiatAgreeService.selCaseNegotiations(negotiatAgree);
+            return AjaxResult.success("和解案内容取得成功!", caseNegotiations);
         } catch (Exception e) {
-            return null;
+            return AjaxResult.success("和解案内容取得失敗!", e);
         }
     }
 }
