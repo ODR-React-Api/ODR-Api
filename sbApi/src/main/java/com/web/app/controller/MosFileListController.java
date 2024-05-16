@@ -52,7 +52,7 @@ public class MosFileListController {
    */
   @SuppressWarnings("rawtypes")
   @ApiOperation("ログインユーザのロールと開示情報取得")
-  @GetMapping("/loginUser")
+  @GetMapping("/getLoginUserRoleOpenInfo")
   public Response selectLoginUserRoleOpenInfo(String caseId, String id, String email) {
       try {
         getFileInfo = mosFileListService.getLoginUserRoleOpenInfo(caseId, id, email);
