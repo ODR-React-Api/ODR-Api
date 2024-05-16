@@ -13,7 +13,6 @@ import com.web.app.domain.MosList.SelectUserInfoForCase;
  * @since 2024/04/23
  * @version 1.0
  */
-
 @Mapper
 public interface GetFuzzyQueryListInfoMapper {
 

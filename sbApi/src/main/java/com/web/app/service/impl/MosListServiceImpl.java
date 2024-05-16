@@ -27,7 +27,6 @@ import com.web.app.service.MosListService;
  * @since 2024/4/22
  * @version 1.0
  */
-
 @Service
 public class MosListServiceImpl implements MosListService {
 
@@ -53,7 +52,6 @@ public class MosListServiceImpl implements MosListService {
      * @param searchCase API「 検索用一覧取得」より渡された引数
      * @return case詳細
      */
-
     @Override
     @Transactional
     public ReturnResult searchDetailCase(SelectCondition searchCase) {
@@ -237,13 +235,11 @@ public class MosListServiceImpl implements MosListService {
 
     /**
      * 検索Boxに入力した文字列で申立て番号と件名の一部検索条件として、ユーザに関連するすべてのケースをDBから検索する。
-     * API_検索用ケース詳細取得
      *
      * @param uid         画面.ユーザID
      * @param queryString 画面.検索Box入力文字列
      * @return 取得されたケース情報リスト
      */
-
     @Override
     @Transactional
     public List<ReturnResult> getFuzzyQueryListInfo(String uid, String queryString) {
@@ -312,7 +308,6 @@ public class MosListServiceImpl implements MosListService {
      * @param queryString 画面.検索Box入力文字列
      * @return 取得されたケース情報リスト
      */
-
     @Override
     @Transactional
     public ReturnResult getFuzzyQueryDetailCase(String caseId, String petitionUserId, Integer positionFlag,
@@ -481,7 +476,6 @@ public class MosListServiceImpl implements MosListService {
      * @param uid ユーザID
      * @return 申立て登録下書き保存データ有無
      */
-
     @Override
     public Integer getSaveDataInfo(String uid) {
         

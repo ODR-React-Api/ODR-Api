@@ -59,7 +59,7 @@
         FROM
             react_use.case_relations
         WHERE
-            MediatorUserEmail = '2805781183@qq.com'
+            MediatorUserEmail = #{email}
         AND DeleteFlag = '0'
         ORDER BY CaseId
     </select>

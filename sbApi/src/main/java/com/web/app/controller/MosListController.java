@@ -25,7 +25,6 @@ import io.swagger.annotations.ApiOperation;
  * @since 2024/4/22
  * @version 1.0
  */
-
 @CrossOrigin(origins = "*")
 @RestController
 @Api(tags = "申立て一覧画面")
@@ -41,7 +40,6 @@ public class MosListController {
      * @param searchCase API「検索用一覧取得」より渡された引数
      * @return case详细情报
      */
-
     @PostMapping("/searchDetail")
     @ApiOperation("検索用ケース詳細取得")
     public ReturnResult searchDetail(@RequestBody SelectCondition searchCase) {
@@ -58,7 +56,6 @@ public class MosListController {
      * @param queryString 画面.検索Box入力文字列
      * @return 取得されたケース情報リスト
      */
-    
     @PostMapping("/getFuzzyQueryListInfo")
     @ApiOperation("曖昧検索用一覧取得")
     @SuppressWarnings("rawtypes")
@@ -95,7 +92,6 @@ public class MosListController {
      * @param uid ユーザID
      * @return 申立て登録下書き保存データ有無
      */
-
     @PostMapping("/getSaveDataInfo")
     @SuppressWarnings("rawtypes")
     @ApiOperation("申立て登録下書き保存データ取得")

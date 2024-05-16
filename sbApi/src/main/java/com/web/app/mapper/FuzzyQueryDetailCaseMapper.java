@@ -11,7 +11,6 @@ import com.web.app.domain.MosList.SearchDetail;
  * @since 2024/04/23
  * @version 1.0
  */
-
 @Mapper
 public interface FuzzyQueryDetailCaseMapper {
 
