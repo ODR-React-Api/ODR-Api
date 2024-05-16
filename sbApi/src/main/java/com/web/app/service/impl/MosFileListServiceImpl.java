@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.web.app.domain.CaseFileInfo;
 import com.web.app.domain.GetFileInfo;
 import com.web.app.mapper.GetFileInfoMapper;
+import com.web.app.mapper.GetLoginUserRoleOpenInfoMapper;
 import com.web.app.service.MosFileListService;
 
 /**
@@ -21,8 +22,14 @@ import com.web.app.service.MosFileListService;
 @Service
 public class MosFileListServiceImpl implements MosFileListService {
 
+    // ログインユーザのロールと開示情報取得
     @Autowired
-    private GetFileInfoMapper loginUserRoleOpenInfoMapper;
+    private GetLoginUserRoleOpenInfoMapper getLoginUserRoleOpenInfoMapper;
+
+    // 案件添付ファイル取得
+    @Autowired
+    private GetFileInfoMapper getFileInfoMapper;
+
 
     /**
      * ログインユーザのロールと開示情報取得
@@ -35,24 +42,23 @@ public class MosFileListServiceImpl implements MosFileListService {
      */
     @Override
     public GetFileInfo getLoginUserRoleOpenInfo(String caseId, String id, String email) {
-        GetFileInfo loginUserRoleOpenInfo = new GetFileInfo();
+        GetFileInfo getFileInfo = new GetFileInfo();
         // ログインユーザのロールと開示情報取得API
-        loginUserRoleOpenInfo = loginUserRoleOpenInfoMapper.selectLoginUserRoleOpenInfo(caseId);
+        getFileInfo = getLoginUserRoleOpenInfoMapper.selectLoginUserRoleOpenInfo(caseId);
 
         // ログインユーザIdがPetitionUserIdと一致すれば、申立人とする
-        if (loginUserRoleOpenInfo.getPetitionUserId().equals(id)) {
-            loginUserRoleOpenInfo.setPositionFlg(1);
+        if (getFileInfo.getPetitionUserId().equals(id)) {
+            getFileInfo.setPositionFlg(1);
 
             // ログインユーザemailがTraderUserEmailと一致すれば、相手方とする
-        } else if (loginUserRoleOpenInfo.getTraderUserEmail().equals(email)) {
-            loginUserRoleOpenInfo.setPositionFlg(2);
+        } else if (getFileInfo.getTraderUserEmail().equals(email)) {
+            getFileInfo.setPositionFlg(2);
 
             // ログインユーザemailがMediatorUserEmailと一致すれば、調停人とする
-        } else if (loginUserRoleOpenInfo.getMediatorUserEmail().equals(email)) {
-            loginUserRoleOpenInfo.setPositionFlg(3);
+        } else if (getFileInfo.getMediatorUserEmail().equals(email)) {
+            getFileInfo.setPositionFlg(3);
         }
-        System.out.println(loginUserRoleOpenInfo);
-        return loginUserRoleOpenInfo;
+        return getFileInfo;
     }
 
     /**
@@ -71,7 +77,7 @@ public class MosFileListServiceImpl implements MosFileListService {
         List<CaseFileInfo> caseFileInfoList = new ArrayList<>();
 
         // 案件添付ファイル取得
-        caseFileInfoList = loginUserRoleOpenInfoMapper.selectCaseFileInfoList(caseId, id, positionFlg,
+        caseFileInfoList = getFileInfoMapper.selectCaseFileInfoList(caseId, id, positionFlg,
                 mediatorDisclosureFlag);
 
         return caseFileInfoList;

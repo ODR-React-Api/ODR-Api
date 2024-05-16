@@ -33,7 +33,7 @@ public class MosFileListController {
     @Autowired
     private MosFileListService mosFileListService;
 
-    GetFileInfo loginUserRoleOpenInfo = new GetFileInfo();
+    GetFileInfo getFileInfo = new GetFileInfo();
 
     @ApiImplicitParams({
         @ApiImplicitParam(name = "caseId", value = "caseId", dataType = "String", required = true, paramType = ""),
@@ -55,8 +55,8 @@ public class MosFileListController {
   @GetMapping("/loginUser")
   public Response selectLoginUserRoleOpenInfo(String caseId, String id, String email) {
       try {
-          loginUserRoleOpenInfo = mosFileListService.getLoginUserRoleOpenInfo(caseId, id, email);
-          return AjaxResult.success("ログインユーザのロールと開示情報取得成功!", loginUserRoleOpenInfo);
+        getFileInfo = mosFileListService.getLoginUserRoleOpenInfo(caseId, id, email);
+          return AjaxResult.success("ログインユーザのロールと開示情報取得成功!", getFileInfo);
       } catch (Exception e) {
           AjaxResult.fatal("ログインユーザのロールと開示情報取得失败!", e);
           return null;
@@ -76,9 +76,9 @@ public class MosFileListController {
   @PostMapping("/getFileInfo")
   public Response getFileInfo(String caseId, String id) {
       // 立場フラグ
-      Integer positionFlg = loginUserRoleOpenInfo.getPositionFlg();
+      Integer positionFlg = getFileInfo.getPositionFlg();
       // 調停人情報開示フラグ
-      Integer mediatorDisclosureFlag = loginUserRoleOpenInfo.getMediatorDisclosureFlag();
+      Integer mediatorDisclosureFlag = getFileInfo.getMediatorDisclosureFlag();
       try {
           List<CaseFileInfo> caseFileInfoList = mosFileListService.getCaseFileInfo(caseId, id, positionFlg,
               mediatorDisclosureFlag);

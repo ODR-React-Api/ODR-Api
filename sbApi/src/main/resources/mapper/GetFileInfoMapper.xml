@@ -3,24 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetFileInfoMapper">
-
-<select id="selectLoginUserRoleOpenInfo" resultMap="com.web.app.domain.GetFileInfo">
-    SELECT
-        MediatorDisclosureFlag, 
-        PetitionUserId,
-        TraderUserEmail,
-        MediatorUserEmail
-    FROM
-        react_use.cases t1
-    LEFT JOIN
-        react_use.case_relations t2
-    ON
-        t1.cid = t2.CaseId
-    WHERE 
-        t1.cid = #{caseId}
-        AND t1.DeleteFlag = '0'
-        AND t2.DeleteFlag = '0';
-</select>
 <select id="selectCaseFileInfoList" resultMap="com.web.app.domain.CaseFileInfo">
     SELECT
         FileName,
@@ -35,7 +17,7 @@
         t2.CaseId = #{caseId} 
         AND t2.DeleteFlag = '0' 
         AND t2.UserType in (1, 2, 3) 
-        AND t2.HaveFile = TRUE 
+        AND t2.HaveFile = 1 
         AND (t2.MessageGroupId is null 
     OR t2.MessageGroupId IN ( 
         SELECT
