@@ -1,11 +1,9 @@
 package com.web.app.service.impl;
 
 import java.text.SimpleDateFormat;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.web.app.mapper.UpdCaseCancelDateMapper;
 import com.web.app.service.UsesaseCancelService;
 
