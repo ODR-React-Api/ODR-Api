@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetSelectListInfoMapper">
+    <resultMap id="testMosResultMap" type="com.web.app.domain.MosList.TestMos">
+    </resultMap>
+    <!-- ユーザ情報を取得する -->
+    <select id="testOdrUsersSearch" resultType="String">
+        SELECT 
+            Email
+        FROM
+            odr_users
+        WHERE
+            Uid = #{sesionId}
+            AND DeleteFlag = 0
+    </select>
+    <!-- ユーザメールをキーにTBL「案件別個人情報リレーション」より申立人となるケース取得 -->
+    <select id="testPetitionsSearch" resultMap="testMosResultMap">
+        SELECT 
+            CaseId,
+            PetitionUserId
+        FROM
+            case_relations
+        WHERE
+            (
+            PetitionUserInfo_Email = #{email}
+            OR  Agent1_Email = #{email}
+            OR  Agent2_Email = #{email}
+            OR  Agent3_Email = #{email}
+            OR  Agent4_Email = #{email}
+            OR  Agent5_Email = #{email}
+            )
+            AND DeleteFlag = 0
+        ORDER BY CaseId ASC
+    </select>
+    <!-- ユーザメールをキーにTBL「案件別個人情報リレーション」より相手方となるケース取得 -->
+    <select id="testTraderFlgSearch" resultMap="testMosResultMap">
+        SELECT 
+            CaseId,
+            PetitionUserId
+        FROM
+            case_relations
+        WHERE
+            (
+            TraderUserEmail = #{email}
+            OR  TraderAgent1_UserEmail = #{email}
+            OR  TraderAgent2_UserEmail = #{email}
+            OR  TraderAgent3_UserEmail = #{email}
+            OR  TraderAgent4_UserEmail = #{email}
+            OR  TraderAgent5_UserEmail = #{email}
+            )
+            AND DeleteFlag = 0
+        ORDER BY CaseId ASC
+    </select> 
+    <!-- ユーザメールをキーにTBL「案件別個人情報リレーション」より調停人となるケース取得 -->
+    <select id="testMediatorSearch" resultMap="testMosResultMap">
+        SELECT 
+            CaseId,
+            PetitionUserId
+        FROM
+            case_relations
+        WHERE
+            MediatorUserEmail = #{email}
+            AND DeleteFlag = 0
+        ORDER BY CaseId ASC
+    </select> 
+</mapper>

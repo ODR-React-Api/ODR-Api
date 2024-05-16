@@ -21,6 +21,9 @@ public class OdrUsers {
     // パスワード
     private String password;
 
+    // パスワード
+    public String password;
+
     // サイトナンバー
     private String RegisteredSiteNo;
 
@@ -82,6 +85,11 @@ public class OdrUsers {
 
     // 規約確認状況
     private String TermsConfirmed;
+
+    public String MessageFrequency;
+
+    // 規約確認状況
+    public String TermsConfirmed;
 
     // 履歴書
     private String ResumeFileId;
