@@ -4,7 +4,7 @@ import com.web.app.domain.QuesAnswerConfirm.InsQuestionnaireResults;
 
 /**
  * C09_アンケート回答確認画面
- * Service层
+ * Service層
  * QuesAnswerConfirmService
  * 
  * @author DUC 張明慧

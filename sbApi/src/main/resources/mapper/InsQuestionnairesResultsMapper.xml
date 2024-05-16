@@ -5,7 +5,7 @@
 <mapper namespace="com.web.app.mapper.InsQuestionnairesResultsMapper">
     <!-- API_アンケート入力結果新規登録 -->
     <!-- 2.2 アンケート回答内容を登録 -->
-    <insert id="insQuestionnairesResults" parameterType="com.web.app.domain.QuesAnswerConfirm.InsQuestionnaireResults">
+    <insert id="insQuestionnairesResults" parameterType="com.web.app.domain.Entity.QuestionnaireResults">
         INSERT INTO questionnaire_results(
             id,
             PlatformId,
@@ -39,35 +39,35 @@
             LastModifiedBy
         )VALUES(
             #{id},
-            #{platformId},
-            #{caseId},
-            NULL,
-            #{questionId},
-            #{userType},
+            #{PlatformId},
+            #{CaseId},
+            #{MediratorUserId},
+            #{QuestionId},
+            #{UserType},
             CURRENT_TIMESTAMP(),
-            #{resultQ1},
-            #{resultQ2},
-            #{resultQ3},
-            #{resultQ4},
-            #{resultQ5},
-            #{resultQ6},
-            #{resultQ7},
-            #{resultQ8},
-            #{resultQ9},
-            #{resultQ10},
-            #{resultQ11},
-            #{resultQ12},
-            #{resultQ13},
-            #{resultQ14},
-            #{resultQ15},
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            0,
+            #{result_Q1},
+            #{result_Q2},
+            #{result_Q3},
+            #{result_Q4},
+            #{result_Q5},
+            #{result_Q6},
+            #{result_Q7},
+            #{result_Q8},
+            #{result_Q9},
+            #{result_Q10},
+            #{result_Q11},
+            #{result_Q12},
+            #{result_Q13},
+            #{result_Q14},
+            #{result_Q15},
+            #{Other01},
+            #{Other02},
+            #{Other03},
+            #{Other04},
+            #{Other05},
+            #{DeleteFlag},
             CURRENT_TIMESTAMP(),
-            "questionnaire"
+            #{LastModifiedBy}
         )
     </insert>
 </mapper>

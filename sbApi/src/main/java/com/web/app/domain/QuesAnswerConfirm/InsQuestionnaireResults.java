@@ -1,13 +1,12 @@
 package com.web.app.domain.QuesAnswerConfirm;
 
 import java.io.Serializable;
-
 import lombok.Data;
 
 /**
  * C09_アンケート回答確認画面
  * API_アンケート入力結果新規登録
- * Dao层
+ * Dao層
  * InsQuestionnaireResults
  * アンケート回答登録処理の引数 ---画面アンケート回答内容
  * 
@@ -17,9 +16,6 @@ import lombok.Data;
  */
 @Data
 public class InsQuestionnaireResults implements Serializable {
-    // ID
-    private String id;
-
     // サーバ設定.platformId 「0001」
     private String platformId;
 
