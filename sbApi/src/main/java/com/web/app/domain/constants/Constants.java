@@ -108,7 +108,7 @@ public class Constants {
     public static final int STR_ODR_USERS_INSERTFLAG = 0;
     public static final int STR_ODR_USERS_INSERT_STATUS = 0;
     public static final String STR_ODR_USERS_INSERT_MESSAGEFREQUENCY = "100";
-    public static final int STR_ODR_USERS_INSERT_TERMSCONFIRMED = 1;
+    public static final String STR_ODR_USERS_INSERT_TERMSCONFIRMED = "1";
     public static final int STR_ODR_USERS_INSERT_USERTYPE = 0;
     public static final int STR_ODR_USERS_INSERT_DELETEFLAG = 0;
     public static final String STR_ODR_USERS_INSERT_PLATFORMID = "0001";
