@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "*")
 @RestController
-@Api(tags = "MosList")
+@Api(tags = "申立て一覧画面")
 @RequestMapping("/MosList")
 public class MosListController {
 

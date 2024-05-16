@@ -25,8 +25,8 @@ import io.swagger.annotations.ApiOperation;
  */
 
 @CrossOrigin(origins = "*")
-@Api(tags = "UserInfoConfirm")
-@RequestMapping("/")
+@Api(tags = "会員情報確認画面")
+@RequestMapping("/UserInfoConfirm")
 @RestController
 public class UserInfoConfirmController {
 
