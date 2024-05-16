@@ -438,7 +438,9 @@ public class MosLoginServiceImpl implements MosLoginService {
     /**
      * 共通関数「TBL「申立（case_petitions）」の更新」
      *
-     * @param OdrUsers String ScreenInfo 更新必要の引数
+     * @param ScreenInfo 画面に入力した内容
+     * @param OdrUsers 取得したユーザ情報内容
+     * @param case_petitions_id API「下書き用準備データ登録」戻ったcase_petitions.id
      * @return int TBL「申立（case_petitions）更新成功の件数
      */
     private int updateCasePetitions(ScreenInfo screenInfo, String case_petitions_id, OdrUsers userInfo) {
@@ -482,7 +484,10 @@ public class MosLoginServiceImpl implements MosLoginService {
     /**
      * 共通関数「TBL「案件別個人情報リレーション（case_relations）」の更新」
      *
-     * @param OdrUsers String ScreenInfo 更新必要の引数
+     * @param case_petitions_id API「下書き用準備データ登録」戻ったcase_petitions.id
+     * @param case_relations_PetitionUserId API「下書き用準備データ登録」戻ったcase_relations_PetitionUserId
+     * @param userInfo 取得したユーザ情報内容
+     * @param screenInfo 画面に入力した内容
      * @return int TBL「案件別個人情報リレーション（case_relations）」の更新成功の件数
      */
     private int updateCaseRelations(String case_petitions_id, String case_relations_PetitionUserId, OdrUsers userInfo,
@@ -522,7 +527,10 @@ public class MosLoginServiceImpl implements MosLoginService {
     /**
      * 共通関数「TBL「添付ファイル（files）」の登録」
      *
-     * @param OdrUsers String ScreenInfo 登録必要の引数
+     * @param fileMaxId1 自動採番のID
+     * @param userInfo 取得したユーザ情報内容
+     * @param screenInfo 画面に入力した内容
+     * @param sysDate システム日付
      * @return int TBL「添付ファイル（files）」の登録成功の件数
      */
     private int insertFiles(String fileMaxId1, OdrUsers userInfo, ScreenInfo screenInfo, String sysDate) {
@@ -556,7 +564,11 @@ public class MosLoginServiceImpl implements MosLoginService {
     /**
      * 共通関数「TBL「案件-添付ファイルリレーション（case_file_relations）」の登録」
      *
-     * @param OdrUsers String ScreenInfo 登録必要の引数
+     * @param userInfo 取得したユーザ情報内容
+     * @param case_petitions_id API「下書き用準備データ登録」戻ったcase_petitions.id
+     * @param fileMaxId1 自動採番のID
+     * @param sysDate システム日付
+     * @param screenInfo 画面に入力した内容
      * @return int TBL「案件-添付ファイルリレーション（case_file_relations）」の登録成功の件数
      */
     private int insertCaseFileRelations(OdrUsers userInfo, String case_petitions_id, String fileMaxId1, String sysDate,
@@ -586,7 +598,7 @@ public class MosLoginServiceImpl implements MosLoginService {
     /**
      * 共通関数「購入日のString日付をUTC時間に変換する」
      *
-     * @param String 変換前のString日付
+     * @param Commoditydate 変換前のString日付
      * @return String 変換後のUTC時間
      */
     private String stringToUtc(String Commoditydate) {

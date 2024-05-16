@@ -13,71 +13,71 @@ import lombok.Data;
 public class CasePetitions {
 
     // ID
-    public String id;
+    private String id;
 
     // プラットフォームID
-    public String PlatformId;
+    private String PlatformId;
 
     // 案件ID
-    public String CaseId;
+    private String CaseId;
 
     // ステータス
-    public Integer Status;
+    private Integer Status;
 
     // 商品名
-    public String productName;
+    private String productName;
 
     // 商品ID
-    public String ProductId;
+    private String ProductId;
 
     // 販売元名称
-    public String TraderName;
+    private String TraderName;
 
     // 販売元メールアドレス
-    public String TraderMail;
+    private String TraderMail;
 
     // 販売元ＵＲＬ
-    public String TraderUrl;
+    private String TraderUrl;
 
     // 購入日
-    public String BoughtDate;
+    private String BoughtDate;
 
     // 購入金額
-    public Double Price;
+    private Double Price;
 
     // 申立ての種類
-    public String petitionTypeValue;
+    private String petitionTypeValue;
 
     // 申立ての種類 その他
-    public String petitionTypeOther;
+    private String petitionTypeOther;
 
     // 申立て内容
-    public String petitionContext;
+    private String petitionContext;
 
     // 希望する解決方法
-    public String ExpectResloveTypeValue;
+    private String ExpectResloveTypeValue;
 
     // 希望する解決方法 その他
-    public String ExpectResloveTypeOther;
+    private String ExpectResloveTypeOther;
 
     // その他項目
-    public String Other;
+    private String Other;
 
-    public String Other01;
+    private String Other01;
 
-    public String Other02;
+    private String Other02;
 
-    public String Other03;
+    private String Other03;
 
-    public String Other04;
+    private String Other04;
 
-    public String Other05;
+    private String Other05;
 
-    public Integer DeleteFlag;
+    private Integer DeleteFlag;
 
-    public String LastModifiedDate;
+    private String LastModifiedDate;
 
-    public String LastModifiedBy;
+    private String LastModifiedBy;
 
-    public Integer IsTemp;
+    private Integer IsTemp;
 }
