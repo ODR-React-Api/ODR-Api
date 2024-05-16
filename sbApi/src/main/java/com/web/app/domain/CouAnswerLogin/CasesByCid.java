@@ -1,4 +1,4 @@
-package com.web.app.domain.CouAnswerLogin;
+package com.web.app.domain.couAnswerLogin;
 
 import java.io.Serializable;
 

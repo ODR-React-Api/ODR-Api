@@ -2,7 +2,7 @@ package com.web.app.mapper;
 
 import java.util.List;
 
-import com.web.app.domain.CouAnswerLogin.CasesByCid;
+import com.web.app.domain.couAnswerLogin.CasesByCid;
 
 public interface CasesByCidMapper {
 

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import com.web.app.controller.CouAnswerLoginController;
-import com.web.app.domain.GetReplies;
+import com.web.app.domain.answerLogin.GetReplies;
 import com.web.app.domain.GetRepliesContext;
 import com.web.app.mapper.GetRepliesContextMapper;
 import com.web.app.service.GetRepliesContextService;

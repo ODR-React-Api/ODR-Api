@@ -44,7 +44,7 @@ public class UserLoginController {
      * @throws Exception エラーの説明内容
      */
     @SuppressWarnings("rawtypes")
-    @ApiOperation("会員登録取得")
+    @ApiOperation("ケース詳細取得")
     @GetMapping("/getPreUserData")
     public Response getPreUserData(String guid) {
         try {

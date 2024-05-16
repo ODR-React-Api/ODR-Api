@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetRepliesMapper">
 
-    <resultMap id="getGetRepliesResultMap" type="com.web.app.domain.GetReplies">
+    <resultMap id="getGetRepliesResultMap" type="com.web.app.domain.answerLogin.GetReplies">
         <result column="replyType" jdbcType="VARCHAR" property="replyType" />
         <result column="replyContext" jdbcType="VARCHAR" property="replyContext" />
         <result column="HaveCounterClaim" jdbcType="VARCHAR" property="HaveCounterClaim" />

@@ -6,7 +6,7 @@
     <resultMap id="getPreUserDataResultMap" type="com.web.app.domain.userLogin.GetPreUserData">
     <result column="email" jdbcType="VARCHAR" property="email" />
     </resultMap>
-    <!-- TBL「ユーザ仮登録（odr_users_pre）」の新規登録 -->    
+    <!-- TBL「ユーザ仮登録（odr_users_pre）」のデータ取得 -->    
     <select id="getUserPre" resultMap="getPreUserDataResultMap">
         SELECT
             email
