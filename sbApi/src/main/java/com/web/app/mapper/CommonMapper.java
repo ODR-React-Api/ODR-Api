@@ -10,6 +10,13 @@ import com.web.app.domain.Entity.MasterPlatforms;
 import com.web.app.domain.Entity.MasterTypes;
 import com.web.app.domain.Entity.OdrUsers;
 
+/**
+ * 工具類Mapper
+ * 
+ * @author DUC 耿浩哲
+ * @since 2024/04/17
+ * @version 1.0
+ */
 @Mapper
 public interface CommonMapper {
 
