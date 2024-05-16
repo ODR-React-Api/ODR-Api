@@ -13,74 +13,74 @@ import lombok.Data;
 public class CaseRelations {
 
     // ID
-    public String id;
+    private String id;
 
     // 案件ID
-    public String CaseId;
+    private String CaseId;
     
     // 申立Id
-    public String CasePetition;
+    private String CasePetition;
     
     // プラットフォームID
-    public String PlatformId;
+    private String PlatformId;
     
     // 申立て人
-    public String PetitionUserId;
+    private String PetitionUserId;
     
     // 申立て人入力情報
-    public String PetitionUserInfo_Email;
+    private String PetitionUserInfo_Email;
     
     // 代理人1
-    public String Agent1_Email;
+    private String Agent1_Email;
     
     // 代理人2
-    public String Agent2_Email;
+    private String Agent2_Email;
     
     // 代理人3
-    public String Agent3_Email;
+    private String Agent3_Email;
     
     // 代理人4
-    public String Agent4_Email;
+    private String Agent4_Email;
     
     // 代理人5
-    public String Agent5_Email;
+    private String Agent5_Email;
     
     // 相手方メール
-    public String TraderUserEmail;
+    private String TraderUserEmail;
     
     // 相手方代理人1
-    public String TraderAgent1_UserEmail;
+    private String TraderAgent1_UserEmail;
     
     // 相手方代理人2
-    public String TraderAgent2_UserEmail;
+    private String TraderAgent2_UserEmail;
     
     // 相手方代理人3
-    public String TraderAgent3_UserEmail;
+    private String TraderAgent3_UserEmail;
     
     // 相手方代理人4
-    public String TraderAgent4_UserEmail;
+    private String TraderAgent4_UserEmail;
     
     // 相手方代理人5
-    public String TraderAgent5_UserEmail;
+    private String TraderAgent5_UserEmail;
     
     // 調停人
-    public String MediatorUserEmail;
+    private String MediatorUserEmail;
 
-    public String ArbitrationUserEmail;
+    private String ArbitrationUserEmail;
     
-    public String Other01;
+    private String Other01;
     
-    public String Other02;
+    private String Other02;
     
-    public String Other03;
+    private String Other03;
     
-    public String Other04;
+    private String Other04;
     
-    public String Other05;
+    private String Other05;
     
-    public Integer DeleteFlag;
+    private Integer DeleteFlag;
     
-    public String LastModifiedDate;
+    private String LastModifiedDate;
     
-    public String LastModifiedBy;
+    private String LastModifiedBy;
 }
