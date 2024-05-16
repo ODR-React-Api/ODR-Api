@@ -18,7 +18,7 @@ import com.web.app.service.AnswerLoginService;
 @Service
 public class AnswerLoginServiceImpl  implements AnswerLoginService {
     @Autowired
-    private GetRepliesDataMapper getRepliesMapper;
+    private GetRepliesDataMapper getRepliesDataMapper;
     
     /**
      * 反訴・回答データ取得
@@ -31,7 +31,7 @@ public class AnswerLoginServiceImpl  implements AnswerLoginService {
     @Override
     public List<GetReplies> getReplies(String CaseId,String PlatformId) {
         List<GetReplies> list = new ArrayList<GetReplies>();
-        list = getRepliesMapper.getReplies(CaseId,PlatformId);
+        list = getRepliesDataMapper.getReplies(CaseId,PlatformId);
         return list;
     }
 }

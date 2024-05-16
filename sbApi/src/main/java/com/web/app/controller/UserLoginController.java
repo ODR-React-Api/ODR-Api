@@ -34,7 +34,7 @@ public class UserLoginController {
     DataSource dataSource;
 
     @Autowired
-    private UserLoginService getPreUserDataService;
+    private UserLoginService userLoginService;
 
     /**
      * API_ID:ケース詳細取得
@@ -49,11 +49,11 @@ public class UserLoginController {
     public Response getPreUserData(String guid) {
         try {
             List<GetPreUserData> userPreList = new ArrayList<GetPreUserData>();
-            userPreList = getPreUserDataService.getUserPre(guid);
+            userPreList = userLoginService.getUserPre(guid);
             return AjaxResult.success("请求成功", userPreList);
         } catch (Exception e) {
             AjaxResult.fatal("查询失败!", e);
             return null;
         }
     }
-}
+} 

@@ -33,7 +33,7 @@ public class AnswerLoginController {
     DataSource dataSource;
 
     @Autowired
-    private AnswerLoginService getRepliesService;
+    private AnswerLoginService answerLoginService;
 
     /**
      * API_ID:反訴・回答データ取得
@@ -48,7 +48,7 @@ public class AnswerLoginController {
     public Response getReplies(String CaseId, String PlatformId) {
         try {
             List<GetReplies> userRepliesList = new ArrayList<GetReplies>();
-            userRepliesList = getRepliesService.getReplies(CaseId, PlatformId);
+            userRepliesList = answerLoginService.getReplies(CaseId, PlatformId);
             return AjaxResult.success("请求成功", userRepliesList);
         } catch (Exception e) {
             AjaxResult.fatal("查询失败!", e);
