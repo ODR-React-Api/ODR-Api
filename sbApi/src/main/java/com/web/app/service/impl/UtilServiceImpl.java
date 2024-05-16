@@ -20,6 +20,7 @@ import com.web.app.domain.Entity.MasterPlatforms;
 import com.web.app.domain.Entity.MasterTypes;
 import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.domain.constants.Constants;
+import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.util.SendMailRequest;
 import com.web.app.domain.util.SendMailTemplate;
 import com.web.app.mapper.CommonMapper;
@@ -159,7 +160,7 @@ public class UtilServiceImpl implements UtilService {
                     sendMailTemplateJp.setPlainText(mailTemplates.get(i).getTextContent());
                     sendMailTemplateJp.setFromEmail(mailTemplates.get(i).getSendFromMail());
                     sendMailTemplateJp.setFromName(mailTemplates.get(i).getSendFromName());
-                    sendMailTemplateJp.setLanguageId("jp");
+                    sendMailTemplateJp.setLanguageId(Constants.JP);
                 }
             }
 
@@ -193,7 +194,7 @@ public class UtilServiceImpl implements UtilService {
 
             request.getParameter().add(Constants.HELP_URL);
 
-            if("M003".equals(request.getTempId())) {
+            if(MailConstants.MailId_M003.equals(request.getTempId())) {
                 request.getParameter().add(sendMailTemplateJp.getFromEmail());
             }
 
