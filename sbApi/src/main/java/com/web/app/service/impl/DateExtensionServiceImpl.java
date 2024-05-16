@@ -9,6 +9,8 @@ import com.web.app.service.DateExtensionService;
 /**
  * 期日延長画面
  * 
+ * 交渉中の相手に、一回だけ交渉期日の延長申請を行うことができる。
+ * 
  * @author DUC 徐義然
  * @since 2024/05/15
  * @version 1.0

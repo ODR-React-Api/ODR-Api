@@ -2,7 +2,7 @@ package com.web.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,8 +38,8 @@ public class DateExtensionController {
      * @return 交渉期限延長可能日数
      */
     @ApiOperation("交渉期限延長可能日数取得")
-    @PostMapping("/getNegotiationExtendDays")
-    public String getNegotiationExtendDays(@RequestBody String platformId){
+    @GetMapping("/getNegotiationExtendDays")
+    public String getNegotiationExtendDays(String platformId){
         System.out.println(platformId);
         return dateExtensionService.getNegotiationExtendDays(platformId);
     }

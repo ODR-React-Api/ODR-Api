@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdCaseCancelDateMapper">
+    <update id="updCaseCancelDate">
+        UPDATE cases
+        SET
+            CaseStage = 4,
+            CaseStatus = '0400',
+            CancelDate = #{cancelDate},
+            ResolutionDate = #{resolutionDate},
+            ResolutionFlag = 0
+        WHERE
+            cid = #{mediationId}
+    </update>
+</mapper>
