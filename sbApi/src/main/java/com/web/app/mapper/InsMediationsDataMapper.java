@@ -1,15 +1,19 @@
 package com.web.app.mapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.web.app.domain.Entity.CaseMediations;
+import com.web.app.domain.Entity.Files;
 import com.web.app.domain.mediationsMake.InsMediationsData;
 
 @Mapper
 public interface InsMediationsDataMapper {
     int insMediationsData2(CaseMediations CaseMediations);
+
+    ArrayList<Files> insertFiles(Files insertFiles);
 
     CaseMediations mediationCount(InsMediationsData mediationcase);
 

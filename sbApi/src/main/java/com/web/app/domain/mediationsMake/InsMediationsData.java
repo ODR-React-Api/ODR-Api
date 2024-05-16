@@ -1,6 +1,10 @@
 package com.web.app.domain.mediationsMake;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.web.app.domain.Entity.Files;
 
 import lombok.Data;
 
@@ -8,6 +12,8 @@ import lombok.Data;
 public class InsMediationsData implements Serializable {
     // 缓冲
     private static final long serialVersionUID = 1L;
+    // 提出ユーザ
+    private String Uid;
 
     // 案件ID
     private String CaseId;
@@ -44,5 +50,7 @@ public class InsMediationsData implements Serializable {
 
     //反訴
     private Integer Counterclaim;
+
+    private ArrayList<Files> insertFiles;
 
 }

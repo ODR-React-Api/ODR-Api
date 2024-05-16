@@ -1,7 +1,5 @@
 package com.web.app.controller;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +11,14 @@ import com.web.app.domain.mediationsMake.InsMediationsData;
 import com.web.app.service.MediationsMakeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import com.web.app.domain.Entity.CaseMediations;
 
+/**
+ * 調停案データ新規登録
+ * 
+ * @author DUC 賈文志
+ * @since 2024/05/16
+ * @version 1.0
+ */
 @CrossOrigin(origins = "*")
 @Api(tags = "調停案作成模块")
 @RestController
@@ -23,13 +27,20 @@ public class MediationsMakeController {
     @Autowired
     private MediationsMakeService mediationsMakeService;
 
+    /**
+     * 
+     * 調停案データ新規登録
+     * 
+     * @param insMediationsData 
+     * @return 調停案データ新規登録成功
+     * @throws Exception 調停案データ新規登録失敗
+     */
     @ApiOperation("調停案データ新規登録")
     @PostMapping("/InsMediationsData")
     public int InsMediationsData(@RequestBody InsMediationsData insMediationsData) {
         try {
-            
-            int InsMediationsData =mediationsMakeService.insMediationsData(insMediationsData); 
-
+            //調停案データ新規登録
+            int InsMediationsData = mediationsMakeService.insMediationsData(insMediationsData);
             return InsMediationsData;
         } catch (Exception e) {
             return 0;

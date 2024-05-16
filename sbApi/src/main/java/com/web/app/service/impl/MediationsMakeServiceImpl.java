@@ -2,14 +2,12 @@ package com.web.app.service.impl;
 
 import java.util.ArrayList;
 import java.util.UUID;
-
-import org.apache.commons.lang.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.web.app.service.MediationsMakeService;
 import com.web.app.domain.Entity.CaseMediations;
+import com.web.app.domain.Entity.Files;
 import com.web.app.domain.mediationsMake.InsMediationsData;
 import com.web.app.mapper.InsMediationsDataMapper;;
 
@@ -68,6 +66,24 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             // 「調停案」は、レコード新規登録（insert）で行う
             int MediationcaseInsert = mediationcaseMapper.insMediationsData2(caseMediations);
 
+            if (MediationcaseInsert == 1) {
+                // フロントから転送されたファイルデータを保存する
+                ArrayList<Files> filesData = insMediationsData.getInsertFiles();
+                // ファイルデータを巡回して個別にログインする
+                System.out.println("FilesLength=" + filesData.size());
+                for (int i = 0; i < filesData.size(); i++) {
+                    UUID filesId = UUID.randomUUID();
+                    String filesid = filesId.toString().replaceAll("-", "");
+                    filesData.get(i).setId(filesid);
+                    filesData.get(i).setPlatformId(insMediationsData.getPlatformId());
+                    filesData.get(i).setCaseId(insMediationsData.getCaseId());
+                    filesData.get(i).setRegisterUserId(insMediationsData.getUid());
+                    filesData.get(i).setDeleteFlag(0);
+                    filesData.get(i).setLastModifiedBy(insMediationsData.getUid());
+                    
+                    ArrayList<Files> insertFiles = mediationcaseMapper.insertFiles(filesData.get(i));
+                }
+            }
             a = 3;
             // 「案件-添付ファイルリレーション」は、添付ファイルの数に等しいレコード新規登録(insert)で行う
             // 「添付ファイル」は、添付ファイルの数に等しいレコード新規登録(insert)で行う
