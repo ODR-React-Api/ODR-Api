@@ -9,6 +9,7 @@ import com.web.app.service.CouAnswerLoginService;
 import com.web.app.tool.AjaxResult;
 import com.web.app.domain.Response;
 import com.web.app.domain.couAnswerLogin.GetRepliesContext;
+import com.web.app.domain.couAnswerLogin.CasesByCid;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.sql.DataSource;
@@ -55,6 +56,28 @@ public class CouAnswerLoginController {
             return null;
         }
     }
+
+    /**
+     * API_ID:ケース詳細取得
+     *
+     * @param CaseId,PlatformId セッション情報より渡された引数
+     * @return Response
+     * @throws Exception エラーの説明内容
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("案件データ取得")
+    @GetMapping("/getCasesByCid")
+    public Response casesByCid(String CaseId, String PlatformId) {
+        try {
+            List<CasesByCid> userContextList = new ArrayList<CasesByCid>();
+            userContextList = couAnswerLoginService.casesByCid(CaseId, PlatformId);
+            return AjaxResult.success("请求成功", userContextList);
+        } catch (Exception e) {
+            AjaxResult.fatal("查询失败!", e);
+            return null;
+        }
+    }
+
 }
 
 
