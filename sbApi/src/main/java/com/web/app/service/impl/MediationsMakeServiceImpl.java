@@ -56,7 +56,6 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             } else {
                 caseMediations.setCounterClaimPayment(null);
             }
-
             caseMediations.setPaymentEndDate(insMediationsData.getPaymentEndDate());
             caseMediations.setShipmentPayType(insMediationsData.getShipmentPayType());
             caseMediations.setSpecialItem(insMediationsData.getSpecialItem());
@@ -82,9 +81,8 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                     filesData.get(i).setRegisterDate(insMediationsData.getRegisterDate());
                     filesData.get(i).setLastModifiedDate(insMediationsData.getLastModifiedDate()); 
                     filesData.get(i).setLastModifiedBy(insMediationsData.getUid());  
+                    //List内のデータを巡回して1つずつログインする
                     int insertFiles = mediationcaseMapper.insertFiles(filesData.get(i));
-
-                    int b=insertFiles;
                 }
             }
             a = 3;
