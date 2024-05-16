@@ -90,6 +90,7 @@ public class UserInfoConfirmServiceImpl implements UserInfoConfirmService {
             sendMailRequest.setUserId(Constants.REGISTERUSER_SENDMAIL_USERID);
             sendMailRequest.setControlType(Constants.REGISTERUSER_SENDMAIL_CONTROLTYPE);
 
+            System.out.println("jkdhfoadhoifhd" + sendMailRequest.getParameter());
             boolean bool = utilService.SendMail(sendMailRequest);
 
             // 送信が成功したかどうかを判断する

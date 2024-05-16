@@ -111,7 +111,7 @@ public class Constants {
     public static final int STR_ODR_USERS_INSERT_TERMSCONFIRMED = 1;
     public static final int STR_ODR_USERS_INSERT_USERTYPE = 0;
     public static final int STR_ODR_USERS_INSERT_DELETEFLAG = 0;
-    public static final String STR_ODR_USERS_INSERT_PLATFORMID = "1";
+    public static final String STR_ODR_USERS_INSERT_PLATFORMID = "0001";
     public static final String STR_ODR_USERS_INSERT_LANGUAGEID = "JP";
     public static final String REGISTERUSER_MAILID_M002_URL = "http://localhost:3000/";
     public static final String REGISTERUSER_SENDMAIL_USERID = "ODR_Front";
