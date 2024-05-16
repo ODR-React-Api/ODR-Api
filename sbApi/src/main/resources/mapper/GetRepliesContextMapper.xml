@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetRepliesContextMapper">
 
-    <resultMap id="getRepliesContextResultMap" type="com.web.app.domain.GetRepliesContext">
+    <resultMap id="getRepliesContextResultMap" type="com.web.app.domain.couAnswerLogin.GetRepliesContext">
         <result column="CounterClaimContext" jdbcType="VARCHAR" property="CounterClaimContext" />
         <result column="FileName" jdbcType="VARCHAR" property="FileName" />
         <result column="FileUrl" jdbcType="VARCHAR" property="FileUrl" />
