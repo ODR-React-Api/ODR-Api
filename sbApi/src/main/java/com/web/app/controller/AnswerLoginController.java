@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.web.app.domain.answerLogin.GetReplies;
-import com.web.app.service.GetRepliesService;
+import com.web.app.service.AnswerLoginService;
 import com.web.app.domain.Response;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
@@ -33,7 +33,7 @@ public class AnswerLoginController {
     DataSource dataSource;
 
     @Autowired
-    private GetRepliesService getRepliesService;
+    private AnswerLoginService getRepliesService;
 
     /**
      * API_ID:反訴・回答データ取得

@@ -2,8 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.GetRepliesMapper">
-
+<mapper namespace="com.web.app.mapper.GetRepliesDataMapper">
     <resultMap id="getGetRepliesResultMap" type="com.web.app.domain.answerLogin.GetReplies">
         <result column="replyType" jdbcType="VARCHAR" property="replyType" />
         <result column="replyContext" jdbcType="VARCHAR" property="replyContext" />
@@ -17,7 +16,6 @@
         <result column="FileName" jdbcType="VARCHAR" property="FileName" />
         <result column="FileUrl" jdbcType="VARCHAR" property="FileUrl" />
     </resultMap>
-
     <select id="getReplies" resultMap="getGetRepliesResultMap">
         SELECT
             c.replyType,

@@ -30,5 +30,5 @@ public class UserLoginServiceImpl implements UserLoginService {
         List<GetPreUserData> list = new ArrayList<GetPreUserData>();
         list = getPreUserDataMapper.getUserPre(guid);
         return list;
-    }
+   }
 }
