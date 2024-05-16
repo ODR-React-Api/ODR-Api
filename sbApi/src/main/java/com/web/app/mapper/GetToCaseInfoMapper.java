@@ -12,8 +12,8 @@ import org.apache.ibatis.annotations.Mapper;
  * @version 1.0
  */
 @Mapper
-public interface GetCaseInfoMapper {
+public interface GetToCaseInfoMapper {
 
     Date getCaseInfo(String CaseId, String PlatformId);
-    
+
 }
