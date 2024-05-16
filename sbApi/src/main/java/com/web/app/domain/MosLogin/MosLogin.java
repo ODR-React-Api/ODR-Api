@@ -11,7 +11,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class PictureDisplay implements Serializable {
+public class MosLogin implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //「API_画面制御表示項目取得」の戻り値

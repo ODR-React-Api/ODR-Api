@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-
+import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.web.app.domain.Entity.MasterPlatforms;
@@ -146,6 +146,8 @@ public class MosLoginServiceImpl implements MosLoginService {
     public GetPetitionTemp getPetitionsTemp(SessionInfo sessionInfo) {
         // 申立て下書き保存データ取得内容
         GetPetitionTemp petitionInfoList1 = new GetPetitionTemp();
+        // 申立人情報取得内容
+        OdrUsers getPetitionInfo = new OdrUsers();
 
         // TBL「案件別個人情報リレーション（case_relations）」とTBL「申立（case_petitions）」より関連ユーザの下書き保存のデータを取得する。
         PetitionTemp petitionsTemp = getPetitionsTempMapper.selectPetitionsTemp(sessionInfo.getSessionId());
@@ -191,22 +193,24 @@ public class MosLoginServiceImpl implements MosLoginService {
         }
 
         // TBL「ユーザ（odr_users）」より申立人情報を取得する
-        // 申立人情報を取得する
-        OdrUsers getPetitionInfo = getPetitionsTempMapper.selectOdrUsers(sessionInfo.getSessionId(),
-                petitionsTemp.getPetitionUserInfo_Email());
-        // 画面表示項目.お問い合わせをされる方についての情報の氏名の名
-        petitionInfoList1.setFirstName(getPetitionInfo.getFirstName());
-        // 画面表示項目.お問い合わせをされる方についての情報の氏名の姓
-        petitionInfoList1.setLastName(getPetitionInfo.getLastName());
-        // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の名
-        petitionInfoList1.setFirstName_kana(getPetitionInfo.getFirstName_kana());
-        // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の姓
-        petitionInfoList1.setLastName_kana(getPetitionInfo.getLastName_kana());
-        // 画面表示項目.お問い合わせをされる方についての情報の所属会社
-        petitionInfoList1.setCompanyName(getPetitionInfo.getCompanyName());
+        if (petitionsTemp.getPetitionUserInfo_Email() != null) {
+            // 申立人情報を取得する
+            getPetitionInfo = getPetitionsTempMapper.selectOdrUsers(sessionInfo.getSessionId(),
+                    petitionsTemp.getPetitionUserInfo_Email());
+            // 画面表示項目.お問い合わせをされる方についての情報の氏名の名
+            petitionInfoList1.setFirstName(getPetitionInfo.getFirstName());
+            // 画面表示項目.お問い合わせをされる方についての情報の氏名の姓
+            petitionInfoList1.setLastName(getPetitionInfo.getLastName());
+            // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の名
+            petitionInfoList1.setFirstName_kana(getPetitionInfo.getFirstName_kana());
+            // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の姓
+            petitionInfoList1.setLastName_kana(getPetitionInfo.getLastName_kana());
+            // 画面表示項目.お問い合わせをされる方についての情報の所属会社
+            petitionInfoList1.setCompanyName(getPetitionInfo.getCompanyName());
+        }
 
         // 上記画面表示項目（画面上で必須となっている項目）取得有り（Nullでない）場合、下記の下書き案件のファイルIDと拡張項目内容取得を行う。
-        if (petitionsTemp != null && getPetitionInfo != null) {
+        if (petitionsTemp.getProductName() != null && getPetitionInfo.getFirstName() != null) {
             // TBL「案件-添付ファイルリレーション（case_file_relations）」より関連下書き案件のファイルIDを取得する。
             List<FileId> getFileId = getPetitionsTempMapper.selectFileId(petitionsTemp.getCasePetition());
             if (getFileId.size() > 0) {
@@ -234,12 +238,12 @@ public class MosLoginServiceImpl implements MosLoginService {
     @Override
     public int insRepliesTemp(ScreenInfo screenInfo) {
         // システム日付(現時刻のUTC時間を取得)
-        Instant now = Instant.now(); 
+        Instant now = Instant.now();
         // 日付書式「yyyy/MM/dd HH:mm:ss」設定
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        //日付書式「yyyy/MM/dd HH:mm:ss」後UTC時間
+        // 日付書式「yyyy/MM/dd HH:mm:ss」後UTC時間
         String sysDate = now.atOffset(ZoneOffset.UTC).format(formatter);
-        System.out.println("システム日付"+sysDate);
+        System.out.println("システム日付" + sysDate);
 
         // ⓵ユーザ情報の取得
         OdrUsers userInfo = insRepliesTempMapper.selectOdrUsers(screenInfo.getSessionId());
@@ -279,14 +283,14 @@ public class MosLoginServiceImpl implements MosLoginService {
                 // 自動採番のid（Guid取得）
                 String fileMaxId1 = utilService.GetGuid();
 
-                //共通関数「TBL「添付ファイル（files）」の登録」
+                // 共通関数「TBL「添付ファイル（files）」の登録」
                 int insertNum1 = insertFiles(fileMaxId1, userInfo, screenInfo, sysDate);
                 if (insertNum1 == 0) {
                     return 0;
                 }
 
                 // ⓺画面上添付ファイルがなくなるまで、TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する。
-                //共通関数「TBL「案件-添付ファイルリレーション（case_file_relations）」の登録」
+                // 共通関数「TBL「案件-添付ファイルリレーション（case_file_relations）」の登録」
                 int insertNum2 = insertCaseFileRelations(userInfo, case_petitions_id, fileMaxId1, sysDate, screenInfo);
                 if (insertNum2 == 0) {
                     return 0;
@@ -296,7 +300,7 @@ public class MosLoginServiceImpl implements MosLoginService {
             if (screenInfo.getPetitionTypeDisplayName().size() > 0) {
                 // 画面上拡張項目遍历
                 for (int i = 0; i < screenInfo.getPetitionTypeDisplayName().size(); i++) {
-                    // 検索条件用数据初始化
+                    // 検索条件用数据初期化
                     CaseExtensionitemValues CaseExtensionitemValues1 = new CaseExtensionitemValues();
                     // プラットフォームID
                     CaseExtensionitemValues1.setPlatformId(userInfo.getPlatformId());
@@ -309,9 +313,9 @@ public class MosLoginServiceImpl implements MosLoginService {
                     // 既存の拡張項目内容を取得
                     ScaleItems scaleItems = insRepliesTempMapper.selectScaleItemIdValue(CaseExtensionitemValues1);
 
-                    // 取得したデータがある場合、2)へ(データを更新)
+                    // 取得したデータがある場合、データを更新
                     if (scaleItems != null) {
-                        // 更新用数据初始化
+                        // 更新用数据初期化
                         CaseExtensionitemValues CaseExtensionitemValues2 = new CaseExtensionitemValues();
                         // プラットフォームID
                         CaseExtensionitemValues2.setPlatformId(userInfo.getPlatformId());
@@ -334,11 +338,11 @@ public class MosLoginServiceImpl implements MosLoginService {
                         if (updateNum3 == 0) {
                             return 0;
                         }
-                        // 取得したデータがないの場合、3)へ(データを登録)
+                        // 取得したデータがないの場合、データを登録
                     } else {
                         // 自動採番のid（Guid取得）
                         String caseExtensionitemValuesMaxId1 = utilService.GetGuid();
-                        // 更新用数据初始化
+                        // 更新用数据初期化
                         CaseExtensionitemValues CaseExtensionitemValues3 = new CaseExtensionitemValues();
                         // ID
                         CaseExtensionitemValues3.setId(caseExtensionitemValuesMaxId1);
@@ -368,17 +372,80 @@ public class MosLoginServiceImpl implements MosLoginService {
         }
         return 1;
     }
+
+    /**
+     * API_販売者・商品情報仮取得
+     * 画面項目の「商品ＩＤ」に入力した値をキーに、本APIに固定値で設定している購入商品、販売者、販売者メールアドレスを取得する。
+     * 取得無しの場合は空値を返す。
+     *
+     * @param goodsId 画面.商品ID
+     * @return goodsInfo 販売者・商品情報仮取得内容
+     */
+    @Override
+    public HashMap<String, String> getGoodsInfo(String goodsId) {
+        // 販売者・商品情報仮取得内容初期化
+        HashMap<String, String> goodsInfo = new HashMap<>();
+        // 商品辞書の内容初期化
+        HashMap<String, String> goodsName = new HashMap<>();
+        // 販売者メアド辞書の内容初期化
+        HashMap<String, String> sellerEmail = new HashMap<>();
+        // 販売者辞書の内容初期化
+        HashMap<String, String> sellerName = new HashMap<>();
+
+        // 取得した商品名
+        String goodsname;
+        // 取得した販売者メールアドレス
+        String email;
+        // 取得した販売者名
+        String name;
+
+        // ①商品辞書の定義
+        goodsName.put("SH0001", "ツヤ肌サプリメント");
+        goodsName.put("SH0002", "ダウンコード");
+        goodsName.put("SH0003", "パンホームベーカリー");
+        goodsName.put("SH0004", "美白肌ファンテーション");
+        goodsName.put("SH0005", "書きやすいボールペン");
+
+        // ②販売者メアド辞書の定義
+        // sellerEmail.put("SH0001", "aaa.111@yahoo.co.jp");
+        sellerEmail.put("SH0002", "bbb.222@gmail.com");
+        sellerEmail.put("SH0003", "ccc.333@qq.com");
+        sellerEmail.put("SH0004", "ddd.444@gmail.com");
+        sellerEmail.put("SH0005", "eee.555@icloud.com");
+
+        // ③販売者辞書の定義
+        sellerName.put("aaa.111@yahoo.co.jp", "渡部　順");
+        sellerName.put("bbb.222@gmail.com", "大野　花子");
+        sellerName.put("ccc.333@qq.com", "さくら　商店");
+        sellerName.put("ddd.444@gmail.com", "ABCマート");
+        sellerName.put("eee.555@icloud.com", "ドン・キホーテ");
+
+        // ④画面.商品IDをキーに商品辞書から対応する商品名を取得する
+        goodsname = goodsName.get(goodsId);
+        // ⑤画面.商品IDをキーに販売者メアド辞書から対応する販売者メールアドレスを取得する
+        email = sellerEmail.get(goodsId);
+        // ⑤で取得した販売者メアド辞書.販売者メールアドレスをキーに販売者辞書から販売者名を取得する。
+        name = sellerName.get(email);
+
+        // 販売者・商品情報仮取得内容
+        goodsInfo.put("goodsName", goodsname);
+        goodsInfo.put("sellerEmail", email);
+        goodsInfo.put("sellerName", name);
+
+        return goodsInfo;
+    }
+
     /**
      * 共通関数「TBL「申立（case_petitions）」の更新」
      *
-     * @param OdrUsers　String　ScreenInfo　更新必要の引数
+     * @param OdrUsers String ScreenInfo 更新必要の引数
      * @return int TBL「申立（case_petitions）更新成功の件数
      */
     private int updateCasePetitions(ScreenInfo screenInfo, String case_petitions_id, OdrUsers userInfo) {
-        //共通関数「購入日のString日付をUTC時間に変換する」
+        // 共通関数「購入日のString日付をUTC時間に変換する」
         String dateString = stringToUtc(screenInfo.getCommoditydate());
-            
-        // 更新用数据初始化
+
+        // 更新用数据初期化
         CasePetitions casePetitions = new CasePetitions();
         // ID
         casePetitions.setId(case_petitions_id);
@@ -411,17 +478,18 @@ public class MosLoginServiceImpl implements MosLoginService {
         int updateNum1 = insRepliesTempMapper.casePetitionsUpd(casePetitions);
         return updateNum1;
     }
+
     /**
      * 共通関数「TBL「案件別個人情報リレーション（case_relations）」の更新」
      *
-     * @param OdrUsers　String　ScreenInfo　更新必要の引数
+     * @param OdrUsers String ScreenInfo 更新必要の引数
      * @return int TBL「案件別個人情報リレーション（case_relations）」の更新成功の件数
      */
     private int updateCaseRelations(String case_petitions_id, String case_relations_PetitionUserId, OdrUsers userInfo,
             ScreenInfo screenInfo) {
         // 自動採番のid（Guid取得）
         String id = utilService.GetGuid();
-        // 更新用数据初始化
+        // 更新用数据初期化
         CaseRelations caseRelations = new CaseRelations();
         // ID
         caseRelations.setId(id);
@@ -451,14 +519,14 @@ public class MosLoginServiceImpl implements MosLoginService {
         return updateNum2;
     }
 
-        /**
+    /**
      * 共通関数「TBL「添付ファイル（files）」の登録」
      *
-     * @param OdrUsers　String　ScreenInfo　登録必要の引数
+     * @param OdrUsers String ScreenInfo 登録必要の引数
      * @return int TBL「添付ファイル（files）」の登録成功の件数
      */
     private int insertFiles(String fileMaxId1, OdrUsers userInfo, ScreenInfo screenInfo, String sysDate) {
-        // 登録用数据初始化
+        // 登録用数据初期化
         Files files = new Files();
         // ID
         files.setId(fileMaxId1);
@@ -485,10 +553,10 @@ public class MosLoginServiceImpl implements MosLoginService {
         return insertNum1;
     }
 
-        /**
+    /**
      * 共通関数「TBL「案件-添付ファイルリレーション（case_file_relations）」の登録」
      *
-     * @param OdrUsers　String　ScreenInfo　登録必要の引数
+     * @param OdrUsers String ScreenInfo 登録必要の引数
      * @return int TBL「案件-添付ファイルリレーション（case_file_relations）」の登録成功の件数
      */
     private int insertCaseFileRelations(OdrUsers userInfo, String case_petitions_id, String fileMaxId1, String sysDate,
@@ -496,7 +564,7 @@ public class MosLoginServiceImpl implements MosLoginService {
 
         // 自動採番のid（Guid取得）
         String caseFileRelationsMaxId1 = utilService.GetGuid();
-        // 登録用数据初始化
+        // 登録用数据初期化
         CaseFileRelations caseFileRelations = new CaseFileRelations();
         // ID
         caseFileRelations.setId(caseFileRelationsMaxId1);
@@ -515,24 +583,24 @@ public class MosLoginServiceImpl implements MosLoginService {
         return insertNum2;
     }
 
-     /**
+    /**
      * 共通関数「購入日のString日付をUTC時間に変換する」
      *
      * @param String 変換前のString日付
      * @return String 変換後のUTC時間
      */
-    private String  stringToUtc(String Commoditydate) {
+    private String stringToUtc(String Commoditydate) {
         try {
-            //String日付をDate日付に変換
+            // String日付をDate日付に変換
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = dateFormat.parse(Commoditydate);
 
-            //Date日付をUTC時間に変換
+            // Date日付をUTC時間に変換
             SimpleDateFormat utcFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             String utcDateString = utcFormat.format(date);
- 
-            System.out.println(utcDateString); 
+
+            System.out.println(utcDateString);
             return utcDateString;
         } catch (Exception e) {
             e.printStackTrace();

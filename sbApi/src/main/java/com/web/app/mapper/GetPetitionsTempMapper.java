@@ -7,6 +7,16 @@ import com.web.app.domain.MosLogin.FileId;
 import com.web.app.domain.MosLogin.PetitionTemp;
 import com.web.app.domain.MosLogin.ScaleItems;
 
+/**
+ * S8_申立登録画面
+ * Mapper層
+ * GetPetitionsTempMapper
+ * API_申立て下書き保存データ取得
+ * 
+ * @author DUC 馮淑慧
+ * @since 2024/04/25
+ * @version 1.0
+ */
 @Mapper
 public interface GetPetitionsTempMapper {
 

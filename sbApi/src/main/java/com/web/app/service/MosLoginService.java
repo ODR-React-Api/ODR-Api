@@ -1,5 +1,6 @@
 package com.web.app.service;
 
+import java.util.HashMap;
 import com.web.app.domain.MosLogin.GetPetitionTemp;
 import com.web.app.domain.MosLogin.GetPlatform;
 import com.web.app.domain.MosLogin.ScreenInfo;
@@ -24,5 +25,8 @@ public interface MosLoginService {
 
     // API_申立て下書きデータ登録
     int insRepliesTemp(ScreenInfo screenInfo);
+
+    // API_販売者・商品情報仮取得
+    HashMap<String, String> getGoodsInfo(String goodsId);
 
 }
