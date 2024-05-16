@@ -8,7 +8,7 @@ import lombok.Data;
  * テーブル名：questionnaire_resultsアンケート入力結果
  * 
  * @author DUC 張明慧
- * @since 2024/05/10
+ * @since 2024/05/16
  * @version 1.0
  */
 @Data
