@@ -10,21 +10,29 @@ import com.web.app.domain.Entity.MasterPlatforms;
 import com.web.app.domain.Entity.MasterTypes;
 import com.web.app.domain.Entity.OdrUsers;
 
+/**
+ * 工具類Mapper
+ * 
+ * @author DUC 耿浩哲
+ * @since 2024/04/17
+ * @version 1.0
+ */
 @Mapper
 public interface CommonMapper {
 
-    // 根据platformID查询platform信息
+    // platformIDによるplatform情報の照会
     MasterPlatforms FindMasterPlatforms(String platformId);
 
-    // 根据用户ID或用户邮箱查询用户信息
+    // ユーザーIDまたはユーザーメールボックスに基づいたユーザー情報の照会
     OdrUsers FindUserByUidOrEmail(String uid, String email, String platformId);
 
-    // 根据caseID查询案件信息
+    // caseIDによる案件情報の照会
     Cases FindCasesInfoByCid(String cid);
 
-    // 查询种类信息
+    // チェックボックスを取得する方法
     List<MasterTypes> FindMasterTypeName(String type, String languageId, String platformId);
 
-    // 取得邮件模板
+    // メールテンプレートの取得
     List<MailTemplates> FindMailTemplatesList(String platformId, String tempId);
+
 }
