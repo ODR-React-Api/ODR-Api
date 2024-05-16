@@ -1,7 +1,6 @@
 package com.web.app.domain;
 
 import java.io.Serializable;
-
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
