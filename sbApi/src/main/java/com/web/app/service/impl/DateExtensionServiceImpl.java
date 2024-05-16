@@ -5,7 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.mapper.GetCaseInfoMapper;
+import com.web.app.mapper.GetToCaseInfoMapper;
 import com.web.app.service.DateExtensionService;
 
 /**
@@ -19,7 +19,7 @@ import com.web.app.service.DateExtensionService;
 public class DateExtensionServiceImpl implements DateExtensionService {
 
     @Autowired
-    private GetCaseInfoMapper dateExtensionMapper;
+    private GetToCaseInfoMapper dateToExtensionMapper;
 
     /**
      * 案件情報取得API
@@ -31,6 +31,6 @@ public class DateExtensionServiceImpl implements DateExtensionService {
      */
     @Override
     public Date getCaseInfo (String CaseId, String PlatformId) throws Exception {
-        return dateExtensionMapper.getCaseInfo(CaseId, PlatformId);
+        return dateToExtensionMapper.getCaseInfo(CaseId, PlatformId);
     }
 }

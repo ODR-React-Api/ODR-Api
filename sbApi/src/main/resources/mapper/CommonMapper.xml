@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.CommonMapper">
-    <!-- 根据platformID查询platform信息 -->
+    <!-- platformIDによるplatform情報の照会 -->
     <select id="FindMasterPlatforms" resultType="com.web.app.domain.Entity.MasterPlatforms">
         SELECT
             *
@@ -16,7 +16,7 @@
             Id
     </select>
 
-    <!-- 根据用户ID或用户邮箱查询用户信息 -->
+    <!-- ユーザーIDまたはユーザーメールボックスに基づいたユーザー情報の照会 -->
     <select id="FindUserByUidOrEmail" resultType="com.web.app.domain.Entity.OdrUsers">
         SELECT
             *
@@ -41,7 +41,7 @@
             </choose>
             AND DeleteFlag = false
     </select>
-    <!-- 根据caseID查询案件信息 -->
+    <!-- caseIDによる案件情報の照会 -->
     <select id="FindCasesInfoByCid" resultType="com.web.app.domain.Entity.Cases">
         SELECT
             *
@@ -52,21 +52,41 @@
             AND DeleteFlag = false
     </select>
 
-    <!-- 查询种类信息 -->
+    <!-- チェックボックスを取得する方法 -->
     <select id="FindMasterTypeName" resultType="com.web.app.domain.Entity.MasterTypes">
         SELECT
-            *
+            Id,
+            platformId,
+            type,
+            Value,
+            DisplayName,
+            OrderNo,
+            Required,
+            IsActive,
+            LanguageId,
+            Creator,
+            CreateDate,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
         FROM
             master_types
         WHERE
-            LanguageId = #{languageId}
-            AND PlatformId = #{platformId}
-            AND Type = #{type}
+            platformId = #{platformId}
+            AND type = #{type}
+            AND IsActive = 1
+            AND LanguageId = #{languageId}
+            AND DeleteFlag = false
         ORDER BY
             OrderNo
     </select>
 
-    <!-- 取得邮件模板 -->
+    <!-- メールテンプレートの取得 -->
     <select id="FindMailTemplatesList" resultType="com.web.app.domain.Entity.MailTemplates">
         SELECT
             *

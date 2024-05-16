@@ -30,4 +30,6 @@ public interface UtilService {
     // 指定时间加天数
     Date AddDaysToDate(Date date, int days);
 
+    
+
 }
