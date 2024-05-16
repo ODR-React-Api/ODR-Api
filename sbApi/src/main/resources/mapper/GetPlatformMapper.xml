@@ -10,9 +10,6 @@
     <resultMap id="statusResultMap" type="com.web.app.domain.Entity.MasterPlatforms">
     </resultMap>
     <resultMap id="expandResultMap" type="com.web.app.domain.MosLogin.ExpandItems">
-        <result property="itemDisplayName" column="ItemDisplayName" jdbcType="VARCHAR"/>
-        <result property="itemType" column="ItemType" jdbcType="INTEGER"/>
-        <result property="isRequired" column="IsRequired" jdbcType="INTEGER"/>
     </resultMap>
     <!-- ユーザ情報を取得する -->
     <select id="selectOdrUsers"  resultMap="odrUsersResultMap">

@@ -3,13 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.InsRepliesTempMapper">
-    <resultMap id="odrUsersResultMap" type="com.web.app.domain.UserInfo">
-        <result property="languageId" column="LanguageId" jdbcType="VARCHAR"/>
-        <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
+    <resultMap id="odrUsersResultMap" type="com.web.app.domain.Entity.OdrUsers">
     </resultMap>
     <resultMap id="scaleItemsResultMap" type="com.web.app.domain.MosLogin.ScaleItems">
-        <result property="extensionitemId" column="ExtensionitemId" jdbcType="VARCHAR"/>
-        <result property="extensionitemValue" column="ExtensionitemValue" jdbcType="VARCHAR"/>
     </resultMap>
     <!-- ユーザ情報取得 -->
     <select id="selectOdrUsers" resultMap="odrUsersResultMap">
@@ -22,7 +18,7 @@
             Uid = #{sessionId}
     </select>
     <!-- TBL「申立（case_petitions）」更新 -->
-    <update id="casePetitionsUpd" parameterType="com.web.app.domain.InsRepliesTemp.CasePetitions">
+    <update id="casePetitionsUpd" parameterType="com.web.app.domain.Entity.CasePetitions">
         UPDATE case_petitions
         SET
             PlatformId = #{platformId},
@@ -41,15 +37,8 @@
             id = #{id}
             AND Status = 0
     </update>
-    <!-- 案件別個人情報リレーション（case_relations）のMAX（id）の取得 -->
-    <!-- <select id="selectMaxId" resultType="String">
-        select 
-            MAX(id) AS id
-        from 
-            case_relations
-    </select> -->
     <!-- TBL「案件別個人情報リレーション（case_relations）」更新 -->
-    <update id="caseRelationsUpd" parameterType="com.web.app.domain.InsRepliesTemp.CaseRelations">
+    <update id="caseRelationsUpd" parameterType="com.web.app.domain.Entity.CaseRelations">
         UPDATE case_relations
         SET
             id = #{id},
@@ -94,7 +83,7 @@
             AND RelatedId = #{case_petitions_id}
     </update>
     <!-- TBL「添付ファイル（files）」を新規登録する -->
-    <insert id="insertFiles" parameterType="com.web.app.domain.InsRepliesTemp.Files">
+    <insert id="insertFiles" parameterType="com.web.app.domain.Entity.Files">
         INSERT INTO files (
             id,
             PlatformId,
@@ -122,15 +111,8 @@
             #{lastModifiedBy}
         )
     </insert>
-    <!-- TBL「案件-添付ファイルリレーション（case_file_relations）」のMAX（id）の取得 -->
-    <!-- <select id="selectCaseFileRelationsMaxId" resultType="String">
-        select 
-            MAX(id) AS id
-        from 
-            case_file_relations
-    </select> -->
     <!-- TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する -->
-    <insert id="insertCaseFileRelations" parameterType="com.web.app.domain.InsRepliesTemp.CaseFileRelations">
+    <insert id="insertCaseFileRelations" parameterType="com.web.app.domain.Entity.CaseFileRelations">
         INSERT INTO case_file_relations (
             id,
             PlatformId,
@@ -153,7 +135,7 @@
         )
     </insert>
     <!-- 既存の拡張項目内容取得 -->
-    <select id="selectScaleItemIdValue" parameterType="com.web.app.domain.InsRepliesTemp.CaseExtensionitemValues" resultMap="scaleItemsResultMap">
+    <select id="selectScaleItemIdValue" parameterType="com.web.app.domain.Entity.CaseExtensionitemValues" resultMap="scaleItemsResultMap">
         SELECT
             ExtensionitemId,
             ExtensionitemValue
@@ -166,7 +148,7 @@
             AND ExtensionitemId = #{extensionitemId}
     </select>
     <!-- 拡張項目内容取得したデータがある場合、TBL「拡張項目設定値（case_extensionitem_values）」を更新 -->
-    <update id="updateCaseExtensionitemValues" parameterType="com.web.app.domain.InsRepliesTemp.CaseExtensionitemValues">
+    <update id="updateCaseExtensionitemValues" parameterType="com.web.app.domain.Entity.CaseExtensionitemValues">
         UPDATE case_extensionitem_values
         SET
             ExtensionitemValue = #{extensionitemValue},
@@ -179,15 +161,8 @@
             AND DeleteFlag = 0
             AND ExtensionitemId = #{extensionitemId}
     </update>
-    <!-- TBL「拡張項目設定値（case_extensionitem_values）」のMAX（id）の取得 -->
-    <!-- <select id="selectCaseExtensionitemValuesMaxId" resultType="String">
-        select 
-            MAX(id) AS id
-        from 
-            case_extensionitem_values
-    </select> -->
     <!-- 拡張項目内容取得したデータがない場合、TBL「拡張項目設定値（case_extensionitem_values）」を登録 -->
-    <insert id="insertCaseExtensionitemValues" parameterType="com.web.app.domain.InsRepliesTemp.CaseExtensionitemValues">
+    <insert id="insertCaseExtensionitemValues" parameterType="com.web.app.domain.Entity.CaseExtensionitemValues">
         INSERT INTO case_extensionitem_values (
             id,
             PlatformId,

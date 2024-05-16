@@ -15,11 +15,11 @@ public class ExpandItems implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // 項目表示名
-    private String itemDisplayName;
+    private String ItemDisplayName;
 
     // 項目種類( 0 = テキストボックス 1 = 数値のみテキストボックス)
-    private Integer itemType;
+    private Integer ItemType;
 
     // 必須フラグ(0 =任意項目とする 1=必須項目とする)
-    private Integer isRequired;
+    private Integer IsRequired;
 }
