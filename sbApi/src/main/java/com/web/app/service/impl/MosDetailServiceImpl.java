@@ -4,25 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.app.domain.CaseRelations;
-import com.web.app.domain.Withdrawal;
-import com.web.app.domain.WithdrawalReturn;
-import com.web.app.mapper.WithdrawalMapper;
-import com.web.app.service.WithdrawalService;
+import com.web.app.domain.Entity.CaseRelations;
+import com.web.app.domain.MosDetail.Withdrawal;
+import com.web.app.domain.MosDetail.WithdrawalReturn;
+import com.web.app.mapper.ApplyWithdrawMapper;
+import com.web.app.service.MosDetailService;
 
 @Service
-public class WithdrawalServiceImpl implements WithdrawalService {
-
+public class MosDetailServiceImpl implements MosDetailService{
+    
     @Autowired
-    private WithdrawalMapper withdrawalMapper;
+    private ApplyWithdrawMapper applyWithdrawMapper;
 
     @Override
     @Transactional
-    public WithdrawalReturn withdrawal(String caseId) {
+    public WithdrawalReturn applyWithdraw(String caseId) {
         WithdrawalReturn withdrawalReturn = new WithdrawalReturn();
-        Withdrawal withdrawal = withdrawalMapper.getCaseStage(caseId);
+        Withdrawal withdrawal = applyWithdrawMapper.getCaseStage(caseId);
         if (withdrawal.getCaseStage() == 0) {
-            int res = withdrawalMapper.updateWithdrawal(withdrawal.getCid());
+            int res = applyWithdrawMapper.updateWithdrawal(withdrawal.getCid());
             if (res != 0) {
                 withdrawalReturn.setUpdateFlag(0);
 
@@ -39,5 +39,4 @@ public class WithdrawalServiceImpl implements WithdrawalService {
         return withdrawalReturn;
 
     }
-
 }

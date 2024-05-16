@@ -1,6 +1,8 @@
-package com.web.app.domain;
+package com.web.app.domain.MosDetail;
 
 import java.io.Serializable;
+
+import com.web.app.domain.Entity.CaseRelations;
 
 import lombok.Data;
 
