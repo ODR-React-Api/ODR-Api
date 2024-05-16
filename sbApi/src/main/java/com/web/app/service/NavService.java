@@ -5,7 +5,6 @@ import com.web.app.domain.Nav.LanguagesData;
 
 /**
  * N1 ナビバー画面
- * API_言語データ取得
  * Service層
  * NavService
  * 
