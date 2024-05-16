@@ -1,6 +1,5 @@
 package com.web.app.service.impl;
 
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,11 +61,11 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
      * 
      * @param resultMediation:更新用調停案データ
      * @return 調停案データ更新結果
-     * @throws SQLException 
+     * @throws Exception 
      */
     @Override
     @Transactional
-    public void saveMediton(ResultMediation resultMediation) throws SQLException {
+    public void saveMediton(ResultMediation resultMediation) throws Exception {
         //調停案データ更新結果
         boolean updateFlg = false;
         //フロントに添付ファイル
@@ -75,7 +74,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
         updateFlg = saveMeditonMapper.updateMediations(setMediation(resultMediation, null, true)) > 0;
         //SQL文が更新されない場合は例外をスローし、DBが更新されないようにトランザクションをロールバックさせる
         if (!updateFlg) {
-            throw new SQLException();
+            throw new RuntimeException();
         }
         if(files == null || files.isEmpty()){
             return;
@@ -89,7 +88,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                         mediation = setMediation(resultMediation, file, false);
                         updateFlg = saveMeditonMapper.deleteFiles(mediation) > 0 && saveMeditonMapper.deleteFileRelations(mediation) > 0;
                         if (!updateFlg) {
-                            throw new SQLException();
+                            throw new RuntimeException();
                         }
                         break;
                     //追加添付ファイル
@@ -97,7 +96,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                         mediation = setMediation(resultMediation, file, false);
                         updateFlg = saveMeditonMapper.addFiles(mediation) > 0 && saveMeditonMapper.addFileRelations(mediation) > 0;
                         if (!updateFlg) {
-                            throw new SQLException();
+                            throw new RuntimeException();
                         }
                         break;
                     //添付ファイルは変更されていません

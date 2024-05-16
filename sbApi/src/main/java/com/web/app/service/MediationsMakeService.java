@@ -1,6 +1,6 @@
 package com.web.app.service;
 
-import java.sql.SQLException;
+
 import com.web.app.domain.mediationsMake.ResultMediation;
 
 /**
@@ -16,5 +16,5 @@ public interface MediationsMakeService {
     //調停案の存在を判断する
     int isExistMediations(String mediationId);
     //API_ID:調停案データ更新API
-    void saveMediton(ResultMediation resultMediation) throws SQLException;
+    void saveMediton(ResultMediation resultMediation) throws Exception;
 }
