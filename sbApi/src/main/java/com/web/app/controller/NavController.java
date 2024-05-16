@@ -11,12 +11,6 @@ import com.web.app.service.NavService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 
-@CrossOrigin(origins = "*")
-// 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
-@Api(tags = "言語選択")
-@RequestMapping("/Nav")
-@RestController
-
 /**
  * N1 ナビバー画面
  * Controller層
@@ -26,6 +20,10 @@ import io.swagger.annotations.Api;
  * @since 2024/05/01
  * @version 1.0
  */
+@CrossOrigin(origins = "*")
+@Api(tags = "言語選択")
+@RequestMapping("/Nav")
+@RestController
 public class NavController {
 
     @Autowired
@@ -46,7 +44,7 @@ public class NavController {
             List<LanguagesData> languagesList = navService.getLanguagesDataList();
             return languagesList;
         } catch (Exception e) {
-            AjaxResult.fatal("検索失敗!", e);
+            AjaxResult.fatal("検索失敗", e);
             return null;
         }
     }
