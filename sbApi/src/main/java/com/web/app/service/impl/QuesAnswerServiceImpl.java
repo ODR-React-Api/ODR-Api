@@ -21,6 +21,7 @@ import com.web.app.service.QuesAnswerService;
 
 @Service
 public class QuesAnswerServiceImpl implements QuesAnswerService {
+
     /**
      * アンケート情報取得
      *
@@ -37,6 +38,7 @@ public class QuesAnswerServiceImpl implements QuesAnswerService {
 
         QuestionnaireData questionnaireData = getQuestionnairesMapper.questionnaieDataSearch(Id);
         Questionnaire_Mails allQuestionnaire = new Questionnaire_Mails();
+
         // 確認画面用データ
         allQuestionnaire.setQuestionnaireData(questionnaireData);
 
@@ -45,7 +47,6 @@ public class QuesAnswerServiceImpl implements QuesAnswerService {
                 questionnaireData.getQuestionId(), questionnaireData.getUserType());
 
         // レコードのカウントが0の場合、FALSE;レコードのカウントが>0の場合、TRUE
-
         if (count > 0) {
             allQuestionnaire.setFlag(true);
         } else {

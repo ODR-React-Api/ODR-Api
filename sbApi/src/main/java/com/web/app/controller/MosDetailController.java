@@ -100,8 +100,8 @@ public class MosDetailController {
 
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停人退出メッセージ登録")
-    @GetMapping("/updMediatorHistories")
-    public Response updMediatorHistories(String caseId, String uid, String platformId, String messageGroupId) {
+    @GetMapping("/mediatorResign")
+    public Response MediatorResign(String caseId, String uid, String platformId, String messageGroupId) {
 
         // 調停人退出メッセージ登録
         int num = mosDetailService.updateMediatorHistoriesData(caseId, uid, platformId, messageGroupId);

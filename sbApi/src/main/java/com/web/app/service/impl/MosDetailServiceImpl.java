@@ -283,27 +283,34 @@ public class MosDetailServiceImpl implements MosDetailService {
     @Override
     public int updateMediatorHistoriesData(String caseId, String uid, String platformId, String messageGroupId) {
 
+        // 案件関連情報取得
         CaseRelations caseRelations = caseRelationsMapper.RelationsListDataSearch(caseId);
 
         SendMailRequest sendMailRequest = new SendMailRequest();
 
-        sendMailRequest.setPlatformId("0001");
+        sendMailRequest.setPlatformId("001");
 
         sendMailRequest.setLanguageId("JP");
 
+        // テンプレートNO
         sendMailRequest.setTempId(MailConstants.MailId_M072);
 
         sendMailRequest.setCaseId(caseId);
 
         ArrayList<String> recipientEmail = new ArrayList<String>();
 
+        // 送信email
         recipientEmail.add(caseRelations.getMediatorUserEmail());
 
         sendMailRequest.setRecipientEmail(recipientEmail);
 
+        // 申立種別取得
+        CasePetitions casePetitions = petitionsContentMapper.PetitionListDataSearch(caseId);
+
         ArrayList<String> parameter = new ArrayList<>();
 
-        parameter.add("http://localhost:3000/");
+        parameter.add(caseId);
+        parameter.add(casePetitions.getPetitionTypeValue());
 
         sendMailRequest.setParameter(parameter);
 
@@ -311,11 +318,48 @@ public class MosDetailServiceImpl implements MosDetailService {
 
         sendMailRequest.setControlType(2);
 
-        boolean bool = utilService.SendMail(sendMailRequest);
+        boolean bool_072 = utilService.SendMail(sendMailRequest);
+        // 送信者メールのクリア
+        recipientEmail.removeAll(recipientEmail);
 
-        if (!bool) {
-            log.error("通知メールの送信に失敗しました。");
-        } else {
+        // 相手方・申立人・代理人送信
+        sendMailRequest.setTempId(MailConstants.MailId_M073);
+        // 相手方・申立人・代理人email 取得
+        recipientEmail.add(caseRelations.getPetitionUserInfo_Email());
+
+        recipientEmail.add(caseRelations.getTraderUserEmail());
+
+        if (caseRelations.getAgent1_Email() != null) {
+            recipientEmail.add(caseRelations.getAgent1_Email());
+        }
+        if (caseRelations.getAgent2_Email() != null) {
+            recipientEmail.add(caseRelations.getAgent2_Email());
+        }
+        if (caseRelations.getAgent3_Email() != null) {
+            recipientEmail.add(caseRelations.getAgent3_Email());
+        }
+        if (caseRelations.getAgent4_Email() != null) {
+            recipientEmail.add(caseRelations.getAgent4_Email());
+        }
+        if (caseRelations.getTraderAgent1_UserEmail() != null) {
+            recipientEmail.add(caseRelations.getTraderAgent1_UserEmail());
+        }
+        if (caseRelations.getTraderAgent2_UserEmail() != null) {
+            recipientEmail.add(caseRelations.getTraderAgent2_UserEmail());
+        }
+        if (caseRelations.getTraderAgent3_UserEmail() != null) {
+            recipientEmail.add(caseRelations.getTraderAgent3_UserEmail());
+        }
+        if (caseRelations.getTraderAgent4_UserEmail() != null) {
+            recipientEmail.add(caseRelations.getTraderAgent4_UserEmail());
+        }
+        if (caseRelations.getTraderAgent5_UserEmail() != null) {
+            recipientEmail.add(caseRelations.getAgent5_Email());
+        }
+
+        boolean bool_073 = utilService.SendMail(sendMailRequest);
+
+        if (bool_072 && bool_073) {
             // セッション情報のCaseId対応な申立人・相手方・代理人のuserid
             List<String> result = mediatorHistoriesMapper.usersId(messageGroupId, platformId, uid);
             // 調停人変更履歴の変更
@@ -342,7 +386,8 @@ public class MosDetailServiceImpl implements MosDetailService {
             if (updateNum == 0 || insertMessageNum == 0 || insertUMessageNum == 0) {
                 return 0;
             }
-
+        } else {
+            log.error("通知メールの送信に失敗しました。");
         }
         return 1;
     }
