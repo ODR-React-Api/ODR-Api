@@ -19,7 +19,7 @@ import com.web.app.service.DateExtensionService;
 public class DateExtensionServiceImpl implements DateExtensionService {
 
     @Autowired
-    private GetToCaseInfoMapper dateToExtensionMapper;
+    private GetToCaseInfoMapper getToCaseInfoMapper;
 
     /**
      * 案件情報取得API
@@ -30,7 +30,7 @@ public class DateExtensionServiceImpl implements DateExtensionService {
      * @throws Exception エラーの説明内容
      */
     @Override
-    public Date getCaseInfo (String CaseId, String PlatformId) throws Exception {
-        return dateToExtensionMapper.getCaseInfo(CaseId, PlatformId);
+    public Date getToCaseInfo(String CaseId, String PlatformId) throws Exception {
+        return getToCaseInfoMapper.getToCaseInfo(CaseId, PlatformId);
     }
 }

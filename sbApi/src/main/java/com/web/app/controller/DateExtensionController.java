@@ -39,10 +39,10 @@ public class DateExtensionController {
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("案件情報取得API")
-    @PostMapping("/getCaseInfo")
-    public Response getCaseInfo(@RequestBody CaseInfo caseInfo) {
+    @PostMapping("/getToCaseInfo")
+    public Response getToCaseInfo(@RequestBody CaseInfo caseInfo) {
         try {
-            caseInfo.setNegotiationEndDate(dateExtensionService.getCaseInfo(caseInfo.getCaseId(), caseInfo.getPlatformId()));
+            caseInfo.setNegotiationEndDate(dateExtensionService.getToCaseInfo(caseInfo.getCaseId(), caseInfo.getPlatformId()));
             return Response.success(caseInfo);
         } catch (Exception e) {
             return Response.error(e.getMessage());
