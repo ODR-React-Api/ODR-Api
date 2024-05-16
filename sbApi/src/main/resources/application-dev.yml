@@ -10,7 +10,7 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://172.17.0.63:3306/react_use?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC
         username: root
-        password: 123456
+        password: duc
         druid:
             min-idle: 3
             max-active: 15
