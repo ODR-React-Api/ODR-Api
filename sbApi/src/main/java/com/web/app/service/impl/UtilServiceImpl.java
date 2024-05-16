@@ -206,13 +206,13 @@ public class UtilServiceImpl implements UtilService {
                     caseTitle = GetCasesByCid(request.getCaseId()).getCaseTitle();
                     int index = caseTitle.lastIndexOf('_');
                     String typeValue = caseTitle.substring(index + 1);
-                    String resloveDisplayName = GetMasterDisplayName(request.getPlatformId(), sendMailTemplate.get(i).getLanguageId(), "ResloveType", typeValue);
+                    String resloveDisplayName = GetMasterDisplayName(request.getPlatformId(), sendMailTemplate.get(0).getLanguageId(), "ResloveType", typeValue);
 
                     caseTitledisplayName = caseTitle.substring(0, index) + "_" + resloveDisplayName;
                 }
-                String htmlBodyTemp = sendMailTemplate.get(i).getHtmlBody();
+                String htmlBodyTemp = sendMailTemplate.get(0).getHtmlBody();
                 if(request.getParameter() != null) {
-                    htmlBodyTemp = ReplaceText(request.getParameter(), sendMailTemplate.get(i).getHtmlBody(), caseTitle, caseTitledisplayName, sendMailTemplate.get(i).getLanguageId(), request.getTempId());
+                    htmlBodyTemp = ReplaceText(request.getParameter(), sendMailTemplate.get(0).getHtmlBody(), caseTitle, caseTitledisplayName, sendMailTemplate.get(0).getLanguageId(), request.getTempId());
 
                     MimeMessage mimeMessage = javaMailSender.createMimeMessage();
                     MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
