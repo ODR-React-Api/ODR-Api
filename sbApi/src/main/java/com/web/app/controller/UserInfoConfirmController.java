@@ -42,7 +42,7 @@ public class UserInfoConfirmController {
      */
 
     @SuppressWarnings("rawtypes")
-    @PostMapping("RegisterUser")
+    @PostMapping("registerUser")
     @ApiOperation("ユーザ新規登録")
     public Response registerUser(UserInfoModel userInfo) {
         try {

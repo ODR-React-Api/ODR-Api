@@ -59,7 +59,7 @@ public class MosListController {
      * @return 取得されたケース情報リスト
      */
     
-    @PostMapping("/GetFuzzyQueryListInfo")
+    @PostMapping("/getFuzzyQueryListInfo")
     @ApiOperation("曖昧検索用一覧取得")
     @SuppressWarnings("rawtypes")
     public Response getFuzzyQueryListInfo(@RequestParam("userId") String uid, @RequestParam("queryString") String queryString) {
@@ -80,7 +80,7 @@ public class MosListController {
      * @param queryString 画面.検索Box入力文字列
      * @return 取得されたケース情報リスト
      */
-    @PostMapping("/FuzzyQueryDetailCase")
+    @PostMapping("/fuzzyQueryDetailCase")
     @ApiOperation("曖昧検索用ケース詳細取得")
     public ReturnResult fuzzyQueryDetailCase(String caseId, String petitionUserId, int positionFlag, String queryString) {
         // サービスの呼び出し
@@ -96,7 +96,7 @@ public class MosListController {
      * @return 申立て登録下書き保存データ有無
      */
 
-    @PostMapping("/GetSaveDataInfo")
+    @PostMapping("/getSaveDataInfo")
     @SuppressWarnings("rawtypes")
     @ApiOperation("申立て登録下書き保存データ取得")
     public Response getSaveDataInfo(String uid) {
