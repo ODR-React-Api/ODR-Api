@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.web.app.domain.CaseFileInfo;
 import com.web.app.domain.GetFileInfo;
-import com.web.app.domain.GetFileInfoResult;
 import com.web.app.mapper.GetFileInfoMapper;
 import com.web.app.service.MosFileListService;
 
@@ -37,24 +36,22 @@ public class MosFileListServiceImpl implements MosFileListService {
     @Override
     public GetFileInfo getLoginUserRoleOpenInfo(String caseId, String id, String email) {
         GetFileInfo loginUserRoleOpenInfo = new GetFileInfo();
-        GetFileInfoResult loginUserRoleOpenInfoResult = new GetFileInfoResult();
         // ログインユーザのロールと開示情報取得API
         loginUserRoleOpenInfo = loginUserRoleOpenInfoMapper.selectLoginUserRoleOpenInfo(caseId);
 
         // ログインユーザIdがPetitionUserIdと一致すれば、申立人とする
         if (loginUserRoleOpenInfo.getPetitionUserId().equals(id)) {
-            loginUserRoleOpenInfoResult.setPositionFlg(1);
+            loginUserRoleOpenInfo.setPositionFlg(1);
 
             // ログインユーザemailがTraderUserEmailと一致すれば、相手方とする
         } else if (loginUserRoleOpenInfo.getTraderUserEmail().equals(email)) {
-            loginUserRoleOpenInfoResult.setPositionFlg(2);
+            loginUserRoleOpenInfo.setPositionFlg(2);
 
             // ログインユーザemailがMediatorUserEmailと一致すれば、調停人とする
         } else if (loginUserRoleOpenInfo.getMediatorUserEmail().equals(email)) {
-            loginUserRoleOpenInfoResult.setPositionFlg(3);
+            loginUserRoleOpenInfo.setPositionFlg(3);
         }
-        System.out.println(loginUserRoleOpenInfoResult);
-        loginUserRoleOpenInfo.setPositionFlg(loginUserRoleOpenInfoResult.getPositionFlg());
+        System.out.println(loginUserRoleOpenInfo);
         return loginUserRoleOpenInfo;
     }
 
