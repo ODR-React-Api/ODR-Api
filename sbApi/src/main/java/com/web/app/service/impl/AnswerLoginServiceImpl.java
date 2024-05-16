@@ -24,7 +24,7 @@ public class AnswerLoginServiceImpl  implements AnswerLoginService {
      * 反訴・回答データ取得
      *
      * @param caseId セッション情報のcaseid
-     * @param PlatformId     セッション情報のプラットフォームID
+     * @param PlatformId セッション情報のプラットフォームID
      * @return 取得した反訴・回答データ
      * @throws Exception エラー画面(404)へ遷移
      */    

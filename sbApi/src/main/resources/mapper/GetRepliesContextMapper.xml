@@ -3,24 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetRepliesContextMapper">
-
     <resultMap id="getRepliesContextResultMap" type="com.web.app.domain.couAnswerLogin.GetRepliesContext">
         <result column="CounterClaimContext" jdbcType="VARCHAR" property="CounterClaimContext" />
         <result column="FileName" jdbcType="VARCHAR" property="FileName" />
         <result column="FileUrl" jdbcType="VARCHAR" property="FileUrl" />
     </resultMap>
-
     <select id="getRepliesContext" resultMap="getRepliesContextResultMap">
         SELECT
             r.CounterClaimContext,
             f.FileName,
             f.FileUrl
         FROM
-            react_use.case_replies r,react_use.files f,react_use.cases c,react_use.case_file_relations l
+            react_use.case_replies r,react_use.cases c,react_use.case_file_relations l,react_use.files f
         WHERE
             r.CaseId = #{CaseId}
             and r.PlatformId = #{PlatformId} 
+            and r.Status = 2
             and r.DeleteFlag = 0
+            and c.cid = #{PlatformId}            
             and c.PlatformId = 0
             and c.DeleteFlag = 0
             and l.CaseId = r.CaseId
@@ -30,7 +30,6 @@
             and l.DeleteFlag = 0
             and f.id = l.fileId
             and f.PlatformId = #{PlatformId} 
-            and c.cid = #{PlatformId}
             order by f.LastModifiedDate asc;
     </select>
 </mapper>

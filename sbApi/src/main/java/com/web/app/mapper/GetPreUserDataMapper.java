@@ -14,7 +14,6 @@ import com.web.app.domain.userLogin.GetPreUserData;
 
 @Mapper
 public interface GetPreUserDataMapper {
-  GetPreUserData getPreUserDataSearch(String guid, String registerDate);
-
-  List<GetPreUserData> getUserPre(String guid);
+    //仮会員登録データ取得
+    List<GetPreUserData> getUserPre(String guid);
 }
