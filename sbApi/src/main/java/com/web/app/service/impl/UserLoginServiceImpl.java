@@ -17,18 +17,18 @@ import com.web.app.service.UserLoginService;
  */
 @Service
 public class UserLoginServiceImpl implements UserLoginService {
-  @Autowired
-  private GetPreUserDataMapper getPreUserDataMapper;
+    @Autowired
+    private GetPreUserDataMapper getPreUserDataMapper;
 
-  /**
-   * TBL「ユーザ仮登録（odr_users_pre）」のデータ取得
-   * 
-   * @param guid
-   */
-  @Override
-  public List<GetPreUserData> getUserPre(String guid) {
-    List<GetPreUserData> list = new ArrayList<GetPreUserData>();
-    list = getPreUserDataMapper.getUserPre(guid);
-    return list;
-  }
+    /**
+     * TBL「ユーザ仮登録（odr_users_pre）」のデータ取得
+     * 
+     * @param guid
+     */
+    @Override
+    public List<GetPreUserData> getUserPre(String guid) {
+        List<GetPreUserData> list = new ArrayList<GetPreUserData>();
+        list = getPreUserDataMapper.getUserPre(guid);
+        return list;
+    }
 }
