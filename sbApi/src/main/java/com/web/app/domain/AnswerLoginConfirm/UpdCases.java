@@ -1,14 +1,23 @@
-package com.web.app.domain;
+package com.web.app.domain.AnswerLoginConfirm;
 
 import java.io.Serializable;
 import java.util.List;
-
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+/**
+ * S12 回答内容確認画面
+ * API_案件更新
+ * Dao層
+ * UpdCases
+ * 
+ * @author DUC 楊バイバイ
+ * @since 2024/05/01
+ * @version 1.0
+ */
 @ApiModel
 @Data
-public class Casecase implements Serializable {
+public class UpdCases implements Serializable {
 
     // 案件ID
     private String cid;
@@ -41,9 +50,9 @@ public class Casecase implements Serializable {
     // 交渉期限日
     private String negotiationEndDate;
     // 交渉期限日変更ステータス
-    private String negotiationEndDateChangeStatus;
+    private Integer negotiationEndDateChangeStatus;
     // 交渉期限日変更回数
-    private String negotiationEndDateChangeCount;
+    private Integer negotiationEndDateChangeCount;
     // 手続き中止日
     private String cancelDate;
 
@@ -52,5 +61,9 @@ public class Casecase implements Serializable {
     private String lastModifiedBy;
     // システム時間
     public String newDate;
+    // システム時間+CounterclaimLimitDays日
+    public String oldDate;
+
+    private static final long serialVersionUID = 1L;
 
 }

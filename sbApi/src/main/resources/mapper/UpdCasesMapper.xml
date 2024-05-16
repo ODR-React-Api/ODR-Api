@@ -2,21 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.CasecaseMapper">
+<mapper namespace="com.web.app.mapper.UpdCasesMapper">
 
-    <resultMap id="BaseResultMap" type="com.web.app.domain.Casecase">
-            <id property="cid" column="cid" jdbcType="VARCHAR"/>
-            <!-- <result property="CaseId" column="CaseId" jdbcType="VARCHAR"/>
-            <result property="CasePetition" column="CasePetition" jdbcType="VARCHAR"/> -->
-            <result property="PlatformId" column="PlatformId" jdbcType="VARCHAR"/>
-            <result property="TraderAgent1_UserEmail" column="TraderAgent1_UserEmail" jdbcType="VARCHAR"/>
-            <result property="TraderAgent2_UserEmail" column="TraderAgent2_UserEmail" jdbcType="VARCHAR"/>
-            <result property="TraderAgent3_UserEmail" column="TraderAgent3_UserEmail" jdbcType="VARCHAR"/>
-            <result property="TraderAgent4_UserEmail" column="TraderAgent4_UserEmail" jdbcType="VARCHAR"/>
-            <result property="TraderAgent5_UserEmail" column="TraderAgent5_UserEmail" jdbcType="VARCHAR"/>
-    </resultMap>
-
-    <update id="updateCasecase" parameterType="com.web.app.domain.Casecase">
+    <update id="updateCasecase" parameterType="com.web.app.domain.AnswerLoginConfirm.UpdCases">
         UPDATE react_use.cases ca,react_use.case_relations re
         <set>
             ca.CaseStage = #{caseStage},
