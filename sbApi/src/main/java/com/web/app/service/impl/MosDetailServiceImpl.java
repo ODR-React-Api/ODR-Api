@@ -86,175 +86,193 @@ public class MosDetailServiceImpl implements MosDetailService {
         // 関係者メアド取得API呼び出し
         CaseRelations caseRelations = caseRelationsMapper.getCaseRelations(caseId);
 
+        RelationsContent relationsContent = new RelationsContent();
+
         // メールベースクエリ対応userの名前
         OdrUsers petitionUser = relationsContentMapper
                 .RelationsContentListDataSearch(caseRelations.getPetitionUserInfo_Email());
 
-        RelationsContent relationsContent = new RelationsContent();
-        // 申立人氏名
-        relationsContent.setPetitionUserName(petitionUser.getFirstName() + "　" + petitionUser.getLastName());
-        // 申立人氏名（カナ）
-        relationsContent.setPetitionUserkana(petitionUser.getFirstName_kana() + "　" + petitionUser.getLastName_kana());
-        // 申立人所属会社
-        relationsContent.setPetitionUsercompanyName(petitionUser.getCompanyName());
-        // 申立人メールアドレス
-        relationsContent.setPetitionUserEmail(caseRelations.getPetitionUserInfo_Email());
+        if (petitionUser != null) {
+            // 申立人氏名
+            relationsContent.setPetitionUserName(petitionUser.getFirstName() + " " + petitionUser.getLastName());
+            // 申立人氏名（カナ）
+            relationsContent
+                    .setPetitionUserkana(petitionUser.getFirstName_kana() + " " + petitionUser.getLastName_kana());
+            // 申立人所属会社
+            relationsContent.setPetitionUsercompanyName(petitionUser.getCompanyName());
+            // 申立人メールアドレス
+            relationsContent.setPetitionUserEmail(caseRelations.getPetitionUserInfo_Email());
+        }
 
         if (caseRelations.getAgent1_Email() != null) {
             OdrUsers users = relationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent1_Email());
-            // 代理人1氏名
-            relationsContent.setAgent1Name(users.getFirstName() + "　" + users.getLastName());
-            // 代理人1氏名（カナ）
-            relationsContent.setAgent1kana(users.getFirstName_kana() + "　" + users.getLastName_kana());
-            // 代理人1メールアドレス
-            relationsContent.setAgent1Email(caseRelations.getAgent1_Email());
-
-        } else {
-            // 取得なしの場合
-            relationsContent.setAgent1Flag(1);
+            if (users != null) {
+                // 代理人1氏名
+                relationsContent.setAgent1Name(users.getFirstName() + " " + users.getLastName());
+                // 代理人1氏名（カナ）
+                relationsContent.setAgent1kana(users.getFirstName_kana() + " " + users.getLastName_kana());
+                // 代理人1メールアドレス
+                relationsContent.setAgent1Email(caseRelations.getAgent1_Email());
+            } else {
+                // 取得なしの場合
+                relationsContent.setAgent1Flag(1);
+            }
         }
 
         if (caseRelations.getAgent2_Email() != null) {
             OdrUsers users = relationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent2_Email());
-            // 代理人2氏名
-            relationsContent.setAgent2Name(users.getFirstName() + "　" + users.getLastName());
-            // 代理人2氏名（カナ）
-            relationsContent.setAgent2kana(users.getFirstName_kana() + "　" + users.getLastName_kana());
-            // 代理人3メールアドレス
-            relationsContent.setAgent2Email(caseRelations.getAgent2_Email());
-
-        } else {
-            // 取得なしの場合
-            relationsContent.setAgent2Flag(1);
+            if (users != null) {
+                // 代理人2氏名
+                relationsContent.setAgent2Name(users.getFirstName() + " " + users.getLastName());
+                // 代理人2氏名（カナ）
+                relationsContent.setAgent2kana(users.getFirstName_kana() + " " + users.getLastName_kana());
+                // 代理人3メールアドレス
+                relationsContent.setAgent2Email(caseRelations.getAgent2_Email());
+            } else {
+                // 取得なしの場合
+                relationsContent.setAgent2Flag(1);
+            }
         }
 
         if (caseRelations.getAgent3_Email() != null) {
             OdrUsers users = relationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent3_Email());
-            // 代理人3氏名
-            relationsContent.setAgent3Name(users.getFirstName() + "　" + users.getLastName());
-            // 代理人3氏名（カナ）
-            relationsContent.setAgent3kana(users.getFirstName_kana() + "　" + users.getLastName_kana());
-            // 代理人3メールアドレス
-            relationsContent.setAgent3Email(caseRelations.getAgent3_Email());
-
-        } else {
-            // 取得なしの場合
-            relationsContent.setAgent3Flag(1);
+            if (users != null) {
+                // 代理人3氏名
+                relationsContent.setAgent3Name(users.getFirstName() + " " + users.getLastName());
+                // 代理人3氏名（カナ）
+                relationsContent.setAgent3kana(users.getFirstName_kana() + " " + users.getLastName_kana());
+                // 代理人3メールアドレス
+                relationsContent.setAgent3Email(caseRelations.getAgent3_Email());
+            } else {
+                // 取得なしの場合
+                relationsContent.setAgent3Flag(1);
+            }
         }
 
         if (caseRelations.getAgent4_Email() != null) {
             OdrUsers users = relationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent4_Email());
-            // 代理人4氏名
-            relationsContent.setAgent4Name(users.getFirstName() + "　" + users.getLastName());
-            // 代理人4氏名（カナ）
-            relationsContent.setAgent4kana(users.getFirstName_kana() + "　" + users.getLastName_kana());
-            // 代理人4メールアドレス
-            relationsContent.setAgent4Email(caseRelations.getAgent4_Email());
-
-        } else {
-            // 取得なしの場合
-            relationsContent.setAgent4Flag(1);
+            if (users != null) {
+                // 代理人4氏名
+                relationsContent.setAgent4Name(users.getFirstName() + " " + users.getLastName());
+                // 代理人4氏名（カナ）
+                relationsContent.setAgent4kana(users.getFirstName_kana() + " " + users.getLastName_kana());
+                // 代理人4メールアドレス
+                relationsContent.setAgent4Email(caseRelations.getAgent4_Email());
+            } else {
+                // 取得なしの場合
+                relationsContent.setAgent4Flag(1);
+            }
         }
 
         if (caseRelations.getAgent5_Email() != null) {
             OdrUsers users = relationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent5_Email());
-            // 代理人5氏名
-            relationsContent.setAgent5Name(users.getFirstName() + "　" + users.getLastName());
-            // 代理人5氏名（カナ）
-            relationsContent.setAgent5kana(users.getFirstName_kana() + "　" + users.getLastName_kana());
-            // 代理人5メールアドレス
-            relationsContent.setAgent5Email(caseRelations.getAgent5_Email());
-
-        } else {
-            // 取得なしの場合
-            relationsContent.setAgent5Flag(1);
+            if (users != null) {
+                // 代理人5氏名
+                relationsContent.setAgent5Name(users.getFirstName() + " " + users.getLastName());
+                // 代理人5氏名（カナ）
+                relationsContent.setAgent5kana(users.getFirstName_kana() + " " + users.getLastName_kana());
+                // 代理人5メールアドレス
+                relationsContent.setAgent5Email(caseRelations.getAgent5_Email());
+            } else {
+                // 取得なしの場合
+                relationsContent.setAgent5Flag(1);
+            }
         }
 
         OdrUsers traderUser = relationsContentMapper.RelationsContentListDataSearch(caseRelations.getTraderUserEmail());
-        // 相手方氏名
-        relationsContent.setTraderUserName(traderUser.getFirstName() + "　" + traderUser.getLastName());
-        // 相手方氏名（カナ）
-        relationsContent.setTraderUserkana(traderUser.getFirstName_kana() + "　" + traderUser.getLastName_kana());
-        // 相手方所属会社
-        relationsContent.setTraderUsercompanyName(traderUser.getCompanyName());
-        // 相手方メールアドレス
-        relationsContent.setTraderUserEmail(caseRelations.getTraderUserEmail());
+
+        if (traderUser != null) {
+            // 相手方氏名
+            relationsContent.setTraderUserName(traderUser.getFirstName() + " " + traderUser.getLastName());
+            // 相手方氏名（カナ）
+            relationsContent.setTraderUserkana(traderUser.getFirstName_kana() + " " + traderUser.getLastName_kana());
+            // 相手方所属会社
+            relationsContent.setTraderUsercompanyName(traderUser.getCompanyName());
+            // 相手方メールアドレス
+            relationsContent.setTraderUserEmail(caseRelations.getTraderUserEmail());
+        }
 
         if (caseRelations.getTraderAgent1_UserEmail() != null) {
 
             OdrUsers users = relationsContentMapper
                     .RelationsContentListDataSearch(caseRelations.getTraderAgent1_UserEmail());
-            // 代理人1氏名
-            relationsContent.setTrader1Name(users.getFirstName() + "　" + users.getLastName());
-            // 代理人1氏名（カナ）
-            relationsContent.setTrader1kana(users.getFirstName_kana() + "　" + users.getLastName_kana());
-            // 代理人1メールアドレス
-            relationsContent.setTrader1Email(caseRelations.getTraderAgent1_UserEmail());
-
-        } else {
-            // 取得なしの場合
-            relationsContent.setTrader1Flag(1);
+            if (users != null) {
+                // 代理人1氏名
+                relationsContent.setTrader1Name(users.getFirstName() + " " + users.getLastName());
+                // 代理人1氏名（カナ）
+                relationsContent.setTrader1kana(users.getFirstName_kana() + " " + users.getLastName_kana());
+                // 代理人1メールアドレス
+                relationsContent.setTrader1Email(caseRelations.getTraderAgent1_UserEmail());
+            } else {
+                // 取得なしの場合
+                relationsContent.setTrader1Flag(1);
+            }
         }
 
         if (caseRelations.getTraderAgent2_UserEmail() != null) {
             OdrUsers users = relationsContentMapper
                     .RelationsContentListDataSearch(caseRelations.getTraderAgent2_UserEmail());
-            // 代理人2氏名
-            relationsContent.setTrader2Name(users.getFirstName() + "　" + users.getLastName());
-            // 代理人2氏名（カナ）
-            relationsContent.setTrader2kana(users.getFirstName_kana() + "　" + users.getLastName_kana());
-            // 代理人2メールアドレス
-            relationsContent.setTrader2Email(caseRelations.getTraderAgent2_UserEmail());
-
-        } else {
-            // 取得なしの場合
-            relationsContent.setTrader2Flag(1);
+            if (users != null) {
+                // 代理人2氏名
+                relationsContent.setTrader2Name(users.getFirstName() + " " + users.getLastName());
+                // 代理人2氏名（カナ）
+                relationsContent.setTrader2kana(users.getFirstName_kana() + " " + users.getLastName_kana());
+                // 代理人2メールアドレス
+                relationsContent.setTrader2Email(caseRelations.getTraderAgent2_UserEmail());
+            } else {
+                // 取得なしの場合
+                relationsContent.setTrader2Flag(1);
+            }
         }
 
         if (caseRelations.getTraderAgent3_UserEmail() != null) {
             OdrUsers users = relationsContentMapper
                     .RelationsContentListDataSearch(caseRelations.getTraderAgent3_UserEmail());
-            // 代理人3氏名
-            relationsContent.setTrader3Name(users.getFirstName() + "　" + users.getLastName());
-            // 代理人3氏名（カナ）
-            relationsContent.setTrader3kana(users.getFirstName_kana() + "　" + users.getLastName_kana());
-            // 代理人3メールアドレス
-            relationsContent.setTrader3Email(caseRelations.getTraderAgent3_UserEmail());
-
-        } else {
-            // 取得なしの場合
-            relationsContent.setTrader3Flag(1);
+            if (users != null) {
+                // 代理人3氏名
+                relationsContent.setTrader3Name(users.getFirstName() + " " + users.getLastName());
+                // 代理人3氏名（カナ）
+                relationsContent.setTrader3kana(users.getFirstName_kana() + " " + users.getLastName_kana());
+                // 代理人3メールアドレス
+                relationsContent.setTrader3Email(caseRelations.getTraderAgent3_UserEmail());
+            } else {
+                // 取得なしの場合
+                relationsContent.setTrader3Flag(1);
+            }
         }
 
         if (caseRelations.getTraderAgent4_UserEmail() != null) {
             OdrUsers users = relationsContentMapper
                     .RelationsContentListDataSearch(caseRelations.getTraderAgent4_UserEmail());
-            // 代理人4氏名
-            relationsContent.setTrader4Name(users.getFirstName() + "　" + users.getLastName());
-            // 代理人4氏名（カナ）
-            relationsContent.setTrader4kana(users.getFirstName_kana() + "　" + users.getLastName_kana());
-            // 代理人4メールアドレス
-            relationsContent.setTrader4Email(caseRelations.getTraderAgent4_UserEmail());
-
-        } else {
-            // 取得なしの場合
-            relationsContent.setTrader4Flag(1);
+            if (users != null) {
+                // 代理人4氏名
+                relationsContent.setTrader4Name(users.getFirstName() + " " + users.getLastName());
+                // 代理人4氏名（カナ）
+                relationsContent.setTrader4kana(users.getFirstName_kana() + " " + users.getLastName_kana());
+                // 代理人4メールアドレス
+                relationsContent.setTrader4Email(caseRelations.getTraderAgent4_UserEmail());
+            } else {
+                // 取得なしの場合
+                relationsContent.setTrader4Flag(1);
+            }
         }
 
         if (caseRelations.getTraderAgent5_UserEmail() != null) {
             OdrUsers users = relationsContentMapper
                     .RelationsContentListDataSearch(caseRelations.getTraderAgent5_UserEmail());
-            // 代理人5氏名
-            relationsContent.setTrader5Name(users.getFirstName() + "　" + users.getLastName());
-            // 代理人5氏名（カナ）
-            relationsContent.setTrader5kana(users.getFirstName_kana() + "　" + users.getLastName_kana());
-            // 代理人5メールアドレス
-            relationsContent.setTrader5Email(caseRelations.getTraderAgent5_UserEmail());
-
-        } else {
-            // 取得なしの場合
-            relationsContent.setTrader5Flag(1);
+            if (users != null) {
+                // 代理人5氏名
+                relationsContent.setTrader5Name(users.getFirstName() + " " + users.getLastName());
+                // 代理人5氏名（カナ）
+                relationsContent.setTrader5kana(users.getFirstName_kana() + " " + users.getLastName_kana());
+                // 代理人5メールアドレス
+                relationsContent.setTrader5Email(caseRelations.getTraderAgent5_UserEmail());
+            } else {
+                // 取得なしの場合
+                relationsContent.setTrader5Flag(1);
+            }
         }
+
         return relationsContent;
     }
 
