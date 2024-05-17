@@ -20,61 +20,53 @@
             LastModifiedDate
         FROM react_use.case_petitions
         WHERE
-            CaseId=#{caseId}
-            AND Status!=0 
-            AND DeleteFlag=0
+            CaseId = #{caseId}
+            AND Status != 0 
+            AND DeleteFlag = 0
 
     </select>
 
-    <resultMap id="PetitionFile" type="com.web.app.domain.MosDetail.AttachedFile">
-        <id property="filename" column="FileName" jdbcType="VARCHAR"/>
-        <result property="fileUrl" column="FileUrl" jdbcType="VARCHAR"/>
-    </resultMap>
-    <select id="PetitionFileSearch" resultMap="PetitionFile">
+    <select id="PetitionFileSearch" resultType="com.web.app.domain.MosDetail.AttachedFile">
         SELECT 
-              A.FileName,
-              A.FileUrl
+              files.FileName,
+              files.FileUrl
         FROM 
-              react_use.files as A
+              react_use.files as files
         LEFT JOIN
-              react_use.case_file_relations as B
+              react_use.case_file_relations as relations
         ON
-              A.id = B.fileid
+              files.id = relations.fileid
         WHERE 
-                B.CaseId=#{caseId}
-            AND B.RelationType=0
-            AND B.DeleteFlag=0
-            AND A.DeleteFlag=0
+                relations.CaseId = #{caseId}
+            AND relations.RelationType = 0
+            AND relations.DeleteFlag = 0
+            AND files.DeleteFlag = 0
     </select>
 
-    <resultMap id="PetitionExtensionitem" type="com.web.app.domain.MosDetail.ExtensionItem">
-        <id property="itemDisplayName" column="ItemDisplayName" jdbcType="VARCHAR"/>
-        <result property="ExtensionitemValue" column="ExtensionitemValue" jdbcType="VARCHAR"/>
-    </resultMap>
-    <select id="PetitionExtensionitemSearch" resultMap="PetitionExtensionitem">
+    <select id="PetitionExtensionitemSearch" resultType="com.web.app.domain.MosDetail.ExtensionItem">
         SELECT 
-              B.ItemDisplayName,
-              A.ExtensionitemValue
+              master.ItemDisplayName,
+              extensionitem.ExtensionitemValue
         FROM 
-              case_extensionitem_values as A
+              case_extensionitem_values as extensionitem
         LEFT JOIN
-              master_extensionitems as B
+              master_extensionitems as master
         ON
-              B.id = A.ExtensionItemId
+              master.id = extensionitem.ExtensionItemId
         LEFT JOIN
-              case_extensionitem_relations as C
-        ON	A.ExtensionItemId=C.ExtensionItemId
+              case_extensionitem_relations as relations
+        ON	extensionitem.ExtensionItemId = relations.ExtensionItemId
         WHERE 
-                A.PlatformId="001"
-            AND A.CaseId=#{caseId}
-            AND A.DeleteFlag=0
-            AND B.LanguageId="jp"
-            AND B.DeleteFlag=0
-            AND C.PlatformId="001"
-            AND C.RelationType=0
-            AND C.DeleteFlag=0
+                extensionitem.PlatformId = "001"
+            AND extensionitem.CaseId = #{caseId}
+            AND extensionitem.DeleteFlag = 0
+            AND master.LanguageId = "jp"
+            AND master.DeleteFlag = 0
+            AND relations.PlatformId = "001"
+            AND relations.RelationType = 0
+            AND relations.DeleteFlag = 0
             ORDER BY
-              C.DisplayOrder asc
+              relations.DisplayOrder asc
               LIMIt 5
     </select>
 </mapper>

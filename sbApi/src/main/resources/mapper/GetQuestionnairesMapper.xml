@@ -19,29 +19,29 @@
         SELECT
             COUNT(*)
         FROM
-            react_use.questionnaire_mails as A
+            react_use.questionnaire_mails
         WHERE
-            A.QuestionId= #{questionId}  and
-            A.CaseId=#{caseId} and
-            A.UserType=#{userType} 
+            QuestionId = #{questionId}  and
+            CaseId = #{caseId} and
+            UserType = #{userType} 
     </select>
 
     <select id="searchQuestionnaieList" resultType="com.web.app.domain.QuesAnswer.QuestionnaireList">
         SELECT
-              A.Description,
-              A.Type,
-              A.ActiveFlag,
-              A.Order,
-              A.RequireFlag
+            questionnaires.Description,
+            questionnaires.Type,
+            questionnaires.ActiveFlag,
+            questionnaires.Order,
+            questionnaires.RequireFlag
         FROM
-            react_use.questionnaires as A
+            react_use.questionnaires as questionnaires
         WHERE
-              A.PlatformId=#{platformId} and
-              A.EffectiveDate >  CURRENT_DATE() and
-              A.Open=1 and
-              A.ActiveFlag=1 and
-              A.QuestionId=#{questionId} 
+            questionnaires.PlatformId = #{platformId} and
+            questionnaires.EffectiveDate >  CURRENT_DATE() and
+            questionnaires.Open = 1 and
+            questionnaires.ActiveFlag = 1 and
+            questionnaires.QuestionId = #{questionId} 
         Order By
-              A.Order ASC
+            questionnaires.Order ASC
     </select>
 </mapper>

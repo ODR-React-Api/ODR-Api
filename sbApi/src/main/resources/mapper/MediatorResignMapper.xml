@@ -5,21 +5,27 @@
 <mapper namespace="com.web.app.mapper.MediatorResignMapper">
 
   <select id="usersId" resultType="string">
-        SELECT UserId
-        FROM react_use.user_messagegroups
-        WHERE messageGroupId=#{messageGroupId}
-            AND   DeleteFlag  = 0
-            AND   PlatformId = #{platformId}
-            AND   userId != #{uid}
+        SELECT 
+            UserId
+        FROM 
+            react_use.user_messagegroups
+        WHERE 
+            messageGroupId=#{messageGroupId} AND
+            DeleteFlag  = 0 AND 
+            PlatformId = #{platformId} AND
+            userId != #{uid}
   </select>
 
 
   <update id="mediatorHistoriesUpdate">
         UPDATE
             react_use.mediator_histories
-        SET Status=4, ResignFlag=1
-        WHERE CaseId=#{caseId}
-            AND userId=#{uid}
+        SET 
+            Status=4, 
+            ResignFlag=1
+        WHERE 
+            CaseId = #{caseId} AND
+            userId = #{uid}
   </update>
 
   <insert id="messagesInsert">

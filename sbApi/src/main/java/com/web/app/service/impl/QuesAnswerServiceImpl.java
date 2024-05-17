@@ -18,9 +18,11 @@ import com.web.app.service.QuesAnswerService;
  * @since 2024/04/17
  * @version 1.0
  */
-
 @Service
 public class QuesAnswerServiceImpl implements QuesAnswerService {
+
+    @Autowired
+    private GetQuestionnairesMapper getQuestionnairesMapper;
 
     /**
      * アンケート情報取得
@@ -29,10 +31,6 @@ public class QuesAnswerServiceImpl implements QuesAnswerService {
      * @param platformId プラットフォームID
      * @return アンケート情報取得必要なすべてのデータ
      */
-
-    @Autowired
-    private GetQuestionnairesMapper getQuestionnairesMapper;
-
     @Override
     public Questionnaire_Mails selectQuestionnaireData(String Id, String platformId) {
 

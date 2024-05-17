@@ -20,8 +20,8 @@ public class AttachedFile implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // 添付ファイル名
-    private String filename;
+    private String FileName;
     // 添付ファイルURL
-    private String fileUrl;
+    private String FileUrl;
 
 }

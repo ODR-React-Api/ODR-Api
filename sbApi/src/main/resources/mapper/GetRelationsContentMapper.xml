@@ -12,16 +12,17 @@
     </resultMap>
     <select id="RelationsContentListDataSearch" resultMap="RelationsContent">
         SELECT 
-              FirstName,
-              LastName,
-              FirstName_kana,
-              LastName_kana,
-              CompanyName
-        FROM react_use.odr_users
+            FirstName,
+            LastName,
+            FirstName_kana,
+            LastName_kana,
+            CompanyName
+        FROM 
+            react_use.odr_users
         WHERE
-              PlatformId="001"
-          AND Email=#{petitionUserInfoEmail}
-          AND DeleteFlag=0
+            PlatformId ="001" AND
+            Email = #{petitionUserInfoEmail} AND 
+            DeleteFlag = 0
           
     </select>
 </mapper>

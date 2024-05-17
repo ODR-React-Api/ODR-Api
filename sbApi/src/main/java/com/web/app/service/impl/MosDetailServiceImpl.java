@@ -30,14 +30,13 @@ import com.web.app.service.UtilService;
  * @since 2024/04/23
  * @version 1.0
  */
-
 @Service
 public class MosDetailServiceImpl implements MosDetailService {
 
+    private static final Logger log = LogManager.getLogger(MosDetailServiceImpl.class);
+
     @Autowired
     private GetPetitionsContentMapper petitionsContentMapper;
-
-    private static final Logger log = LogManager.getLogger(MosDetailServiceImpl.class);
 
     @Autowired
     private MediatorResignMapper mediatorHistoriesMapper;
@@ -57,7 +56,6 @@ public class MosDetailServiceImpl implements MosDetailService {
      * @param caseId フロントエンド転送
      * @return 申立ての内容の取得必要なすべてのデータ
      */
-
     @Override
     public PetitionsContent selectPetitionData(String caseId) {
 
@@ -77,24 +75,14 @@ public class MosDetailServiceImpl implements MosDetailService {
         return petitionsContent;
     }
 
-    @Override
-    public CaseRelations selectRelationsData(String caseId) {
-
-        CaseRelations caseRelations = caseRelationsMapper.RelationsListDataSearch(caseId);
-
-        return caseRelations;
-    }
-
     /**
      * 関係者内容取得
      *
      * @param caseId フロントエンド転送
      * @return 関係者内容取得の取得必要なすべてのデータ
      */
-
     @Override
     public RelationsContent selectRelationsContentData(String caseId) {
-
         // 関係者メアド取得API呼び出し
         CaseRelations caseRelations = caseRelationsMapper.RelationsListDataSearch(caseId);
 
@@ -279,10 +267,8 @@ public class MosDetailServiceImpl implements MosDetailService {
      * @param messageGroupId フロントエンド転送
      * @return 調停人退出メッセージ登録
      */
-
     @Override
     public int updateMediatorHistoriesData(String caseId, String uid, String platformId, String messageGroupId) {
-
         // 案件関連情報取得
         CaseRelations caseRelations = caseRelationsMapper.RelationsListDataSearch(caseId);
 

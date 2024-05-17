@@ -20,7 +20,7 @@ public class ExtensionItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // 拡張項目名
-    private String itemDisplayName;
+    private String ItemDisplayName;
     // 拡張項目値
     private String ExtensionitemValue;
 

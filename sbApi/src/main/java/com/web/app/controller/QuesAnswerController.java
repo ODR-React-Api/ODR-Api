@@ -11,6 +11,13 @@ import com.web.app.service.QuesAnswerService;
 
 import io.swagger.annotations.Api;
 
+/**
+ * アンケート回答画面
+ * 
+ * @author DUC 王亞テイ
+ * @since 2024/04/23
+ * @version 1.0
+ */
 @CrossOrigin(origins = "*")
 @Api(tags = "アンケート情報取得")
 @RestController
@@ -22,13 +29,13 @@ public class QuesAnswerController {
     @SuppressWarnings("rawtypes")
     @GetMapping("/getQuestionnaires")
     public Response getQuestionnaires(String Id, String PlatformId) {
-
         // 確認画面用データ
         Questionnaire_Mails allQuestionnaire = getQuestionnairesService.selectQuestionnaireData(Id, PlatformId);
 
         if (allQuestionnaire != null) {
             return Response.success(allQuestionnaire);
         }
+
         return Response.error("失敗");
     }
 
