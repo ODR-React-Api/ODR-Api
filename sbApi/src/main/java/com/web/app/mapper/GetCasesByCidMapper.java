@@ -1,7 +1,7 @@
 package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import com.web.app.domain.couAnswerLogin.GetRepliesContext;
+import com.web.app.domain.couAnswerLogin.CasesByCid;
 import java.util.List;
 
 /**
@@ -13,8 +13,7 @@ import java.util.List;
  */
 
 @Mapper
-public interface GetRepliesContextMapper {
-    //反訴・回答データ取得
-    List<GetRepliesContext> getRepliesContext(String CaseId,String PlatformId);
-
+public interface GetCasesByCidMapper {
+    //案件データ取得
+    List<CasesByCid> casesByCid(String CaseId,String PlatformId);
 }

@@ -58,7 +58,7 @@ public class CouAnswerLoginController {
     }
 
     /**
-     * API_ID:ケース詳細取得
+     * API_案件データ取得
      *
      * @param CaseId,PlatformId セッション情報より渡された引数
      * @return Response

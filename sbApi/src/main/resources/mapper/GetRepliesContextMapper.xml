@@ -32,20 +32,6 @@
             and f.PlatformId = #{PlatformId} 
             order by f.LastModifiedDate asc;
     </select>
-
-    <resultMap id="casesByCidResultMap" type="com.web.app.domain.couAnswerLogin.CasesByCid">
-        <result column="CaseTitle" jdbcType="VARCHAR" property="CaseTitle" />
-    </resultMap>
-    <select id="casesByCid" resultMap="casesByCidResultMap">
-        SELECT
-            CaseTitle
-        FROM
-            react_use.cases
-        WHERE
-            cid = #{CaseId}
-            and PlatformId = #{PlatformId} 
-            and DeleteFlag = 0
-    </select>
 </mapper>
 
 
