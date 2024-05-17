@@ -1,7 +1,11 @@
 package com.web.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.web.app.tool.AjaxResult;
 import com.web.app.service.NegotiatAgreeService;
 import com.web.app.domain.Response;
@@ -44,8 +48,9 @@ public class NegotiatAgreeController {
       int num = negotiatAgreeService.updCaseEstablish(caseEstablish);
       if (num == 0) {
         return AjaxResult.success("更新0件!");
+      } else {
+        return AjaxResult.success("更新成功有り件!", num);
       }
-      return AjaxResult.success("更新成功有り件!", num);
     } catch (Exception e) {
       AjaxResult.fatal("查询失败!", e);
       return null;

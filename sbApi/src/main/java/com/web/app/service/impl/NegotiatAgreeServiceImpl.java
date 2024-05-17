@@ -2,7 +2,7 @@ package com.web.app.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.web.app.domain.CaseNegotiations;
+import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.NegotiatAgree.CaseEstablish;
 import com.web.app.mapper.UpdCaseEstablishMapper;
@@ -37,8 +37,12 @@ public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
         CaseNegotiations caseNegotiations = updCaseEstablishMapper
                 .selectCaseNegotiations(caseEstablish.getCaseNegotiationsId());
         if (caseNegotiations.getStatus() == 6) {
+
+            // 案件更新用数据初期化
             Cases cases = new Cases();
-            // 金銭の支払い有無
+
+            // 金銭の支払い有無の設定
+            // 取得した和解案のPayAmountが０より大きい場合、１で更新する。上記以外場合、０で更新する
             if (caseNegotiations.getPayAmount() > 0) {
                 cases.setPayFlag(1);
             } else {

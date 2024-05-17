@@ -12,7 +12,7 @@ import com.web.app.domain.NegotiatAgree.CaseEstablish;
  * @version 1.0
  */
 public interface NegotiatAgreeService {
-    
-    //API_案件成立更新
+
+    // API_案件成立更新
     int updCaseEstablish(CaseEstablish caseEstablish);
 }

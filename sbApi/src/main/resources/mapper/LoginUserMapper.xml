@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.LoginUserMapper">
+
+    <resultMap id="ResultMap" type="com.web.app.domain.Entity.OdrUsers">
+    </resultMap>
+
+     <sql id="Login_List">
+        FirstName,MiddleName,
+        LastName,FirstName_kana,MiddleName_kana,
+        LastName_kana,PlatformId,LanguageId,
+        status,TimeZone,ConfirmedVersionNoOfTerms,
+        ConfirmedVersionNoOfPolicy
+    </sql>
+
+    <!-- <sql id="Success_Insert_List">
+        (id,PlatformId,CaseId,ActionType,
+        CaseStage,UserId,UserType,ActionDateTime,
+        MessageGroupId,MessageId,HaveFile,Parameters,
+        Other01,Other02,Other03,Other04,Other05,
+        DeleteFlag,LastModifiedDate,LastModifiedBy)
+    </sql>
+    <sql id="Success_Insert_Values">
+        (#{newId}, '001','', 'LoginOK', 
+            99, #{email},0, NOW(), '', '', 0, #{email}, '', 
+            '', '', '', '', 0, NOW(), #{email})
+    </sql>
+    <sql id="Fail_Insert_List">
+        (id,PlatformId,CaseId,ActionType,
+        CaseStage,UserId,UserType,ActionDateTime,
+        MessageGroupId,MessageId,HaveFile,Parameters,
+        Other01,Other02,Other03,Other04,Other05,
+        DeleteFlag,LastModifiedDate,LastModifiedBy)
+    </sql>
+    <sql id="Fail_Insert_Values">
+        (#{newId}, '001','', 'LoginNG', 
+            99, #{email},0, NOW(), '', '', 0, #{email}, '', 
+            '', '', '', '', 0, NOW(), #{email})
+    </sql>  -->
+
+    <select id="getLoginUser" resultMap="ResultMap">
+        select <include refid="Login_List"/> from odr_users where Email = #{email} and password = #{passWord} and DeleteFlag = 0;
+    </select>
+
+    <update id="updateLoginDate" parameterType="com.web.app.domain.Entity.CasePetitions">
+            UPDATE case_petitions
+        SET
+            PlatformId = #{platformId},
+            productName = #{productName},
+            ProductId = #{productId},
+            TraderName = #{traderName},
+            TraderMail = #{traderMail},
+            TraderUrl = #{traderUrl},
+            BoughtDate = #{boughtDate},
+            Price = #{price},
+            petitionTypeValue = #{petitionTypeValue},
+            petitionContext = #{petitionContext},
+            ExpectResloveTypeValue = #{expectResloveTypeValue},
+            Other = #{other}
+        WHERE
+            id = #{id}
+            AND Status = 0
+        update odr_users set LastLoginDate = NOW() where Email = #{email} and password = #{passWord} and DeleteFlag = 0;
+    </update>
+</mapper>

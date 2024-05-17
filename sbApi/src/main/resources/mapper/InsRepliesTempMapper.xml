@@ -21,18 +21,18 @@
     <update id="casePetitionsUpd" parameterType="com.web.app.domain.Entity.CasePetitions">
         UPDATE case_petitions
         SET
-            PlatformId = #{platformId},
+            PlatformId = #{PlatformId},
             productName = #{productName},
-            ProductId = #{productId},
-            TraderName = #{traderName},
-            TraderMail = #{traderMail},
-            TraderUrl = #{traderUrl},
-            BoughtDate = #{boughtDate},
-            Price = #{price},
+            ProductId = #{ProductId},
+            TraderName = #{TraderName},
+            TraderMail = #{TraderMail},
+            TraderUrl = #{TraderUrl},
+            BoughtDate = #{BoughtDate},
+            Price = #{Price},
             petitionTypeValue = #{petitionTypeValue},
             petitionContext = #{petitionContext},
-            ExpectResloveTypeValue = #{expectResloveTypeValue},
-            Other = #{other}
+            ExpectResloveTypeValue = #{ExpectResloveTypeValue},
+            Other = #{Other}
         WHERE
             id = #{id}
             AND Status = 0
@@ -42,17 +42,17 @@
         UPDATE case_relations
         SET
             id = #{id},
-            PlatformId = #{platformId},
-            PetitionUserInfo_Email = #{petitionUserInfo_Email},
-            Agent1_Email = #{agent1_Email},
-            Agent2_Email = #{agent2_Email},
-            Agent3_Email = #{agent3_Email},
-            Agent4_Email = #{agent4_Email},
-            Agent5_Email = #{agent5_Email},
-            TraderUserEmail = #{traderUserEmail}
+            PlatformId = #{PlatformId},
+            PetitionUserInfo_Email = #{PetitionUserInfo_Email},
+            Agent1_Email = #{Agent1_Email},
+            Agent2_Email = #{Agent2_Email},
+            Agent3_Email = #{Agent3_Email},
+            Agent4_Email = #{Agent4_Email},
+            Agent5_Email = #{Agent5_Email},
+            TraderUserEmail = #{TraderUserEmail}
         WHERE
-            CasePetition = #{casePetition}
-            AND PetitionUserId = #{petitionUserId}
+            CasePetition = #{CasePetition}
+            AND PetitionUserId = #{PetitionUserId}
     </update>
     <!-- 案件-添付ファイルリレーション取得 -->
     <select id="caseFileRelationsSelect" resultType="String">
@@ -99,16 +99,16 @@
         )
         VALUES (
             #{id},
-            #{platformId},
-            #{fileName},
-            #{fileExtension},
-            #{fileUrl},
-            #{fileSize},
-            #{registerUserId},
-            #{registerDate},
+            #{PlatformId},
+            #{FileName},
+            #{FileExtension},
+            #{FileUrl},
+            #{FileSize},
+            #{RegisterUserId},
+            #{RegisterDate},
             0,
-            #{lastModifiedDate},
-            #{lastModifiedBy}
+            #{LastModifiedDate},
+            #{LastModifiedBy}
         )
     </insert>
     <!-- TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する -->
@@ -125,13 +125,13 @@
         )
         VALUES (
             #{id},
-            #{platformId},
+            #{PlatformId},
             0,
-            #{relatedId},
+            #{RelatedId},
             #{fileId},
             0,
-            #{lastModifiedDate},
-            #{lastModifiedBy}
+            #{LastModifiedDate},
+            #{LastModifiedBy}
         )
     </insert>
     <!-- 既存の拡張項目内容取得 -->
@@ -142,24 +142,24 @@
         FROM
             case_extensionitem_values
         WHERE
-            PlatformId = #{platformId}
-            AND Case_petitionId = #{case_petitionId}
+            PlatformId = #{PlatformId}
+            AND case_petitionId = #{case_petitionId}
             AND DeleteFlag = 0
-            AND ExtensionitemId = #{extensionitemId}
+            AND ExtensionitemId = #{ExtensionitemId}
     </select>
     <!-- 拡張項目内容取得したデータがある場合、TBL「拡張項目設定値（case_extensionitem_values）」を更新 -->
     <update id="updateCaseExtensionitemValues" parameterType="com.web.app.domain.Entity.CaseExtensionitemValues">
         UPDATE case_extensionitem_values
         SET
-            ExtensionitemValue = #{extensionitemValue},
+            ExtensionitemValue = #{ExtensionitemValue},
             DeleteFlag = 0,
-            LastModifiedDate = #{lastModifiedDate},
-            LastModifiedBy = #{lastModifiedBy}
+            LastModifiedDate = #{LastModifiedDate},
+            LastModifiedBy = #{LastModifiedBy}
         WHERE
-            PlatformId = #{platformId}
-            AND Case_petitionId = #{case_petitionId}
+            PlatformId = #{PlatformId}
+            AND case_petitionId = #{case_petitionId}
             AND DeleteFlag = 0
-            AND ExtensionitemId = #{extensionitemId}
+            AND ExtensionitemId = #{ExtensionitemId}
     </update>
     <!-- 拡張項目内容取得したデータがない場合、TBL「拡張項目設定値（case_extensionitem_values）」を登録 -->
     <insert id="insertCaseExtensionitemValues" parameterType="com.web.app.domain.Entity.CaseExtensionitemValues">
@@ -176,14 +176,14 @@
         )
         VALUES (
             #{id},
-            #{platformId},
+            #{PlatformId},
             NULL,
             #{case_petitionId},
-            #{extensionitemId},
-            #{extensionitemValue},
+            #{ExtensionitemId},
+            #{ExtensionitemValue},
             0,
-            #{lastModifiedDate},
-            #{lastModifiedBy}
+            #{LastModifiedDate},
+            #{LastModifiedBy}
         )
     </insert>
 </mapper>
