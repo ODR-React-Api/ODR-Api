@@ -8,9 +8,10 @@ import lombok.Data;
 
 @Data
 public class InsMediationsData implements Serializable {
+
     // 缓冲
     private static final long serialVersionUID = 1L;
-    // 提出ユーザ
+    // ログインユーザ
     private String Uid;
 
     // 案件ID
@@ -37,18 +38,15 @@ public class InsMediationsData implements Serializable {
     // 特記事項
     private String SpecialItem;
 
-    // 提出ユーザ
-    private String UserId;
-
     // システム日付
     private String LastModifiedDate;
 
     // ログインユーザ
     private String LastModifiedBy;
 
-    //反訴
+    // 反訴
     private Integer Counterclaim;
-
+    // システム日付
     private String RegisterDate;
 
     // private ArrayList<Files> insertFiles;

@@ -60,7 +60,8 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             caseMediations.setPaymentEndDate(insMediationsData.getPaymentEndDate());
             caseMediations.setShipmentPayType(insMediationsData.getShipmentPayType());
             caseMediations.setSpecialItem(insMediationsData.getSpecialItem());
-            caseMediations.setUserId(insMediationsData.getUserId());
+            //ローグ・ユアサの保存
+            caseMediations.setUserId(insMediationsData.getUid());
             caseMediations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
             caseMediations.setLastModifiedBy(insMediationsData.getLastModifiedBy());
             // 「調停案」新規登録
@@ -76,6 +77,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                 filesData.setCaseId(insMediationsData.getCaseId());
                 // ローグ・ユアサの保存
                 filesData.setRegisterUserId(insMediationsData.getUid());
+                //システム日払いの保存
                 filesData.setRegisterDate(insMediationsData.getRegisterDate());
                 filesData.setLastModifiedDate(insMediationsData.getLastModifiedDate());
                 // ローグ・ユアサの保存
