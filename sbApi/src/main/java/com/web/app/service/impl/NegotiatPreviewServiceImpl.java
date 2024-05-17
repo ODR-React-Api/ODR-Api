@@ -1,11 +1,14 @@
 package com.web.app.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.web.app.domain.NegotiatPreview.MasterTemplates;
+import com.web.app.domain.constants.Constants;
 import com.web.app.mapper.GetNegotiationsTemplateMapper;
 import com.web.app.service.NegotiatPreviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 和解案テンプレート取得サビース
@@ -27,9 +30,19 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
      * @return List<MasterTemplates> 
      * @throws
      */
+    @Transactional
     @Override
-    public List<MasterTemplates>  getNegotiationsTemplate(MasterTemplates masterTemplates) {
-        List<MasterTemplates>  contextlist = getNegotiationsTemplateMapper.selectContext( masterTemplates);
-        return contextlist;
+    public List<MasterTemplates>  getNegotiationsTemplate() throws Exception {
+        
+            MasterTemplates masterTemplates = new MasterTemplates();
+            masterTemplates.setDeleteFlag(Constants.DELETE_FLAG_0);
+            List<Integer> templateType = new ArrayList<>();
+            //0:和解案テンプレート　　3：和解案合意書テンプレート
+            templateType.add(Constants.TEMPLATE_TYPE_0);
+            templateType.add(Constants.TEMPLATE_TYPE_3);
+            masterTemplates.setTemplateTypes(templateType);
+            masterTemplates.setLanguageId(Constants.JP);
+        List<MasterTemplates>  contextList = getNegotiationsTemplateMapper.selectContext( masterTemplates);
+        return contextList;
     }
 }

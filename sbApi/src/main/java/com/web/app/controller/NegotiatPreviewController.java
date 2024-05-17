@@ -6,7 +6,6 @@ import com.web.app.service.NegotiatPreviewService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -40,21 +39,9 @@ public class NegotiatPreviewController {
     @PostMapping("/getNegotiationsTemplate")
     public List<MasterTemplates> getNegotiationsTemplate() {
         try {
-
-            MasterTemplates masterTemplates = new MasterTemplates();
-            masterTemplates.setDeleteFlag(Constants.DELETE_FLAG_0);
-
-            List<Integer> templateType = new ArrayList<>();
-            templateType.add(Constants.TEMPLATE_TYPE_0);
-            templateType.add(Constants.TEMPLATE_TYPE_3);
-            masterTemplates.setTemplateTypes(templateType);
-
-            masterTemplates.setLanguageId(Constants.JP);
             List<MasterTemplates> asterTemplatesList = negotiationsPreviewService
-                    .getNegotiationsTemplate(masterTemplates);
-
+                    .getNegotiationsTemplate();
             return asterTemplatesList;
-
         } catch (Exception e) {
             AjaxResult.fatal(Constants.MSG_ERROR, e);
             return null;

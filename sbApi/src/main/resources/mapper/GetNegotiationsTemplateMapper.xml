@@ -22,8 +22,6 @@
         <result property="other04" column="Other04" jdbcType="VARCHAR"/>
         <result property="other05" column="Other05" jdbcType="VARCHAR"/>
         <result property="isActive" column="IsActive" jdbcType="INTEGER"/>
-
-
     </resultMap>
     <select id="selectContext" resultMap="GetNegotiationsTemplateResultMap">
         SELECT
