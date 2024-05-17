@@ -16,6 +16,7 @@ import com.web.app.domain.mediationsMake.InsMediationsData;
  */
 @Mapper
 public interface InsMediationsDataMapper {
+    
     // 「調停案」新規登録
     int insMediationsData2(CaseMediations CaseMediations);
 

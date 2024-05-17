@@ -32,7 +32,7 @@ public class MediationsMakeController {
      * 調停案データ新規登録
      * 
      * @param insMediationsData 
-     * @return 調停案データ新規登録成功
+     * @return 調停案データ新規登録成功 (1：調停案データ新規登録成功2：調停案データ更新成功)
      * @throws Exception 調停案データ新規登録失敗
      */
     @ApiOperation("調停案データ新規登録")

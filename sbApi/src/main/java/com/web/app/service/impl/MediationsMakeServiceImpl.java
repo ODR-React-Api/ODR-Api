@@ -28,7 +28,6 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
 
         // 「調停案」データが存在する場合
         if (mediationsCount != null) {
-
             // 「案件-添付ファイル」、「添付ファイル」データが存在するかどうかを判断する
             int dataSearch = mediationcaseMapper.dataSearch(insMediationsData);
 
@@ -38,7 +37,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             } else {
                 // 調停案データ更新API
             }
-            dataStatus = 0;
+            dataStatus = 2;
         } else {
             // 調停案データ新規登録API
             // 「調停案」新規登録に必要なデータを保存する
@@ -50,7 +49,6 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             caseMediations.setCaseId(insMediationsData.getCaseId());
             caseMediations.setExpectResloveTypeValue(insMediationsData.getExpectResloveTypeValue());
             caseMediations.setPayAmount(insMediationsData.getPayAmount());
-
             // CounterClaimPayment（反訴の支払金額）を設定するための申請の反訴があるかどうかを判断する
             if (insMediationsData.getCounterclaim() == 1) {
                 // 反訴申請が存在する場合、フロントから転送された反訴の支払金額データを保存する。
@@ -65,15 +63,12 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             caseMediations.setUserId(insMediationsData.getUserId());
             caseMediations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
             caseMediations.setLastModifiedBy(insMediationsData.getLastModifiedBy());
-
             // 「調停案」新規登録
             int MediationcaseInsert = mediationcaseMapper.insMediationsData2(caseMediations);
-
             // 「調停案」データ新規登録が成功した場合
             if (MediationcaseInsert == 1) {
                 // フロントから転送されたファイルデータを保存する
                 ArrayList<Files> filesData = insMediationsData.getInsertFiles();
-
                 // ファイルデータを巡回して個別にログインする
                 for (int i = 0; i < filesData.size(); i++) {
                     UUID filesId = UUID.randomUUID();
@@ -90,7 +85,6 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                     filesData.get(i).setLastModifiedBy(insMediationsData.getUid());
                     // 「添付ファイル」の新規登録
                     int insertFiles = mediationcaseMapper.insertFiles(filesData.get(i));
-
                     // 「添付ファイル」新規登録が成功した場合
                     if (insertFiles == 1) {
                         // 「案件-添付ファイル」テーブルのデータを保存する
@@ -114,5 +108,4 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
         }
         return dataStatus;
     }
-
 }
