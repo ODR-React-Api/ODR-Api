@@ -20,22 +20,25 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
     @Transactional
     @Override
     public int insMediationsData(InsMediationsData insMediationsData) {
-        int a;
-        // 「調停案」にデータが存在するかどうかを判断する（ファイルが添付されていない場合がある）
+
+        // データの存在状態を判断するために使用する
+        int dataStatus;
+        // 「調停案」にデータが存在するかどうかを判断する（CaseId検索による）
         CaseMediations mediationsCount = mediationcaseMapper.mediationCount(insMediationsData);
 
         // 「調停案」データが存在する場合
         if (mediationsCount != null) {
-            // 「調停案」、「案件-添付ファイル」、「添付ファイル」テーブルを関連付けてデータが存在するかどうかを判断する
+
+            // 「案件-添付ファイル」、「添付ファイル」データが存在するかどうかを判断する
             int dataSearch = mediationcaseMapper.dataSearch(insMediationsData);
-            // 表関連データが存在しない場合
+
+            // 「案件-添付ファイル」、「添付ファイル」データが発生しないと判断した場合
             if (dataSearch == 0) {
                 // 調停案データ更新API
-                a = 1;
+                dataStatus = 1;
             } else {
-                // 「案件-添付ファイルリレーション」は、添付ファイルの数に等しいレコード新規登録(insert)で行う
-                // 「添付ファイル」は、添付ファイルの数に等しいレコード新規登録(insert)で行う
-                a = 2;
+                // 調停案データ更新API
+                dataStatus = 2;
             }
             // 調停案データ更新API
         } else {
@@ -43,9 +46,9 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             CaseMediations caseMediations = new CaseMediations();
             // id付与
             UUID uuid = UUID.randomUUID();
-            String id = uuid.toString().replaceAll("-", "");
-            caseMediations.setId(id);
-            // 属性赋予
+            String caseMediationsId = uuid.toString().replaceAll("-", "");
+            caseMediations.setId(caseMediationsId);
+            // 「調停案」テーブルのフィールドにデータを保存する
             caseMediations.setPlatformId(insMediationsData.getPlatformId());
             caseMediations.setCaseId(insMediationsData.getCaseId());
             caseMediations.setExpectResloveTypeValue(insMediationsData.getExpectResloveTypeValue());
@@ -53,8 +56,10 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
 
             // CounterClaimPayment（反訴の支払金額）を設定するための申請の反訴があるかどうかを判断する
             if (insMediationsData.getCounterclaim() == 1) {
+                // 反訴申請が存在する場合、フロントから転送された反訴の支払金額データを保存する。
                 caseMediations.setCounterClaimPayment(insMediationsData.getCounterClaimPayment());
             } else {
+                //反訴申請が存在しない場合、反訴の支払金額は表示されず、空の値を保存します。
                 caseMediations.setCounterClaimPayment(null);
             }
             caseMediations.setPaymentEndDate(insMediationsData.getPaymentEndDate());
@@ -63,6 +68,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             caseMediations.setUserId(insMediationsData.getUserId());
             caseMediations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
             caseMediations.setLastModifiedBy(insMediationsData.getLastModifiedBy());
+
             // 「調停案」は、レコード新規登録（insert）で行う
             int MediationcaseInsert = mediationcaseMapper.insMediationsData2(caseMediations);
 
@@ -93,26 +99,26 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                         caseFileRelations.setId(CaseFileRelationsid);
                         caseFileRelations.setPlatformId(insMediationsData.getPlatformId());
                         caseFileRelations.setCaseId(insMediationsData.getCaseId());
-                        caseFileRelations.setRelatedId(id);
+                        caseFileRelations.setRelatedId(caseMediationsId);
                         caseFileRelations.setFileId(filesid);
                         caseFileRelations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
                         caseFileRelations.setLastModifiedBy(insMediationsData.getUid());
 
                         int insCaseFileRelations = mediationcaseMapper.insCaseFileRelations(caseFileRelations);
 
-                        if (insCaseFileRelations ==1) {
-                            a=111;
-                        }else{
-                            a=222;
+                        if (insCaseFileRelations == 1) {
+                            dataStatus = 111;
+                        } else {
+                            dataStatus = 222;
                         }
                     }
                 }
             }
-            a = 3;
+            dataStatus = 3;
             // 「案件-添付ファイルリレーション」は、添付ファイルの数に等しいレコード新規登録(insert)で行う
             // 「添付ファイル」は、添付ファイルの数に等しいレコード新規登録(insert)で行う
         }
-        return a;
+        return dataStatus;
     }
 
 }
