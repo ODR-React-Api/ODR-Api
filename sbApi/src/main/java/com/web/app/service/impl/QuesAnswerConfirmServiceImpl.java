@@ -43,7 +43,6 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
     @Transactional
     @Override
     public int InsQuestionnairesResults(InsQuestionnaireResults insQuestionnaireResults) {
-        // TODO
         // 2.1 メール送信 & アクション履歴記録
         // 送信先：【画面C08】.userEmail
         // メール送信の項目を設定
