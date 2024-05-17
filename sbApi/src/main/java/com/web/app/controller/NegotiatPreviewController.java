@@ -51,7 +51,7 @@ public class NegotiatPreviewController {
                     return AjaxResult.success("和解案提出成功!");
                 }
             }
-            return AjaxResult.error("和解案提出成功!");
+            return AjaxResult.success("和解案提出成功!");
         }catch (Exception e){
             return AjaxResult.fatal("和解案提出失敗!", e);
         }

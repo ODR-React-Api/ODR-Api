@@ -1,5 +1,7 @@
 package com.web.app.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,9 +12,11 @@ import com.web.app.domain.Entity.File;
 import com.web.app.domain.NegotiatPreview.NegotiatPreview;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.Num;
+import com.web.app.domain.util.SendMailRequest;
 import com.web.app.mapper.InsNegotiationDataMapper;
 import com.web.app.mapper.UpdNegotiationsDataMapper;
 import com.web.app.service.NegotiatPreviewService;
+import com.web.app.service.UtilService;
 
 /**
  * 和解案データ登録
@@ -30,7 +34,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     private InsNegotiationDataMapper insNegotiationDataMapper;
 
     @Autowired
-    private UtilServiceImpl utilServiceImpl;
+    private UtilService utilService;
 
     /**
      * 和解案が存在するかどうかを判断する
@@ -84,7 +88,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     public int InsNegotiationData(NegotiatPreview negotiatPreview) {
         // 「和解案」新規登録
         CaseNegotiations caseNegotiations = new CaseNegotiations();
-        caseNegotiations.setId(utilServiceImpl.GetGuid());
+        caseNegotiations.setId(utilService.GetGuid());
         caseNegotiations.setPlatformId(negotiatPreview.getPlatformId());
         caseNegotiations.setCaseId(negotiatPreview.getCaseId());
         caseNegotiations.setStatus(negotiatPreview.getStatus());
@@ -109,7 +113,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
 
         // 「添付ファイル」の新規登録
         File file = new File();
-        file.setId(utilServiceImpl.GetGuid());
+        file.setId(utilService.GetGuid());
         file.setPlatformId(negotiatPreview.getPlatformId());
         file.setCaseId(negotiatPreview.getCaseId());
         file.setFileName(negotiatPreview.getFileName());
@@ -128,7 +132,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
 
         // 「案件-添付ファイルリレーション」新規登録
         CaseFileRelations caseFileRelations = new CaseFileRelations();
-        caseFileRelations.setId(utilServiceImpl.GetGuid());
+        caseFileRelations.setId(utilService.GetGuid());
         caseFileRelations.setPlatformId(negotiatPreview.getPlatformId());
         caseFileRelations.setCaseId(negotiatPreview.getCaseId());
         caseFileRelations.setRelatedId(caseNegotiations.getId());
@@ -137,6 +141,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         if (addCaseFileRelationsStatus == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
+        boolean bool = utilService.SendMail(null);
         return Constants.RESULT_STATE_SUCCESS;
     }
 
@@ -189,7 +194,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
 
         // 「添付ファイル」の新規登録
         File addFile = new File();
-        addFile.setId(utilServiceImpl.GetGuid());
+        addFile.setId(utilService.GetGuid());
         addFile.setPlatformId(negotiatPreview.getPlatformId());
         addFile.setCaseId(negotiatPreview.getCaseId());
         addFile.setFileName(negotiatPreview.getFileName());
@@ -208,7 +213,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
 
         // 「案件-添付ファイルリレーション」新規登録
         CaseFileRelations addCaseFileRelations = new CaseFileRelations();
-        addCaseFileRelations.setId(utilServiceImpl.GetGuid());
+        addCaseFileRelations.setId(utilService.GetGuid());
         addCaseFileRelations.setPlatformId(negotiatPreview.getPlatformId());
         addCaseFileRelations.setCaseId(negotiatPreview.getCaseId());
         addCaseFileRelations.setRelatedId(upCaseNegotiations.getId());
@@ -218,5 +223,38 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
             return Constants.RESULT_STATE_ERROR;
         }
         return Constants.RESULT_STATE_SUCCESS;
+    }
+
+    public SendMailRequest Mail(NegotiatPreview negotiatPreview){
+        SendMailRequest sendMailRequest = new SendMailRequest();
+
+        sendMailRequest.setPlatformId(negotiatPreview.getPlatformId());
+
+        sendMailRequest.setLanguageId(Constants.JP);
+
+        sendMailRequest.setTempId("M026");
+
+        sendMailRequest.setCaseId("0000000032");
+
+        ArrayList<String> recipientEmail = new ArrayList<String>();
+
+        recipientEmail.add("li.zhiwen@trans-cosmos.com.cn");
+
+        sendMailRequest.setRecipientEmail(recipientEmail);
+
+        ArrayList<String> parameter = new ArrayList<String>();
+
+        parameter.add("0000000032");
+        parameter.add("メール受信テスト２_返金,その他");
+        parameter.add("UserName");
+        parameter.add("http://www.baidu.com");
+
+        sendMailRequest.setParameter(parameter);
+
+        sendMailRequest.setUserId("001");
+
+        sendMailRequest.setControlType(1);
+
+        return sendMailRequest;
     }
 }

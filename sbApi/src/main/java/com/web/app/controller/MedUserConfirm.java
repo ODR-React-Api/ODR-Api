@@ -1,6 +1,5 @@
 package com.web.app.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,31 +9,28 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.NegotiatAgree.NegotiatAgree;
-import com.web.app.service.NegotiatAgreeService;
 import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * 和解案合意画面
+ * 調停人確認画面
  * 
  * @author DUC 李志文
- * @since 2024/05/14
+ * @since 2024/05/16
  * @version 1.0
  */
 @CrossOrigin(origins = "*")
-@Api(tags = "和解案合意画面")
+@Api(tags = "調停人確認画面")
 @RestController
-@RequestMapping("/NegotiatAgree")
-public class NegotiatAgreeController {
-    @Autowired
-    private NegotiatAgreeService negotiatAgreeService;
+@RequestMapping("/")
+public class MedUserConfirm {
 
     /**
-     * 和解案合意画面
+     * 調停人確認画面
      *
-     * @param NegotiatAgree セッション値
+     * @param NegotiatPreview セッション値
      * @return Response
      * @throws Exception 和解案提出失敗
      */
@@ -42,10 +38,9 @@ public class NegotiatAgreeController {
     @PostMapping("NegotiatAgree")
     public Response NegotiatAgree(@RequestBody NegotiatAgree negotiatAgree) {
         try {
-            CaseNegotiations caseNegotiations = negotiatAgreeService.selCaseNegotiations(negotiatAgree);
-            return AjaxResult.success("和解案内容取得成功!", caseNegotiations);
+            return null;
         } catch (Exception e) {
-            return AjaxResult.fatal("和解案内容取得失敗!", e);
+            return AjaxResult.fatal( "失敗!",e);
         }
     }
 }

@@ -7,7 +7,7 @@ import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.Entity.File;
 
 /**
- * 和解案プレビュー画面
+ * 和解案データ新規登録
  * 
  * @author DUC 李志文
  * @since 2024/05/10
