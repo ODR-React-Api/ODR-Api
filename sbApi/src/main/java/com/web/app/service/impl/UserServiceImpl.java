@@ -1,5 +1,5 @@
 package com.web.app.service.impl;
-
+//这里加一行用来测试git commit
 import com.web.app.domain.Response;
 import com.web.app.domain.User;
 import com.web.app.mapper.UserMapper;
@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
     } catch (Exception e) {
       return null;
     }
-
   }
 
   /*
