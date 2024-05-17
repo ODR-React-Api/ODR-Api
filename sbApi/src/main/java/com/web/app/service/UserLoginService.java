@@ -1,8 +1,5 @@
 package com.web.app.service;
 
-import com.web.app.domain.userLogin.GetPreUserData;
-import java.util.List;
-
 /**
  * 会員登録フォーム
  * 
@@ -12,5 +9,5 @@ import java.util.List;
  */
 public interface UserLoginService {
     //API_仮会員登録データ取得
-    List<GetPreUserData> getPreUserData(String guid);
+    String getPreUserData(String guid);
 }

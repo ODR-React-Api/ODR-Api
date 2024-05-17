@@ -1,10 +1,7 @@
 package com.web.app.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.web.app.domain.userLogin.GetPreUserData;
 import com.web.app.mapper.GetPreUserDataMapper;
 import com.web.app.service.UserLoginService;
 
@@ -28,9 +25,7 @@ public class UserLoginServiceImpl implements UserLoginService {
      * @return getPreUserDatalist
      */
     @Override
-    public List<GetPreUserData> getPreUserData(String guid) {
-        List<GetPreUserData> getPreUserDatalist = new ArrayList<GetPreUserData>();
-        getPreUserDatalist = getPreUserDataMapper.getPreUserDataMapper(guid);
-        return getPreUserDatalist;
+    public String getPreUserData(String guid) {
+        return getPreUserDataMapper.getPreUserData(guid);
     }
 }

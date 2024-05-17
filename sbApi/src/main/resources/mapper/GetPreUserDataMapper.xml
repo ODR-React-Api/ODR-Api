@@ -3,10 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetPreUserDataMapper">
-    <resultMap id="getPreUserDataResultMap" type="com.web.app.domain.userLogin.GetPreUserData">
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    </resultMap>   
-    <select id="getPreUserDataMapper" resultMap="getPreUserDataResultMap">
+    <select id="getPreUserData" resultType="java.lang.String">
         SELECT
             email   
         FROM

@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.InsClaimRepliesMapper">
-  <insert id="insClaimReplies" parameterType="com.web.app.domain.InsClaimReplies">
+    <insert id="insClaimReplies" parameterType="com.web.app.domain.InsClaimReplies">
         INSERT INTO react_use.case_claimreplies (
             id,
             PlatformId,
@@ -33,7 +33,7 @@
             #{lastModifiedBy}
         )
     </insert>
-      
+    
         <insert id="insClaimRepliesDataFiles" parameterType="com.web.app.domain.Files">
         INSERT INTO react_use.files (
             id,
@@ -77,8 +77,7 @@
         )
     </insert>
 
-        <insert id="insClaimRepliesDataFilesRelations" parameterType="com.web.app.domain.CaseFileRelations">
-        
+        <insert id="insClaimRepliesDataFilesRelations" parameterType="com.web.app.domain.CaseFileRelations">        
         INSERT INTO react_use.case_file_relations (
             id,
             PlatformId,
