@@ -81,25 +81,20 @@ public class MosListServiceImpl implements MosListService {
         if (caseDetailCasesSelInfo.getCaseStage() == 0) {
             // 対応期日を文字列にフォーマットを設定する
             dateString = simpleDateFormat.format(caseDetailCasesSelInfo.getReplyEndDate());
-
         } else if (caseDetailCasesSelInfo.getCaseStage() == 2) {
             // 「cases」から「案件ステージ」を取得したの判定：2:（反訴）
             // 対応期日を文字列にフォーマットを設定する
             dateString = simpleDateFormat.format(caseDetailCasesSelInfo.getCounterclaimEndDate());
-
         } else if (caseDetailCasesSelInfo.getCaseStage() == 3) {
             // 「cases」から「案件ステージ」を取得したの判定：3:（交渉）
             // 対応期日を文字列にフォーマットを設定する
             dateString = simpleDateFormat.format(caseDetailCasesSelInfo.getNegotiationEndDate());
-
         } else if (caseDetailCasesSelInfo.getCaseStage() == 6 || caseDetailCasesSelInfo.getCaseStage() == 7) {
             // 「cases」から「案件ステージ」を取得したの判定：6:（調停人指名）7:（調停）
             // 対応期日を文字列にフォーマットを設定するする
             dateString = simpleDateFormat.format(caseDetailCasesSelInfo.getMediationEndDate());
-
         } else {
             dateString = "99999999";
-
         }
         // 対応期日を設定された
         caseDetailCasesInfoItem.setCorrespondDate(dateString);
@@ -146,7 +141,6 @@ public class MosListServiceImpl implements MosListService {
                             || caseDetailCasesSelInfo.getGroupMessageFlag2() == 1) {
                         // 要対応有無に1（要対応）を設定する
                         caseDetailCasesInfoItem.setCorrespondence("1");
-                        // }
                     }
                     break;
                 default:
@@ -195,7 +189,6 @@ public class MosListServiceImpl implements MosListService {
                         // 要対応有無に1（要対応）を設定する
                         caseDetailCasesInfoItem.setCorrespondence("1");
                     }
-                    // }
                     break;
                 default:
                     // 上記以外の場合、要対応有無に0（要対応なし）を設定する

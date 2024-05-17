@@ -73,7 +73,6 @@ public class MosDetailServiceImpl implements MosDetailService {
         if (caseStage == 0 && ("0000".equals(status))) {
             // ケース状態の更新
             int updateNum = updCasesStatusMapper.caseStatusChangeUpdate(cid);
-
             // ケース状態の更新の件数が0じゃない場合
             if (updateNum != 0) {
                 participatedStatusChangeResultInfo.setParticipatedFlag(0);
