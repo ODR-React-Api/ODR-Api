@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.web.app.service.MediationsMakeService;
+import com.web.app.domain.Entity.CaseFileRelations;
 import com.web.app.domain.Entity.CaseMediations;
 import com.web.app.domain.Entity.Files;
 import com.web.app.domain.mediationsMake.InsMediationsData;
@@ -79,10 +80,32 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                     filesData.get(i).setRegisterUserId(insMediationsData.getUid());
                     filesData.get(i).setDeleteFlag(0);
                     filesData.get(i).setRegisterDate(insMediationsData.getRegisterDate());
-                    filesData.get(i).setLastModifiedDate(insMediationsData.getLastModifiedDate()); 
-                    filesData.get(i).setLastModifiedBy(insMediationsData.getUid());  
-                    //List内のデータを巡回して1つずつログインする
+                    filesData.get(i).setLastModifiedDate(insMediationsData.getLastModifiedDate());
+                    filesData.get(i).setLastModifiedBy(insMediationsData.getUid());
+                    // List内のデータを巡回して1つずつログインする
                     int insertFiles = mediationcaseMapper.insertFiles(filesData.get(i));
+
+                    if (insertFiles == 1) {
+                        CaseFileRelations caseFileRelations = new CaseFileRelations();
+
+                        UUID CaseFileRelationsId = UUID.randomUUID();
+                        String CaseFileRelationsid = CaseFileRelationsId.toString().replaceAll("-", "");
+                        caseFileRelations.setId(CaseFileRelationsid);
+                        caseFileRelations.setPlatformId(insMediationsData.getPlatformId());
+                        caseFileRelations.setCaseId(insMediationsData.getCaseId());
+                        caseFileRelations.setRelatedId(id);
+                        caseFileRelations.setFileId(filesid);
+                        caseFileRelations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
+                        caseFileRelations.setLastModifiedBy(insMediationsData.getUid());
+
+                        int insCaseFileRelations = mediationcaseMapper.insCaseFileRelations(caseFileRelations);
+
+                        if (insCaseFileRelations ==1) {
+                            a=111;
+                        }else{
+                            a=222;
+                        }
+                    }
                 }
             }
             a = 3;

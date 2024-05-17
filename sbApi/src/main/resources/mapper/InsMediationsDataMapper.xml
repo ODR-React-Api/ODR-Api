@@ -151,4 +151,40 @@
         #{LastModifiedBy}
      )
 </insert>
+
+    <insert id="insCaseFileRelations" parameterType="com.web.app.domain.Entity.CaseFileRelations">
+    INSERT INTO case_file_relations
+    (
+        id,
+        PlatformId,
+        CaseId,
+        RelationType,
+        RelatedId,
+        fileId,
+        Other01,
+        Other02,
+        Other03,
+        Other04,
+        Other05,
+        DeleteFlag,
+        LastModifiedDate,
+        LastModifiedBy
+    )
+    VALUES(
+        #{id},
+        #{PlatformId},
+        #{CaseId},
+        5,
+        #{RelatedId},
+        #{fileId},
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        0,
+        #{LastModifiedDate},
+        #{LastModifiedBy}
+    )
+    </insert>
 </mapper>
