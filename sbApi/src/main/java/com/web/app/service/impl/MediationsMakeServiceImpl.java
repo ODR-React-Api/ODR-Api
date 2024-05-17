@@ -67,41 +67,37 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             int MediationcaseInsert = mediationcaseMapper.insMediationsData2(caseMediations);
             // 「調停案」データ新規登録が成功した場合
             if (MediationcaseInsert == 1) {
-                // フロントから転送されたファイルデータを保存する
-                ArrayList<Files> filesData = insMediationsData.getInsertFiles();
-                // ファイルデータを巡回して個別にログインする
-                for (int i = 0; i < filesData.size(); i++) {
-                    UUID filesId = UUID.randomUUID();
-                    String filesid = filesId.toString().replaceAll("-", "");
-                    filesData.get(i).setId(filesid);
-                    filesData.get(i).setPlatformId(insMediationsData.getPlatformId());
-                    filesData.get(i).setCaseId(insMediationsData.getCaseId());
+                //フロントから転送されたファイルデータを保存する
+                Files filesData = insMediationsData.getInsertFiles();
+                UUID filesId = UUID.randomUUID();
+                String filesid = filesId.toString().replaceAll("-", "");
+                filesData.setId(filesid);
+                filesData.setPlatformId(insMediationsData.getPlatformId());
+                filesData.setCaseId(insMediationsData.getCaseId());
+                // ローグ・ユアサの保存
+                filesData.setRegisterUserId(insMediationsData.getUid());
+                filesData.setRegisterDate(insMediationsData.getRegisterDate());
+                filesData.setLastModifiedDate(insMediationsData.getLastModifiedDate());
+                // ローグ・ユアサの保存
+                filesData.setLastModifiedBy(insMediationsData.getUid());
+                // 「添付ファイル」の新規登録
+                int insertFiles = mediationcaseMapper.insertFiles(filesData);
+                // 「添付ファイル」新規登録が成功した場合
+                if (insertFiles == 1) {
+                    // 「案件-添付ファイル」テーブルのデータを保存する
+                    CaseFileRelations caseFileRelations = new CaseFileRelations();
+                    UUID CaseFileRelationsId = UUID.randomUUID();
+                    String CaseFileRelationsid = CaseFileRelationsId.toString().replaceAll("-", "");
+                    caseFileRelations.setId(CaseFileRelationsid);
+                    caseFileRelations.setPlatformId(insMediationsData.getPlatformId());
+                    caseFileRelations.setCaseId(insMediationsData.getCaseId());
+                    caseFileRelations.setRelatedId(caseMediationsId);
+                    caseFileRelations.setFileId(filesid);
+                    caseFileRelations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
                     // ローグ・ユアサの保存
-                    filesData.get(i).setRegisterUserId(insMediationsData.getUid());
-                    filesData.get(i).setDeleteFlag(0);
-                    filesData.get(i).setRegisterDate(insMediationsData.getRegisterDate());
-                    filesData.get(i).setLastModifiedDate(insMediationsData.getLastModifiedDate());
-                    // ローグ・ユアサの保存
-                    filesData.get(i).setLastModifiedBy(insMediationsData.getUid());
-                    // 「添付ファイル」の新規登録
-                    int insertFiles = mediationcaseMapper.insertFiles(filesData.get(i));
-                    // 「添付ファイル」新規登録が成功した場合
-                    if (insertFiles == 1) {
-                        // 「案件-添付ファイル」テーブルのデータを保存する
-                        CaseFileRelations caseFileRelations = new CaseFileRelations();
-                        UUID CaseFileRelationsId = UUID.randomUUID();
-                        String CaseFileRelationsid = CaseFileRelationsId.toString().replaceAll("-", "");
-                        caseFileRelations.setId(CaseFileRelationsid);
-                        caseFileRelations.setPlatformId(insMediationsData.getPlatformId());
-                        caseFileRelations.setCaseId(insMediationsData.getCaseId());
-                        caseFileRelations.setRelatedId(caseMediationsId);
-                        caseFileRelations.setFileId(filesid);
-                        caseFileRelations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
-                        // ローグ・ユアサの保存
-                        caseFileRelations.setLastModifiedBy(insMediationsData.getUid());
-                        // 「案件-添付ファイルリレーション」新規登録
-                        mediationcaseMapper.insCaseFileRelations(caseFileRelations);
-                    }
+                    caseFileRelations.setLastModifiedBy(insMediationsData.getUid());
+                    // 「案件-添付ファイルリレーション」新規登録
+                    mediationcaseMapper.insCaseFileRelations(caseFileRelations);
                 }
             }
             dataStatus = 1;

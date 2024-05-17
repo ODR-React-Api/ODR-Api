@@ -1,8 +1,6 @@
 package com.web.app.domain.mediationsMake;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.web.app.domain.Entity.Files;
 
@@ -53,6 +51,8 @@ public class InsMediationsData implements Serializable {
 
     private String RegisterDate;
 
-    private ArrayList<Files> insertFiles;
+    // private ArrayList<Files> insertFiles;
+
+    private Files insertFiles;
 
 }
