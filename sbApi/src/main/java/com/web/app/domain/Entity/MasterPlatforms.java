@@ -1,132 +1,248 @@
 package com.web.app.domain.Entity;
 
-
-import java.sql.Date;
 import lombok.Data;
 
+/**
+ * プラットフォームマスタ
+ * 
+ * @author DUC 耿浩哲
+ * @since 2024/05/10
+ * @version 1.0
+ */
 @Data
 public class MasterPlatforms {
 
-    public String Id;
+    // ID
+    private String Id;
 
-    public String PlatformName;
+    // プラットフォーム名
+    private String PlatformName;
 
-    public String Logo;
+    // ロゴ
+    private String Logo;
 
-    public String Logo_Small;
+    //ロゴ小
+    private String Logo_Small;
 
-    public String TimeZone;
+    // タイムゾーン
+    private String TimeZone;
 
-    public String Currency;
+    // 通貨
+    private String Currency;
 
-    public String CurrencyMark;
+    // 通貨記号
+    private String CurrencyMark;
 
-    public double HeatUpWeight;
+    // ヒートアップ閾値
+    private double HeatUpWeight;
 
-    public int RemindTiming_Reply;
+    // 期日リマインド - 申立に対する回答（相手方）
+    private int RemindTiming_reply;
 
-    public int RemindTiming_Claimreply;
+    // 期日リマインド - 反訴に対する回答（申立人）
+    private int RemindTiming_claimreply;
 
-    public int RemindTiming_Negotiation;
+    // 期日リマインド - 交渉 
+    private int RemindTiming_negotiation;
 
-    public int RemindTiming_Ex_Neg;
+    // 期日リマインド - 交渉延長ある場合
+    private int RemindTiming_ex_neg;
 
-    public int RemindTiming_Mediation;
+    // 期日リマインド - 調停 
+    private int RemindTiming_mediation;
 
-    public int RemindTiming_Ex_Med;
+    // 期日リマインド - 調停延長ある場合
+    private int RemindTiming_ex_med;
 
-    public int InfoFrequency;
+    // メッセージメール頻度
+    private int InfoFrequency;
 
-    public boolean WorkDayBase;
+    // 作業日のみ
+    private Integer WorkDayBase;
 
-    public int ReplyLimitDays;
+    // 相手への非通知設定
+    private Integer PetitionNoticeMode;
 
-    public int CounterclaimLimitDays;
+    // 通知用メールアドレス
+    private String PetitionNoticeEmail;
 
-    public int NegotiationLimitDays;
+    // 申立回答期限
+    private int ReplyLimitDays;
 
-    public int NegotiationExtendDays;
+    // 反訴期限日数
+    private int CounterclaimLimitDays;
 
-    public int MediationLimitDays;
+    // 交渉期限日数
+    private int NegotiationLimitDays;
 
-    public int MediationExtentdDays;
+    // 交渉期限延長可能日数
+    private int NegotiationExtendDays;
 
-    public int UserProductId;
+    // 調停期限日数
+    private int MediationLimitDays;
 
-    public int UseTraderName;
+    // 調停期限延長可能日数
+    private int MediationExtentdDays;
 
-    public int UseProductUrl;
+    // 商品IDの利用設定
+    private int UserProductId;
 
-    public int UseOther;
+    // 販売者名利用設定
+    private int UseTraderName;
 
-    public int UseRepliesOther;
-    public int UseClaimRepliesOther;
-    public int UseNegotiationsOther;
-    public int UseMediationsOther;
+    // 販売元URL利用設定
+    private int UseProductUrl;
 
-    public int MessageUpdateFrequency;
+    // 拡張項目利用設定
+    private int UseOther;
 
-    public String LanguageId;
+    // 回答タブ拡張項目利用設定
+    private int UseRepliesOther;
 
-    public boolean ShowMiddleName;
+    // 反訴タブ拡張項目利用設定
+    private int UseClaimRepliesOther;
 
-    public int MediatorAssignType;
+    // 和解タブ拡張項目利用設定
+    private int UseNegotiationsOther;
 
-    public boolean MediatorPrivateMessage;
+    // 調停タブ拡張項目利用設定
+    private int UseMediationsOther;
 
-    public boolean MediatorPrivateMessageAddMode;
+    // デフォルト販売者Email自動設定
+    private Integer UseDefaultTraderEmail;
 
-    public boolean MediatorInfoLimit;
+    // デフォルト販売者Email
+    private String DefaultTraderEmail;
 
-    public int MediatorInfoLimitConfirmDays;
+    // メッセージ更新頻度
+    private int MessageUpdateFrequency;
 
-    public boolean Phase_Negotiation;
+    private String languageId;
 
-    public boolean Phase_Mediation;
+    private Integer ShowMiddleName;
 
-    public boolean Phase_Arbitration;
+    // 調停人指名方法
+    private int MediatorAssignType;
 
-    public boolean Phase_Reply;
+    // 調停人との個別やりとり
+    private Integer MediatorPrivateMessage;
 
-    public String Other01;
+    // 調停人との個別やりとり付加方法
+    private Integer MediatorPrivateMessageAddMode;
 
-    public String Other02;
+    // 調停人の交渉フェーズ情報閲覧制限
+    private Integer MediatorInfoLimit;
 
-    public String Other03;
+    // 情報閲覧制限できる期間
+    private int MediatorInfoLimitConfirmDays;
 
-    public String Other04;
+    // 交渉機能利用有無
+    private Integer Phase_negotiation;
 
-    public String Other05;
+    // 調停機能利用有無
+    private Integer Phase_mediation;
 
-    public boolean DeleteFlag;
+    // 仲裁機能利用有無
+    private Integer Phase_arbitration;
 
-    public boolean UseDefaultTraderEmail;
+    // 反訴機能利用有無
+    private Integer Phase_reply;
 
-    public String DefaultTraderEmail;
+    // サービスサイトURL
+    private String ServiceSiteUrl;
 
-    public Date LastModifiedDate;
+    // 申立内容-添付ファイル
+    private int PetitionsContexFile;
 
-    public String LastModifiedBy;
+    // 回答の内容-添付ファイル
+    private int RepliesContextFile;
 
-    public int MediationChangeableCountSet;
+    // 回答画面_反訴の回答内容－添付ファイル
+    private int ClaimRepliesContextFileR;
 
-    public int MediationNoReasonChangeableCountSet;
+    // 反訴画面_反訴の回答内容－添付ファイル
+    private int ClaimRepliesContextFileC;
 
-    public String ServiceSiteUrl;
+    // 和解案内容-添付ファイル
+    private int NegotiationsContextFile;
 
-    public int PetitionsContexFile;
+    // 調停案内容-添付ファイル
+    private int MediationsContextFile;
 
-    public int RepliesContextFile;
+    private String Other01;
 
-    public int ClaimRepliesContextFileR;
+    private String Other02;
 
-    public int ClaimRepliesContextFileC;
+    private String Other03;
 
-    public int NegotiationsContextFile;
+    private String Other04;
 
-    public int MediationsContextFile;
+    private String Other05;
 
-    public boolean PetitionNoticeMode;
+    private Integer DeleteFlag;
 
-    public String PetitionNoticeEmail;
+    private String LastModifiedDate;
+
+    private String LastModifiedBy;
+
+    // 「利用モジュール管理」の保存ボタンを押下したユーザID
+    private String moduleLastModifiedBy;
+
+    // 「利用モジュール管理」の保存ボタンを押下時のタイムスタンプ
+    private String moduleLastModifiedDate;
+
+    // 「利用機能コントロール」の保存ボタンを押下したユーザID
+    private String functionlastModifiedBy;
+
+    // 「利用機能コントロール」の保存ボタンを押下時のタイムスタンプ
+    private String functionlastModifiedDate;
+
+    // 「手続き日程カレンダー管理」の保存ボタンを押下したユーザID
+    private String limitLastModifiedBy;
+
+    // 「手続き日程カレンダー管理」の保存ボタンを押下時のタイムスタンプ
+    private String limitLastModifiedDate;
+
+    // 「通知機能管理」の保存ボタンを押下したユーザID
+    private String notificationLastModifiedBy;
+
+    // 「通知機能管理」の保存ボタンを押下時のタイムスタンプ
+    private String notificationLastModifiedDate;
+
+    // 「プラットフォーム基本情報」の保存ボタンを押下したユーザID
+    private String platformLastModifiedBy;
+
+    // 「プラットフォーム基本情報」の保存ボタンを押下時のタイムスタンプ
+    private String platformLastModifiedDate;
+
+    // 「申立て登録項目管理」「申立て」の保存ボタンを押下したユーザID
+    private String pfOptionPetitionsLastModifiedBy;
+
+    // 「申立て登録項目管理」「申立て」の保存ボタンを押下時のタイムスタンプ
+    private String pfOptionPetitionsLastModifiedDate;
+
+    // 「申立て登録項目管理」「回答」の保存ボタンを押下したユーザID
+    private String pfOptionRepliesLastModifiedBy;
+
+    // 「申立て登録項目管理」「回答」の保存ボタンを押下時のタイムスタンプ
+    private String pfOptionRepliesLastModifiedDate;
+
+    // 「申立て登録項目管理」「反訴の回答」の保存ボタンを押下したユーザID
+    private String pfOptionClaimRepliesLastModifiedBy;
+
+    // 「申立て登録項目管理」「反訴の回答」の保存ボタンを押下時のタイムスタンプ
+    private String pfOptionClaimRepliesLastModifiedDate;
+
+    // 「申立て登録項目管理」「和解案」の保存ボタンを押下したユーザID
+    private String pfOptionNegotiationsLastModifiedBy;
+
+    // 「申立て登録項目管理」「和解案」の保存ボタンを押下時のタイムスタンプ
+    private String pfOptionNegotiationsLastModifiedDate;
+
+    // 「申立て登録項目管理」「調停案」の保存ボタンを押下したユーザID
+    private String pfOptionMediationsLastModifiedBy;
+
+    // 「申立て登録項目管理」「調停案」の保存ボタンを押下時のタイムスタンプ
+    private String pfOptionMediationsLastModifiedDate;
+
 }
