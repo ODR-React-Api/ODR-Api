@@ -13,51 +13,51 @@ import lombok.Data;
 public class MasterTypes {
     
     // ID
-    public String Id;
+    private String Id;
 
     // プラットフォームID
-    public String platformId;
+    private String platformId;
 
     // 申立種類、希望する解決方法種類、回答種類、対応方法の種類など
-    public String type;
+    private String type;
 
     // 値
-    public String Value;
+    private String Value;
 
     // 表示名
-    public String DisplayName;
+    private String DisplayName;
 
     // オーダー番号
-    public int OrderNo;
+    private int OrderNo;
 
     // 必須制御
-    public Integer Required;
+    private Integer Required;
 
     // 利用・停止制御
-    public Integer IsActive;
+    private Integer IsActive;
 
     // master_lang.id
-    public String LanguageId;
+    private String LanguageId;
 
     // 作成者
-    public String Creator;
+    private String Creator;
 
     // 作成日
-    public String CreateDate;
+    private String CreateDate;
 
-    public String Other01;
+    private String Other01;
 
-    public String Other02;
+    private String Other02;
 
-    public String Other03;
+    private String Other03;
 
-    public String Other04;
+    private String Other04;
 
-    public String Other05;
+    private String Other05;
 
-    public Integer DeleteFlag;
+    private Integer DeleteFlag;
 
-    public String LastModifiedDate;
+    private String LastModifiedDate;
 
-    public String LastModifiedBy;
+    private String LastModifiedBy;
 }

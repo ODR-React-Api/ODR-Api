@@ -13,236 +13,236 @@ import lombok.Data;
 public class MasterPlatforms {
 
     // ID
-    public String Id;
+    private String Id;
 
     // プラットフォーム名
-    public String PlatformName;
+    private String PlatformName;
 
     // ロゴ
-    public String Logo;
+    private String Logo;
 
     //ロゴ小
-    public String Logo_Small;
+    private String Logo_Small;
 
     // タイムゾーン
-    public String TimeZone;
+    private String TimeZone;
 
     // 通貨
-    public String Currency;
+    private String Currency;
 
     // 通貨記号
-    public String CurrencyMark;
+    private String CurrencyMark;
 
     // ヒートアップ閾値
-    public double HeatUpWeight;
+    private double HeatUpWeight;
 
     // 期日リマインド - 申立に対する回答（相手方）
-    public int RemindTiming_reply;
+    private int RemindTiming_reply;
 
     // 期日リマインド - 反訴に対する回答（申立人）
-    public int RemindTiming_claimreply;
+    private int RemindTiming_claimreply;
 
     // 期日リマインド - 交渉 
-    public int RemindTiming_negotiation;
+    private int RemindTiming_negotiation;
 
     // 期日リマインド - 交渉延長ある場合
-    public int RemindTiming_ex_neg;
+    private int RemindTiming_ex_neg;
 
     // 期日リマインド - 調停 
-    public int RemindTiming_mediation;
+    private int RemindTiming_mediation;
 
     // 期日リマインド - 調停延長ある場合
-    public int RemindTiming_ex_med;
+    private int RemindTiming_ex_med;
 
     // メッセージメール頻度
-    public int InfoFrequency;
+    private int InfoFrequency;
 
     // 作業日のみ
-    public Integer WorkDayBase;
+    private Integer WorkDayBase;
 
     // 相手への非通知設定
-    public Integer PetitionNoticeMode;
+    private Integer PetitionNoticeMode;
 
     // 通知用メールアドレス
-    public String PetitionNoticeEmail;
+    private String PetitionNoticeEmail;
 
     // 申立回答期限
-    public int ReplyLimitDays;
+    private int ReplyLimitDays;
 
     // 反訴期限日数
-    public int CounterclaimLimitDays;
+    private int CounterclaimLimitDays;
 
     // 交渉期限日数
-    public int NegotiationLimitDays;
+    private int NegotiationLimitDays;
 
     // 交渉期限延長可能日数
-    public int NegotiationExtendDays;
+    private int NegotiationExtendDays;
 
     // 調停期限日数
-    public int MediationLimitDays;
+    private int MediationLimitDays;
 
     // 調停期限延長可能日数
-    public int MediationExtentdDays;
+    private int MediationExtentdDays;
 
     // 商品IDの利用設定
-    public int UserProductId;
+    private int UserProductId;
 
     // 販売者名利用設定
-    public int UseTraderName;
+    private int UseTraderName;
 
     // 販売元URL利用設定
-    public int UseProductUrl;
+    private int UseProductUrl;
 
     // 拡張項目利用設定
-    public int UseOther;
+    private int UseOther;
 
     // 回答タブ拡張項目利用設定
-    public int UseRepliesOther;
+    private int UseRepliesOther;
 
     // 反訴タブ拡張項目利用設定
-    public int UseClaimRepliesOther;
+    private int UseClaimRepliesOther;
 
     // 和解タブ拡張項目利用設定
-    public int UseNegotiationsOther;
+    private int UseNegotiationsOther;
 
     // 調停タブ拡張項目利用設定
-    public int UseMediationsOther;
+    private int UseMediationsOther;
 
     // デフォルト販売者Email自動設定
-    public Integer UseDefaultTraderEmail;
+    private Integer UseDefaultTraderEmail;
 
     // デフォルト販売者Email
-    public String DefaultTraderEmail;
+    private String DefaultTraderEmail;
 
     // メッセージ更新頻度
-    public int MessageUpdateFrequency;
+    private int MessageUpdateFrequency;
 
-    public String languageId;
+    private String languageId;
 
-    public Integer ShowMiddleName;
+    private Integer ShowMiddleName;
 
     // 調停人指名方法
-    public int MediatorAssignType;
+    private int MediatorAssignType;
 
     // 調停人との個別やりとり
-    public Integer MediatorPrivateMessage;
+    private Integer MediatorPrivateMessage;
 
     // 調停人との個別やりとり付加方法
-    public Integer MediatorPrivateMessageAddMode;
+    private Integer MediatorPrivateMessageAddMode;
 
     // 調停人の交渉フェーズ情報閲覧制限
-    public Integer MediatorInfoLimit;
+    private Integer MediatorInfoLimit;
 
     // 情報閲覧制限できる期間
-    public int MediatorInfoLimitConfirmDays;
+    private int MediatorInfoLimitConfirmDays;
 
     // 交渉機能利用有無
-    public Integer Phase_negotiation;
+    private Integer Phase_negotiation;
 
     // 調停機能利用有無
-    public Integer Phase_mediation;
+    private Integer Phase_mediation;
 
     // 仲裁機能利用有無
-    public Integer Phase_arbitration;
+    private Integer Phase_arbitration;
 
     // 反訴機能利用有無
-    public Integer Phase_reply;
+    private Integer Phase_reply;
 
     // サービスサイトURL
-    public String ServiceSiteUrl;
+    private String ServiceSiteUrl;
 
     // 申立内容-添付ファイル
-    public int PetitionsContexFile;
+    private int PetitionsContexFile;
 
     // 回答の内容-添付ファイル
-    public int RepliesContextFile;
+    private int RepliesContextFile;
 
     // 回答画面_反訴の回答内容－添付ファイル
-    public int ClaimRepliesContextFileR;
+    private int ClaimRepliesContextFileR;
 
     // 反訴画面_反訴の回答内容－添付ファイル
-    public int ClaimRepliesContextFileC;
+    private int ClaimRepliesContextFileC;
 
     // 和解案内容-添付ファイル
-    public int NegotiationsContextFile;
+    private int NegotiationsContextFile;
 
     // 調停案内容-添付ファイル
-    public int MediationsContextFile;
+    private int MediationsContextFile;
 
-    public String Other01;
+    private String Other01;
 
-    public String Other02;
+    private String Other02;
 
-    public String Other03;
+    private String Other03;
 
-    public String Other04;
+    private String Other04;
 
-    public String Other05;
+    private String Other05;
 
-    public Integer DeleteFlag;
+    private Integer DeleteFlag;
 
-    public String LastModifiedDate;
+    private String LastModifiedDate;
 
-    public String LastModifiedBy;
+    private String LastModifiedBy;
 
     // 「利用モジュール管理」の保存ボタンを押下したユーザID
-    public String moduleLastModifiedBy;
+    private String moduleLastModifiedBy;
 
     // 「利用モジュール管理」の保存ボタンを押下時のタイムスタンプ
-    public String moduleLastModifiedDate;
+    private String moduleLastModifiedDate;
 
     // 「利用機能コントロール」の保存ボタンを押下したユーザID
-    public String functionlastModifiedBy;
+    private String functionlastModifiedBy;
 
     // 「利用機能コントロール」の保存ボタンを押下時のタイムスタンプ
-    public String functionlastModifiedDate;
+    private String functionlastModifiedDate;
 
     // 「手続き日程カレンダー管理」の保存ボタンを押下したユーザID
-    public String limitLastModifiedBy;
+    private String limitLastModifiedBy;
 
     // 「手続き日程カレンダー管理」の保存ボタンを押下時のタイムスタンプ
-    public String limitLastModifiedDate;
+    private String limitLastModifiedDate;
 
     // 「通知機能管理」の保存ボタンを押下したユーザID
-    public String notificationLastModifiedBy;
+    private String notificationLastModifiedBy;
 
     // 「通知機能管理」の保存ボタンを押下時のタイムスタンプ
-    public String notificationLastModifiedDate;
+    private String notificationLastModifiedDate;
 
     // 「プラットフォーム基本情報」の保存ボタンを押下したユーザID
-    public String platformLastModifiedBy;
+    private String platformLastModifiedBy;
 
     // 「プラットフォーム基本情報」の保存ボタンを押下時のタイムスタンプ
-    public String platformLastModifiedDate;
+    private String platformLastModifiedDate;
 
     // 「申立て登録項目管理」「申立て」の保存ボタンを押下したユーザID
-    public String pfOptionPetitionsLastModifiedBy;
+    private String pfOptionPetitionsLastModifiedBy;
 
     // 「申立て登録項目管理」「申立て」の保存ボタンを押下時のタイムスタンプ
-    public String pfOptionPetitionsLastModifiedDate;
+    private String pfOptionPetitionsLastModifiedDate;
 
     // 「申立て登録項目管理」「回答」の保存ボタンを押下したユーザID
-    public String pfOptionRepliesLastModifiedBy;
+    private String pfOptionRepliesLastModifiedBy;
 
     // 「申立て登録項目管理」「回答」の保存ボタンを押下時のタイムスタンプ
-    public String pfOptionRepliesLastModifiedDate;
+    private String pfOptionRepliesLastModifiedDate;
 
     // 「申立て登録項目管理」「反訴の回答」の保存ボタンを押下したユーザID
-    public String pfOptionClaimRepliesLastModifiedBy;
+    private String pfOptionClaimRepliesLastModifiedBy;
 
     // 「申立て登録項目管理」「反訴の回答」の保存ボタンを押下時のタイムスタンプ
-    public String pfOptionClaimRepliesLastModifiedDate;
+    private String pfOptionClaimRepliesLastModifiedDate;
 
     // 「申立て登録項目管理」「和解案」の保存ボタンを押下したユーザID
-    public String pfOptionNegotiationsLastModifiedBy;
+    private String pfOptionNegotiationsLastModifiedBy;
 
     // 「申立て登録項目管理」「和解案」の保存ボタンを押下時のタイムスタンプ
-    public String pfOptionNegotiationsLastModifiedDate;
+    private String pfOptionNegotiationsLastModifiedDate;
 
     // 「申立て登録項目管理」「調停案」の保存ボタンを押下したユーザID
-    public String pfOptionMediationsLastModifiedBy;
+    private String pfOptionMediationsLastModifiedBy;
 
     // 「申立て登録項目管理」「調停案」の保存ボタンを押下時のタイムスタンプ
-    public String pfOptionMediationsLastModifiedDate;
+    private String pfOptionMediationsLastModifiedDate;
 
 }
