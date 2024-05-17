@@ -4,7 +4,7 @@ import com.web.app.domain.CouAnswerLogin.UpdClaimRepliesDataParameter;
 
 /**
  * S14_反訴回答登録画面
- * Service层
+ * Service層
  * CouAnswerLoginService
  * 
  * @author DUC 張明慧

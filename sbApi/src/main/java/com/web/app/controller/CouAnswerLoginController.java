@@ -6,20 +6,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.web.app.domain.Response;
 import com.web.app.domain.CouAnswerLogin.UpdClaimRepliesDataParameter;
 import com.web.app.service.CouAnswerLoginService;
 import com.web.app.tool.AjaxResult;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
  * S14_反訴回答登録画面
- * Controller层
+ * Controller層
  * CouAnswerLoginController
- * API_反訴への回答データ更新
  * 
  * @author DUC 張明慧
  * @since 2024/05/02
@@ -45,30 +42,24 @@ public class CouAnswerLoginController {
     @PostMapping("/UpdClaimRepliesData")
     @SuppressWarnings("rawtypes")
     public Response updClaimRepliesData(@RequestBody UpdClaimRepliesDataParameter updClaimRepliesDataParameter) {
-        // 反訴への回答
-        String replyContext = updClaimRepliesDataParameter.getReplyContext();
         // セッションのプラットフォームID
         String platformId = updClaimRepliesDataParameter.getPlatformId();
         // セッション情報のCaseId
         String caseId = updClaimRepliesDataParameter.getCaseId();
-        if (replyContext != null) {
-            if (caseId != null && platformId != null) {
-                try {
-                    int result = couAnswerLoginService.UpdClaimRepliesData(updClaimRepliesDataParameter);
-                    if (result == 0) {
-                        return AjaxResult.error("更新失败!");
-                    } else {
-                        return AjaxResult.success("更新成功!");
-                    }
-                } catch (Exception e) {
-                    AjaxResult.fatal("更新失败!", e);
-                    return null;
+        if (caseId != null && platformId != null) {
+            try {
+                // 反訴への回答データ更新
+                int res = couAnswerLoginService.UpdClaimRepliesData(updClaimRepliesDataParameter);
+                if (res == 0) {
+                    return AjaxResult.success("更新失败!");
                 }
-            } else {
-                return AjaxResult.error("セッションを取得しない。");
+                return AjaxResult.success("更新成功!");
+            } catch (Exception e) {
+                AjaxResult.fatal("更新失败!", e);
+                return null;
             }
         } else {
-            return AjaxResult.error("回答の内容が入力必須です。");
+            return AjaxResult.error("セッションを取得しない。");
         }
     }
 }

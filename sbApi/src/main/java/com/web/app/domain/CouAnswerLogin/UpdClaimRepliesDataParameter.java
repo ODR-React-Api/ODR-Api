@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * S14_反訴回答登録画面
  * API_反訴への回答データ更新
- * Dao层
+ * Dao層
  * UpdClaimRepliesDataParameter
  * API_反訴への回答データ更新の引数
  * 

@@ -30,14 +30,6 @@
         AND PlatformId = #{platformId}
     </update>
 
-    <!-- 「添付ファイル」取得 -->
-    <select id="getFilesCount" resultType="java.lang.Integer">
-        SELECT COUNT(1)
-        FROM files
-        WHERE
-            id = #{delFileId}
-        AND PlatformId = #{platformId}
-    </select>
     <!-- 「添付ファイル」論理削除 -->
     <update id="updFiles" parameterType="com.web.app.domain.CouAnswerLogin.UpdClaimRepliesDataParameter">
         UPDATE files
@@ -48,6 +40,16 @@
             id = #{delFileId}
         AND PlatformId = #{platformId}
     </update>
+    <!-- 「添付ファイル」取得 -->
+    <select id="getFilesCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM files
+        WHERE
+            CaseId = #{caseId}
+        AND PlatformId = #{platformId}
+        AND FileName = #{fileName}
+        AND FileExtension = #{fileExtension}
+    </select>
     <!-- 「添付ファイル」の新規登録 -->
     <insert id="insFiles" parameterType="com.web.app.domain.Entity.Files">
         INSERT INTO files(
@@ -76,29 +78,21 @@
             #{FileName},
             #{FileExtension},
             #{FileUrl},
-            NULL,
+            #{FileBlobStorageId},
             #{FileSize},
             #{RegisterUserId},
             CURRENT_TIMESTAMP(),
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            0,
+            #{Other01},
+            #{Other02},
+            #{Other03},
+            #{Other04},
+            #{Other05},
+            #{DeleteFlag},
             CURRENT_TIMESTAMP(),
             #{LastModifiedBy}
         )
     </insert>
 
-    <!-- 「案件-添付ファイルリレーション」取得 -->
-    <select id="getCaseFileRelationsCount" resultType="java.lang.Integer">
-        SELECT COUNT(1)
-        FROM case_file_relations
-        WHERE
-            fileId = #{delFileId}
-        AND PlatformId = #{platformId}
-    </select>
     <!-- 「案件-添付ファイルリレーション」論理削除 -->
     <update id="updCaseFileRelations" parameterType="com.web.app.domain.CouAnswerLogin.UpdClaimRepliesDataParameter">
         UPDATE case_file_relations
@@ -133,12 +127,12 @@
             #{RelationType},
             #{RelatedId},
             #{fileId},
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            0,
+            #{Other01},
+            #{Other02},
+            #{Other03},
+            #{Other04},
+            #{Other05},
+            #{DeleteFlag},
             CURRENT_TIMESTAMP(),
             #{LastModifiedBy}
         )
