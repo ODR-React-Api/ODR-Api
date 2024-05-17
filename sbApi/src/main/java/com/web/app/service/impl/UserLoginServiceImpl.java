@@ -28,7 +28,7 @@ public class UserLoginServiceImpl implements UserLoginService {
      * @return getPreUserDatalist
      */
     @Override
-    public List<GetPreUserData> getUserPre(String guid) {
+    public List<GetPreUserData> getPreUserData(String guid) {
         List<GetPreUserData> getPreUserDatalist = new ArrayList<GetPreUserData>();
         getPreUserDatalist = getPreUserDataMapper.getPreUserDataMapper(guid);
         return getPreUserDatalist;

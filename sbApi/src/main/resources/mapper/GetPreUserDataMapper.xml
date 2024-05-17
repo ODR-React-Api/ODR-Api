@@ -12,6 +12,7 @@
         FROM
             react_use.odr_users_pre
         WHERE
-            guid = #{guid,jdbcType=VARCHAR}  AND registerDate &lt;= DATE_SUB(NOW(), INTERVAL 3 DAY ) ; 
+            guid = #{guid} 
+            AND registerDate &lt;= DATE_SUB(NOW(), INTERVAL 3 DAY ) ; 
     </select>
 </mapper>

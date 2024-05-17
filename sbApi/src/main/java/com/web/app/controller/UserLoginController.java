@@ -44,7 +44,7 @@ public class UserLoginController {
     public Response getPreUserData(String guid) {
         try {
             List<GetPreUserData> getPreUserDataList = new ArrayList<GetPreUserData>();
-            getPreUserDataList = userLoginService.getUserPre(guid);
+            getPreUserDataList = userLoginService.getPreUserData(guid);
             return AjaxResult.success("请求成功", getPreUserDataList);
         } catch (Exception e) {
             AjaxResult.fatal("查询失败!", e);
