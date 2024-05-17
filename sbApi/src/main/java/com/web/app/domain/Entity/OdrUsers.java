@@ -81,7 +81,7 @@ public class OdrUsers {
     private String MessageFrequency;
 
     // 規約確認状況
-    private String TermsConfirmed;
+    private int TermsConfirmed;
 
     // 履歴書
     private String ResumeFileId;
