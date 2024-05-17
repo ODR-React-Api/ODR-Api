@@ -9,7 +9,7 @@ import com.web.app.mapper.GetPreUserDataMapper;
 import com.web.app.service.UserLoginService;
 
 /**
- * API_仮会員登録データ取得
+ * 会員登録フォーム画面
  * 
  * @author DUC 信召艶
  * @since 2024/04/18
@@ -21,14 +21,16 @@ public class UserLoginServiceImpl implements UserLoginService {
     private GetPreUserDataMapper getPreUserDataMapper;
 
     /**
-     * TBL「ユーザ仮登録（odr_users_pre）」のデータ取得
+     * API_仮会員登録データ取得
+     * データを処理してDBを更新する
      * 
-     * @param guid
+     * @param guid ユーザ識別用GUID
+     * @return getPreUserDatalist
      */
     @Override
     public List<GetPreUserData> getUserPre(String guid) {
-        List<GetPreUserData> list = new ArrayList<GetPreUserData>();
-        list = getPreUserDataMapper.getUserPre(guid);
-        return list;
+        List<GetPreUserData> getPreUserDatalist = new ArrayList<GetPreUserData>();
+        getPreUserDatalist = getPreUserDataMapper.getPreUserDataMapper(guid);
+        return getPreUserDatalist;
     }
 }
