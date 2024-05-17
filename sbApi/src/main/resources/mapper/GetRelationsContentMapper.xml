@@ -3,14 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetPetitionsContentMapper">
-    <resultMap id="RelationsContent" type="com.web.app.domain.Entity.OdrUsers">
-        <id property="FirstName" column="FirstName" jdbcType="VARCHAR"/>
-        <result property="LastName" column="LastName" jdbcType="VARCHAR"/>
-        <result property="FirstName_kana" column="FirstName_kana" jdbcType="VARCHAR"/>
-        <result property="LastName_kana" column="LastName_kana" jdbcType="VARCHAR"/>
-        <result property="CompanyName" column="CompanyName" jdbcType="VARCHAR"/>
-    </resultMap>
-    <select id="RelationsContentListDataSearch" resultMap="RelationsContent">
+    <select id="RelationsContentListDataSearch" resultType="com.web.app.domain.Entity.OdrUsers">
         SELECT 
             FirstName,
             LastName,
@@ -23,6 +16,5 @@
             PlatformId ="001" AND
             Email = #{petitionUserInfoEmail} AND 
             DeleteFlag = 0
-          
     </select>
 </mapper>

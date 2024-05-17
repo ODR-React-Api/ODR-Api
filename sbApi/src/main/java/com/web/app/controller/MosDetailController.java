@@ -22,7 +22,6 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins = "*")
 @Api(tags = "申立て詳細画面_概要")
 @RestController
-
 public class MosDetailController {
 
     @Autowired

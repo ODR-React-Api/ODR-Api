@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetPetitionsContentMapper">
-    <select id="PetitionListDataSearch" resultType="com.web.app.domain.Entity.CasePetitions">
+    <select id="petitionListDataSearch" resultType="com.web.app.domain.Entity.CasePetitions">
         SELECT 
             CaseId,
             productName,
@@ -20,53 +20,53 @@
             LastModifiedDate
         FROM react_use.case_petitions
         WHERE
-            CaseId = #{caseId}
-            AND Status != 0 
-            AND DeleteFlag = 0
-
+            CaseId = #{caseId} AND
+            Status != 0  AND
+            DeleteFlag = 0
     </select>
 
-    <select id="PetitionFileSearch" resultType="com.web.app.domain.MosDetail.AttachedFile">
+    <select id="petitionFileSearch" resultType="com.web.app.domain.MosDetail.AttachedFile">
         SELECT 
-              files.FileName,
-              files.FileUrl
+            files.FileName,
+            files.FileUrl
         FROM 
-              react_use.files as files
+            react_use.files as files
         LEFT JOIN
-              react_use.case_file_relations as relations
+            react_use.case_file_relations as relations
         ON
-              files.id = relations.fileid
+            files.id = relations.fileid
         WHERE 
-                relations.CaseId = #{caseId}
-            AND relations.RelationType = 0
-            AND relations.DeleteFlag = 0
-            AND files.DeleteFlag = 0
+            relations.CaseId = #{caseId} AND
+            relations.RelationType = 0 AND
+            relations.DeleteFlag = 0 AND
+            files.DeleteFlag = 0
     </select>
 
-    <select id="PetitionExtensionitemSearch" resultType="com.web.app.domain.MosDetail.ExtensionItem">
+    <select id="petitionExtensionitemSearch" resultType="com.web.app.domain.MosDetail.ExtensionItem">
         SELECT 
-              master.ItemDisplayName,
-              extensionitem.ExtensionitemValue
+            master.ItemDisplayName,
+            extensionitem.ExtensionitemValue
         FROM 
-              case_extensionitem_values as extensionitem
+            case_extensionitem_values as extensionitem
         LEFT JOIN
-              master_extensionitems as master
+            master_extensionitems as master
         ON
-              master.id = extensionitem.ExtensionItemId
+            master.id = extensionitem.ExtensionItemId
         LEFT JOIN
-              case_extensionitem_relations as relations
-        ON	extensionitem.ExtensionItemId = relations.ExtensionItemId
+            case_extensionitem_relations as relations
+        ON	
+            extensionitem.ExtensionItemId = relations.ExtensionItemId
         WHERE 
-                extensionitem.PlatformId = "001"
-            AND extensionitem.CaseId = #{caseId}
-            AND extensionitem.DeleteFlag = 0
-            AND master.LanguageId = "jp"
-            AND master.DeleteFlag = 0
-            AND relations.PlatformId = "001"
-            AND relations.RelationType = 0
-            AND relations.DeleteFlag = 0
-            ORDER BY
-              relations.DisplayOrder asc
-              LIMIt 5
+            extensionitem.PlatformId = "001" AND
+            extensionitem.CaseId = #{caseId} AND
+            extensionitem.DeleteFlag = 0 AND
+            master.LanguageId = "jp" AND
+            master.DeleteFlag = 0 AND
+            relations.PlatformId = "001" AND
+            relations.RelationType = 0 AND
+            relations.DeleteFlag = 0
+        ORDER BY
+            relations.DisplayOrder asc
+            LIMIt 5
     </select>
 </mapper>

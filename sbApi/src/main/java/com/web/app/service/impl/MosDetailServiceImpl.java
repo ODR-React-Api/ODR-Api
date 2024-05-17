@@ -16,7 +16,7 @@ import com.web.app.domain.MosDetail.PetitionsContent;
 import com.web.app.domain.MosDetail.RelationsContent;
 import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.util.SendMailRequest;
-import com.web.app.mapper.CaseRelationsMapper;
+import com.web.app.mapper.GetCaseRelationsMapper;
 import com.web.app.mapper.GetPetitionsContentMapper;
 import com.web.app.mapper.MediatorResignMapper;
 import com.web.app.mapper.GetRelationsContentMapper;
@@ -42,7 +42,7 @@ public class MosDetailServiceImpl implements MosDetailService {
     private MediatorResignMapper mediatorHistoriesMapper;
 
     @Autowired
-    private CaseRelationsMapper caseRelationsMapper;
+    private GetCaseRelationsMapper caseRelationsMapper;
 
     @Autowired
     private GetRelationsContentMapper relationsContentMapper;
@@ -62,15 +62,15 @@ public class MosDetailServiceImpl implements MosDetailService {
         PetitionsContent petitionsContent = new PetitionsContent();
 
         // 申立ての内容取得
-        CasePetitions casePetitions = petitionsContentMapper.PetitionListDataSearch(caseId);
+        CasePetitions casePetitions = petitionsContentMapper.petitionListDataSearch(caseId);
 
         petitionsContent.setCasePetitions(casePetitions);
 
         // 添付資料取得
-        petitionsContent.setAttachedFile(petitionsContentMapper.PetitionFileSearch(casePetitions.getCaseId()));
+        petitionsContent.setAttachedFile(petitionsContentMapper.petitionFileSearch(casePetitions.getCaseId()));
 
         // 拡張項目取得
-        petitionsContent.setExtensionItem(petitionsContentMapper.PetitionExtensionitemSearch(caseId));
+        petitionsContent.setExtensionItem(petitionsContentMapper.petitionExtensionitemSearch(caseId));
 
         return petitionsContent;
     }
@@ -84,7 +84,7 @@ public class MosDetailServiceImpl implements MosDetailService {
     @Override
     public RelationsContent selectRelationsContentData(String caseId) {
         // 関係者メアド取得API呼び出し
-        CaseRelations caseRelations = caseRelationsMapper.RelationsListDataSearch(caseId);
+        CaseRelations caseRelations = caseRelationsMapper.getCaseRelations(caseId);
 
         // メールベースクエリ対応userの名前
         OdrUsers petitionUser = relationsContentMapper
@@ -270,7 +270,7 @@ public class MosDetailServiceImpl implements MosDetailService {
     @Override
     public int updateMediatorHistoriesData(String caseId, String uid, String platformId, String messageGroupId) {
         // 案件関連情報取得
-        CaseRelations caseRelations = caseRelationsMapper.RelationsListDataSearch(caseId);
+        CaseRelations caseRelations = caseRelationsMapper.getCaseRelations(caseId);
 
         SendMailRequest sendMailRequest = new SendMailRequest();
 
@@ -291,7 +291,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         sendMailRequest.setRecipientEmail(recipientEmail);
 
         // 申立種別取得
-        CasePetitions casePetitions = petitionsContentMapper.PetitionListDataSearch(caseId);
+        CasePetitions casePetitions = petitionsContentMapper.petitionListDataSearch(caseId);
 
         ArrayList<String> parameter = new ArrayList<>();
 

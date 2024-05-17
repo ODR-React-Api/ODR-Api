@@ -8,8 +8,8 @@ import com.web.app.domain.Entity.CaseRelations;
 
 
 @Mapper
-public interface CaseRelationsMapper {
+public interface GetCaseRelationsMapper {
 
-    CaseRelations RelationsListDataSearch(String caseId);
+    CaseRelations getCaseRelations(String CaseId);
 
 }

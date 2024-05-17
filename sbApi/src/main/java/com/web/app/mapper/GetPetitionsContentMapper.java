@@ -11,9 +11,9 @@ import com.web.app.domain.MosDetail.ExtensionItem;
 @Mapper
 public interface GetPetitionsContentMapper {
 
-  CasePetitions PetitionListDataSearch(String caseId);
+  CasePetitions petitionListDataSearch(String caseId);
 
-  List<AttachedFile> PetitionFileSearch(String caseId);
+  List<AttachedFile> petitionFileSearch(String caseId);
 
-  List<ExtensionItem> PetitionExtensionitemSearch(String caseId);
+  List<ExtensionItem> petitionExtensionitemSearch(String caseId);
 }
