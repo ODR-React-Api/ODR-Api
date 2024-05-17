@@ -3,8 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetPoliciesInfoMapper">
+<resultMap id="getPoliciesInfoMap" type="com.web.app.domain.PoliciesInfo">
+</resultMap>
 
-<select id="selectPoliciesInfo" resultMap="com.web.app.domain.PoliciesInfo">
+<select id="selectPoliciesInfo" resultMap="getPoliciesInfoMap">
     SELECT
         HtmlContext, 
         VersionNo 
