@@ -40,11 +40,10 @@ public class MediationsMakeController {
     public int InsMediationsData(@RequestBody InsMediationsData insMediationsData) {
         try {
             //調停案データ新規登録
-            int InsMediationsData = mediationsMakeService.insMediationsData(insMediationsData);
-            return InsMediationsData;
+            int insmediationsData = mediationsMakeService.insMediationsData(insMediationsData);
+            return insmediationsData;
         } catch (Exception e) {
             return 0;
         }
-
     }
 }
