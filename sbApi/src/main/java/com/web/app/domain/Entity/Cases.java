@@ -13,166 +13,166 @@ import lombok.Data;
 public class Cases {
 
     // ID
-    public String cid;
+    private String cid;
 
     // プラットフォームID
-    public String PlatformId;
+    private String PlatformId;
 
     // 案件ステージ
-    public int CaseStage;
+    private int CaseStage;
 
     // 案件ステータス
-    public String CaseStatus;
+    private String CaseStatus;
 
     // タイトル名
-    public String CaseTitle;
+    private String CaseTitle;
 
     // 申立て日
-    public String PetitionDate;
+    private String PetitionDate;
 
     // 取り下げ日
-    public String WithDrawDate;
+    private String WithDrawDate;
 
     // 回答開始日
-    public String ReplyStartDate;
+    private String ReplyStartDate;
 
     // 回答期限日
-    public String ReplyEndDate;
+    private String ReplyEndDate;
 
     // 反訴の有無
-    public Integer CounterclaimFlag;
+    private Integer CounterclaimFlag;
 
     // 反訴の回答開始日
-    public String CounterclaimStartDate;
+    private String CounterclaimStartDate;
 
     // 反訴の回答期限日
-    public String CounterclaimEndDate;
+    private String CounterclaimEndDate;
 
     // 交渉開始日
-    public String NegotiationStartDate;
+    private String NegotiationStartDate;
 
     // 交渉期限日
-    public String NegotiationEndDate;
+    private String NegotiationEndDate;
 
     // 交渉期限日変更ステータス
-    public int NegotiationEndDateChangeStatus;
+    private int NegotiationEndDateChangeStatus;
 
     // 交渉期限日変更回数
-    public int NegotiationEndDateChangeCount;
+    private int NegotiationEndDateChangeCount;
 
     // 手続き中止日
-    public String CancelDate;
+    private String CancelDate;
 
     // 調停人指名依頼日
-    public String MediatorReuqestDate;
+    private String MediatorReuqestDate;
 
     // 調停開始日
-    public String MediationStartDate;
+    private String MediationStartDate;
 
     // 調停期限日
-    public String MediationEndDate;
+    private String MediationEndDate;
 
     // 調停期限変更回数
-    public int MediationEndDateChangeCount;
+    private int MediationEndDateChangeCount;
 
     // 調停人無理由変更可能期限日
-    public String MediatorNoReasonChangeDate;
+    private String MediatorNoReasonChangeDate;
 
     // 調停人情報開示変更可能期限日
-    public String MediatorDisclosureDate;
+    private String MediatorDisclosureDate;
 
     // 調停人変更回数(申立人)
-    public int MediatorChangeableCount1;
+    private int MediatorChangeableCount1;
 
     // 調停人変更回数(相手方)
-    public int MediatorChangeableCount2;
+    private int MediatorChangeableCount2;
 
     // 調停人情報開示フラグ
-    public int MediatorDisclosureFlag;
+    private int MediatorDisclosureFlag;
 
     // 個別やりとりステータス（申立人↔調停人）
-    public int GroupMessageFlag1;
+    private int GroupMessageFlag1;
 
     // 個別やりとりステータス（相手方↔調停人）
-    public int GroupMessageFlag2;
+    private int GroupMessageFlag2;
 
     // 個別やりとり依頼コメント（申立人↔調停人）
-    public String GroupMessageComment1;
+    private String GroupMessageComment1;
 
     // 個別やりとり依頼コメント（相手方↔調停人）
-    public String GroupMessageComment2;
+    private String GroupMessageComment2;
 
     // 仲裁開始日時
-    public String ArbitrationStartDate;
+    private String ArbitrationStartDate;
 
     // 仲裁期限日
-    public String ArbitrationEndDate;
+    private String ArbitrationEndDate;
 
     // 裁定修正期日
-    public String ArbitrationEditDate;
+    private String ArbitrationEditDate;
 
     // 解決日時
-    public String ResolutionDate;
+    private String ResolutionDate;
 
     // 解決有無
-    public Integer ResolutionFlag;
+    private Integer ResolutionFlag;
 
     // 金銭の支払い有無
-    public Integer PayFlag;
+    private Integer PayFlag;
 
     // 反訴の金銭の支払い有無
-    public Integer CounterclaimPayFlag;
+    private Integer CounterclaimPayFlag;
 
     // 利用言語
-    public String LanguageId;
+    private String LanguageId;
 
     // アンケート送信フラグ
-    public Integer QuestionnaireSendFlag;
+    private Integer QuestionnaireSendFlag;
 
     // 手続き中止担当側
-    public int CancelBy;
+    private int CancelBy;
 
     // 手続き中止実地日
-    public String CancelActionDate;
+    private String CancelActionDate;
 
     // 手続き中止確認側（申立人）
-    public Integer CancelReuqestBy1;
+    private Integer CancelReuqestBy1;
 
     // 手続き中止確認側（相手方）
-    public Integer CancelReuqestBy2;
+    private Integer CancelReuqestBy2;
 
     // 手続き中止確認側（調停人）
-    public Integer CancelReuqestBy3;
+    private Integer CancelReuqestBy3;
 
-    public String OtherDate01;
+    private String OtherDate01;
 
-    public String OtherDate02;
+    private String OtherDate02;
 
-    public String OtherDate03;
+    private String OtherDate03;
 
-    public String OtherDate04;
+    private String OtherDate04;
 
-    public String OtherDate05;
+    private String OtherDate05;
 
-    public String Other01;
+    private String Other01;
 
-    public String Other02;
+    private String Other02;
 
-    public String Other03;
+    private String Other03;
 
-    public String Other04;
+    private String Other04;
 
-    public String Other05;
+    private String Other05;
 
-    public Integer DeleteFlag;
+    private Integer DeleteFlag;
 
-    public String LastModifiedDate;
+    private String LastModifiedDate;
 
-    public String LastModifiedBy;
+    private String LastModifiedBy;
 
-    public int MediationChangeableCountSet;
+    private int MediationChangeableCountSet;
 
-    public int MediationNoReasonChangeableCountSet;
+    private int MediationNoReasonChangeableCountSet;
 
-    public Integer JoinedFlag;
+    private Integer JoinedFlag;
 }
