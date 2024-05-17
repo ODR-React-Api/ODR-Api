@@ -42,7 +42,7 @@
             #{languageId},
             #{status},
             #{messageFrequency},
-            #{termsConfirmed},
+            #{TermsConfirmed},
             CURRENT_TIMESTAMP,
             CURRENT_TIMESTAMP,
             #{userType},
