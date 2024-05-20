@@ -105,4 +105,54 @@ public class Constants {
     // { "ddd.444@gmail.com", "ABCマート" },
     // { "eee.555@icloud.com", "ドン・キホーテ" },
     // };
+
+    // S03
+    public static final int STR_CASES_NEGOTIATIONENDDATECHANGESTATUS_1 = 1;
+    public static final int STR_CASES_NEGOTIATIONENDDATECHANGESTATUS_2 = 2;
+    public static final String CORRESPOND_FLAG_1 = "1";
+    public static final String CORRESPOND_FLAG_0 = "0";
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_0 = 0;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_1 = 1;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_2 = 2;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_3 = 3;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_4 = 4;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_5 = 5;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_7 = 7;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_8 = 8;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_9 = 9;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_10 = 10;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_11 = 11;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_12 = 12;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_13 = 13;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_14 = 14;
+    public static final int STR_CASE_NEGOTIATIONS_STATUS_15 = 15;
+    public static final int STR_CASE_MEDIATIONS_STATUS_1 = 1;
+    public static final int STR_CASE_MEDIATIONS_STATUS_2 = 2;
+    public static final int STR_CASE_MEDIATIONS_STATUS_3 = 3;
+    public static final int STR_CASE_MEDIATIONS_STATUS_7 = 7;
+    public static final int STR_CASE_MEDIATIONS_STATUS_8 = 8;
+    public static final int STR_CASES_GROUPMESSAGEFLAG = 1;
+    public static final int USER_MESSAGES_NOTREADEDCNT_0 = 0;
+    public static final int NOREADCNT_0 = 0;
+    public static final int STR_CASES_MEDIATORDISCLOSUREFLAG_1 = 1;
+    public static final String SIMPLE_DATE_FORMAT = "yyyyMMdd";
+
+    // S04
+    public static final String CASE_STATUS_0 = "0000";
+    public static final String CASE_STATUS_1 = "0001";
+    public static final int UPDATE_NUMBER_0 = 0;
+    public static final int PARTICIPATED_FLAG_1 = 1;
+    public static final int PARTICIPATED_FLAG_0 = 0;
+    // S03,S04 その他人と共有する
+    public static final int STR_CASES_CASESTAGE_0 = 0;
+    // S03 その他人と共有する
+    public static final int STR_CASES_CASESTAGE_2 = 2;
+    public static final int STR_CASES_CASESTAGE_3 = 3;
+    public static final int STR_CASES_CASESTAGE_6 = 6;
+    public static final int STR_CASES_CASESTAGE_7 = 7;
+    public static final int POSITIONFLAG_PETITION = 1;
+    public static final int POSITIONFLAG_TRADER = 2;
+    public static final int POSITIONFLAG_MEDIATOR = 3;
+    public static final String DEFAULT_CORRESPONDDATE = "99999999";
+
 }

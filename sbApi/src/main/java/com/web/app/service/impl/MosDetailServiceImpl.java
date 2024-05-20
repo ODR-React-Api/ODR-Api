@@ -7,6 +7,7 @@ import com.web.app.controller.ElevantPersonnelEmailAddressController;
 import com.web.app.domain.ElevantPersonnelEmailAddressInfo;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.MosDetail.ParticipatedStatusChangeResultInfo;
+import com.web.app.domain.constants.Constants;
 import com.web.app.mapper.UpdCasesStatusMapper;
 import com.web.app.service.MosDetailService;
 
@@ -21,7 +22,6 @@ import com.web.app.service.MosDetailService;
 public class MosDetailServiceImpl implements MosDetailService {
     @Autowired
     private ElevantPersonnelEmailAddressController elevantPersonnelEmailAddressController;
-
     @Autowired
     private UpdCasesStatusMapper updCasesStatusMapper;
 
@@ -29,7 +29,7 @@ public class MosDetailServiceImpl implements MosDetailService {
      * 参加済状態変更
      * 参加表明対象ケースの状態の取得
      * 
-     * @param param1 参加表明する渡された引数: 案件ID
+     * @param caseId 参加表明する渡された引数: 案件ID
      * @return 戻り値は「 参照表明更新済FLG」に返される
      */
     @Override
@@ -55,27 +55,29 @@ public class MosDetailServiceImpl implements MosDetailService {
      * 参加済状態変更
      * ケース状態の更新
      * 
-     * @param param1 引数：参加表明対象ケースの状態に取得された
+     * @param participationSel 参加表明対象ケースの状態に取得された
+     * @param caseId           案件ID
      * @return 戻り値は「 参照表明更新済FLG」に返される
      */
     private ParticipatedStatusChangeResultInfo participatedCaseStatusChangeUpdate(
             Cases participationSel, String caseId) {
-        // テーブル「案件」から、「ID」を取得
+        // テーブル「cases」から、「ID」を取得
         String cid = participationSel.getCid();
-        // テーブル「案件」から、「案件ステージ」を取得
+        // テーブル「cases」から、「案件ステージ」を取得
         Integer caseStage = participationSel.getCaseStage();
-        // テーブル「案件」から、「案件ステータス」を取得
+        // テーブル「cases」から、「案件ステータス」を取得
         String status = participationSel.getCaseStatus();
 
         ParticipatedStatusChangeResultInfo participatedStatusChangeResultInfo = new ParticipatedStatusChangeResultInfo();
 
-        // テーブル「案件」から取得したCaseStageが0（回答） かつ CaseStatusが0000（申立後-参加待ち）の場合、以下の処理を実行
-        if (caseStage == 0 && ("0000".equals(status))) {
+        // テーブル「cases」から取得したCaseStageが0（回答） かつ CaseStatusが0000（申立後-参加待ち）の場合、以下の処理を実行
+        if (caseStage == Constants.STR_CASES_CASESTAGE_0 && (Constants.CASE_STATUS_0.equals(status))) {
             // ケース状態の更新
             int updateNum = updCasesStatusMapper.caseStatusChangeUpdate(cid);
             // ケース状態の更新の件数が0じゃない場合
-            if (updateNum != 0) {
-                participatedStatusChangeResultInfo.setParticipatedFlag(0);
+            if (updateNum != Constants.UPDATE_NUMBER_0) {
+                // 正常に更新の場合、参照表明更新済Flgに0（正常更新）を設定して、画面へ返す
+                participatedStatusChangeResultInfo.setParticipatedFlag(Constants.PARTICIPATED_FLAG_0);
             }
 
             // アクション履歴の登録 TODO
@@ -89,7 +91,8 @@ public class MosDetailServiceImpl implements MosDetailService {
             }
         } else {
             // テーブル「案件」から取得したCaseStageが0（回答）以外の場合、以下の処理を実行
-            participatedStatusChangeResultInfo.setParticipatedFlag(1);
+            // 正常に更新の場合、参照表明更新済Flgに1（更新不可）を設定し、画面へ返す
+            participatedStatusChangeResultInfo.setParticipatedFlag(Constants.PARTICIPATED_FLAG_1);
         }
         return participatedStatusChangeResultInfo;
     }

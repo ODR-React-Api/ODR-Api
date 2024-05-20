@@ -19,7 +19,7 @@
         <result property="mediationsStatus" column="caseMediationsStatus" jdbcType="INTEGER"/>
     </resultMap>
 
-    <select id="CaseDetailCasesInforSearch" resultMap="caseDetailCasesInfoResultMap">
+    <select id="caseDetailCasesInforSearch" resultMap="caseDetailCasesInfoResultMap">
         SELECT
             Cases.cid AS cid,
             Cases.CaseStage AS CaseStage,
@@ -46,7 +46,7 @@
             AND caseNegotiations.DeleteFlag = 0
         ORDER BY Cases.cid asc                
     </select>
-    <select id="CaseDetailCasesMediatorDisclosureFlagInfoSearch" resultType="Integer">
+    <select id="caseDetailCasesMediatorDisclosureFlagInfoSearch" resultType="Integer">
         SELECT 
             MediatorDisclosureFlag
         FROM
@@ -54,25 +54,25 @@
         WHERE
             cases.cid = #{CaseId}
     </select>
-    <select id="CaseDetailUserMessagesReadedCntInfoSearch" resultType="Integer">
+    <select id="messagesReadedCntSearch" resultType="Integer">
         SELECT 
             count(*) as notReadedCnt
         FROM
             user_messages
         WHERE
-            CaseId = #{CaseId}
+            CaseId = #{caseId}
             AND userId = #{userId}
             AND ReadFlag = 0
             AND DeleteFlag = 0
     </select>
     
-    <select id="CaseDetailMessagesUserMessagesReadedCntInfoSearch" resultType="Integer">
+    <select id="caseDetailMessagesUserMessagesReadedCntSearch" resultType="Integer">
         SELECT 
             count(*) as notReadedCnt
         FROM
             user_messages userMessages,messages messages
         WHERE
-            user_messages.CaseId = #{CaseId}
+            user_messages.CaseId = #{caseId}
             AND userMessages.userId = #{userId}
             AND userMessages.ReadFlag = 0
             AND userMessages.DeleteFlag = 0

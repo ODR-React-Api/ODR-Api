@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.web.app.domain.MosList.CaseDetailCasesSelectInfo;
 import com.web.app.domain.MosList.CaseIdListInfo;
 import com.web.app.domain.MosList.ReturnResult;
+import com.web.app.domain.constants.Constants;
 import com.web.app.mapper.GetCaseDetailMapper;
 import com.web.app.service.MosListService;
 
@@ -26,7 +27,7 @@ public class MosListServiceImpl implements MosListService {
     /**
      * ケース詳細取得
      *
-     * @param param1 API「 一覧取得」より渡された引数
+     * @param caseIdListInfo API「 一覧取得」より渡された引数
      * @return 戻り値はAPI「 一覧取得」に返される
      */
     @Override
@@ -53,10 +54,10 @@ public class MosListServiceImpl implements MosListService {
     /**
      * ケース詳細取得設定
      *
-     * @param param1 取得したの申立て番号、件名、登録日付、対応期日、状態、要対応有無
-     * @param param2 API「 一覧取得」より渡された引数: 案件ID
-     * @param param3 API「 一覧取得」より渡された引数: 立場フラグ
-     * @param param4 API「 一覧取得」より渡された引数: ユーザーID
+     * @param caseDetailCasesSelInfo 取得したの申立て番号、件名、登録日付、対応期日、状態、要対応有無
+     * @param caseId                 API「 一覧取得」より渡された引数: 案件ID
+     * @param idFlag                 API「 一覧取得」より渡された引数: 立場フラグ
+     * @param userId                 API「 一覧取得」より渡された引数: ユーザーID
      * @return 戻り値はAPI「 一覧取得」に返される
      */
     private ReturnResult caseDetailMediationsInfoSearch(CaseDetailCasesSelectInfo caseDetailCasesSelInfo,
@@ -74,127 +75,170 @@ public class MosListServiceImpl implements MosListService {
 
         // 戻り値の対応期日を設定された
         // オブジェクトを作成する
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SIMPLE_DATE_FORMAT);
         // 対応期日初期値
         String dateString;
         // 「cases」から「案件ステージ」を取得したの判定：0:（申立）
-        if (caseDetailCasesSelInfo.getCaseStage() == 0) {
+        if (caseDetailCasesSelInfo.getCaseStage() == Constants.STR_CASES_CASESTAGE_0) {
             // 対応期日を文字列にフォーマットを設定する
             dateString = simpleDateFormat.format(caseDetailCasesSelInfo.getReplyEndDate());
-        } else if (caseDetailCasesSelInfo.getCaseStage() == 2) {
+        } else if (caseDetailCasesSelInfo.getCaseStage() == Constants.STR_CASES_CASESTAGE_2) {
             // 「cases」から「案件ステージ」を取得したの判定：2:（反訴）
             // 対応期日を文字列にフォーマットを設定する
             dateString = simpleDateFormat.format(caseDetailCasesSelInfo.getCounterclaimEndDate());
-        } else if (caseDetailCasesSelInfo.getCaseStage() == 3) {
+        } else if (caseDetailCasesSelInfo.getCaseStage() == Constants.STR_CASES_CASESTAGE_3) {
             // 「cases」から「案件ステージ」を取得したの判定：3:（交渉）
             // 対応期日を文字列にフォーマットを設定する
             dateString = simpleDateFormat.format(caseDetailCasesSelInfo.getNegotiationEndDate());
-        } else if (caseDetailCasesSelInfo.getCaseStage() == 6 || caseDetailCasesSelInfo.getCaseStage() == 7) {
+        } else if (caseDetailCasesSelInfo.getCaseStage() == Constants.STR_CASES_CASESTAGE_6
+                || caseDetailCasesSelInfo.getCaseStage() == Constants.STR_CASES_CASESTAGE_7) {
             // 「cases」から「案件ステージ」を取得したの判定：6:（調停人指名）7:（調停）
             // 対応期日を文字列にフォーマットを設定するする
             dateString = simpleDateFormat.format(caseDetailCasesSelInfo.getMediationEndDate());
         } else {
-            dateString = "99999999";
+            dateString = Constants.DEFAULT_CORRESPONDDATE;
         }
         // 対応期日を設定された
         caseDetailCasesInfoItem.setCorrespondDate(dateString);
 
         // 要対応有無の設定
         // 立場フラグが1（申立人）の場合
-        if (idFlag == 1) {
+        if (idFlag == Constants.POSITIONFLAG_PETITION) {
             // 戻り値の立場フラグを設定された
             caseDetailCasesInfoItem.setPositionFlg(idFlag);
 
             // 「cases」から取得したの「案件ステージ」の比較
             switch (caseDetailCasesSelInfo.getCaseStage()) {
-                case 2:
+                case Constants.STR_CASES_CASESTAGE_2:
                     // 要対応有無に1（要対応）を設定する
-                    caseDetailCasesInfoItem.setCorrespondence("1");
+                    caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     break;
-                case 3:
+                case Constants.STR_CASES_CASESTAGE_3:
                     // 「cases」から取得したの「交渉期限日変更ステータス」の比較
                     // 「case_negotiations」から取得したの「ステータス」の比較
-                    if (caseDetailCasesSelInfo.getNegotiationEndDateChangeStatus() == 1 ||
+                    if (caseDetailCasesSelInfo
+                            .getNegotiationEndDateChangeStatus() == Constants.STR_CASES_NEGOTIATIONENDDATECHANGESTATUS_1
+                            ||
                             (caseDetailCasesSelInfo.getCaseNegotiationsStatus() == null ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 1 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 2 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 3 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 5 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 7 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 8 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 12 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 13 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 14)) {
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_1
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_2
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_3
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_5
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_7
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_8
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_12
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_13
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_14)) {
                         // 要対応有無に1（要対応）を設定する
-                        caseDetailCasesInfoItem.setCorrespondence("1");
+                        caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     }
                     break;
-                case 6:
+                case Constants.STR_CASES_CASESTAGE_6:
                     // 要対応有無に1（要対応）を設定する
-                    caseDetailCasesInfoItem.setCorrespondence("1");
+                    caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     break;
-                case 7:
+                case Constants.STR_CASES_CASESTAGE_7:
                     // 「case_mediations」から「ステータス」取得した
                     Integer mediationsInfoStatus = caseDetailCasesSelInfo.getMediationsStatus();
                     // 「case_mediations」から「ステータス」を取得したの比較
-                    if (mediationsInfoStatus == 1 || mediationsInfoStatus == 3 || mediationsInfoStatus == 8
-                            || caseDetailCasesSelInfo.getGroupMessageFlag2() == 1) {
+                    if (mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_1
+                            || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_3
+                            || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_8
+                            || caseDetailCasesSelInfo.getGroupMessageFlag2() == Constants.STR_CASES_GROUPMESSAGEFLAG) {
                         // 要対応有無に1（要対応）を設定する
-                        caseDetailCasesInfoItem.setCorrespondence("1");
+                        caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     }
                     break;
                 default:
                     // 上記以外の場合、要対応有無に0（要対応なし）を設定する
-                    caseDetailCasesInfoItem.setCorrespondence("0");
+                    caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
             }
-        } else if (idFlag == 2) {
+        } else if (idFlag == Constants.POSITIONFLAG_TRADER) {
             // 立場フラグが2（相手方）の場合
             // 戻り値の立場フラグを設定された
             caseDetailCasesInfoItem.setPositionFlg(idFlag);
 
             // 「cases」から取得したの「案件ステージ」の比較
             switch (caseDetailCasesSelInfo.getCaseStage()) {
-                case 0:
+                case Constants.STR_CASES_CASESTAGE_0:
                     // 要対応有無に1（要対応）を設定する
-                    caseDetailCasesInfoItem.setCorrespondence("1");
+                    caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     break;
-                case 3:
+                case Constants.STR_CASES_CASESTAGE_3:
                     // 「cases」から取得したの「交渉期限日変更ステータス」の比較
                     // 「case_negotiations」から取得したの「ステータス」の比較
-                    if (caseDetailCasesSelInfo.getNegotiationEndDateChangeStatus() == 2 ||
+                    if (caseDetailCasesSelInfo
+                            .getNegotiationEndDateChangeStatus() == Constants.STR_CASES_NEGOTIATIONENDDATECHANGESTATUS_2
+                            ||
                             (caseDetailCasesSelInfo.getCaseNegotiationsStatus() == null ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 0 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 1 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 3 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 4 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 9 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 10 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 11 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 14 ||
-                                    caseDetailCasesSelInfo.getCaseNegotiationsStatus() == 15)) {
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_0
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_1
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_3
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_4
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_9
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_10
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_11
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_14
+                                    ||
+                                    caseDetailCasesSelInfo
+                                            .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_15)) {
                         // 要対応有無に1（要対応）を設定する
-                        caseDetailCasesInfoItem.setCorrespondence("1");
+                        caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     }
                     break;
-                case 6:
+                case Constants.STR_CASES_CASESTAGE_6:
                     // 要対応有無に1（要対応）を設定する
-                    caseDetailCasesInfoItem.setCorrespondence("1");
+                    caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_0);
                     break;
-                case 7:
+                case Constants.STR_CASES_CASESTAGE_7:
                     // 「case_mediations」から「ステータス」を取得した
                     Integer mediationsInfoStatus = caseDetailCasesSelInfo.getMediationsStatus();
                     // 「case_mediations」から「ステータス」を取得したの比較
-                    if (mediationsInfoStatus == 1 || mediationsInfoStatus == 2 || mediationsInfoStatus == 7
-                            || caseDetailCasesSelInfo.getGroupMessageFlag1() == 1) {
+                    if (mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_1
+                            || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_2
+                            || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_7
+                            || caseDetailCasesSelInfo.getGroupMessageFlag1() == Constants.STR_CASES_GROUPMESSAGEFLAG) {
                         // 要対応有無に1（要対応）を設定する
-                        caseDetailCasesInfoItem.setCorrespondence("1");
+                        caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     }
                     break;
                 default:
                     // 上記以外の場合、要対応有無に0（要対応なし）を設定する
-                    caseDetailCasesInfoItem.setCorrespondence("0");
+                    caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
             }
-        } else if (idFlag == 3) {
+        } else if (idFlag == Constants.POSITIONFLAG_MEDIATOR) {
             // 立場フラグが3（調停人）の場合
             // 戻り値の立場フラグを設定された
             caseDetailCasesInfoItem.setPositionFlg(idFlag);
@@ -202,45 +246,45 @@ public class MosListServiceImpl implements MosListService {
             // 要対応有無の設定
             // 「cases」から取得したの「案件ステージ」の比較
             switch (caseDetailCasesSelInfo.getCaseStage()) {
-                case 6:
+                case Constants.STR_CASES_CASESTAGE_6:
                     // 要対応有無に1（要対応）を設定する
-                    caseDetailCasesInfoItem.setCorrespondence("1");
+                    caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     break;
-                case 7:
+                case Constants.STR_CASES_CASESTAGE_7:
                     // 「case_mediations」から取得した
                     Integer mediationsInfoStatus = caseDetailCasesSelInfo.getMediationsStatus();
                     if (mediationsInfoStatus == null || mediationsInfoStatus == 0) {
                         // 要対応有無に1（要対応）を設定する
-                        caseDetailCasesInfoItem.setCorrespondence("1");
+                        caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     }
                     break;
                 default:
                     // 上記以外の場合、要対応有無に0（要対応なし）を設定する
-                    caseDetailCasesInfoItem.setCorrespondence("0");
+                    caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
             }
 
             // 未読メッセージ件数の取得
-            if (caseDetailCasesSelInfo.getCaseStage() == 6) {
+            if (caseDetailCasesSelInfo.getCaseStage() == Constants.STR_CASES_CASESTAGE_6) {
                 // 1）未読メッセージ件数取得
-                Integer messagesReadedCnt = 0;
-                // 調停人情報開示フラグを取得
+                Integer messagesReadedCnt = Constants.NOREADCNT_0;
+                // 「cases」から「調停人情報開示フラグ」を取得
                 Integer mediatorDisclosureFlagItem = getCaseDetailMapper
                         .caseDetailCasesMediatorDisclosureFlagInfoSearch(caseId);
                 // 未読メッセージ取得（申立人・相手方・調停人受理開示後）
-                if (mediatorDisclosureFlagItem == 1) {
+                if (mediatorDisclosureFlagItem == Constants.STR_CASES_MEDIATORDISCLOSUREFLAG_1) {
                     // b ;未読メッセージ取得（申立人・相手方・調停人受理開示後）
                     messagesReadedCnt = getCaseDetailMapper.messagesReadedCntSearch(caseId, userId);
 
                     // 2）未読メッセージ有無の設定
-                    if (messagesReadedCnt > 0) {
+                    if (messagesReadedCnt > Constants.NOREADCNT_0) {
                         // 未読メッセージ件数の設定
                         caseDetailCasesInfoItem.setMsgCount(messagesReadedCnt);
                         // 3）要対応有無の設定（メッセージ向け）
                         // 要対応有無に1（要対応）を設定する
-                        caseDetailCasesInfoItem.setCorrespondence("1");
+                        caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     } else {
                         // 未読メッセージ件数の設定
-                        caseDetailCasesInfoItem.setMsgCount(0);
+                        caseDetailCasesInfoItem.setMsgCount(Constants.NOREADCNT_0);
                     }
                 } else {
                     // 未読メッセージ件数取得 （調停人＋受理後＋未開示）
@@ -249,34 +293,33 @@ public class MosListServiceImpl implements MosListService {
                             .caseDetailMessagesUserMessagesReadedCntSearch(caseId, userId);
 
                     // 2）未読メッセージ有無の設定
-                    if (messagesUserMessagesReadedCnt > 0) {
+                    if (messagesUserMessagesReadedCnt > Constants.NOREADCNT_0) {
                         // 未読メッセージ件数の設定
                         caseDetailCasesInfoItem.setMsgCount(messagesUserMessagesReadedCnt);
                         // 3）要対応有無の設定（メッセージ向け）
                         // 要対応有無に1（要対応）を設定する
-                        caseDetailCasesInfoItem.setCorrespondence("1");
+                        caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     } else {
                         // 未読メッセージ件数の設定
-                        caseDetailCasesInfoItem.setMsgCount(0);
+                        caseDetailCasesInfoItem.setMsgCount(Constants.NOREADCNT_0);
                     }
                 }
             }
-
         }
         // 未読メッセージ件数の取得
         // b ;未読メッセージ取得（申立人・相手方・調停人受理開示後）
         Integer messagesReadedCnt = getCaseDetailMapper.messagesReadedCntSearch(caseId, userId);
 
         // 2）未読メッセージ有無の設定
-        if (messagesReadedCnt > 0) {
+        if (messagesReadedCnt > Constants.NOREADCNT_0) {
             // 未読メッセージ件数の設定
             caseDetailCasesInfoItem.setMsgCount(messagesReadedCnt);
             // 3）要対応有無の設定（メッセージ向け）
             // 要対応有無に1（要対応）を設定する
-            caseDetailCasesInfoItem.setCorrespondence("1");
+            caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
         } else {
             // 未読メッセージ件数の設定
-            caseDetailCasesInfoItem.setMsgCount(0);
+            caseDetailCasesInfoItem.setMsgCount(Constants.NOREADCNT_0);
         }
         return caseDetailCasesInfoItem;
     }

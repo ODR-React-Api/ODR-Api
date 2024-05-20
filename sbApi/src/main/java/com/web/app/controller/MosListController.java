@@ -33,7 +33,7 @@ public class MosListController {
     /**
      * ケース詳細取得
      *
-     * @param param1 API「 一覧取得」より渡された引数
+     * @param API「 一覧取得」より渡された引数
      * @return 戻り値はAPI「 一覧取得」に返される
      * @throws Exception エラーの説明内容
      */

@@ -34,7 +34,7 @@ public class NegotiatMakeController {
     /**
      * 和解案下書きデータ取得API
      * 
-     * @param param1 セッション情報 と ログイン情報渡された
+     * @param セッション情報 と ログイン情報渡された
      * @return 戻り値は「 和解案作成 和解案下書きデータ取得」に返される
      * @throws Exception エラーの説明内容
      */
@@ -55,7 +55,7 @@ public class NegotiatMakeController {
     /**
      * 下書き保存処理
      * 
-     * @param param1 セッション情報 と ログイン情報渡された
+     * @param セッション情報 と ログイン情報渡された
      * @return 戻り値は「 下書き保存処理」が返された値
      * @throws Exception エラーの説明内容
      */
