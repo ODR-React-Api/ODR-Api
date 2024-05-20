@@ -1,4 +1,5 @@
 package com.web.app.domain.MediationsConCon;
+
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,13 +15,13 @@ import io.swagger.annotations.ApiModel;
  * @since 2024/05/09
  * @version 1.0
  */
-@ApiModel 
+@ApiModel
 @Data
-public class MediationsContentDB implements Serializable{
-    
+public class MediationsContentDB implements Serializable {
+
     // 缓冲
     private static final long serialVersionUID = 1L;
-    
+
     // ログインユーザ
     private String userId;
 

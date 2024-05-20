@@ -21,7 +21,7 @@ import com.web.app.service.MedDateExtensionService;
  * @version 1.0
  */
 @Service
-public class MedDateExtensionServiceImpl implements MedDateExtensionService{
+public class MedDateExtensionServiceImpl implements MedDateExtensionService {
 
     // マッパーオブジェクト
     @Autowired
@@ -40,7 +40,8 @@ public class MedDateExtensionServiceImpl implements MedDateExtensionService{
         Date mediationEndDate = casesForMediationEndDate.getMediationEndDate();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         String date = sdf.format(mediationEndDate);
-        
-        return updCasesForMediationEndDateMapper.setUpdCasesForMediationEndDate(date,casesForMediationEndDate.getCid());
+
+        return updCasesForMediationEndDateMapper.setUpdCasesForMediationEndDate(date,
+                casesForMediationEndDate.getCid());
     }
 }

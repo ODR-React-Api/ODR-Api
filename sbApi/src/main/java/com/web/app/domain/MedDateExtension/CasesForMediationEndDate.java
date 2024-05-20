@@ -3,7 +3,6 @@ package com.web.app.domain.MedDateExtension;
 import java.io.Serializable;
 import java.util.Date;
 
-
 import lombok.Data;
 
 /**
@@ -15,7 +14,7 @@ import lombok.Data;
  */
 @Data
 public class CasesForMediationEndDate implements Serializable {
-    
+
     // 缓冲
     private static final long serialVersionUID = 1L;
 

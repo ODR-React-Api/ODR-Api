@@ -30,21 +30,21 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @RequestMapping("/medDateExtension")
 @SuppressWarnings("rawtypes")
 public class MedDateExtensionController {
-  
-     @Autowired
-     private MedDateExtensionService medDateExtensionService;
-     
-     /**
-     * API_案件情報更新
-     * サービスメソッドを呼び出して案件を更新し、
-     * 更新結果を判断してページに戻る
-     * 
-     * @param casesForMediationEndDate 案件情報更新の引数
-     * @return Response 案件情報更新の状況
-     */
-     @ApiOperation("案件情報更新")
-     @PostMapping("/updCasesForMediationEndDate")
-     public Response updCasesForMediationEndDate(@RequestBody CasesForMediationEndDate casesForMediationEndDate) {
+
+  @Autowired
+  private MedDateExtensionService medDateExtensionService;
+
+  /**
+   * API_案件情報更新
+   * サービスメソッドを呼び出して案件を更新し、
+   * 更新結果を判断してページに戻る
+   * 
+   * @param casesForMediationEndDate 案件情報更新の引数
+   * @return Response 案件情報更新の状況
+   */
+  @ApiOperation("案件情報更新")
+  @PostMapping("/updCasesForMediationEndDate")
+  public Response updCasesForMediationEndDate(@RequestBody CasesForMediationEndDate casesForMediationEndDate) {
     try {
       if (medDateExtensionService.updCasesForMediationEndDate(casesForMediationEndDate) != 0) {
         System.out.println("====================successed================================");

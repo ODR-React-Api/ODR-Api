@@ -13,12 +13,12 @@ import io.swagger.annotations.ApiModel;
  * @since 2024/05/09
  * @version 1.0
  */
-@ApiModel 
+@ApiModel
 @Data
-public class MediationsTemplate implements Serializable{
+public class MediationsTemplate implements Serializable {
     // 缓冲
     private static final long serialVersionUID = 1L;
-    
+
     // テンプレート内容
     private String context;
 

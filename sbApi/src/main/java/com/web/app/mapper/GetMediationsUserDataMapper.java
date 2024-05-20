@@ -18,5 +18,5 @@ import com.web.app.domain.MediationsConCon.MediationsUserData;
 @Mapper
 public interface GetMediationsUserDataMapper {
     // API_ユーザデータ取得
-    List<MediationsUserData> findAllUser(String caseId,String platformId);
+    List<MediationsUserData> findAllUser(String caseId, String platformId);
 }
