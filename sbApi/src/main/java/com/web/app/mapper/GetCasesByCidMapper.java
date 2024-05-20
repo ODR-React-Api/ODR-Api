@@ -5,7 +5,7 @@ import com.web.app.domain.couAnswerLogin.CasesByCid;
 import java.util.List;
 
 /**
- * API_反訴・回答データ取得 Mapper
+ * 回答登録画面 Mapper
  * 
  * @author DUC 信召艶
  * @since 2024/04/29
@@ -14,6 +14,6 @@ import java.util.List;
 
 @Mapper
 public interface GetCasesByCidMapper {
-    //案件データ取得
+    //API_反訴・回答データ取得
     List<CasesByCid> casesByCid(String CaseId,String PlatformId);
 }
