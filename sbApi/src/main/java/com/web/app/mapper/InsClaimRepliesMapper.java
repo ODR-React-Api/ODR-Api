@@ -6,6 +6,8 @@ import com.web.app.domain.Files;
 @Mapper
 public interface InsClaimRepliesMapper {
   int insClaimReplies(InsClaimReplies insClaimReplies);
+
   int insClaimRepliesDataFiles(Files files);
+  
   int insClaimRepliesDataFilesRelations(CaseFileRelations caseFileRelations);
 }

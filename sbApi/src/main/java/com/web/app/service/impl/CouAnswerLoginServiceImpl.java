@@ -53,9 +53,9 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
      * @throws Exception エラーの説明内容
      */ 
     @Override
-    public List<CasesByCid> casesByCid(String CaseId,String PlatformId) {
+    public List<CasesByCid> casesByCid(String caseId,String platformId) {
         List<CasesByCid> casesByCidList = new ArrayList<CasesByCid>();
-        casesByCidList = getCasesByCidMapper.casesByCid(CaseId,PlatformId);
+        casesByCidList = getCasesByCidMapper.casesByCid(caseId,platformId);
         return casesByCidList;
     }
 

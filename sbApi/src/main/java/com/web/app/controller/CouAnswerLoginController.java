@@ -42,10 +42,10 @@ public class CouAnswerLoginController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("反訴・回答データ取得")
     @GetMapping("/getRepliesContext")
-    public Response getRepliesContext(String CaseId, String PlatformId) {
+    public Response getRepliesContext(String caseId, String platformId) {
         try {
             List<GetRepliesContext> getRepliesContextList = new ArrayList<GetRepliesContext>();
-            getRepliesContextList = couAnswerLoginService.getRepliesContext(CaseId, PlatformId);
+            getRepliesContextList = couAnswerLoginService.getRepliesContext(caseId, platformId);
             return AjaxResult.success("请求成功", getRepliesContextList);
         } catch (Exception e) {
             AjaxResult.fatal("查询失败!", e);
@@ -64,10 +64,10 @@ public class CouAnswerLoginController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("案件データ取得")
     @GetMapping("/getCasesByCid")
-    public Response getCasesByCid(String CaseId, String PlatformId) {
+    public Response getCasesByCid(String caseId, String platformId) {
         try {
             List<CasesByCid> getCasesByCidList = new ArrayList<CasesByCid>();
-            getCasesByCidList = couAnswerLoginService.casesByCid(CaseId, PlatformId);
+            getCasesByCidList = couAnswerLoginService.casesByCid(caseId, platformId);
             return AjaxResult.success("请求成功", getCasesByCidList);
         } catch (Exception e) {
             AjaxResult.fatal("查询失败!", e);

@@ -28,9 +28,9 @@ public class AnswerLoginServiceImpl  implements AnswerLoginService {
      * @return getRepliesList
      */    
     @Override
-    public List<GetReplies> getReplies(String CaseId,String PlatformId) {
+    public List<GetReplies> getReplies(String caseId,String platformId) {
         List<GetReplies> getRepliesList = new ArrayList<GetReplies>();
-        getRepliesList = getRepliesDataMapper.getReplies(CaseId,PlatformId);
+        getRepliesList = getRepliesDataMapper.getReplies(caseId,platformId);
         return getRepliesList;
     }
 }

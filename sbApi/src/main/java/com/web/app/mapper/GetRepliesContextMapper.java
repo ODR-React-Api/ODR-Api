@@ -5,7 +5,7 @@ import com.web.app.domain.couAnswerLogin.GetRepliesContext;
 import java.util.List;
 
 /**
- * API_反訴・回答データ取得 Mapper
+ * 反訴回答登録画面 Mapper
  * 
  * @author DUC 信召艶
  * @since 2024/04/29
@@ -14,6 +14,6 @@ import java.util.List;
 @Mapper
 public interface GetRepliesContextMapper {
     //反訴・回答データ取得
-    List<GetRepliesContext> getRepliesContext(String CaseId,String PlatformId);
+    List<GetRepliesContext> getRepliesContext(String caseId,String platformId);
 
 }

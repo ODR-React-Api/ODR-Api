@@ -14,5 +14,5 @@ import java.util.List;
 @Mapper
 public interface GetCasesByCidMapper {
     //API_反訴・回答データ取得
-    List<CasesByCid> casesByCid(String CaseId,String PlatformId);
+    List<CasesByCid> casesByCid(String caseId,String platformId);
 }

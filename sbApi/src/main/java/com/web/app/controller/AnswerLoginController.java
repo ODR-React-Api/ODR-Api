@@ -41,10 +41,10 @@ public class AnswerLoginController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("会員登録取得")
     @GetMapping("/GetReplies")
-    public Response getReplies(String CaseId, String PlatformId) {
+    public Response getReplies(String caseId, String platformId) {
         try {
             List<GetReplies> userRepliesList = new ArrayList<GetReplies>();
-            userRepliesList = answerLoginService.getReplies(CaseId, PlatformId);
+            userRepliesList = answerLoginService.getReplies(caseId, platformId);
             return AjaxResult.success("请求成功", userRepliesList);
         } catch (Exception e) {
             AjaxResult.fatal("查询失败!", e);
