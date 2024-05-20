@@ -12,7 +12,7 @@ import com.web.app.mapper.GetCasesByCidMapper;
 import com.web.app.service.CouAnswerLoginService;
 
 /**
- * API_反訴・回答データ取得
+ * 反訴回答登録画面
  * 
  * @author DUC 信召艶
  * @since 2024/04/29
@@ -28,20 +28,20 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
     //案件データ取得
     @Autowired
     private GetCasesByCidMapper getCasesByCidMapper;
-    
+
     /**
      * 反訴・回答データ取得
      *
      * @param caseId セッション情報のcaseid
      * @param PlatformId セッション情報のプラットフォームID
-     * @return 取得した反訴・回答データ
-     * @throws Exception エラー画面(404)へ遷移
+     * @return getRepliesContextList
+     * @throws Exception エラーの説明内容
      */ 
     @Override
     public List<GetRepliesContext> getRepliesContext(String CaseId,String PlatformId) {
-        List<GetRepliesContext> list = new ArrayList<GetRepliesContext>();
-        list = getRepliesContextMapper.getRepliesContext(CaseId,PlatformId);
-        return list;
+        List<GetRepliesContext> getRepliesContextList = new ArrayList<GetRepliesContext>();
+        getRepliesContextList = getRepliesContextMapper.getRepliesContext(CaseId,PlatformId);
+        return getRepliesContextList;
     }
 
     /**
@@ -49,14 +49,14 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
      *
      * @param caseId セッション情報のcaseid
      * @param PlatformId セッション情報のプラットフォームID
-     * @return 取得した案件データ
-     * @throws Exception エラー画面(404)へ遷移
+     * @return casesByCidList
+     * @throws Exception エラーの説明内容
      */ 
     @Override
     public List<CasesByCid> casesByCid(String CaseId,String PlatformId) {
-        List<CasesByCid> list = new ArrayList<CasesByCid>();
-        list = getCasesByCidMapper.casesByCid(CaseId,PlatformId);
-        return list;
+        List<CasesByCid> casesByCidList = new ArrayList<CasesByCid>();
+        casesByCidList = getCasesByCidMapper.casesByCid(CaseId,PlatformId);
+        return casesByCidList;
     }
 
 }

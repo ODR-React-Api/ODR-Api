@@ -32,7 +32,7 @@ public class CouAnswerLoginController {
     private CouAnswerLoginService couAnswerLoginService;
 
     /**
-     * API_ID:反訴・回答データ取得
+     * API_反訴・回答データ取得
      *
      * @param CaseId セッション情報のCaseId 
      * @param PlatformId セッション情報のプラットフォームID

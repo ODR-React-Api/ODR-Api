@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 /**
- * API_案件データ取得 domain
+ * 反訴回答登録画面 domain
  * 
  * @author DUC 信召艶
  * @since 2024/05/06
