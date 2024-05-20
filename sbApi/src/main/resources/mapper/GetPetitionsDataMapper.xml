@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     <mapper namespace="com.web.app.mapper.GetPetitionsDataMapper">
 
-        <resultMap id="ResultMap" type="com.web.app.domain.PetitionsData">
+        <resultMap id="ResultMap" type="com.web.app.domain.AnswerLogin.PetitionsData">
                 <result property="productName" column="productName" jdbcType="VARCHAR"/>
                 <result property="productId" column="ProductId" jdbcType="VARCHAR"/>
                 <result property="traderName" column="TraderName" jdbcType="VARCHAR"/>

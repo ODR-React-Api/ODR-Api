@@ -9,15 +9,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.app.domain.PetitionsData;
+import com.web.app.domain.AnswerLogin.PetitionsData;
 import com.web.app.service.AnswerLoginService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * 回答登録画面
+ * 
+ * @author DUC 王大安
+ * @since 2024/4/25
+ * @version 1.0
+ */
 @CrossOrigin(origins = "*")
-// 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
-@Api(tags = "申立データ取得2")
+@Api(tags = "回答登録画面")
 @RestController
 @RequestMapping("/getData")
 public class AnswerLoginController {
@@ -25,7 +31,13 @@ public class AnswerLoginController {
     @Autowired
     AnswerLoginService getPetitionsDataService;
 
-
+    /**
+     * 申立データ取得API
+     *
+     * @param caseId セッション情報の案件ID
+     * @param plateFormId セッション情報のプラットフォームID
+     * @return 申立データ取得結果
+     */
     @ApiOperation("申立データ取得API")
     @PostMapping("/getPetitionsData")
     List<PetitionsData> getPetitionsData(String caseId, String plateFormId){

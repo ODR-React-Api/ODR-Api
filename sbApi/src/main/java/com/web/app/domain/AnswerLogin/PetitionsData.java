@@ -1,11 +1,15 @@
-package com.web.app.domain;
+package com.web.app.domain.AnswerLogin;
+
+import java.io.Serializable;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 @ApiModel
 @Data
-public class PetitionsData {
+public class PetitionsData implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     private String productName;
 
     private String productId;
