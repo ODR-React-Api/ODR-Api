@@ -29,7 +29,7 @@
             t2.RelatedId = t1.id AND
             t2.DeleteFlag = 0 AND
             t3.id = t2.fileId AND
-            t3.platformId = t2.platformId
+            t3.platformId = #{platformId}
         ORDER BY
             t3.LastModifiedDate
     </select>

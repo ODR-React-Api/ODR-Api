@@ -46,11 +46,12 @@ public class MediationsMakeController {
      */
     @ApiOperation("調停案データ取得")
     @PostMapping("/getMediationsData")
-    public ResultMediation returnMediationsDetails(@RequestBody ResultMediation resultMediation){
+    @SuppressWarnings("unchecked")
+    public Response<ResultMediation> returnMediationsDetails(@RequestBody ResultMediation resultMediation){
         try {
             //DBデータ取得
             resultMediation = mediationsMakeService.getMediationsData(resultMediation);
-            return resultMediation;
+            return AjaxResult.success("調停案データ取得しました", resultMediation);
         } catch (Exception e) {
             AjaxResult.fatal("取得に失敗しました!", e);
             return null;
@@ -68,20 +69,16 @@ public class MediationsMakeController {
     @ApiOperation("調停案データ更新")
     @PostMapping("/saveMediton")
     public Response SaveMediton(@RequestBody ResultMediation resultMediation, HttpServletRequest request,HttpServletResponse response){
-        if (mediationsMakeService.isExistMediations(resultMediation.getMediationId()) != 0) {
-            try {
+        try {
+            if (mediationsMakeService.isExistMediations(resultMediation.getMediationId()) != 0) {
                 mediationsMakeService.saveMediton(resultMediation);
                 return AjaxResult.success("調停案が更新されました!");
-            } catch (Exception e) {
-                AjaxResult.fatal("更新に失敗しました!", e);
-                return null;
+            }else{
+                return AjaxResult.success("調停案が更新されていません!");
             }
-        }
-        try {
-            request.getRequestDispatcher("/mediationsMake/insMediationsData").forward(request, response);
-            return AjaxResult.success("調停案を追加してください!");
         } catch (Exception e) {
-            return AjaxResult.success("調停案を追加してください!");
+            AjaxResult.fatal("更新に失敗しました!", e);
+            return null;
         }
     }
 }

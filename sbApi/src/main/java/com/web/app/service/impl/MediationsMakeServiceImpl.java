@@ -66,14 +66,10 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
     @Override
     @Transactional
     public void saveMediton(ResultMediation resultMediation) throws Exception {
-        //調停案データ更新結果
-        boolean updateFlg = false;
         //フロントに添付ファイル
         List<SubsidiaryFile> files = resultMediation.getFiles();
-        //調停案更新
-        updateFlg = saveMeditonMapper.updateMediations(setMediation(resultMediation, null, true)) > 0;
         //SQL文が更新されない場合は例外をスローし、DBが更新されないようにトランザクションをロールバックさせる
-        if (!updateFlg) {
+        if (!(saveMeditonMapper.updateMediations(setMediation(resultMediation, null, true)) <= 0)) {
             throw new RuntimeException();
         }
         if(files == null || files.isEmpty()){
@@ -86,16 +82,14 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                     //添付ファイルを削除
                     case 1:
                         mediation = setMediation(resultMediation, file, false);
-                        updateFlg = saveMeditonMapper.deleteFiles(mediation) > 0 && saveMeditonMapper.deleteFileRelations(mediation) > 0;
-                        if (!updateFlg) {
+                        if (!(saveMeditonMapper.deleteFiles(mediation) > 0 && saveMeditonMapper.deleteFileRelations(mediation) > 0)) {
                             throw new RuntimeException();
                         }
                         break;
                     //追加添付ファイル
                     case 2:
                         mediation = setMediation(resultMediation, file, false);
-                        updateFlg = saveMeditonMapper.addFiles(mediation) > 0 && saveMeditonMapper.addFileRelations(mediation) > 0;
-                        if (!updateFlg) {
+                        if (!(saveMeditonMapper.addFiles(mediation) > 0 && saveMeditonMapper.addFileRelations(mediation) > 0)) {
                             throw new RuntimeException();
                         }
                         break;
@@ -122,9 +116,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
     private Mediation setMediation(ResultMediation resultMediation,SubsidiaryFile file,boolean isMediation){
         Mediation mediation = new Mediation();
         //時間フォーマットの変換
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        String nowDate = sdf.format(System.currentTimeMillis());
-        mediation.setLastModifiedDate(nowDate);
+        mediation.setLastModifiedDate(getStringDate(null));
         mediation.setPlatformId(resultMediation.getPlatformId());
         mediation.setUserId(resultMediation.getUserId());
         if (isMediation) {
@@ -134,7 +126,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             mediation.setOtherContext(resultMediation.getOtherContext());
             mediation.setPayAmount(resultMediation.getPayAmount());
             mediation.setCounterClaimPayment(resultMediation.getCounterClaimPayment());
-            mediation.setPaymentEndDate(sdf.format(resultMediation.getPaymentEndDate()));
+            mediation.setPaymentEndDate(getStringDate(resultMediation.getPaymentEndDate()));
             mediation.setShipmentPayType(resultMediation.getShipmentPayType());
             mediation.setSpecialItem(resultMediation.getSpecialItem());
             mediation.setMediationId(resultMediation.getMediationId());
@@ -155,6 +147,27 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
         return mediation;
     }
 
+
+    /**
+     * 時間フォーマットの変換
+     * Date -> String
+     * 
+     * @param date 変換が必要な時間（NULLの場合はシステム時間を取得）
+     * @return 日付文字列
+     */
+    private String getStringDate(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        try {
+            if(date == null){
+                return sdf.format(System.currentTimeMillis());
+            }else{
+                return sdf.format(date);
+            }
+        } catch (Exception e) {
+            //日付変換に失敗した場合
+            return null;
+        }
+    }
 
 
 
@@ -228,30 +241,10 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                 resultMediation.setPayAmount(next.getPayAmount());
                 resultMediation.setCounterClaimPayment(next.getCounterClaimPayment());
                 //時間フォーマットの変換
-                String paymentEndDate = next.getPaymentEndDate();
-                Date endDate = null;
-                try {
-                    if (paymentEndDate != null) {
-                        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        endDate = fmt.parse(paymentEndDate);
-                    }
-                } catch (Exception e) {
-                    endDate = null;
-                }
-                resultMediation.setPaymentEndDate(endDate);
+                resultMediation.setPaymentEndDate(stringtoDate(next.getPaymentEndDate()));
                 resultMediation.setShipmentPayType(next.getShipmentPayType());
                 //時間フォーマットの変換
-                String agreement = next.getAgreementDate();
-                Date agreementDate = null;
-                try {
-                    if (agreement != null) {
-                        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        agreementDate = fmt.parse(agreement);
-                    }
-                } catch (Exception e) {
-                    agreementDate = null;
-                }
-                resultMediation.setAgreementDate(agreementDate);
+                resultMediation.setAgreementDate(stringtoDate(next.getAgreementDate()));
                 resultMediation.setSpecialItem(next.getSpecialItem());
                 resultMediation.setUserId(next.getUserId());
             }
@@ -259,5 +252,26 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
         }
         resultMediation.setFiles(files);
         return resultMediation;
+    }
+
+    /**
+     * 時間フォーマットの変換
+     * String -> Date
+     * 
+     * @param dateString 変換が必要な日付文字列
+     * @return 変換後の日付
+     */
+
+    private Date stringtoDate(String dateString){
+        Date date = null;
+        try {
+            if (dateString != null) {
+                DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                date = fmt.parse(dateString);
+            }
+        } catch (Exception e) {
+            date = null;
+        }
+        return date;
     }
 }
