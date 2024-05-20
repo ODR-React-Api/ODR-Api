@@ -25,16 +25,9 @@
             r.PlatformId='001'
     </select>
 
-    <select id="mediationCount" resultType="com.web.app.domain.Entity.CaseMediations">
+    <select id="mediationData" resultType="int">
         SELECT
-            PlatformId,
-            CaseId,
-            PayAmount,
-            CounterClaimPayment,
-            PaymentEndDate,
-            ShipmentPayType,
-            SpecialItem,
-            UserId   
+            Count(1) 
         FROM 
             case_mediations
         WHERE
@@ -164,8 +157,8 @@
             Other05,
             DeleteFlag,
             LastModifiedDate,
-            astModifiedBy)
-        VALUES(
+            LastModifiedBy
+        )VALUES(
             #{id},
             #{PlatformId},
             #{CaseId},

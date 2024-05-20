@@ -16,6 +16,9 @@ import com.web.app.domain.mediationsMake.InsMediationsData;
  */
 @Mapper
 public interface InsMediationsDataMapper {
+
+    // 「調停案」にデータが存在するかどうかを判断する
+    int mediationData(InsMediationsData mediationcase);
     
     // 「調停案」新規登録
     int insMediationsData2(CaseMediations CaseMediations);
@@ -26,8 +29,7 @@ public interface InsMediationsDataMapper {
     // 「案件-添付ファイルリレーション」新規登録
     int insCaseFileRelations(CaseFileRelations caseFileRelations);
 
-    // 「調停案」にデータが存在するかどうかを判断する
-    CaseMediations mediationCount(InsMediationsData mediationcase);
+
 
     // 「案件-添付ファイル」、「添付ファイル」データが存在するかどうかを判断する
     int dataSearch(InsMediationsData mediationcase);

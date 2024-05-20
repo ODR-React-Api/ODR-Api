@@ -1,6 +1,5 @@
 package com.web.app.service.impl;
 
-import java.util.ArrayList;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,11 +23,11 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
         // 調停案データ新規登録が成功したかどうかを判断する
         int dataStatus;
         // 「調停案」にデータが存在するかどうかを判断する（CaseId検索による）
-        CaseMediations mediationsCount = mediationcaseMapper.mediationCount(insMediationsData);
+        int mediationsDataCount = mediationcaseMapper.mediationData(insMediationsData);
 
         // 「調停案」データが存在する場合
         // 調停案データ更新API
-        if (mediationsCount != null) {
+        if (mediationsDataCount == 1) {
             // 「案件-添付ファイル」、「添付ファイル」データが存在するかどうかを判断する
             int dataSearch = mediationcaseMapper.dataSearch(insMediationsData);
 
@@ -66,9 +65,9 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             caseMediations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
             caseMediations.setLastModifiedBy(insMediationsData.getLastModifiedBy());
             // 「調停案」新規登録
-            int MediationcaseInsert = mediationcaseMapper.insMediationsData2(caseMediations);
+            int mediationcaseInsert = mediationcaseMapper.insMediationsData2(caseMediations);
             // 「調停案」データ新規登録が成功した場合
-            if (MediationcaseInsert == 1) {
+            if (mediationcaseInsert == 1) {
                 // フロントから転送されたファイルデータを保存する
                 Files filesData = insMediationsData.getInsertFiles();
                 UUID filesId = UUID.randomUUID();
