@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.web.app.domain.Response;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.UsesaseCancelService;
+import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -41,12 +43,17 @@ public class UsesaseCancelController {
      */
     @ApiOperation("手続き中止")
     @GetMapping("/updCaseCancelDate")
-    public int UpdCaseCancelDate(String mediationId){
+    @SuppressWarnings("unchecked")
+    public Response<Integer> updCaseCancelDate(String mediationId){
         try {
-            return usesaseCancelService.updCaseCancelDate(mediationId) > 0 ? Constants.RESULT_STATE_ERROR:Constants.RESULT_STATE_SUCCESS;
+            if(usesaseCancelService.updCaseCancelDate(mediationId) > 0){
+                return AjaxResult.success("中止手続き成功", Constants.RESULT_STATE_ERROR);
+            }else{
+                return AjaxResult.success("中止手続き失敗", Constants.RESULT_STATE_SUCCESS);
+            }
         } catch (Exception e) {
             //更新失敗
-            return Constants.RESULT_STATE_SUCCESS;
+            return AjaxResult.fatal("中止手続き失敗", e);
         }
     }
 }

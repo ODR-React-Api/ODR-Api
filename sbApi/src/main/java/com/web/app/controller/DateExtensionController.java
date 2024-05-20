@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.web.app.domain.Response;
 import com.web.app.service.DateExtensionService;
+import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -38,8 +40,8 @@ public class DateExtensionController {
      */
     @ApiOperation("交渉期限延長可能日数取得")
     @GetMapping("/getNegotiationExtendDays")
-    public String getNegotiationExtendDays(String platformId){
-        System.out.println(platformId);
-        return dateExtensionService.getNegotiationExtendDays(platformId);
+    @SuppressWarnings("unchecked")
+    public Response<String> getNegotiationExtendDays(String platformId){
+        return AjaxResult.success("交渉期限延長可能日数取得しました", dateExtensionService.getNegotiationExtendDays(platformId));
     }
 }
