@@ -77,7 +77,7 @@ public class MedUserConfirmController {
      * 
      * 調停人情報取得
      * 
-     * @param CaseId  受付カウンターからの案件ID
+     * @param CaseId 受付カウンターからの案件ID
      * @return 調停人情報取得
      * @throws Exception 調停人情報取得失敗
      */
