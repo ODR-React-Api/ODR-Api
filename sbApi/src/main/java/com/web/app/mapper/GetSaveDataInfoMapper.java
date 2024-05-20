@@ -11,7 +11,6 @@ import com.web.app.domain.MosList.DraftSavingDate;
  * @since 2024/04/25
  * @version 1.0
  */
-
 @Mapper
 public interface GetSaveDataInfoMapper {
 
