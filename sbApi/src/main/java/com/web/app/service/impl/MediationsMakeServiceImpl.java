@@ -23,16 +23,16 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
         // 調停案データ新規登録が成功したかどうかを判断する
         int dataStatus;
         // 「調停案」にデータが存在するかどうかを判断する（CaseId検索による）
-        int mediationsDataCount = mediationcaseMapper.mediationData(insMediationsData);
+        int mediationsDataCount = mediationcaseMapper.mediationDataCount(insMediationsData);
 
         // 「調停案」データが存在する場合
         // 調停案データ更新API
         if (mediationsDataCount == 1) {
             // 「案件-添付ファイル」、「添付ファイル」データが存在するかどうかを判断する
-            int dataSearch = mediationcaseMapper.dataSearch(insMediationsData);
+            int filesDataCount = mediationcaseMapper.filesDataCount(insMediationsData);
 
             // 「案件-添付ファイル」、「添付ファイル」データが発生しないと判断した場合
-            if (dataSearch == 0) {
+            if (filesDataCount == 0) {
                 // 調停案データ更新API
             } else {
                 // 調停案データ更新API
@@ -65,9 +65,9 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             caseMediations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
             caseMediations.setLastModifiedBy(insMediationsData.getLastModifiedBy());
             // 「調停案」新規登録
-            int mediationcaseInsert = mediationcaseMapper.insMediationsData2(caseMediations);
+            int mediationCaseInsert = mediationcaseMapper.insMediationsData(caseMediations);
             // 「調停案」データ新規登録が成功した場合
-            if (mediationcaseInsert == 1) {
+            if (mediationCaseInsert == 1) {
                 // フロントから転送されたファイルデータを保存する
                 Files filesData = insMediationsData.getInsertFiles();
                 UUID filesId = UUID.randomUUID();

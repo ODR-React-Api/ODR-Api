@@ -17,13 +17,13 @@ import com.web.app.domain.mediationsMake.InsMediationsData;
 public interface InsMediationsDataMapper {
 
     // 「調停案」にデータが存在するかどうかを判断する
-    int mediationData(InsMediationsData mediationcase);
+    int mediationDataCount(InsMediationsData mediationcase);
 
     // 「案件-添付ファイル」、「添付ファイル」データが存在するかどうかを判断する
-    int dataSearch(InsMediationsData mediationcase);
+    int filesDataCount(InsMediationsData mediationcase);
 
     // 「調停案」新規登録
-    int insMediationsData2(CaseMediations CaseMediations);
+    int insMediationsData(CaseMediations CaseMediations);
 
     // 「添付ファイル」の新規登録
     int insertFiles(Files insertFiles);

@@ -4,7 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.InsMediationsDataMapper">
 
-    <select id="dataSearch" resultType="int">
+     <select id="mediationDataCount" resultType="int">
+        SELECT
+            Count(1) 
+        FROM 
+            case_mediations
+        WHERE
+            CaseId =#{CaseId}    
+    </select>  
+
+    <select id="filesDataCount" resultType="int">
         SELECT
             Count(1)
         FROM 
@@ -25,16 +34,7 @@
             r.PlatformId='001'
     </select>
 
-    <select id="mediationData" resultType="int">
-        SELECT
-            Count(1) 
-        FROM 
-            case_mediations
-        WHERE
-            CaseId =#{CaseId}    
-    </select>
-
-    <insert id="insMediationsData2" parameterType="com.web.app.domain.mediationsMake.InsMediationsData">
+    <insert id="insMediationsData" parameterType="com.web.app.domain.mediationsMake.InsMediationsData">
         INSERT INTO case_mediations (
             id,
             PlatformId,
