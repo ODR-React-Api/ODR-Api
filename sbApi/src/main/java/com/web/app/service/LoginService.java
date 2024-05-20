@@ -2,6 +2,7 @@ package com.web.app.service;
 
 import java.util.List;
 import com.web.app.domain.Entity.OdrUsers;
+import com.web.app.domain.Login.LoginUser;
 
 /**
  * C1_ログイン画面
@@ -15,5 +16,5 @@ import com.web.app.domain.Entity.OdrUsers;
 public interface LoginService {
 
     // API_申立データ取得
-    List<OdrUsers> LoginUser(String email, String passWordd);
+    List<OdrUsers> LoginUser(LoginUser loginUser);
 }

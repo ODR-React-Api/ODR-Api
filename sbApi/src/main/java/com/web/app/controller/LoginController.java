@@ -49,7 +49,7 @@ public class LoginController {
     public Response LoginUser(@RequestBody LoginUser loginUser) {
         try {
             // 申立データ取得
-            List<OdrUsers> list = loginService.LoginUser(loginUser.getEmail(), loginUser.getPassWord());
+            List<OdrUsers> list = loginService.LoginUser(loginUser);
             if (list.size() > 0) {
                 return AjaxResult.success("検索成功!", list);
             } else {
