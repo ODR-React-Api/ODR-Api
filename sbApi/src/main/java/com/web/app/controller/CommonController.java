@@ -9,11 +9,11 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-// import com.web.app.domain.ActionHistories;
-// import com.web.app.domain.Constants;
 import com.web.app.domain.Response;
 import com.web.app.domain.User;
 import com.web.app.domain.Entity.ActionHistories;
@@ -33,19 +33,19 @@ public class CommonController {
     @Autowired
     private CommonService commonService;
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @ApiOperation("案件別個人情報リレーションデータ取得(申立人/相手方)")
-    @GetMapping("/GetUserDataFromCaseIdentity")
     /**
      * 案件別個人情報リレーションデータ取得(申立人/相手方)
      * 
      * @param identity   = true 申立人;identity = false 相手方
-     * @param languageId
-     * @param platformId
-     * @param caseId
-     * @return
+     * @param languageId 言語ID
+     * @param platformId プラットフォームのId
+     * @param caseId     案件ID
+     * @return user
      * @throws Exception
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @ApiOperation("案件別個人情報リレーションデータ取得(申立人/相手方)")
+    @GetMapping("/GetUserDataFromCaseIdentity")
     public Response GetUserDataFromCaseIdentity(Boolean identity, String languageId, String platformId, String caseId)
             throws Exception {
         try {
@@ -63,19 +63,18 @@ public class CommonController {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @ApiOperation("アクション履歴新規登録")
-    @GetMapping("/InsHistories")
-    public Response InsHistories(ActionHistories actionHistories, List<String> fileId, Boolean parametersFlag,
+    @PostMapping("/InsHistories")
+    public Response InsHistories(ActionHistories actionHistories, @RequestBody List<String> fileId,
+            Boolean parametersFlag,
             Boolean displayNameFlag) throws Exception {
         Response dataResponse = new Response<>();
         try {
             actionHistories.setId(UUID.randomUUID().toString());
             actionHistories.setActionDateTime(new Date());
-            int res = commonService.InsHistories(actionHistories, fileId, parametersFlag, displayNameFlag);
-            if (res == 1) {
-                dataResponse.setData(res);
-                dataResponse.setCode(Constants.RETCD_SUCCESS);
-                dataResponse.setMsg(Constants.RETCD_OK);
-            }
+            Boolean res = commonService.InsHistories(actionHistories, fileId, parametersFlag, displayNameFlag);
+            dataResponse.setData(res);
+            dataResponse.setCode(Constants.RETCD_SUCCESS);
+            dataResponse.setMsg(Constants.RETCD_OK);
             return dataResponse;
         } catch (Exception e) {
             throw e;

@@ -1,53 +1,49 @@
 package com.web.app.domain.Entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
-@ApiModel // 声明当前对象是用来封装数据的对象
 @Data
-public class ActionHistories implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class ActionHistories  {
 
-    private String id;
+    public String id;
 
-    private String PlatformId;
+    public String PlatformId;
 
-    private String CaseId;
+    public String CaseId;
 
-    private String ActionType;
+    public String ActionType;
 
-    private Integer CaseStage;
+    public Integer CaseStage;
 
-    private String UserId;
+    public String UserId;
 
-    private Integer UserType;
+    public Integer UserType;
 
-    private Date ActionDateTime;
+    public Date ActionDateTime;
 
-    private String MessageGroupId;
+    public String MessageGroupId;
 
-    private String MessageId;
+    public String MessageId;
 
-    private Boolean HaveFile;
+    public Boolean HaveFile;
 
-    private String Parameters;
+    public String Parameters;
 
-    private String Other01;
+    public String Other01;
 
-    private String Other02;
+    public String Other02;
 
-    private String Other03;
+    public String Other03;
 
-    private String Other04;
+    public String Other04;
 
-    private String Other05;
+    public String Other05;
 
-    private Boolean DeleteFlag;
+    public Boolean DeleteFlag;
 
-    private Date LastModifiedDate;
+    public Date LastModifiedDate;
 
-    private String LastModifiedBy;
+    public String LastModifiedBy;
 }

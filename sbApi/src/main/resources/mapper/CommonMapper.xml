@@ -41,22 +41,22 @@
         FROM
             odr_users
         WHERE
-            <choose>
-                <when test="uid != null and uid != ''">
+        <choose>
+            <when test="uid != null and uid != ''">
                     Uid = #{uid}
-                </when>
-                <otherwise>
+            </when>
+            <otherwise>
                     Email = #{email}
-                </otherwise>
-            </choose>
-            <choose>
-                <when test="platformId != null and platformId != ''">
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="platformId != null and platformId != ''">
                     AND PlatformId = #{platformId}
-                </when>
-                <otherwise>
+            </when>
+            <otherwise>
                     AND 1 = 1
-                </otherwise>
-            </choose>
+            </otherwise>
+        </choose>
             AND DeleteFlag = false
     </select>
     <!-- 根据caseID查询案件信息 -->
@@ -95,6 +95,7 @@
             AND TemplateNo = #{tempId}
             AND LanguageId = 'jp'
     </select>
+
     <select id="GetUserDataFromCaseIdentity" resultMap="BaseResultMap">
         SELECT odr_users.FirstName,odr_users.MiddleName,odr_users.LastName FROM odr_users INNER JOIN case_relations
         WHERE case_relations.CaseId = #{caseId}
@@ -146,6 +147,45 @@
             #{MessageId},
             #{HaveFile},
             #{Parameters},
+            #{Other01},
+            #{Other02},
+            #{Other03},
+            #{Other04},
+            #{Other05},
+            #{DeleteFlag},
+            #{LastModifiedDate},
+            #{LastModifiedBy}
+            )
+    </insert>
+
+    <select id="FindFileRelations" resultType="com.web.app.domain.Entity.ActionFileRelations">
+        select * from 
+            Action_File_Relations
+        where
+            id = #{id}
+            And DeleteFlag = '0'
+    </select>
+    <insert id="InsertActionFileRelations">
+        insert into Action_File_Relations(
+            id,
+            PlatformId,
+            CaseId,
+            ActionHistoryId,
+            fileId,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy)
+        values(
+            #{id},
+            #{PlatformId},
+            #{CaseId},
+            #{ActionHistoryId},
+            #{fileId},
             #{Other01},
             #{Other02},
             #{Other03},
