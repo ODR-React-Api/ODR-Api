@@ -7,6 +7,6 @@
         SELECT MediatorDisclosureDate 
             from cases
         WHERE
-        cid = #{caseId}
+            cid = #{caseId}
     </select>
 </mapper>

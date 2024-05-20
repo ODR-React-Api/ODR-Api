@@ -41,7 +41,7 @@
             MediatorChangeableCount1 = #{cases.MediatorChangeableCount1},
             MediatorChangeableCount2 = #{cases.MediatorChangeableCount2}
         WHERE
-        cid = #{cases.Cid}
+            cid = #{cases.Cid}
     </update>
 
     <select id="getMediatorChangeableCount" parameterType="string" resultMap="BaseResultMap">
@@ -52,7 +52,7 @@
             MediatorNoReasonChangeDate
             from cases
         WHERE
-        cid = #{Cid}
+            cid = #{Cid}
     </select>
 
     <insert id="insertFile" parameterType="com.web.app.domain.MedUserChange.InsertFileInfo">

@@ -19,6 +19,12 @@ public class InfoPublicSeigenServiceImpl implements InfoPublicSeigenService {
     @Autowired
     private GetMediatorDisclosureDateMapper getMediatorDisclosureDateMapper;
 
+    /**
+     * 調停人情報開示制限
+     * 
+     * @param mediatorDisclosureRequest 請求の変数
+     * @return 変更状態
+     */
     @Override
     @Transactional(noRollbackFor = { ArithmeticException.class })
     public Boolean updMediatorDisclosureFlag(MediatorDisclosureRequest mediatorDisclosureRequest) {
@@ -31,6 +37,12 @@ public class InfoPublicSeigenServiceImpl implements InfoPublicSeigenService {
         }
     }
 
+    /**
+     * 調停人情報開示変更可能期限日
+     * 
+     * @param caseId 案件ID
+     * @return Date
+     */
     @Override
     public Date getMediatorDisclosureDate(String caseId) {
         return getMediatorDisclosureDateMapper.getMediatorDisclosureDate(caseId);

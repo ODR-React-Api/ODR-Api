@@ -18,10 +18,6 @@ import com.web.app.service.InfoPublicSeigenService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "*")
-@Api(tags = "情報公開制限画面")
-@RestController
-@RequestMapping("/InfoPublicSeigen")
 /**
  * 情報公開制限画面
  * 
@@ -29,6 +25,10 @@ import io.swagger.annotations.ApiOperation;
  * @since 2024/04/26
  * @version 1.0
  */
+@CrossOrigin(origins = "*")
+@Api(tags = "情報公開制限画面")
+@RestController
+@RequestMapping("/InfoPublicSeigen")
 public class InfoPublicSeigenController {
 
     @Autowired
@@ -37,15 +37,15 @@ public class InfoPublicSeigenController {
     @Autowired
     private InfoPublicSeigenService infoPublicSeigenService;
 
+    /**
+     * 調停人情報開示制限
+     * @param mediatorDisclosureRequest 請求の変数
+     * @return 変更状態
+     * @throws Exception
+     */
     @ApiOperation("調停人情報開示制限")
     @GetMapping("/updMediatorDisclosureFlag")
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    /**
-     * 
-     * @param mediatorDisclosureRequest
-     * @return
-     * @throws Exception
-     */
     public Response updMediatorDisclosureFlag(MediatorDisclosureRequest mediatorDisclosureRequest) throws Exception {
         try {
 
@@ -67,16 +67,16 @@ public class InfoPublicSeigenController {
         }
     }
 
-    @ApiOperation("調停人情報開示変更可能期限日")
-    @GetMapping("/getMediatorDisclosureDate")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     /**
      * 調停人情報開示変更可能期限日
      * 
-     * @param caseId
+     * @param caseId 案件ID
      * @return Response
      * @throws Exception
      */
+    @ApiOperation("調停人情報開示変更可能期限日")
+    @GetMapping("/getMediatorDisclosureDate")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public Response getMediatorDisclosureDate(String caseId) throws Exception {
         try {
 
