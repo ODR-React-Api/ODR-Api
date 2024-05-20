@@ -43,8 +43,4 @@ public class MedDateExtensionServiceImpl implements MedDateExtensionService{
         
         return updCasesForMediationEndDateMapper.setUpdCasesForMediationEndDate(date,casesForMediationEndDate.getCid());
     }
-    
-    
-    
-
 }
