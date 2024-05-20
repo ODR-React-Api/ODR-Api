@@ -151,5 +151,7 @@ public class Constants {
     public static final String SPACE_STRING = " ";
     public static final int REGISTRATION_REGISTRATION = 1;
     public static final int REGISTRATION_REGISTRATION_UNREGISTERED = 0;
+    public static final int MOSDETAIL_UPDATEFLAG_0 = 0;
+    public static final int MOSDETAIL_UPDATEFLAG_1 = 1;
 
 }

@@ -13,6 +13,13 @@ import com.web.app.service.MosDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * 申立て概要画面
+ * 
+ * @author DUC 張万超
+ * @since 2024/4/29
+ * @version 1.0
+ */
 @RestController
 @CrossOrigin(origins = "*")
 @Api(tags = "申立て詳細画面")
@@ -22,6 +29,12 @@ public class MosDetailController {
     @Autowired
     private MosDetailService mosDetailService;
 
+    /**
+     * ケースの状態を取り下げに変更する。
+     *
+     * @param caseId 渡し項目.CaseId
+     * @return 変更結果
+     */
     @GetMapping("/withdrawal")
     @ApiOperation("取り下げ済状態変更")
     public WithdrawalReturn getMethodName(@RequestParam String caseId) {
