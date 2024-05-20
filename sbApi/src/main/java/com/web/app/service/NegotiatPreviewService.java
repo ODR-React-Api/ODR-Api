@@ -1,5 +1,6 @@
 package com.web.app.service;
 
+import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.NegotiatPreview.NegotiatPreview;
 
 /**
@@ -15,5 +16,5 @@ public interface NegotiatPreviewService {
     //和解案新規登録
     int InsNegotiationData(NegotiatPreview negotiatPreview);
     //和解案更新登録
-    int UpdNegotiationsData(NegotiatPreview negotiatPreview);
+    int UpdNegotiationsData(NegotiatPreview negotiatPreview, CaseNegotiations caseNegotiations);
 }

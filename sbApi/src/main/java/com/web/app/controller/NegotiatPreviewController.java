@@ -5,13 +5,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.web.app.domain.Response;
 import com.web.app.domain.NegotiatPreview.NegotiatPreview;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.NegotiatPreviewService;
 import com.web.app.tool.AjaxResult;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -30,9 +28,6 @@ public class NegotiatPreviewController {
     @Autowired
     private NegotiatPreviewService negotiatPreviewService;
 
-    @Autowired
-    private SendMailController sendMailController;
-
     /**
      * 和解案提出登録/更新
      *
@@ -46,12 +41,9 @@ public class NegotiatPreviewController {
         try{
             int status = negotiatPreviewService.NegotiatPreview(negotiatPreview);
             if (status == Constants.RESULT_STATE_SUCCESS) {
-                Boolean boolean1 = sendMailController.sendMail();
-                if (boolean1 = true) {
-                    return AjaxResult.success("和解案提出成功!");
-                }
+                return AjaxResult.success("和解案提出成功!");
             }
-            return AjaxResult.success("和解案提出成功!");
+            return AjaxResult.error("和解案提出失敗!");
         }catch (Exception e){
             return AjaxResult.fatal("和解案提出失敗!", e);
         }

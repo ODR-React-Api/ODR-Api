@@ -1,6 +1,9 @@
 package com.web.app.domain.NegotiatPreview;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import com.web.app.domain.Entity.File;
 
 import lombok.Data;
 
@@ -104,4 +107,6 @@ public class NegotiatPreview implements Serializable{
 
     //LastModifiedBy
     private String LastModifiedBy;
+
+    private ArrayList<File> FileList;
 }

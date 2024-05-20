@@ -19,7 +19,7 @@ import com.web.app.service.NegotiatPreviewService;
 import com.web.app.service.UtilService;
 
 /**
- * 和解案データ登録
+ * 和解案プレビュー画面
  * 
  * @author DUC 李志文
  * @since 2024/05/10
@@ -46,34 +46,16 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     @Transactional
     @Override
     public int NegotiatPreview(NegotiatPreview negotiatPreview) {
-        //和解案抽出
-        CaseNegotiations cNegotiations = updNegotiationsDataMapper.SearchCaseNegotiations(negotiatPreview.getCaseId());
-        if (cNegotiations != null) {
-            // Num未マージ
-            if (cNegotiations.getStatus().equals(Num.NUM0) ||
-                    cNegotiations.getStatus().equals(Num.NUM1) ||
-                    cNegotiations.getStatus().equals(Num.NUM2)) {
-                negotiatPreview.setStatus(Num.NUM2);
-            } else if (cNegotiations.getStatus().equals(Num.NUM7) ||
-                    cNegotiations.getStatus().equals(Num.NUM8) ||
-                    cNegotiations.getStatus().equals(Num.NUM9)) {
-                negotiatPreview.setStatus(Num.NUM9);
-            } else if (cNegotiations.getStatus().equals(Num.NUM10) ||
-                    cNegotiations.getStatus().equals(Num.NUM11) ||
-                    cNegotiations.getStatus().equals(Num.NUM12)) {
-                negotiatPreview.setStatus(Num.NUM12);
-            } else if (cNegotiations.getStatus().equals(Num.NUM13) ||
-                    cNegotiations.getStatus().equals(Num.NUM14) ||
-                    cNegotiations.getStatus().equals(Num.NUM15)) {
-                negotiatPreview.setStatus(Num.NUM15);
-            }else{
-                return 1;
-            }
-            UpdNegotiationsData(negotiatPreview);
+        // 和解案抽出
+        CaseNegotiations caseNegotiations = updNegotiationsDataMapper
+                .SearchCaseNegotiations(negotiatPreview.getCaseId());
+        // Num未マージ
+        if (caseNegotiations != null) {
+            UpdNegotiationsData(negotiatPreview, caseNegotiations);
         } else {
             InsNegotiationData(negotiatPreview);
         }
-        return 1;
+        return Constants.RESULT_STATE_ERROR;
     }
 
     /**
@@ -112,36 +94,44 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         }
 
         // 「添付ファイル」の新規登録
-        File file = new File();
-        file.setId(utilService.GetGuid());
-        file.setPlatformId(negotiatPreview.getPlatformId());
-        file.setCaseId(negotiatPreview.getCaseId());
-        file.setFileName(negotiatPreview.getFileName());
-        file.setFileExtension(negotiatPreview.getFileExtension());
-        file.setFileUrl(negotiatPreview.getFileUrl());
-        file.setFileBlobStorageId(negotiatPreview.getFileBlobStorageId());
-        file.setFileSize(negotiatPreview.getFileSize());
-        file.setRegisterUserId(negotiatPreview.getRegisterUserId());
-        file.setRegisterDate(negotiatPreview.getRegisterDate());
-        file.setLastModifiedDate(negotiatPreview.getLastModifiedDate());
-        file.setLastModifiedBy(negotiatPreview.getLastModifiedBy());
-        int addFileStatus = insNegotiationDataMapper.AddFile(file);
-        if (addFileStatus == Constants.RESULT_STATE_ERROR) {
-            return Constants.RESULT_STATE_ERROR;
+        for (int i = 0; i < negotiatPreview.getFileList().size(); i++) {
+            File file = new File();
+            file.setId(utilService.GetGuid());
+            file.setPlatformId(negotiatPreview.getFileList().get(i).getPlatformId());
+            file.setCaseId(negotiatPreview.getCaseId());
+            file.setFileName(negotiatPreview.getFileName());
+            file.setFileExtension(negotiatPreview.getFileExtension());
+            file.setFileUrl(negotiatPreview.getFileUrl());
+            file.setFileBlobStorageId(negotiatPreview.getFileBlobStorageId());
+            file.setFileSize(negotiatPreview.getFileSize());
+            file.setRegisterUserId(negotiatPreview.getRegisterUserId());
+            file.setRegisterDate(negotiatPreview.getRegisterDate());
+            file.setLastModifiedDate(negotiatPreview.getLastModifiedDate());
+            file.setLastModifiedBy(negotiatPreview.getLastModifiedBy());
+            int addFileStatus = insNegotiationDataMapper.AddFile(file);
+            if (addFileStatus == Constants.RESULT_STATE_ERROR) {
+                return Constants.RESULT_STATE_ERROR;
+            }
+
+            // 「案件-添付ファイルリレーション」新規登録
+            CaseFileRelations caseFileRelations = new CaseFileRelations();
+            caseFileRelations.setId(utilService.GetGuid());
+            caseFileRelations.setPlatformId(negotiatPreview.getPlatformId());
+            caseFileRelations.setCaseId(negotiatPreview.getCaseId());
+            caseFileRelations.setRelatedId(caseNegotiations.getId());
+            caseFileRelations.setFileId(file.getId());
+            int addCaseFileRelationsStatus = insNegotiationDataMapper.AddCaseFileRelations(caseFileRelations);
+            if (addCaseFileRelationsStatus == Constants.RESULT_STATE_ERROR) {
+                return Constants.RESULT_STATE_ERROR;
+            }
         }
 
-        // 「案件-添付ファイルリレーション」新規登録
-        CaseFileRelations caseFileRelations = new CaseFileRelations();
-        caseFileRelations.setId(utilService.GetGuid());
-        caseFileRelations.setPlatformId(negotiatPreview.getPlatformId());
-        caseFileRelations.setCaseId(negotiatPreview.getCaseId());
-        caseFileRelations.setRelatedId(caseNegotiations.getId());
-        caseFileRelations.setFileId(file.getId());
-        int addCaseFileRelationsStatus = insNegotiationDataMapper.AddCaseFileRelations(caseFileRelations);
-        if (addCaseFileRelationsStatus == Constants.RESULT_STATE_ERROR) {
+        // メール送信
+        SendMailRequest sendMailRequest = Mail(negotiatPreview);
+        boolean bool = utilService.SendMail(sendMailRequest);
+        if (bool != true) {
             return Constants.RESULT_STATE_ERROR;
         }
-        boolean bool = utilService.SendMail(null);
         return Constants.RESULT_STATE_SUCCESS;
     }
 
@@ -154,7 +144,36 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
      */
     @Transactional
     @Override
-    public int UpdNegotiationsData(NegotiatPreview negotiatPreview) {
+    public int UpdNegotiationsData(NegotiatPreview negotiatPreview, CaseNegotiations caseNegotiations) {
+        // Status設定
+        if (Num.NUM15.equals(negotiatPreview.getStatus())) {
+            if (Num.NUM7.equals(caseNegotiations.getStatus()) ||
+                    Num.NUM8.equals(caseNegotiations.getStatus()) ||
+                    Num.NUM9.equals(caseNegotiations.getStatus())) {
+                negotiatPreview.setStatus(Num.NUM9);
+            } else if (Num.NUM13.equals(caseNegotiations.getStatus()) ||
+                    Num.NUM14.equals(caseNegotiations.getStatus()) ||
+                    Num.NUM15.equals(caseNegotiations.getStatus())) {
+                negotiatPreview.setStatus(Num.NUM15);
+            } else {
+                return Constants.RESULT_STATE_ERROR;
+            }
+        } else if (Num.NUM2.equals(negotiatPreview.getStatus())) {
+            if (Num.NUM0.equals(caseNegotiations.getStatus()) ||
+                    Num.NUM1.equals(caseNegotiations.getStatus()) ||
+                    Num.NUM2.equals(caseNegotiations.getStatus())) {
+                negotiatPreview.setStatus(Num.NUM2);
+            } else if (Num.NUM10.equals(caseNegotiations.getStatus()) ||
+                    Num.NUM11.equals(caseNegotiations.getStatus()) ||
+                    Num.NUM12.equals(caseNegotiations.getStatus())) {
+                negotiatPreview.setStatus(Num.NUM12);
+            } else {
+                return Constants.RESULT_STATE_ERROR;
+            }
+        } else {
+            return Constants.RESULT_STATE_ERROR;
+        }
+
         // 「和解案」更新
         CaseNegotiations upCaseNegotiations = new CaseNegotiations();
         upCaseNegotiations.setId(negotiatPreview.getId());
@@ -222,10 +241,17 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         if (addCaseFileRelationsStatus == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
+
+        // メール送信
+        SendMailRequest sendMailRequest = Mail(negotiatPreview);
+        boolean bool = utilService.SendMail(sendMailRequest);
+        if (bool != true) {
+            return Constants.RESULT_STATE_ERROR;
+        }
         return Constants.RESULT_STATE_SUCCESS;
     }
 
-    public SendMailRequest Mail(NegotiatPreview negotiatPreview){
+    public SendMailRequest Mail(NegotiatPreview negotiatPreview) {
         SendMailRequest sendMailRequest = new SendMailRequest();
 
         sendMailRequest.setPlatformId(negotiatPreview.getPlatformId());
