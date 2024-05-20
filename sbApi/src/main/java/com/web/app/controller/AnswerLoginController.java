@@ -13,7 +13,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.ArrayList;
 import java.util.List;
-import javax.sql.DataSource;
 
 /**
  * 回答登録画面 Controller
@@ -22,7 +21,6 @@ import javax.sql.DataSource;
  * @since 2024/04/25
  * @version 1.0
  */
-
 @CrossOrigin(origins = "*")
 @Api(tags = "回答登録画面")
 @RestController
@@ -30,16 +28,14 @@ import javax.sql.DataSource;
 public class AnswerLoginController {
 
     @Autowired
-    DataSource dataSource;
-
-    @Autowired
     private AnswerLoginService answerLoginService;
 
     /**
      * API_ID:反訴・回答データ取得
      *
-     * @param param1 セッション情報より渡された引数
-     * @return 戻り値は画面データ項目setで画面各項目へ反映する
+     * @param CaseId セッション情報のCaseId 
+     * @param PlatformId セッション情報のプラットフォームID
+     * @return userRepliesList
      * @throws Exception エラーの説明内容
      */
     @SuppressWarnings("rawtypes")

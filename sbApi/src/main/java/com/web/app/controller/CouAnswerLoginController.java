@@ -12,7 +12,6 @@ import com.web.app.domain.couAnswerLogin.GetRepliesContext;
 import com.web.app.domain.couAnswerLogin.CasesByCid;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,6 @@ import java.util.List;
  * @since 2024/04/29
  * @version 1.0
  */
-
 @CrossOrigin(origins = "*")
 @Api(tags = "反訴回答登録画面")
 @RestController
@@ -31,16 +29,14 @@ import java.util.List;
 public class CouAnswerLoginController {
 
     @Autowired
-    DataSource dataSource;
-
-    @Autowired
     private CouAnswerLoginService couAnswerLoginService;
 
     /**
      * API_ID:反訴・回答データ取得
      *
-     * @param CaseId,PlatformId セッション情報より渡された引数
-     * @return Response
+     * @param CaseId セッション情報のCaseId 
+     * @param PlatformId セッション情報のプラットフォームID
+     * @return getRepliesContextList
      * @throws Exception エラーの説明内容
      */
     @SuppressWarnings("rawtypes")
@@ -48,9 +44,9 @@ public class CouAnswerLoginController {
     @GetMapping("/getRepliesContext")
     public Response getRepliesContext(String CaseId, String PlatformId) {
         try {
-            List<GetRepliesContext> userContextList = new ArrayList<GetRepliesContext>();
-            userContextList = couAnswerLoginService.getRepliesContext(CaseId, PlatformId);
-            return AjaxResult.success("请求成功", userContextList);
+            List<GetRepliesContext> getRepliesContextList = new ArrayList<GetRepliesContext>();
+            getRepliesContextList = couAnswerLoginService.getRepliesContext(CaseId, PlatformId);
+            return AjaxResult.success("请求成功", getRepliesContextList);
         } catch (Exception e) {
             AjaxResult.fatal("查询失败!", e);
             return null;
@@ -60,18 +56,19 @@ public class CouAnswerLoginController {
     /**
      * API_案件データ取得
      *
-     * @param CaseId,PlatformId セッション情報より渡された引数
-     * @return Response
+     * @param CaseId セッション情報のCaseId 
+     * @param PlatformId セッション情報のプラットフォームID
+     * @return getCasesByCidList
      * @throws Exception エラーの説明内容
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("案件データ取得")
     @GetMapping("/getCasesByCid")
-    public Response casesByCid(String CaseId, String PlatformId) {
+    public Response getCasesByCid(String CaseId, String PlatformId) {
         try {
-            List<CasesByCid> userContextList = new ArrayList<CasesByCid>();
-            userContextList = couAnswerLoginService.casesByCid(CaseId, PlatformId);
-            return AjaxResult.success("请求成功", userContextList);
+            List<CasesByCid> getCasesByCidList = new ArrayList<CasesByCid>();
+            getCasesByCidList = couAnswerLoginService.casesByCid(CaseId, PlatformId);
+            return AjaxResult.success("请求成功", getCasesByCidList);
         } catch (Exception e) {
             AjaxResult.fatal("查询失败!", e);
             return null;

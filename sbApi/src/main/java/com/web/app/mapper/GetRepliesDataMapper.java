@@ -5,13 +5,12 @@ import com.web.app.domain.answerLogin.GetReplies;
 import java.util.List;
 
 /**
- * API_反訴・回答データ取得
+ * S11_回答登録画面
  * 
  * @author DUC 信召艶
  * @since 2024/04/25
  * @version 1.0
  */
-
 @Mapper
 public interface GetRepliesDataMapper {
     //反訴・回答データ取得

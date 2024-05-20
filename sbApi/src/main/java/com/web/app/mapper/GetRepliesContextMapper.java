@@ -11,7 +11,6 @@ import java.util.List;
  * @since 2024/04/29
  * @version 1.0
  */
-
 @Mapper
 public interface GetRepliesContextMapper {
     //反訴・回答データ取得

@@ -9,7 +9,7 @@ import com.web.app.mapper.GetRepliesDataMapper;
 import com.web.app.service.AnswerLoginService;
 
 /**
- * API_反訴・回答データ取得
+ * S11_回答登録画面
  * 
  * @author DUC 信召艶
  * @since 2024/04/25
@@ -25,13 +25,12 @@ public class AnswerLoginServiceImpl  implements AnswerLoginService {
      *
      * @param caseId セッション情報のcaseid
      * @param PlatformId セッション情報のプラットフォームID
-     * @return 取得した反訴・回答データ
-     * @throws Exception エラー画面(404)へ遷移
+     * @return getRepliesList
      */    
     @Override
     public List<GetReplies> getReplies(String CaseId,String PlatformId) {
-        List<GetReplies> list = new ArrayList<GetReplies>();
-        list = getRepliesDataMapper.getReplies(CaseId,PlatformId);
-        return list;
+        List<GetReplies> getRepliesList = new ArrayList<GetReplies>();
+        getRepliesList = getRepliesDataMapper.getReplies(CaseId,PlatformId);
+        return getRepliesList;
     }
 }
