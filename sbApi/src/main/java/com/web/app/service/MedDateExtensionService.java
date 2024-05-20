@@ -13,5 +13,5 @@ import com.web.app.domain.MedDateExtension.CasesForMediationEndDate;
  */
 public interface MedDateExtensionService {
     // API_案件情報更新
-    int updCasesForMediationEndDate(CasesForMediationEndDate updCasesForMediationEndDateResult);
+    int updCasesForMediationEndDate(CasesForMediationEndDate casesForMediationEndDate);
 }
