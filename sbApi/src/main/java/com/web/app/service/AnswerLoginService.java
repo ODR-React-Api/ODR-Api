@@ -2,6 +2,7 @@ package com.web.app.service;
 
 import java.util.List;
 
+import com.web.app.domain.AnswerLogin.PetitionDataUser;
 import com.web.app.domain.AnswerLogin.PetitionsData;
 
 /**
@@ -20,4 +21,12 @@ public interface AnswerLoginService {
      * @return 申立データ取得結果
      */
     List<PetitionsData> getPetitionData(String caseId, String plateFormId);
+
+    /**
+     * 申立データ取得API
+     *
+     * @param plateFormId セッション情報のプラットフォームID
+     * @return プラットフォ情報
+     */
+    PetitionDataUser getPetitionDataUser(String plateFormId);
 }
