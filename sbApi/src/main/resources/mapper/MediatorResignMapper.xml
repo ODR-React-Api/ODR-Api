@@ -14,8 +14,16 @@
             DeleteFlag  = 0 AND 
             PlatformId = #{platformId} AND
             userId != #{uid}
-  </select>
+  </select >
 
+  <select id="userEmail" resultType="com.web.app.domain.Entity.OdrUsers">
+        SELECT  
+            Email
+        FROM 
+            react_use.odr_users
+        WHERE 
+            Uid = #{uid}
+  </select>
 
   <update id="mediatorHistoriesUpdate">
         UPDATE
@@ -117,6 +125,5 @@
             #{item.userId}
             )
         </foreach>
-        
   </insert>
 </mapper>

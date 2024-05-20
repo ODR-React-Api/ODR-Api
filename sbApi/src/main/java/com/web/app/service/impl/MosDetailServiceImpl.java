@@ -303,8 +303,11 @@ public class MosDetailServiceImpl implements MosDetailService {
 
         ArrayList<String> recipientEmail = new ArrayList<String>();
 
+        //調停人email取得
+        OdrUsers usersEmail = mediatorHistoriesMapper.userEmail(uid);
+
         // 送信email
-        recipientEmail.add(caseRelations.getMediatorUserEmail());
+        recipientEmail.add(usersEmail.getEmail());
 
         sendMailRequest.setRecipientEmail(recipientEmail);
 
@@ -323,11 +326,13 @@ public class MosDetailServiceImpl implements MosDetailService {
         sendMailRequest.setControlType(2);
 
         boolean bool_072 = utilService.SendMail(sendMailRequest);
+
         // 送信者メールのクリア
         recipientEmail.removeAll(recipientEmail);
 
         // 相手方・申立人・代理人送信
         sendMailRequest.setTempId(MailConstants.MailId_M073);
+
         // 相手方・申立人・代理人email 取得
         recipientEmail.add(caseRelations.getPetitionUserInfo_Email());
 
