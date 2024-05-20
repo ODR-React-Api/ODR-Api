@@ -9,8 +9,15 @@ import com.web.app.domain.Entity.CaseFileRelations;
 import com.web.app.domain.Entity.CaseMediations;
 import com.web.app.domain.Entity.Files;
 import com.web.app.domain.mediationsMake.InsMediationsData;
-import com.web.app.mapper.InsMediationsDataMapper;;
+import com.web.app.mapper.InsMediationsDataMapper;
 
+/**
+ * 調停案データ新規登録
+ * 
+ * @author DUC 賈文志
+ * @since 2024/05/20
+ * @version 1.0
+ */
 @Service
 public class MediationsMakeServiceImpl implements MediationsMakeService {
     @Autowired

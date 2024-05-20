@@ -6,11 +6,19 @@ import com.web.app.domain.Entity.Files;
 
 import lombok.Data;
 
+/**
+ * 調停案データ新規登録
+ * 
+ * @author DUC 賈文志
+ * @since 2024/05/20
+ * @version 1.0
+ */
 @Data
 public class InsMediationsData implements Serializable {
 
     // 缓冲
     private static final long serialVersionUID = 1L;
+    
     // ログインユーザ
     private String Uid;
 
@@ -46,11 +54,11 @@ public class InsMediationsData implements Serializable {
 
     // 反訴
     private Integer Counterclaim;
+
     // システム日付
     private String RegisterDate;
 
-    // private ArrayList<Files> insertFiles;
-
+    // 添付ファイル
     private Files insertFiles;
 
 }
