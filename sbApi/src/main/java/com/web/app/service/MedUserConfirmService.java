@@ -10,7 +10,7 @@ import com.web.app.domain.medUserConfirm.GetMediatorInfo;
  * 調停人情報取得
  * 
  * @author DUC 賈文志
- * @since 2024/05/13
+ * @since 2024/05/20
  * @version 1.0
  */
 public interface MedUserConfirmService {

@@ -19,7 +19,7 @@ import com.web.app.service.MedUserConfirmService;
  * 調停人情報取得
  * 
  * @author DUC 賈文志
- * @since 2024/05/13
+ * @since 2024/05/20
  * @version 1.0
  */
 
@@ -56,7 +56,7 @@ public class MedUserConfirmController {
      * 
      * 調停者メールとユザーIDを取得
      * 
-     * @param CaseId
+     * @param CaseId 受付カウンターからの案件ID
      * @return 調停者メールとユザーID
      * @throws Exception 調停者メールとユザーIDを取得失敗
      */
@@ -77,7 +77,7 @@ public class MedUserConfirmController {
      * 
      * 調停人情報取得
      * 
-     * @param CaseId
+     * @param CaseId  受付カウンターからの案件ID
      * @return 調停人情報取得
      * @throws Exception 調停人情報取得失敗
      */
