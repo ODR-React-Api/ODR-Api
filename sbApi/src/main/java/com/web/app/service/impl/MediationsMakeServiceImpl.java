@@ -27,6 +27,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
         CaseMediations mediationsCount = mediationcaseMapper.mediationCount(insMediationsData);
 
         // 「調停案」データが存在する場合
+        // 調停案データ更新API
         if (mediationsCount != null) {
             // 「案件-添付ファイル」、「添付ファイル」データが存在するかどうかを判断する
             int dataSearch = mediationcaseMapper.dataSearch(insMediationsData);
@@ -60,7 +61,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             caseMediations.setPaymentEndDate(insMediationsData.getPaymentEndDate());
             caseMediations.setShipmentPayType(insMediationsData.getShipmentPayType());
             caseMediations.setSpecialItem(insMediationsData.getSpecialItem());
-            //ローグ・ユアサの保存
+            // ローグ・ユアサの保存
             caseMediations.setUserId(insMediationsData.getUid());
             caseMediations.setLastModifiedDate(insMediationsData.getLastModifiedDate());
             caseMediations.setLastModifiedBy(insMediationsData.getLastModifiedBy());
@@ -68,7 +69,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             int MediationcaseInsert = mediationcaseMapper.insMediationsData2(caseMediations);
             // 「調停案」データ新規登録が成功した場合
             if (MediationcaseInsert == 1) {
-                //フロントから転送されたファイルデータを保存する
+                // フロントから転送されたファイルデータを保存する
                 Files filesData = insMediationsData.getInsertFiles();
                 UUID filesId = UUID.randomUUID();
                 String filesid = filesId.toString().replaceAll("-", "");
@@ -77,7 +78,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                 filesData.setCaseId(insMediationsData.getCaseId());
                 // ローグ・ユアサの保存
                 filesData.setRegisterUserId(insMediationsData.getUid());
-                //システム日払いの保存
+                // システム日払いの保存
                 filesData.setRegisterDate(insMediationsData.getRegisterDate());
                 filesData.setLastModifiedDate(insMediationsData.getLastModifiedDate());
                 // ローグ・ユアサの保存

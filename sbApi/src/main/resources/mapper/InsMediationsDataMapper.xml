@@ -4,188 +4,181 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.InsMediationsDataMapper">
 
-<select id="dataSearch" resultType="int">
-    SELECT
-        Count(1)
-    FROM 
-        case_mediations c
-    LEFT JOIN
-        case_file_relations r 
-        on c.CaseId = r.CaseId and c.id =r.RelatedId
-    LEFT JOIN
-        files f
-        on r.fileId = f.id
-    WHERE
-        c.CaseId =#{CaseId} AND
-        c.PlatformId ='001'AND
-        c.DeleteFlag = 0  AND
-        r.PlatformId='001'AND
-        r.RelationType =5 AND
-        r.DeleteFlag = 0 AND
-        r.PlatformId='001'
-</select>
+    <select id="dataSearch" resultType="int">
+        SELECT
+            Count(1)
+        FROM 
+            case_mediations c
+        LEFT JOIN
+            case_file_relations r 
+            on c.CaseId = r.CaseId and c.id =r.RelatedId
+        LEFT JOIN
+            files f
+            on r.fileId = f.id
+        WHERE
+            c.CaseId =#{CaseId} AND
+            c.PlatformId ='001'AND
+            c.DeleteFlag = 0  AND
+            r.PlatformId='001'AND
+            r.RelationType =5 AND
+            r.DeleteFlag = 0 AND
+            r.PlatformId='001'
+    </select>
 
-<select id="mediationCount" resultType="com.web.app.domain.Entity.CaseMediations">
-    SELECT
-        PlatformId,
-        CaseId,
-        PayAmount,
-        CounterClaimPayment,
-        PaymentEndDate,
-        ShipmentPayType,
-        SpecialItem,
-        UserId   
-    FROM 
-        case_mediations
-    WHERE
-        CaseId =#{CaseId}    
-</select>
+    <select id="mediationCount" resultType="com.web.app.domain.Entity.CaseMediations">
+        SELECT
+            PlatformId,
+            CaseId,
+            PayAmount,
+            CounterClaimPayment,
+            PaymentEndDate,
+            ShipmentPayType,
+            SpecialItem,
+            UserId   
+        FROM 
+            case_mediations
+        WHERE
+            CaseId =#{CaseId}    
+    </select>
 
-<insert id="insMediationsData2" parameterType="com.web.app.domain.mediationsMake.InsMediationsData">
-    INSERT INTO case_mediations 
-        (
-        id,
-        PlatformId,
-        CaseId,
-        Status,
-        ExpectResloveTypeValue,
-        HtmlContext,
-        HtmlContext2,
-        PayAmount,
-        CounterClaimPayment,
-        PaymentEndDate,
-        ShipmentPayType,
-        SpecialItem,
-        UserId,
-        SubmitDate,
-        AgreementDate,
-        CounterClaimType,
-        CounterClaimContext,
-        PaymentUser,
-        PetitionUserAgreeStatus,
-        PetitionUserAgreeDate,
-        TraderUserAgreeStatus,
-        TraderUserAgreeDate,
-        Other01,
-        Other02,
-        Other03,
-        Other04,
-        Other05,
-        DeleteFlag,
-        LastModifiedDate,
-        LastModifiedBy
-    )
-    VALUES(
-        #{id},
-        #{PlatformId},
-        #{CaseId},
-        0,
-        #{ExpectResloveTypeValue},
-        NULL,
-        NULL,
-        #{PayAmount},
-        #{CounterClaimPayment},
-        #{PaymentEndDate},
-        #{ShipmentPayType},
-        #{SpecialItem},
-        #{UserId},
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        0,
-        NULL,
-        0,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        0,
-        #{LastModifiedDate},
-        #{LastModifiedBy}
-    )
-</insert>
+    <insert id="insMediationsData2" parameterType="com.web.app.domain.mediationsMake.InsMediationsData">
+        INSERT INTO case_mediations (
+            id,
+            PlatformId,
+            CaseId,
+            Status,
+            ExpectResloveTypeValue,
+            HtmlContext,
+            HtmlContext2,
+            PayAmount,
+            CounterClaimPayment,
+            PaymentEndDate,
+            ShipmentPayType,
+            SpecialItem,
+            UserId,
+            SubmitDate,
+            AgreementDate,
+            CounterClaimType,
+            CounterClaimContext,
+            PaymentUser,
+            PetitionUserAgreeStatus,
+            PetitionUserAgreeDate,
+            TraderUserAgreeStatus,
+            TraderUserAgreeDate,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )VALUES(
+            #{id},
+            #{PlatformId},
+            #{CaseId},
+            0,
+            #{ExpectResloveTypeValue},
+            NULL,
+            NULL,
+            #{PayAmount},
+            #{CounterClaimPayment},
+            #{PaymentEndDate},
+            #{ShipmentPayType},
+            #{SpecialItem},
+            #{UserId},
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            0,
+            NULL,
+            0,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            0,
+            #{LastModifiedDate},
+            #{LastModifiedBy}
+        )
+    </insert>
 
-<insert id="insertFiles" parameterType="com.web.app.domain.Entity.Files">
-    INSERT INTO files
-     (
-        id,
-        PlatformId,
-        CaseId,
-        FileName,
-        FileExtension,
-        FileUrl,
-        FileBlobStorageId,
-        FileSize,
-        RegisterUserId,
-        RegisterDate,
-        Other01,
-        Other02,
-        Other03,
-        Other04,
-        Other05,
-        DeleteFlag,
-        LastModifiedDate,
-        LastModifiedBy
-     )
-     VALUES(
-        #{id},
-        #{PlatformId},
-        #{CaseId},
-        #{FileName},
-        #{FileExtension},
-        #{FileUrl},
-        NULL,
-        #{FileSize},
-        #{RegisterUserId},
-        #{RegisterDate},
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        0,
-        #{LastModifiedDate},
-        #{LastModifiedBy}
-     )
-</insert>
+    <insert id="insertFiles" parameterType="com.web.app.domain.Entity.Files">
+        INSERT INTO files(
+            id,
+            PlatformId,
+            CaseId,
+            FileName,
+            FileExtension,
+            FileUrl,
+            FileBlobStorageId,
+            FileSize,
+            RegisterUserId,
+            RegisterDate,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )VALUES(
+            #{id},
+            #{PlatformId},
+            #{CaseId},
+            #{FileName},
+            #{FileExtension},
+            #{FileUrl},
+            NULL,
+            #{FileSize},
+            #{RegisterUserId},
+            #{RegisterDate},
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            0,
+            #{LastModifiedDate},
+            #{LastModifiedBy}
+        )
+    </insert>
 
     <insert id="insCaseFileRelations" parameterType="com.web.app.domain.Entity.CaseFileRelations">
-    INSERT INTO case_file_relations
-    (
-        id,
-        PlatformId,
-        CaseId,
-        RelationType,
-        RelatedId,
-        fileId,
-        Other01,
-        Other02,
-        Other03,
-        Other04,
-        Other05,
-        DeleteFlag,
-        LastModifiedDate,
-        LastModifiedBy
-    )
-    VALUES(
-        #{id},
-        #{PlatformId},
-        #{CaseId},
-        5,
-        #{RelatedId},
-        #{fileId},
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        0,
-        #{LastModifiedDate},
-        #{LastModifiedBy}
-    )
+        INSERT INTO case_file_relations(
+            id,
+            PlatformId,
+            CaseId,
+            RelationType,
+            RelatedId,
+            fileId,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            astModifiedBy)
+        VALUES(
+            #{id},
+            #{PlatformId},
+            #{CaseId},
+            5,
+            #{RelatedId},
+            #{fileId},
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            0,
+            #{LastModifiedDate},
+            #{LastModifiedBy})
     </insert>
 </mapper>
