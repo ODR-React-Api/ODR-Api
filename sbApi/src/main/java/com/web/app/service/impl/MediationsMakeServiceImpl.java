@@ -9,6 +9,7 @@ import com.web.app.domain.Entity.CaseFileRelations;
 import com.web.app.domain.Entity.CaseMediations;
 import com.web.app.domain.Entity.Files;
 import com.web.app.domain.mediationsMake.InsMediationsData;
+import com.web.app.domain.constants.Constants;
 import com.web.app.mapper.InsMediationsDataMapper;
 
 /**
@@ -41,17 +42,17 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
 
         // 「調停案」データが存在する場合
         // 調停案データ更新API
-        if (mediationsDataCount == 1) {
+        if (mediationsDataCount == Constants.NUM_1) {
             // 「案件-添付ファイル」、「添付ファイル」データが存在するかどうかを判断する
             int filesDataCount = mediationcaseMapper.filesDataCount(insMediationsData);
 
             // 「案件-添付ファイル」、「添付ファイル」データが発生しないと判断した場合
-            if (filesDataCount == 0) {
+            if (filesDataCount == Constants.NUM_0) {
                 // 調停案データ更新API
             } else {
                 // 調停案データ更新API
             }
-            dataStatus = 2;
+            dataStatus = Constants.NUM_2;
         } else {
             // 調停案データ新規登録API
             // 「調停案」新規登録に必要なデータを保存する
@@ -64,7 +65,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             caseMediations.setExpectResloveTypeValue(insMediationsData.getExpectResloveTypeValue());
             caseMediations.setPayAmount(insMediationsData.getPayAmount());
             // CounterClaimPayment（反訴の支払金額）を設定するための申請の反訴があるかどうかを判断する
-            if (insMediationsData.getCounterclaim() == 1) {
+            if (insMediationsData.getCounterclaim() == Constants.NUM_1) {
                 // 反訴申請が存在する場合、フロントから転送された反訴の支払金額データを保存する。
                 caseMediations.setCounterClaimPayment(insMediationsData.getCounterClaimPayment());
             } else {
@@ -81,7 +82,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             // 「調停案」新規登録
             int mediationCaseInsert = mediationcaseMapper.insMediationsData(caseMediations);
             // 「調停案」データ新規登録が成功した場合
-            if (mediationCaseInsert == 1) {
+            if (mediationCaseInsert == Constants.NUM_1) {
                 // フロントから転送されたファイルデータを保存する
                 Files filesData = insMediationsData.getInsertFiles();
                 UUID filesId = UUID.randomUUID();
@@ -99,7 +100,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                 // 「添付ファイル」の新規登録
                 int insertFiles = mediationcaseMapper.insertFiles(filesData);
                 // 「添付ファイル」新規登録が成功した場合
-                if (insertFiles == 1) {
+                if (insertFiles == Constants.NUM_1) {
                     // 「案件-添付ファイル」テーブルのデータを保存する
                     CaseFileRelations caseFileRelations = new CaseFileRelations();
                     UUID CaseFileRelationsId = UUID.randomUUID();
@@ -116,7 +117,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                     mediationcaseMapper.insCaseFileRelations(caseFileRelations);
                 }
             }
-            dataStatus = 1;
+            dataStatus = Constants.NUM_1;
         }
         return dataStatus;
     }

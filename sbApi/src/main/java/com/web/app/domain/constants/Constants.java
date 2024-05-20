@@ -105,4 +105,8 @@ public class Constants {
     // { "ddd.444@gmail.com", "ABCマート" },
     // { "eee.555@icloud.com", "ドン・キホーテ" },
     // };
+    public static final int NUM_0 = 0;
+    public static final int NUM_1 = 1;
+    public static final int NUM_2 = 2;
+
 }
