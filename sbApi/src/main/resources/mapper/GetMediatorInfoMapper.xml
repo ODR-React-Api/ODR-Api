@@ -3,13 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
-<mapper namespace="com.web.app.mapper.GetMediatorInfoMapper">
-    <resultMap id="MediateUserMap" type="com.web.app.domain.medUserConfirm.GetMediatorInfo">
+<mapper namespace="com.web.app.mapper.GetMediatorGenMapper">
+    <resultMap id="MediateUserMap" type="com.web.app.domain.medUserConfirm.GetMediatorGen">
         <result property="userId" column="userId" jdbcType="VARCHAR"/>
         <result property="Status" column="Status" jdbcType="INTEGER"/>
     </resultMap>
  
-    <select id="getMediatorInfo" resultMap="MediateUserMap">
+    <select id="getMediatorGen" resultMap="MediateUserMap">
         SELECT
             userId,
             Status

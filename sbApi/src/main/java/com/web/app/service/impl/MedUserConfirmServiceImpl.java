@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
-import com.web.app.domain.medUserConfirm.GetMediatorInfo;
+import com.web.app.domain.medUserConfirm.GetMediatorGen;
 import com.web.app.mapper.GetMediationStatusMapper;
 import com.web.app.mapper.GetUserIDbyMailMapper;
-import com.web.app.mapper.GetMediatorInfoMapper;
+import com.web.app.mapper.GetMediatorGenMapper;
 
 /**
  * 調停案ステータス取得
@@ -28,7 +28,7 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
     @Autowired
     private GetUserIDbyMailMapper getUserIDbyMailMapper;
     @Autowired
-    private GetMediatorInfoMapper getMediatorInfoMapper;
+    private GetMediatorGenMapper getMediatorGenMapper;
 
     /**
      * 
@@ -73,9 +73,9 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
      * @return 調停人情報
      */
     @Override
-    public ArrayList<GetMediatorInfo> getMediatorInfo(String CaseId) {
+    public ArrayList<GetMediatorGen> getMediatorGen(String CaseId) {
         // 調停人情報取得
-        ArrayList<GetMediatorInfo> getMediatorInfo = getMediatorInfoMapper.getMediatorInfo(CaseId);
-        return getMediatorInfo;
+        ArrayList<GetMediatorGen> getMediatorGen = getMediatorGenMapper.getMediatorGen(CaseId);
+        return getMediatorGen;
     }
 }

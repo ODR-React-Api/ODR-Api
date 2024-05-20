@@ -23,6 +23,13 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
     @Autowired
     private InsMediationsDataMapper mediationcaseMapper;
 
+    /**
+     * 
+     * 調停案データ新規登録
+     * 
+     * @param insMediationsData フロントから転送されたデータを受信する
+     * @return 調停案データ登録または更新状態 (1：調停案データ新規登録成功2：調停案データ更新成功)
+     */
     @Transactional
     @Override
     public int insMediationsData(InsMediationsData insMediationsData) {

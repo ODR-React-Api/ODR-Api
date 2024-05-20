@@ -2,7 +2,7 @@ package com.web.app.mapper;
 
 import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
-import com.web.app.domain.medUserConfirm.GetMediatorInfo;
+import com.web.app.domain.medUserConfirm.GetMediatorGen;
 
 /**
  * 調停人情報取得
@@ -12,7 +12,7 @@ import com.web.app.domain.medUserConfirm.GetMediatorInfo;
  * @version 1.0
  */
 @Mapper
-public interface GetMediatorInfoMapper {
+public interface GetMediatorGenMapper {
     // 調停人情報取得
-    ArrayList<GetMediatorInfo> getMediatorInfo(String CaseId);
+    ArrayList<GetMediatorGen> getMediatorGen(String CaseId);
 }

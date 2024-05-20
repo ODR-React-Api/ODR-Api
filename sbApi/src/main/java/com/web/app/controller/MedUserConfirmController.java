@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
-import com.web.app.domain.medUserConfirm.GetMediatorInfo;
+import com.web.app.domain.medUserConfirm.GetMediatorGen;
 import com.web.app.service.MedUserConfirmService;
 
 /**
@@ -82,12 +82,12 @@ public class MedUserConfirmController {
      * @throws Exception 調停人情報取得失敗
      */
     @ApiOperation("調停人情報取得")
-    @PostMapping("/GetMediatorInfo")
-    public ArrayList<GetMediatorInfo> GetMediatorInfo(@RequestBody String CaseId) {
+    @PostMapping("/GetMediatorGen")
+    public ArrayList<GetMediatorGen> GetMediatorGen(@RequestBody String CaseId) {
         try {
             // 調停人情報取得
-            ArrayList<GetMediatorInfo> getMediatorInfo = medUserConfirmService.getMediatorInfo(CaseId);
-            return getMediatorInfo;
+            ArrayList<GetMediatorGen> getMediatorGen = medUserConfirmService.getMediatorGen(CaseId);
+            return getMediatorGen;
         } catch (Exception e) {
             return null;
         }

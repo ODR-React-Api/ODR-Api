@@ -2,7 +2,7 @@ package com.web.app.service;
 
 import java.util.ArrayList;
 import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
-import com.web.app.domain.medUserConfirm.GetMediatorInfo;
+import com.web.app.domain.medUserConfirm.GetMediatorGen;
 
 /**
  * 調停案ステータス取得
@@ -21,5 +21,5 @@ public interface MedUserConfirmService {
     GetUserIDbyMail getUserIDbyMail(String CaseId);
 
     // 調停人情報取得
-    ArrayList<GetMediatorInfo> getMediatorInfo(String CaseId);
+    ArrayList<GetMediatorGen> getMediatorGen(String CaseId);
 }

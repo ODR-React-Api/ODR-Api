@@ -1,9 +1,7 @@
 package com.web.app.domain.mediationsMake;
 
 import java.io.Serializable;
-
 import com.web.app.domain.Entity.Files;
-
 import lombok.Data;
 
 /**

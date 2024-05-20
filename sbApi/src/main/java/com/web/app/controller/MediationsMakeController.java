@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.web.app.domain.mediationsMake.InsMediationsData;
 import com.web.app.service.MediationsMakeService;
 import io.swagger.annotations.Api;
@@ -32,8 +31,7 @@ public class MediationsMakeController {
      * 調停案データ新規登録
      * 
      * @param insMediationsData フロントから転送されたデータを受信する
-     * @return 調停案データ新規登録成功 (1：調停案データ新規登録成功2：調停案データ更新成功)
-     * @throws Exception 調停案データ新規登録失敗
+     * @return 調停案データ登録または更新状態 (1：調停案データ新規登録成功2：調停案データ更新成功)
      */
     @ApiOperation("調停案データ新規登録")
     @PostMapping("/InsMediationsData")
