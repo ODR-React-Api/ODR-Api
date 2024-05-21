@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
 import com.web.app.domain.QuesAnswer.Questionnaire_Mails;
 import com.web.app.service.QuesAnswerService;
+import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 
@@ -29,14 +30,15 @@ public class QuesAnswerController {
     @SuppressWarnings("rawtypes")
     @GetMapping("/getQuestionnaires")
     public Response getQuestionnaires(String Id, String PlatformId) {
-        // 確認画面用データ
-        Questionnaire_Mails allQuestionnaire = getQuestionnairesService.selectQuestionnaireData(Id, PlatformId);
+        try {
+            // 確認画面用データ
+            Questionnaire_Mails allQuestionnaire = getQuestionnairesService.selectQuestionnaireData(Id, PlatformId);
 
-        if (allQuestionnaire != null) {
-            return Response.success(allQuestionnaire);
+            return AjaxResult.success("Success",allQuestionnaire);
+
+        } catch (Exception e) {
+            return AjaxResult.fatal("Error",e);
         }
-
-        return Response.error("失敗");
     }
 
 }

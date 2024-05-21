@@ -9,6 +9,8 @@ import com.web.app.domain.Response;
 import com.web.app.domain.MosDetail.PetitionsContent;
 import com.web.app.domain.MosDetail.RelationsContent;
 import com.web.app.service.MosDetailService;
+import com.web.app.tool.AjaxResult;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -38,15 +40,15 @@ public class MosDetailController {
     @SuppressWarnings("rawtypes")
     @GetMapping("/getPetitionsContent")
     public Response getPetitionsContent(String caseId) {
+        try {
+            // 申立ての内容取得
+            PetitionsContent petitionsContent = mosDetailService.selectPetitionData(caseId);
 
-        // 申立ての内容取得
-        PetitionsContent petitionsContent = mosDetailService.selectPetitionData(caseId);
+            return AjaxResult.success("Success",petitionsContent);
 
-        if (petitionsContent != null) {
-            return Response.success(petitionsContent);
+        } catch (Exception e) {
+            return AjaxResult.fatal("Error",e);
         }
-
-        return Response.error("失敗");
     }
 
     /**
@@ -60,15 +62,15 @@ public class MosDetailController {
     @ApiOperation("関係者内容取得")
     @GetMapping("/getRelationsContent")
     public Response getRelationsContent(String caseId) {
+        try {
+            // 関係者内容取得
+            RelationsContent relationsContent = mosDetailService.selectRelationsContentData(caseId);
 
-        // 関係者内容取得
-        RelationsContent relationsContent = mosDetailService.selectRelationsContentData(caseId);
+            return AjaxResult.success("Success",relationsContent);
 
-        if (relationsContent != null) {
-            return Response.success(relationsContent);
+        } catch (Exception e) {
+            return AjaxResult.fatal("Error",e);
         }
-
-        return Response.error("失败");
     }
 
     /**
@@ -85,12 +87,15 @@ public class MosDetailController {
     @ApiOperation("調停人退出メッセージ登録")
     @GetMapping("/mediatorResign")
     public Response MediatorResign(String caseId, String uid, String platformId, String messageGroupId) {
-        // 調停人退出メッセージ登録
-        int num = mosDetailService.updateMediatorHistoriesData(caseId, uid, platformId, messageGroupId);
+        try {
+            // 調停人退出メッセージ登録
+            int num = mosDetailService.updateMediatorHistoriesData(caseId, uid, platformId, messageGroupId);
 
-        if (num != 0) {
-            return Response.success(num);
+            return AjaxResult.success("Success",num);
+
+        } catch (Exception e) {
+            return AjaxResult.fatal("Error",e);
         }
-        return Response.error("失败");
+
     }
 }
