@@ -42,11 +42,12 @@ public class MosListController {
      */
     @PostMapping("/searchDetail")
     @ApiOperation("検索用ケース詳細取得")
-    public ReturnResult searchDetail(@RequestBody SelectCondition searchCase) {
+    @SuppressWarnings("rawtypes")
+    public Response searchDetail(@RequestBody SelectCondition searchCase) {
         // 詳細caseを呼び出してサービスを取得する
         ReturnResult result = mosListService.searchDetailCase(searchCase);
 
-        return result;
+        return Response.success(result);
     }
 
     /**

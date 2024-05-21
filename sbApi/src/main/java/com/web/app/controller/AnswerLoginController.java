@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.app.domain.Response;
 import com.web.app.domain.AnswerLogin.PetitionDataUser;
 import com.web.app.domain.AnswerLogin.PetitionsData;
 import com.web.app.service.AnswerLoginService;
@@ -41,10 +42,11 @@ public class AnswerLoginController {
      */
     @ApiOperation("申立データ取得API")
     @PostMapping("/getPetitionsData")
-    public List<PetitionsData> getPetitionsData(String caseId, String plateFormId){
+    @SuppressWarnings("rawtypes")
+    public Response getPetitionsData(String caseId, String plateFormId){
         List<PetitionsData> list;
         list = getPetitionsDataService.getPetitionData(caseId, plateFormId);
-        return list;
+        return Response.success(list);
     }
 
     /**
@@ -55,8 +57,9 @@ public class AnswerLoginController {
      */
     @ApiOperation("案件別個人情報リレーションデータ取得(申立人)")
     @PostMapping("/getPetitionDataUser")
-    public PetitionDataUser GetPetitionDataUser(String plateFormId) {
-        return getPetitionsDataService.getPetitionDataUser(plateFormId);
+    @SuppressWarnings("rawtypes")
+    public Response GetPetitionDataUser(String plateFormId) {
+        return Response.success(getPetitionsDataService.getPetitionDataUser(plateFormId));
     }
     
 }

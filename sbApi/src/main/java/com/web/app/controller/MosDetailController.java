@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.app.domain.Response;
 import com.web.app.domain.MosDetail.WithdrawalReturn;
 import com.web.app.service.MosDetailService;
 
@@ -37,9 +38,10 @@ public class MosDetailController {
      */
     @GetMapping("/withdrawal")
     @ApiOperation("取り下げ済状態変更")
-    public WithdrawalReturn getMethodName(@RequestParam String caseId) {
+    @SuppressWarnings("rawtypes")
+    public Response getMethodName(@RequestParam String caseId) {
         WithdrawalReturn res = mosDetailService.applyWithdraw(caseId);
-        return res;
+        return Response.success(res);
     }
 
 }
