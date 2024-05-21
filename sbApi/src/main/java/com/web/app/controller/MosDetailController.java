@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.MosDetail.WithdrawalReturn;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.MosDetailService;
+import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,8 +42,12 @@ public class MosDetailController {
     @ApiOperation("取り下げ済状態変更")
     @SuppressWarnings("rawtypes")
     public Response getMethodName(@RequestParam String caseId) {
-        WithdrawalReturn res = mosDetailService.applyWithdraw(caseId);
-        return Response.success(res);
+        try {
+            WithdrawalReturn res = mosDetailService.applyWithdraw(caseId);
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,res);
+        } catch (Exception e) {
+            return AjaxResult.error("error:" + e);
+        }
     }
 
 }

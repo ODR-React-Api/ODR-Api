@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
 import com.web.app.domain.AnswerLogin.PetitionDataUser;
 import com.web.app.domain.AnswerLogin.PetitionsData;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.AnswerLoginService;
+import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
 
 /**
  * 回答登録画面
@@ -36,17 +37,21 @@ public class AnswerLoginController {
     /**
      * 申立データ取得API
      *
-     * @param caseId セッション情報の案件ID
+     * @param caseId      セッション情報の案件ID
      * @param plateFormId セッション情報のプラットフォームID
      * @return 申立データ取得結果
      */
     @ApiOperation("申立データ取得API")
     @PostMapping("/getPetitionsData")
     @SuppressWarnings("rawtypes")
-    public Response getPetitionsData(String caseId, String plateFormId){
-        List<PetitionsData> list;
-        list = getPetitionsDataService.getPetitionData(caseId, plateFormId);
-        return Response.success(list);
+    public Response getPetitionsData(String caseId, String plateFormId) {
+        try {
+            List<PetitionsData> list;
+            list = getPetitionsDataService.getPetitionData(caseId, plateFormId);
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,list);
+        } catch (Exception e) {
+            return AjaxResult.error("error:" + e);
+        }
     }
 
     /**
@@ -59,7 +64,10 @@ public class AnswerLoginController {
     @PostMapping("/getPetitionDataUser")
     @SuppressWarnings("rawtypes")
     public Response GetPetitionDataUser(String plateFormId) {
-        return Response.success(getPetitionsDataService.getPetitionDataUser(plateFormId));
+        try {
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,getPetitionsDataService.getPetitionDataUser(plateFormId));
+        } catch (Exception e) {
+            return AjaxResult.error("error:" + e);
+        }
     }
-    
 }
