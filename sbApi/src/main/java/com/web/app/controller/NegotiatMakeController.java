@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.app.domain.Response;
 import com.web.app.domain.NegotiatMake.FromSessionLogin;
 import com.web.app.domain.NegotiatMake.SettlementDraftDataResult;
 import com.web.app.service.NegotiatMakeService;
@@ -34,18 +35,17 @@ public class NegotiatMakeController {
     /**
      * 和解案下書きデータ取得API
      * 
-     * @param セッション情報 と ログイン情報渡された
+     * @param fromSessionLogin セッション情報 と ログイン情報渡された
      * @return 戻り値は「 和解案作成 和解案下書きデータ取得」に返される
      * @throws Exception エラーの説明内容
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("和解案データ取得")
-    @PostMapping("/getSettlementDraft")
-    public SettlementDraftDataResult getSettlementDraftData(
-            @RequestBody FromSessionLogin settlementDraftFromSessionLogin) {
+    @PostMapping("/getNegotiationsData")
+    public Response getNegotiationsData(@RequestBody FromSessionLogin fromSessionLogin) {
         try {
-            SettlementDraftDataResult dataResult = negotiatMakeService
-                    .settlementDraftDataInfoSearch(settlementDraftFromSessionLogin);
-            return dataResult;
+            SettlementDraftDataResult dataResult = negotiatMakeService.settlementDraftDataInfoSearch(fromSessionLogin);
+            return Response.success(dataResult);
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
             return null;
@@ -55,18 +55,18 @@ public class NegotiatMakeController {
     /**
      * 下書き保存処理
      * 
-     * @param セッション情報 と ログイン情報渡された
+     * @param settlementDraftFromSessionLogin セッション情報 と ログイン情報渡された
      * @return 戻り値は「 下書き保存処理」が返された値
      * @throws Exception エラーの説明内容
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("下書き保存処理")
     @PostMapping("/getCaseNegotiationsStatus")
-    public SettlementDraftDataResult getCaseNegotiationsStatus(
-            @RequestBody FromSessionLogin settlementDraftFromSessionLogin) {
+    public Response getCaseNegotiationsStatus(@RequestBody FromSessionLogin fromSessionLogin) {
         try {
             SettlementDraftDataResult participatedResult = negotiatMakeService
-                    .settlementDraftGetCaseNegotiationsStatusInfoSearch(settlementDraftFromSessionLogin);
-            return participatedResult;
+                    .settlementDraftInfoSearch(fromSessionLogin);
+            return Response.success(participatedResult);
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
             return null;

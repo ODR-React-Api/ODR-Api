@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.app.domain.Response;
 import com.web.app.domain.MosDetail.ParticipatedStatusChangeResultInfo;
 import com.web.app.service.MosDetailService;
 import com.web.app.tool.AjaxResult;
@@ -35,12 +36,13 @@ public class MosDetailController {
      * @return 戻り値は「 参照表明更新済FLG」に返される
      * @throws Exception エラーの説明内容
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("参加済状態変更")
     @PostMapping("/updCasesStatus")
-    public ParticipatedStatusChangeResultInfo updCasesStatus(String caseId) {
+    public Response updCasesStatus(String caseId) {
         try {
             ParticipatedStatusChangeResultInfo participatedInfo = mosDetailService.participatedStatusSearch(caseId);
-            return participatedInfo;
+            return Response.success(participatedInfo);
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
             return null;

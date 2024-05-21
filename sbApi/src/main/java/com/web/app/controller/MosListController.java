@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.app.domain.Response;
 import com.web.app.domain.MosList.CaseIdListInfo;
 import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.service.MosListService;
@@ -37,12 +38,13 @@ public class MosListController {
      * @return 戻り値はAPI「 一覧取得」に返される
      * @throws Exception エラーの説明内容
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("ケース詳細取得API")
     @PostMapping("/getCaseDetailnfo")
-    public ReturnResult getCaseDetailnfo(@RequestBody CaseIdListInfo caseListInfo) {
+    public Response getCaseDetailnfo(@RequestBody CaseIdListInfo caseListInfo) {
         try {
             ReturnResult caseDetail = mosListService.caseDetailCasesInfoSearch(caseListInfo);
-            return caseDetail;
+            return Response.success(caseDetail);
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
             return null;
