@@ -47,9 +47,9 @@ public class UsesaseCancelController {
     public Response<Integer> updCaseCancelDate(String mediationId){
         try {
             if(usesaseCancelService.updCaseCancelDate(mediationId) > 0){
-                return AjaxResult.success("中止手続き成功", Constants.RESULT_STATE_ERROR);
+                return AjaxResult.success("中止手続き成功", Constants.RESULT_CODE_SUCCESS);
             }else{
-                return AjaxResult.success("中止手続き失敗", Constants.RESULT_STATE_SUCCESS);
+                return AjaxResult.success("中止手続き失敗", Constants.RESULT_CODE_ERROR);
             }
         } catch (Exception e) {
             //更新失敗

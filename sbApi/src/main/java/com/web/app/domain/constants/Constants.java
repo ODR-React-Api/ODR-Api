@@ -96,6 +96,10 @@ public class Constants {
     public static final String CONFIRMED_MESSAGE = "確認済みの調停案は、編集を行うことはできません。";
     //画面「S22」のエラーメッセージ
     public static final String FINSHED_MESSAGE = "成立済みの調停案は、編集を行うことはできません。";
+    //手続き中止APIの結果コード 0:成功
+    public static final int RESULT_CODE_SUCCESS = 0;
+    //手続き中止APIの結果コード 1:失敗
+    public static final int RESULT_CODE_ERROR = 1;
 
 
 

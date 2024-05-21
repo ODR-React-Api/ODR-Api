@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins = "*")
 @Api(tags = "期日延長画面") 
 @RestController
-@RequestMapping("/mediationsMake")
+@RequestMapping("/dateExtension")
 public class DateExtensionController {
 
     //サービスオブジェクト
@@ -42,6 +42,10 @@ public class DateExtensionController {
     @GetMapping("/getNegotiationExtendDays")
     @SuppressWarnings("unchecked")
     public Response<String> getNegotiationExtendDays(String platformId){
-        return AjaxResult.success("交渉期限延長可能日数取得しました", dateExtensionService.getNegotiationExtendDays(platformId));
+        try {
+            return AjaxResult.success("交渉期限延長可能日数取得しました", dateExtensionService.getNegotiationExtendDays(platformId));
+        } catch (Exception e) {
+            return AjaxResult.fatal("交渉期限延長可能日数取得失敗!", e);
+        }
     }
 }
