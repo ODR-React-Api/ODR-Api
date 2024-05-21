@@ -80,11 +80,12 @@ public class MosListController {
      */
     @PostMapping("/fuzzyQueryDetailCase")
     @ApiOperation("曖昧検索用ケース詳細取得")
-    public ReturnResult fuzzyQueryDetailCase(String caseId, String petitionUserId, int positionFlag, String queryString) {
+    @SuppressWarnings("rawtypes")
+    public Response fuzzyQueryDetailCase(String caseId, String petitionUserId, int positionFlag, String queryString) {
         // サービスの呼び出し
         ReturnResult returnResult = mosListService.getFuzzyQueryDetailCase(caseId, petitionUserId, positionFlag,
                 queryString);
-        return returnResult;
+        return Response.success(returnResult);
     }
 
     /**
