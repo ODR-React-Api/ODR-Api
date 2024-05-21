@@ -3,6 +3,7 @@ package com.web.app.controller;
 import com.web.app.domain.TestUser;
 import com.web.app.domain.Response;
 import com.web.app.domain.User;
+import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.service.TestUserService;
 import com.web.app.service.UserService;
 import com.web.app.tool.AjaxResult;
@@ -67,22 +68,21 @@ public class UserController {
 
   }
 
-  @ApiOperation("添加用户")
-  @PostMapping("/addUser")
-  @SuppressWarnings("rawtypes")
-  public Response addUser(User user) {
-    try {
+  // @ApiOperation("添加用户")
+  // @PostMapping("/addUser")
+  // @SuppressWarnings("rawtypes")
+  // public Response addUser(User user) {
+  //   try {
 
-      System.out.println("获取的数据库连接为:" + dataSource.getConnection());
+  //     System.out.println("获取的数据库连接为:" + dataSource.getConnection());
 
-      userService.addUser(user);
-      return AjaxResult.success("添加用户成功!");
-    } catch (Exception e) {
-      AjaxResult.fatal("上传单文件失败!", e);
-      return null;
-    }
-
-  }
+  //     userService.addUser(user);
+  //     return AjaxResult.success("添加用户成功!");
+  //   } catch (Exception e) {
+  //     AjaxResult.fatal("上传单文件失败!", e);
+  //     return null;
+  //   }
+  // }
 
   @ApiOperation("用户检索")
   @PostMapping("/testUser")
@@ -128,4 +128,7 @@ public class UserController {
       return null;
     }
   }
+
+
+
 }

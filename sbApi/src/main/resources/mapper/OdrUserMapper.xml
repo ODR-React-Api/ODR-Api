@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.OdrUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.web.app.domain.Entity.OdrUsers">
+            <id property="Uid" column="Uid" jdbcType="VARCHAR"/>
+            <result property="PlatformId" column="PlatformId" jdbcType="VARCHAR"/>
+            <result property="Email" column="Email" jdbcType="VARCHAR"/>
+            <result property="FirstName" column="FirstName" jdbcType="VARCHAR"/>
+            <result property="MiddleName" column="MiddleName" jdbcType="VARCHAR"/>
+            <result property="LastName" column="LastName" jdbcType="VARCHAR"/>
+            <!-- <result property="FirstName_EN" column="FirstName_EN" jdbcType="VARCHAR"/>
+            <result property="MiddleName_EN" column="MiddleName_EN" jdbcType="VARCHAR"/>
+            <result property="LastName_EN" column="LastName_EN" jdbcType="VARCHAR"/> -->
+            <result property="FirstName_kana" column="FirstName_kana" jdbcType="VARCHAR"/>
+            <result property="MiddleName_kana" column="MiddleName_kana" jdbcType="VARCHAR"/>
+            <result property="LastName_kana" column="LastName_kana" jdbcType="VARCHAR"/>
+            <result property="CompanyName" column="CompanyName" jdbcType="VARCHAR"/>
+            <result property="LanguageId" column="LanguageId" jdbcType="VARCHAR"/>
+            <!-- <result property="Status" column="Status" jdbcType="INTEGER"/>
+            <result property="TimeZone" column="TimeZone" jdbcType="VARCHAR"/>
+            <result property="ThemeId" column="ThemeId" jdbcType="VARCHAR"/>
+            <result property="TermsConfirmStatus" column="TermsConfirmStatus" jdbcType="VARCHAR"/>
+            <result property="ResumeFileId" column="ResumeFileId" jdbcType="VARCHAR"/>
+            <result property="SelfIntroduce" column="SelfIntroduce" jdbcType="VARCHAR"/>
+            <result property="HistoryInfo" column="HistoryInfo" jdbcType="VARCHAR"/>
+            <result property="Major" column="Major" jdbcType="VARCHAR"/>
+            <result property="Position" column="Position" jdbcType="VARCHAR"/>
+            <result property="ProfilePictureFileId" column="ProfilePictureFileId" jdbcType="VARCHAR"/>
+            <result property="UserType" column="UserType" jdbcType="VARCHAR"/>
+            <result property="CompanyName_EN" column="CompanyName_EN" jdbcType="INTEGER"/>  
+            <result property="ShowTuritor1" column="ShowTuritor1" jdbcType="BOOLEAN"/>
+            <result property="ShowTuritor2" column="ShowTuritor2" jdbcType="BOOLEAN"/>
+            <result property="ShowTuritor3" column="ShowTuritor3" jdbcType="BOOLEAN"/>
+            <result property="LastLoginDate" column="LastLoginDate" jdbcType="DATE"/>
+            <result property="RegisterDate" column="RegisterDate" jdbcType="DATE"/>
+            <result property="Other01" column="Other01" jdbcType="VARCHAR"/>
+            <result property="Other02" column="Other02" jdbcType="VARCHAR"/>
+            <result property="Other03" column="Other03" jdbcType="VARCHAR"/>
+            <result property="Other04" column="Other04" jdbcType="VARCHAR"/>
+            <result property="Other05" column="Other05" jdbcType="VARCHAR"/>
+            <result property="DeleteFlag" column="DeleteFlag" jdbcType="BOOLEAN"/>
+            <result property="LastModifiedDate" column="LastModifiedDate" jdbcType="DATE"/>
+            <result property="LastModifiedBy" column="LastModifiedBy" jdbcType="VARCHAR"/>
+            <result property="ConfirmedVersionNoOfTerms" column="ConfirmedVersionNoOfTerms" jdbcType="INTEGER"/>
+            <result property="ConfirmedVersionNoOfPolicy" column="ConfirmedVersionNoOfPolicy" jdbcType="INTEGER"/>
+            <result property="NoticeEmail" column="NoticeEmail" jdbcType="BOOLEAN"/>             -->
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,portrait,
+        phone,password,reg_ip,
+        account_non_expired,credentials_non_expired,account_non_locked,
+        status,is_del,create_time,
+        update_time
+    </sql>
+    <insert id="insertUser">
+        insert into odr_user(Email,FirstName,MiddleName,LastName,FirstName_kana,MiddleName_kana,LastName_kana,CompanyName,PlatformId,LanguageId) 
+        values(#{Email},#{FirstName},#{MiddleName},#{LastName},#{FirstName_kana},#{MiddleName_kana},#{LastName_kana},#{CompanyName},#{PlatformId},#{LanguageId})
+    </insert>
+
+
+</mapper>

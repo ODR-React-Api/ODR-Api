@@ -90,4 +90,7 @@ public class OdrUsers {
     private int ConfirmedVersionNoOfPolicy;
 
     private String NoticeEmail;
+    
+
+
 }
