@@ -14,6 +14,7 @@ import com.web.app.domain.Response;
 import com.web.app.domain.MedUserChange.InsertFileInfo;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.MedUserChangeService;
+import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +39,7 @@ public class MedUserChangeController {
 
     @ApiOperation("調停案削除")
     @GetMapping("/delAboutCasesMediations")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes" })
     /**
      * API_調停案削除
      * 
@@ -52,25 +53,16 @@ public class MedUserChangeController {
 
             System.out.println("获取的数据库连接为:" + dataSource.getConnection());
             Boolean resultBoolean = medUserChangeService.delAboutCasesMediations(caseId);
-            Response response = new Response<Boolean>();
-            if (resultBoolean) {
-                response.setCode(Constants.RETCD_SUCCESS);
-                response.setData(resultBoolean);
-                response.setMsg(Constants.MSG_SUCCESS);
-            } else {
-                response.setCode(Constants.RETCD_ERROR);
-                response.setData(resultBoolean);
-                response.setMsg(Constants.RETCD_NG);
-            }
-            return response;
+            return AjaxResult.success(Constants.MSG_SUCCESS, resultBoolean);
         } catch (Exception e) {
+            AjaxResult.fatal(caseId, e);
             throw e;
         }
     }
 
     @ApiOperation("案件関連情報更新")
     @GetMapping("/updAboutCasesInfo")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes" })
     /**
      * 案件関連情報更新
      * 
@@ -84,18 +76,9 @@ public class MedUserChangeController {
         try {
             System.out.println("获取的数据库连接为:" + dataSource.getConnection());
             Boolean resultBoolean = medUserChangeService.updAboutCasesInfo(caseId, userType, withReason);
-            Response response = new Response<Boolean>();
-            if (resultBoolean) {
-                response.setCode(Constants.RETCD_SUCCESS);
-                response.setData(resultBoolean);
-                response.setMsg(Constants.MSG_SUCCESS);
-            } else {
-                response.setCode(Constants.RETCD_ERROR);
-                response.setData(resultBoolean);
-                response.setMsg(Constants.RETCD_NG);
-            }
-            return response;
+            return AjaxResult.success(Constants.MSG_SUCCESS, resultBoolean);
         } catch (Exception e) {
+            AjaxResult.fatal(caseId, e);
             throw e;
         }
     }
@@ -105,7 +88,7 @@ public class MedUserChangeController {
     @PostMapping("/insertFileInfo")
     public Response insertFileInfo(@RequestBody InsertFileInfo insertFileInfo) {
         int insertfileInfoNum = medUserChangeService.insertFileInfo(insertFileInfo);
-        if(insertfileInfoNum == 1) {
+        if (insertfileInfoNum == 1) {
             return Response.success("成功");
         }
         return Response.error("失败");

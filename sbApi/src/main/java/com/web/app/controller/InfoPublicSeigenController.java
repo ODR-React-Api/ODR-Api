@@ -14,6 +14,7 @@ import com.web.app.domain.MediatorDisclosureRequest;
 import com.web.app.domain.Response;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.InfoPublicSeigenService;
+import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,8 +53,9 @@ public class InfoPublicSeigenController {
 
             System.out.println("获取的数据库连接为:" + dataSource.getConnection());
             Boolean resultBoolean = infoPublicSeigenService.updMediatorDisclosureFlag(mediatorDisclosureRequest);
-            return Response.success(resultBoolean);
+            return AjaxResult.success(Constants.MSG_SUCCESS, resultBoolean);
         } catch (Exception e) {
+            AjaxResult.fatal(Constants.MSG_ERROR, e);
             throw e;
         }
     }
@@ -67,24 +69,15 @@ public class InfoPublicSeigenController {
      */
     @ApiOperation("調停人情報開示変更可能期限日")
     @GetMapping("/getMediatorDisclosureDate")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes" })
     public Response getMediatorDisclosureDate(String caseId) throws Exception {
         try {
 
             System.out.println("获取的数据库连接为:" + dataSource.getConnection());
             Date mediatorDisclosureDate = infoPublicSeigenService.getMediatorDisclosureDate(caseId);
-            Response response = new Response<Date>();
-            if (mediatorDisclosureDate != null) {
-                response.setCode(Constants.RETCD_SUCCESS);
-                response.setData(response);
-                response.setMsg(Constants.MSG_SUCCESS);
-            } else {
-                response.setCode(Constants.RETCD_ERROR);
-                response.setData(response);
-                response.setMsg(Constants.RETCD_NG);
-            }
-            return response;
+            return AjaxResult.success(Constants.MSG_SUCCESS, mediatorDisclosureDate);
         } catch (Exception e) {
+            AjaxResult.fatal(Constants.MSG_ERROR, e);
             throw e;
         }
     }

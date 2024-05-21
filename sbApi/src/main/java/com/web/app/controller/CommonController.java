@@ -1,7 +1,5 @@
 package com.web.app.controller;
 
-import java.util.Date;
-import java.util.UUID;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -19,6 +17,8 @@ import com.web.app.domain.User;
 import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.CommonService;
+import com.web.app.tool.AjaxResult;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -43,20 +43,18 @@ public class CommonController {
      * @return user
      * @throws Exception
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "rawtypes" })
     @ApiOperation("案件別個人情報リレーションデータ取得(申立人/相手方)")
     @GetMapping("/GetUserDataFromCaseIdentity")
     public Response GetUserDataFromCaseIdentity(Boolean identity, String languageId, String platformId, String caseId)
             throws Exception {
         try {
-            Response dataResponse = new Response<User>();
             System.out.println("获取的数据库连接为:" + dataSource.getConnection());
             User user = commonService.GetUserDataFromCaseIdentity(identity, languageId, platformId, caseId);
-            dataResponse.setCode(Constants.RETCD_SUCCESS);
-            dataResponse.setMsg(Constants.RETCD_OK);
-            dataResponse.setData(user);
-            return dataResponse;
+
+            return AjaxResult.success(Constants.MSG_SUCCESS, user);
         } catch (Exception e) {
+            AjaxResult.fatal(Constants.MSG_ERROR, e);
             throw e;
         }
     }
@@ -79,8 +77,9 @@ public class CommonController {
             Boolean displayNameFlag) throws Exception {
         try {
             Boolean res = commonService.InsertActionHistories(actionHistories, fileId, parametersFlag, displayNameFlag);
-            return Response.success(res);
+            return AjaxResult.success(Constants.MSG_SUCCESS, res);
         } catch (Exception e) {
+            AjaxResult.fatal(Constants.MSG_ERROR, e);
             throw e;
         }
     }
