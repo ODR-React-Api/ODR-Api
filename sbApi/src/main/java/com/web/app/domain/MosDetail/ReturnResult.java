@@ -1,4 +1,4 @@
-package com.web.app.domain.Entity;
+package com.web.app.domain.MosDetail;
 
 import java.io.Serializable;
 import java.util.Date;

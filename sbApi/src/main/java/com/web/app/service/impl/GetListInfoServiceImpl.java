@@ -5,23 +5,18 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Comparator;
-import com.web.app.domain.Entity.CaseDetails;
-import com.web.app.domain.Entity.ReturnResult;
-import com.web.app.domain.Entity.UserCase;
-import com.web.app.mapper.CaseRelationsMapper;
-import com.web.app.mapper.OdrUsersMapper;
+import com.web.app.domain.MosDetail.CaseDetails;
+import com.web.app.domain.MosDetail.ReturnResult;
+import com.web.app.domain.MosDetail.UserCase;
+import com.web.app.mapper.GetListInfoMapper;
 import com.web.app.service.GetListInfoService;
 
 @Service
 public class GetListInfoServiceImpl implements GetListInfoService {
 
   // 引入Dao层
-  // ユーザ
   @Autowired
-  private OdrUsersMapper odrUsersMapper;
-  // 案件別個人情報リレーション
-  @Autowired
-  private CaseRelationsMapper caseRelationsMapper;
+  private GetListInfoMapper getListInfoMapper;
 
   @Override
   public List<ReturnResult> getListInfo(String uid) {
@@ -40,10 +35,10 @@ public class GetListInfoServiceImpl implements GetListInfoService {
     List<ReturnResult> returnResultList2 = new ArrayList<>();
 
     // ユーザ情報を取得する
-    email = odrUsersMapper.selectEmailOdrUsers(uid);
+    email = getListInfoMapper.selectEmailOdrUsers(uid);
 
     // ユーザが申立人の場合
-    List<UserCase> caseIdPetition1 = caseRelationsMapper.selectCaseIdPetition1(email);
+    List<UserCase> caseIdPetition1 = getListInfoMapper.selectCaseIdPetition1(email);
 
     // 调用API「ケース詳細取得」参数初始化
     CaseDetails caseDetails1 = new CaseDetails();
@@ -69,7 +64,7 @@ public class GetListInfoServiceImpl implements GetListInfoService {
     }
 
     // ユーザが相手方の場合
-    List<UserCase> caseIdPetition2 = caseRelationsMapper.selectCaseIdPetition2(email);
+    List<UserCase> caseIdPetition2 = getListInfoMapper.selectCaseIdPetition2(email);
 
     // 调用API「ケース詳細取得」参数初始化
     CaseDetails caseDetails2 = new CaseDetails();
@@ -93,7 +88,7 @@ public class GetListInfoServiceImpl implements GetListInfoService {
     }
 
     // ユーザが調停人の場合
-    List<UserCase> caseIdPetition3 = caseRelationsMapper.selectCaseIdPetition3(email);
+    List<UserCase> caseIdPetition3 = getListInfoMapper.selectCaseIdPetition3(email);
 
     // 调用API「ケース詳細取得」参数初始化
     CaseDetails caseDetails3 =  new CaseDetails();

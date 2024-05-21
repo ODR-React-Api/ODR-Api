@@ -1,4 +1,4 @@
-package com.web.app.domain.Entity;
+package com.web.app.domain.MosContentConfirm;
 
 import java.io.Serializable;
 import lombok.Data;

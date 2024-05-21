@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.InsPetitionsDataMapper">
+
+    <resultMap id="BaseResultMap" type="com.web.app.domain.MosContentConfirm.IdPetitionUserId">
+            <result property="id" column="Id" jdbcType="VARCHAR"/>
+            <result property="petitionUserId" column="PetitionUserId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMap2" type="com.web.app.domain.MosContentConfirm.UserLanguageIdPlatformId">
+            <result property="languageId" column="LanguageId" jdbcType="VARCHAR"/>
+            <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMap3" type="com.web.app.domain.Entity.IdPetitionUserId">
+            <result property="extensionitemId" column="ExtensionitemId" jdbcType="VARCHAR"/>
+            <result property="extensionitemValue" column="ExtensionitemValue" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- TBL「案件別個人情報リレーション（case_relations）」と「申立（case_petitions）」より用意した下書き保存データを取得する。 -->
+    <select id="selectIdPetitionUserId" parameterType="string" resultMap="BaseResultMap">
+        select b.id, 
+            a.petitionUserId
+        from 
+            case_relations as a
+        inner join
+            case_petitions as b
+        where
+            a.petitionUserId = #{uid} and
+            b.status = '0' and
+            a.casePetition = b.id
+    </select>
+
+    <!-- 案件別個人情報リレーション（case_relations）のMAX（id）の取得 -->
+    <select id="selectMaxId" resultType="String">
+        select 
+            MAX(id) AS id
+        from 
+            case_relations
+    </select>
+
+    <!-- TBL「案件別個人情報リレーション（case_relations）」の更新 -->
+    <update id="updateCaseRelations" parameterType="com.web.app.domain.MosContentConfirm.UpdateCaseRelations">
+        update  
+            case_relations
+        set 
+            id,
+            CaseId,
+            PlatformId,
+            etitionUserInfo_Email,
+            Agent1_Email,
+            Agent2_Email,
+            Agent3_Email,
+            Agent4_Email,
+            Agent5_Email,
+            TraderUserEmail
+        where
+            CasePetitions = #{casePetitions} and
+            PetitionUserId = #{petitionUserId}
+    </update> 
+
+    <!-- ユーザ情報の取得-->
+    <select id="selectLanguageIdAndPlatformId" parameterType="string" resultMap="BaseResultMap2">
+        select languageId, 
+            platformId
+        from 
+            odr_users
+        where
+            uid = #{uid}
+    </select>
+
+    <!-- 販売者メールアドレス登録有無の判定-->
+    <select id="selectCount" resultType="int">
+        select count(*)
+        from 
+            odr_users
+        where
+            Email = #{email} and
+            PlatformId = #{platformId} and
+            DeleteFlag = #{deleteFlag}
+    </select>
+
+    <!-- ユーザ情報を取得 -->
+    <select id="selectMaxCid" resultType="String">
+        select 
+            MAX(cid) AS cid
+        from 
+            cases
+    </select>
+
+    <!-- TBL「案件（cases）」の新規登録 -->
+    <insert id="insertCases" parameterType="com.web.app.domain.MosContentConfirm.InsertCases">
+        insert into cases(
+            cid,
+            platformId,
+            caseStage,
+            caseStatus,
+            caseTitle,
+            petitionDate,
+            languageId,
+            replyStartDate,
+            replyEndDate
+        )
+        values(
+            #{cid},
+            #{platformId},
+            #{caseStage},
+            #{caseStatus},
+            #{caseTitle},
+            #{petitionDate,},
+            #{languageId},
+            #{replyStartDate},
+            #{replyEndDate}
+        )
+    </insert>
+
+    <!-- TBL「案件別個人情報リレーション（case_relations）」の更新 -->
+    <update id="updateCasePetitions" parameterType="com.web.app.domain.MosContentConfirm.UpdateCasePetitions">
+        update  
+            case_petitions
+        set 
+            PlatformId,
+            CaseId,
+            productName,
+            ProductId,
+            TraderName,
+            TraderMail,
+            TraderUrl,
+            BoughtDate,
+            Price,
+            petitionTypeValue,
+            petitionContext,
+            ExpectResloveTypeValue,
+            Other,
+            LanguageId
+        where
+            id = #{id} 
+    </update> 
+
+    <!-- ユーザ情報を取得 -->
+    <select id="selectFileId" resultType="String">
+        select 
+            a.fileId 
+        from 
+            case_file_relations as a
+        inner join
+            files as b
+        where 
+            a.RelationType = #{relationType} and
+            a.RelatedId = #{RelatedId} and
+            a.fileId = b.id
+    </select>
+
+    <!-- TBL「案件-添付ファイルリレーション（case_file_relations）」を論理削除する -->
+    <update id="updateDeleteFlag">
+        update
+            case_file_relations
+        set
+            DeleteFlag = #{deleteFlag}
+        where
+            id = #{id}
+    </update>
+
+    <!-- TBL「案件-添付ファイルリレーション（case_file_relations）」のMAX（id）の取得 -->
+    <select id="selectMaxId2" resultType="String">
+        select 
+            MAX(id) AS id
+        from 
+            case_file_relations
+    </select>
+
+    <!-- .TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する -->
+    <insert id="insertCaseFileRelations" parameterType="com.web.app.domain.MosContentConfirm.InsertCaseFileRelations">
+        insert into cases(
+            id,
+            PlatformId,
+            CaseId,
+            RelationType,
+            RelatedId,
+            fileId,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )
+        values(
+            #{id},
+            #{platformId},
+            #{caseId},
+            #{relationType},
+            #{relatedId},
+            #{fileId},
+            #{deleteFlag},
+            #{lastModifiedDate},
+            #{lastModifiedBy}
+        )
+    </insert>
+
+    <!-- TBL「添付ファイル（files）」を論理削除する -->
+    <update id="updateDeleteFlag2">
+        update
+            files
+        set
+            DeleteFlag = #{deleteFlag}
+        where
+            id = #{fileId}
+    </update>
+
+    <!-- TBL「添付ファイル（files）」を新規登録する -->
+    <insert id="insertFiles" parameterType="com.web.app.domain.MosContentConfirm.InsertFiles">
+        insert into Files(
+            id,
+            PlatformId,
+            CaseId,
+            FileName,
+            FileExtension,
+            FileUrl,
+            FileSize,
+            RegisterUserId,
+            RegisterDate,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )
+        values(
+            #{id},
+            #{platformId},
+            #{caseId},
+            #{fileName},
+            #{fileExtension},
+            #{fileUrl},
+            #{fileSize},
+            #{registerUserId},
+            #{registerDate},
+            #{deleteFlag},
+            #{lastModifiedDate},
+            #{lastModifiedBy}
+        )
+    </insert>
+
+    <!-- TBL「添付ファイル（files）」のMAX（id）の取得 -->
+    <select id="selectMaxId3" resultType="String">
+        select 
+            MAX(id) AS id
+        from 
+            files
+    </select>
+
+    <!-- 拡張項目内容を取得 -->
+    <select id="selectCaseIdPetition1" resultMap="BaseResultMap">
+        select ExtensionitemId, 
+            ExtensionitemValue
+        from 
+            case_extensionitem_values
+        where
+            PlatformId = #{platformId} and
+            Case_petitionId = #{casePetitionId} and
+            DeleteFlag = #{deleteFlag0} and
+            ExtensionitemId = #{extensionitemId} and
+    </select>
+    <!-- 拡張項目内容の更新 -->
+    <update id="updateCasePetitions" parameterType="com.web.app.domain.MosContentConfirm.UpdateOrInsertCaseExtensionitemValues">
+        update  
+            case_extensionitem_values
+        set 
+            ExtensionitemValue,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy,
+            CaseId,
+        where
+            PlatformId = #{platformId}
+            Case_petitionId = #{casePetitionId}
+            DeleteFlag = #{deleteFlag0}
+            ExtensionitemId = #{extensionitemId}
+    </update> 
+
+    <!-- case_extensionitem_valuesのMAX（id）の取得 -->
+    <select id="selectMaxId4" resultType="String">
+        select 
+            MAX(id) AS id
+        from 
+            case_extensionitem_values
+    </select>
+
+    <!-- case_extensionitem_valuesのMAX（id）を新規登録する -->
+    <insert id="insertCaseExtensionitemValues" parameterType="com.web.app.domain.MosContentConfirm.UpdateOrInsertCaseExtensionitemValues">
+        insert into cases(
+            id,
+            PlatformId,
+            CaseId,
+            case_petitionId,
+            ExtensionitemId,
+            ExtensionitemValue,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )
+        values(
+            #{id},
+            #{platformId},
+            #{caseId},
+            #{casePetitionId},
+            #{extensionitemId},
+            #{extensionitemValue},
+            #{deleteFlag},
+            #{lastModifiedDate},
+            #{lastModifiedBy}
+        )
+    </insert>
+
+</mapper>

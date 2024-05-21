@@ -1,15 +1,13 @@
-package com.web.app.domain.Entity;
-
+package com.web.app.domain.MosDetail;
 import java.io.Serializable;
-
 import lombok.Data;
 
 @Data
-public class IdPetitionUserId implements Serializable {
+public class UserCase implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    // Id
-    private String id;
+    // ケースId
+    private String caseId;
 
     // ユーザーId
     private String petitionUserId;

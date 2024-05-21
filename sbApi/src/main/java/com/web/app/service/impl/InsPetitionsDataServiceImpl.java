@@ -5,50 +5,30 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.web.app.domain.Entity.InsertCases;
-import com.web.app.domain.Entity.InsertFiles;
-import com.web.app.domain.Entity.S09ScreenIntelligence;
-import com.web.app.domain.Entity.UpdateCasePetitions;
-import com.web.app.domain.Entity.UpdateCaseRelations;
-import com.web.app.domain.Entity.UpdateOrInsertCaseExtensionitemValues;
-import com.web.app.domain.Entity.InsertCaseFileRelations;
-import com.web.app.domain.Entity.ExtensionItem;
-import com.web.app.domain.Entity.IdPetitionUserId;
-import com.web.app.domain.Entity.UserLanguageIdPlatformId;
-import com.web.app.mapper.CaseExtensionitemValuesMapper;
-import com.web.app.mapper.CaseFileRelationsMapper;
-import com.web.app.mapper.CasePetitionsMapper;
-import com.web.app.mapper.CaseRelationsMapper;
-import com.web.app.mapper.CasesMapper;
-import com.web.app.mapper.FilesMapper;
-import com.web.app.mapper.OdrUsersMapper;
-import com.web.app.service.RegistrationInformationRegistrationService;
+import com.web.app.domain.MosContentConfirm.ExtensionItem;
+import com.web.app.domain.MosContentConfirm.IdPetitionUserId;
+import com.web.app.domain.MosContentConfirm.InsertCaseFileRelations;
+import com.web.app.domain.MosContentConfirm.InsertCases;
+import com.web.app.domain.MosContentConfirm.InsertFiles;
+import com.web.app.domain.MosContentConfirm.S09ScreenIntelligence;
+import com.web.app.domain.MosContentConfirm.UpdateCasePetitions;
+import com.web.app.domain.MosContentConfirm.UpdateCaseRelations;
+import com.web.app.domain.MosContentConfirm.UpdateOrInsertCaseExtensionitemValues;
+import com.web.app.domain.MosContentConfirm.UserLanguageIdPlatformId;
+import com.web.app.mapper.InsPetitionsDataMapper;
+import com.web.app.service.InsPetitionsDataService;
+import com.web.app.service.UtilService;
 
 @Service
-public class RegistrationInformationRegistrationServiceImpl implements RegistrationInformationRegistrationService {
+public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
 
   // 引入Dao层
-  // 案件別個人情報リレーション
   @Autowired
-  private CaseRelationsMapper caseRelationsMapper;
-  // ユーザ
+  private InsPetitionsDataMapper insPetitionsDataMapper;
+
+  // 引入共通Service
   @Autowired
-  private OdrUsersMapper odrUsersMapper;
-   // ユーザ
-  @Autowired
-  private CasesMapper casesMapper;
-  // 申立
-  @Autowired
-  private CasePetitionsMapper casePetitionsMapper;
-  // 案件-添付ファイルリレーション
-  @Autowired
-  private CaseFileRelationsMapper caseFileRelationsMapper;
-  // 添付ファイル（files）
-  @Autowired
-  private FilesMapper filesMapper;
-  // 拡張項目設定値（case_extensionitem_values）
-  @Autowired
-  private CaseExtensionitemValuesMapper caseExtensionitemValuesMapper;
+  private UtilService utilService;
 
   @Override
   public Integer LoginIntelligence(S09ScreenIntelligence s09ScreenIntelligence, String uid, String platformId) {
@@ -78,53 +58,47 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     int salesBrokerFlg = 0;
 
     // 1.TBL「案件別個人情報リレーション（case_relations）」と「申立（case_petitions）」より用意した下書き保存データを取得する。
-    IdPetitionUserId idPetitionUserId = caseRelationsMapper.selectIdPetitionUserId(uid);
+    IdPetitionUserId idPetitionUserId = insPetitionsDataMapper.selectIdPetitionUserId(uid);
 
     // 2.ユーザ情報の取得
-    UserLanguageIdPlatformId userLanguageIdPlatformId = odrUsersMapper.selectLanguageIdAndPlatformId(uid);
+    UserLanguageIdPlatformId userLanguageIdPlatformId = insPetitionsDataMapper.selectLanguageIdAndPlatformId(uid);
 
-    // 案件（cases）のMAX（cid）の取得
-    // TODO(自动采番的最大ID)
-    String maxCid = casesMapper.selectMaxCid();
     // 自動採番のcid（CaseId）
-    cid = maxCid + 1;
+    cid = utilService.GetGuid();
     // 3.TBL「案件（cases）」の新規登録
     returnFlag = insertCases(returnFlag, s09ScreenIntelligence, cid , userLanguageIdPlatformId);
 
     // 案件別個人情報リレーション（case_relations）のMAX（id）の取得
-    // TODO(自动采番的最大ID)
-    String maxId = caseRelationsMapper.selectMaxId();
-    // MAXのID
-    id = maxId + 1;
+    id = utilService.GetGuid();
+
     // 4.TBL「案件別個人情報リレーション（case_relations）」の更新
-    returnFlag = updateCaseRelations(returnFlag, id, maxCid, userLanguageIdPlatformId, s09ScreenIntelligence, idPetitionUserId);
+    returnFlag = updateCaseRelations(returnFlag, id, cid, userLanguageIdPlatformId, s09ScreenIntelligence, idPetitionUserId);
 
     // 5.TBL「申立（case_petitions）」の更新
     returnFlag = updateCasePetitions(returnFlag, idPetitionUserId, cid, s09ScreenIntelligence, userLanguageIdPlatformId);
 
     // 6.a案件-添付ファイルリレーションの取得
-    fileId = caseFileRelationsMapper.selectFileId(relationType, idPetitionUserId.getId());
+    fileId = insPetitionsDataMapper.selectFileId(relationType, idPetitionUserId.getId());
 
     // 6.b上記取得(案件-添付ファイルリレーションの取得)有りの場合は関連のデータを初期化する
     if (fileId != null) {
       // TBL「添付ファイル（files）」を論理削除する
-      filesMapper.updateDeleteFlag(deleteFlag1, fileId);
+      insPetitionsDataMapper.updateDeleteFlag(deleteFlag1, fileId);
 
       // TBL「案件-添付ファイルリレーション（case_file_relations）」を論理削除する
-      caseFileRelationsMapper.updateDeleteFlag(deleteFlag1, id);
+      insPetitionsDataMapper.updateDeleteFlag(deleteFlag1, id);
     }
 
     // 7.画面に添付資料が添付有りの場合、添付資料がなくなるまで以下の処理を行う。
     if (s09ScreenIntelligence.getFileSize() != "0") {
-      
+
       // 自動採番のid（Id）
-      // TODO(自动采番的最大ID)
-      String fileMaxId = filesMapper.selectMaxId();
-      String fileMaxId2 = fileMaxId + 1;
+      String fileMaxId = utilService.GetGuid();
+
       // a.TBL「添付ファイル（files）」を新規登録する
-      returnFlag = insertFiles(returnFlag, fileMaxId2, userLanguageIdPlatformId, cid, s09ScreenIntelligence, uid, deleteFlag0);
+      returnFlag = insertFiles(returnFlag, fileMaxId, userLanguageIdPlatformId, cid, s09ScreenIntelligence, uid, deleteFlag0);
       // b.TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する
-      returnFlag = insertCaseFileRelations(returnFlag, userLanguageIdPlatformId, relationType, cid, idPetitionUserId, fileMaxId2, s09ScreenIntelligence, uid, deleteFlag0);
+      returnFlag = insertCaseFileRelations(returnFlag, userLanguageIdPlatformId, relationType, cid, idPetitionUserId, fileMaxId, s09ScreenIntelligence, uid, deleteFlag0);
     }
     // 8.③～⑦の登録処理が正常終了の場合、アクション履歴登録を行う
     // TODO(メール・アクション一覧_v1.04.xlsx在哪里？)
@@ -134,7 +108,7 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     }
 
     // 9.販売者メールアドレス登録有無の判定
-    int numberOfPieces = odrUsersMapper.selectCount(s09ScreenIntelligence.getTraderMail(), userLanguageIdPlatformId.getPlatformId(), deleteFlag0);
+    int numberOfPieces = insPetitionsDataMapper.selectCount(s09ScreenIntelligence.getTraderMail(), userLanguageIdPlatformId.getPlatformId(), deleteFlag0);
     // cnt > 0の場合
     if (numberOfPieces > 0) {
       // 販売者メアド登録有無FLGに1（登録あり）を設定
@@ -147,7 +121,7 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
       // 既存の拡張項目内容を取得
       for (int i = 0; i < s09ScreenIntelligence.getExtensionItem().size(); i++) {
         // 既存の拡張項目内容を取得
-        ExtensionItem extensionItem = caseExtensionitemValuesMapper.selectExtensionitemIdExtensionitemValue(platformId, idPetitionUserId.getId(), deleteFlag0, s09ScreenIntelligence.getExtensionItem().get(i).getExtensionitemId());
+        ExtensionItem extensionItem = insPetitionsDataMapper.selectExtensionitemIdExtensionitemValue(platformId, idPetitionUserId.getId(), deleteFlag0, s09ScreenIntelligence.getExtensionItem().get(i).getExtensionitemId());
         // 全部数据
         extensionItemList.add(extensionItem);
       }
@@ -197,18 +171,18 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     // TODO(システム日付 + master_platforms.ReplyLimitDays 加到时分秒哪一个上面？)
     insertCases.setReplyEndDate(new Date());
     // TBL「案件（cases）」の新規登録
-    returnFlag = casesMapper.insertCases(insertCases);
+    returnFlag = insPetitionsDataMapper.insertCases(insertCases);
     return returnFlag;
   }
 
   // TBL「案件別個人情報リレーション（case_relations）」の更新
-  private int updateCaseRelations(int returnFlag, String id, String maxCid, UserLanguageIdPlatformId userLanguageIdPlatformId, S09ScreenIntelligence s09ScreenIntelligence, IdPetitionUserId idPetitionUserId) {
+  private int updateCaseRelations(int returnFlag, String id, String cid, UserLanguageIdPlatformId userLanguageIdPlatformId, S09ScreenIntelligence s09ScreenIntelligence, IdPetitionUserId idPetitionUserId) {
     // 「案件別個人情報リレーション（case_relations）」更新用数据初始化
     UpdateCaseRelations updateCaseRelations = new UpdateCaseRelations();
     // ID
     updateCaseRelations.setId(id);
     // 案件ID
-    updateCaseRelations.setCaseId(maxCid);
+    updateCaseRelations.setCaseId(cid);
     // プラットフォームID
     if (userLanguageIdPlatformId != null) {
       updateCaseRelations.setPlatformId(userLanguageIdPlatformId.getPlatformId());
@@ -228,7 +202,7 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     // 相手方メール
     updateCaseRelations.setTraderUserEmail(s09ScreenIntelligence.getTraderMail());
     // TBL「案件別個人情報リレーション（case_relations）」の更新
-    returnFlag = caseRelationsMapper.updateCaseRelations(updateCaseRelations, idPetitionUserId.getId(), idPetitionUserId.getPetitionUserId());
+    returnFlag = insPetitionsDataMapper.updateCaseRelations(updateCaseRelations, idPetitionUserId.getId(), idPetitionUserId.getPetitionUserId());
     return returnFlag;
   }
 
@@ -268,7 +242,7 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     updateCasePetitions.setLanguageId(userLanguageIdPlatformId.getLanguageId());
 
     // TBL「申立（case_petitions）」の更新
-    returnFlag = casePetitionsMapper.updateCasePetitions(updateCasePetitions, idPetitionUserId.getId());
+    returnFlag = insPetitionsDataMapper.updateCasePetitions(updateCasePetitions, idPetitionUserId.getId());
     return returnFlag;
   }
 
@@ -302,7 +276,7 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     // 上次修改者
     insertFiles.setLastModifiedBy(uid);
     // TBL「添付ファイル（files）」を新規登録する
-    returnFlag = filesMapper.insertFiles(insertFiles);
+    returnFlag = insPetitionsDataMapper.insertFiles(insertFiles);
     return returnFlag;
   }
 
@@ -310,12 +284,12 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
   private int insertCaseFileRelations(int returnFlag, UserLanguageIdPlatformId userLanguageIdPlatformId, int relationType, String cid, IdPetitionUserId idPetitionUserId, String fileMaxId2, S09ScreenIntelligence s09ScreenIntelligence, String uid, short deleteFlag0) {
 
     // 自動採番のid（Id）
-    String maxId = caseFileRelationsMapper.selectMaxId();
+    String maxId = utilService.GetGuid();
 
     // TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録用数据初始化
     InsertCaseFileRelations insertCaseFileRelations = new InsertCaseFileRelations();
     // ID
-    insertCaseFileRelations.setId(maxId + 1);
+    insertCaseFileRelations.setId(maxId);
     // プラットフォームID
     insertCaseFileRelations.setPlatformId(userLanguageIdPlatformId.getPlatformId());
     // 案件ID
@@ -333,7 +307,7 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     // 上次修改者
     insertCaseFileRelations.setLastModifiedBy(uid);
     // TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する
-    returnFlag = caseFileRelationsMapper.insertCaseFileRelations(insertCaseFileRelations);
+    returnFlag = insPetitionsDataMapper.insertCaseFileRelations(insertCaseFileRelations);
     return returnFlag;
   }
 
@@ -353,7 +327,7 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     // 案件ID
     updateOrInsertCaseExtensionitemValues.setCaseId(cid);
     // case_extensionitem_valuesの更新
-    caseExtensionitemValuesMapper.updateCaseExtensionitemValues(updateOrInsertCaseExtensionitemValues, platformId, id, deleteFlag0, extensionItem.getExtensionitemId());
+    insPetitionsDataMapper.updateCaseExtensionitemValues(updateOrInsertCaseExtensionitemValues, platformId, id, deleteFlag0, extensionItem.getExtensionitemId());
   }
 
   // case_extensionitem_valuesの登録
@@ -362,10 +336,9 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     // case_extensionitem_values更新用数据初始化
     UpdateOrInsertCaseExtensionitemValues updateOrInsertCaseExtensionitemValues = new UpdateOrInsertCaseExtensionitemValues();
     // 自動採番のID
-    // TODO(自动采番的最大ID)
-    String maxId = caseExtensionitemValuesMapper.selectMaxId();
+    String maxId = utilService.GetGuid();
     // ID
-    updateOrInsertCaseExtensionitemValues.setId(maxId + 1);
+    updateOrInsertCaseExtensionitemValues.setId(maxId);
     // プラットフォームID
     updateOrInsertCaseExtensionitemValues.setPlatformId(platformId);
     // 案件ID
@@ -383,6 +356,6 @@ public class RegistrationInformationRegistrationServiceImpl implements Registrat
     // LastModifiedBy
     updateOrInsertCaseExtensionitemValues.setLastModifiedBy(uid);
     // case_extensionitem_valuesの更新
-    caseExtensionitemValuesMapper.insertCaseExtensionitemValues(updateOrInsertCaseExtensionitemValues);
+    insPetitionsDataMapper.insertCaseExtensionitemValues(updateOrInsertCaseExtensionitemValues);
   }
 }

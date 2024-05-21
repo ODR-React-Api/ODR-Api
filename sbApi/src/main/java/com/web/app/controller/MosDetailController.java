@@ -1,5 +1,5 @@
 package com.web.app.controller;
-import com.web.app.domain.Entity.ReturnResult;
+import com.web.app.domain.MosDetail.ReturnResult;
 import com.web.app.service.GetListInfoService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 // 接受请求URL
 @RequestMapping("/user")
-public class GetListInfoController {
+public class MosDetailController {
 
   // Service接口引入
   @Autowired

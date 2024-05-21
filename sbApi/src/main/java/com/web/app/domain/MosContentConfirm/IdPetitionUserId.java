@@ -1,15 +1,15 @@
-package com.web.app.domain.Entity;
+package com.web.app.domain.MosContentConfirm;
 
 import java.io.Serializable;
 
 import lombok.Data;
 
 @Data
-public class UserCase implements Serializable {
+public class IdPetitionUserId implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    // ケースId
-    private String caseId;
+    // Id
+    private String id;
 
     // ユーザーId
     private String petitionUserId;
