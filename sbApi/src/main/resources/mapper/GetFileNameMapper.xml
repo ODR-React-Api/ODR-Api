@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.">
-    <select id="" resultType="com.web.app.domain.Entity.">
+<mapper namespace="com.web.app.mapper.GetFileNameMapper">
+    <select id="SelFile" resultType="String">
         SELECT
             FileName
         FROM
             files
         WHERE
-            id = #{id}
+            id = #{FileId}
     </select>
 </mapper>

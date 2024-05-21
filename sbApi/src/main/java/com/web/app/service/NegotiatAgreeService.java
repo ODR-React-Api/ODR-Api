@@ -12,5 +12,5 @@ import com.web.app.domain.NegotiatAgree.NegotiatAgree;
  */
 public interface NegotiatAgreeService {
     //和解案確認データ取得
-    CaseNegotiations selCaseNegotiations(NegotiatAgree negotiatAgree);
+    CaseNegotiations SelCaseNegotiations(NegotiatAgree negotiatAgree);
 }

@@ -12,5 +12,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface GetFileNameMapper {
     //添付ファイルテーブルからファイル名を取得
-    String SelFile(String id);
+    String SelFile(String fileId);
 }

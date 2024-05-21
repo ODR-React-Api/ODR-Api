@@ -32,17 +32,17 @@ public class NegotiatAgreeController {
     private NegotiatAgreeService negotiatAgreeService;
 
     /**
-     * 和解案合意画面
+     * 和解案確認データ取得
      *
      * @param NegotiatAgree セッション値
      * @return Response
      * @throws Exception 和解案提出失敗
      */
-    @ApiOperation("和解案合意画面")
-    @PostMapping("NegotiatAgree")
-    public Response NegotiatAgree(@RequestBody NegotiatAgree negotiatAgree) {
+    @ApiOperation("和解案確認データ取得")
+    @PostMapping("GetNegotiatConInfo")
+    public Response GetNegotiatConInfo(@RequestBody NegotiatAgree negotiatAgree) {
         try {
-            CaseNegotiations caseNegotiations = negotiatAgreeService.selCaseNegotiations(negotiatAgree);
+            CaseNegotiations caseNegotiations = negotiatAgreeService.SelCaseNegotiations(negotiatAgree);
             return AjaxResult.success("和解案内容取得成功!", caseNegotiations);
         } catch (Exception e) {
             return AjaxResult.fatal("和解案内容取得失敗!", e);
