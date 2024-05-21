@@ -63,6 +63,4 @@ public class AnswerLoginServiceImpl implements AnswerLoginService{
         return petitionDataUser;
     }
 
-    
-    
 }
