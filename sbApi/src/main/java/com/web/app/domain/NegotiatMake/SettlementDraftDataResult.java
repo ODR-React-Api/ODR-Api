@@ -18,22 +18,31 @@ public class SettlementDraftDataResult implements Serializable {
 
     // 対応方法
     private String correspondence;
+
     // その他 内容
     private String otherContext;
+
     // 申立て支払金額
     private double payAmount;
+
     // 反訴の支払金額
     private double counterClaimPayment;
+
     // 支払期日
     private Date paymentEndDate;
+
     // 返送時送料
     private int shipmentPayType;
+
     // 特記事項
     private String specialItem;
+
     // ステータス
     private int status;
+
     // ファイル名
     private String fileName;
+
     // 異常終了利用してのメッセージ
     private String message;
 

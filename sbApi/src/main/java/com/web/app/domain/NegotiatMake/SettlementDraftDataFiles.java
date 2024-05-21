@@ -18,22 +18,31 @@ public class SettlementDraftDataFiles implements Serializable {
 
     // ID
     private String id;
+
     // プラットフォームID
     private String PlatformId;
+
     // 案件ID
     private String CaseId;
+
     // ファイル名
     private String FileName;
+
     // 拡張子
     private String FileExtension;
+
     // URL
     private String FileUrl;
+
     // ストレージID
     private String FileBlobStorageId;
+
     // ファイルサイズ
     private Integer FileSize;
+
     // ユーザーID
     private String RegisterUserId;
+
     // 登録日
     private Date RegisterDate;
 

@@ -155,4 +155,12 @@ public class Constants {
     public static final int POSITIONFLAG_MEDIATOR = 3;
     public static final String DEFAULT_CORRESPONDDATE = "99999999";
 
+    // S17 その他人と共有する
+    public static final int DELETE_FLAG_0 = 0;
+    public static final int DELETE_FLAG_1 = 1;
+    public static final String SPACE_STRING = "";
+
+    // S17
+    public static final int SESSIONLOGIN_FILES_SIZE_0 = 0;
+
 }

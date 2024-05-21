@@ -16,7 +16,7 @@ import com.web.app.domain.NegotiatMake.SettlementDraftDataFiles;
 @Mapper
 public interface InsNegotiationTempMapper {
     // 下書き保存処理
-    SettlementDraftDataCaseNegotiations settlementDraftNegotiationsInfoSearch(String sessionCaseId, String platformId);
+    SettlementDraftDataCaseNegotiations getNegotiationsStatusInfoSearch(String sessionCaseId, String platformId);
 
     // テーブル「和解案」新規登録
     Integer insertCaseNegotiationsInfo(SettlementDraftDataCaseNegotiations caseNegotiations);

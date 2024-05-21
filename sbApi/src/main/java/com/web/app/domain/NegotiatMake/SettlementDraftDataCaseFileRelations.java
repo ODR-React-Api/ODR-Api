@@ -18,14 +18,19 @@ public class SettlementDraftDataCaseFileRelations implements Serializable {
 
     // ID
     private String id;
+
     // プラットフォームID
     private String PlatformId;
+
     // ケース
     private String CaseId;
+
     // 案件種類
     private Integer RelationType;
+
     // 案件種類ID
     private String RelatedId;
+
     // ファイルID
     private String fileId;
 

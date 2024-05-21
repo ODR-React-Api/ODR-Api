@@ -19,10 +19,13 @@ public class CaseIdListInfo implements Serializable {
 
     // 案件ID
     private String caseId;
+
     // 申立て人
     private String petitionUserId;
+
     // 立場フラグ
     private Integer flag;
+
     // ユーザーID
     private String userId;
 

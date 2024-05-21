@@ -19,7 +19,8 @@ public class ParticipatedStatusChangeResultInfo implements Serializable {
 
     // 参照表明更新済フラグ
     private Integer participatedFlag;
+
     // 関係者メアド取得
-    ElevantPersonnelEmailAddressInfo elevantPersonnelEmailAddressInfo;
+    private ElevantPersonnelEmailAddressInfo elevantPersonnelEmailAddressInfo;
 
 }

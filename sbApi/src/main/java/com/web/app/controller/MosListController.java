@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
 import com.web.app.domain.MosList.CaseIdListInfo;
 import com.web.app.domain.MosList.ReturnResult;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.MosListService;
 import com.web.app.tool.AjaxResult;
 
@@ -44,7 +45,10 @@ public class MosListController {
     public Response getCaseDetailnfo(@RequestBody CaseIdListInfo caseListInfo) {
         try {
             ReturnResult caseDetail = mosListService.caseDetailCasesInfoSearch(caseListInfo);
-            return Response.success(caseDetail);
+            if (caseDetail != null) {
+                return Response.success(caseDetail);
+            }
+            return Response.error(Constants.RETCD_NG);
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
             return null;

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
 import com.web.app.domain.NegotiatMake.FromSessionLogin;
 import com.web.app.domain.NegotiatMake.SettlementDraftDataResult;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.NegotiatMakeService;
 import com.web.app.tool.AjaxResult;
 
@@ -45,7 +46,10 @@ public class NegotiatMakeController {
     public Response getNegotiationsData(@RequestBody FromSessionLogin fromSessionLogin) {
         try {
             SettlementDraftDataResult dataResult = negotiatMakeService.settlementDraftDataInfoSearch(fromSessionLogin);
-            return Response.success(dataResult);
+            if (dataResult != null) {
+                return Response.success(dataResult);
+            }
+            return Response.error(Constants.RETCD_NG);
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
             return null;
@@ -66,7 +70,10 @@ public class NegotiatMakeController {
         try {
             SettlementDraftDataResult participatedResult = negotiatMakeService
                     .settlementDraftInfoSearch(fromSessionLogin);
-            return Response.success(participatedResult);
+            if (participatedResult != null) {
+                return Response.success(participatedResult);
+            }
+            return Response.error(Constants.RETCD_NG);
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
             return null;

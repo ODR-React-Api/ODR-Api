@@ -46,7 +46,7 @@
             AND caseNegotiations.DeleteFlag = 0
         ORDER BY Cases.cid asc                
     </select>
-    <select id="caseDetailCasesMediatorDisclosureFlagInfoSearch" resultType="Integer">
+    <select id="getMediatorDisclosureFlagInfoSearch" resultType="Integer">
         SELECT 
             MediatorDisclosureFlag
         FROM
@@ -54,7 +54,7 @@
         WHERE
             cases.cid = #{CaseId}
     </select>
-    <select id="messagesReadedCntSearch" resultType="Integer">
+    <select id="getMessagesReadCntSearch" resultType="Integer">
         SELECT 
             count(*) as notReadedCnt
         FROM
@@ -66,7 +66,7 @@
             AND DeleteFlag = 0
     </select>
     
-    <select id="caseDetailMessagesUserMessagesReadedCntSearch" resultType="Integer">
+    <select id="getUserMessagesReadCntSearch" resultType="Integer">
         SELECT 
             count(*) as notReadedCnt
         FROM

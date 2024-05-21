@@ -18,34 +18,49 @@ public class SettlementDraftDataCaseNegotiations implements Serializable {
 
     // ID
     private String id;
+
     // プラットフォームID
     private String PlatformId;
+
     // 案件ID
     private String CaseId;
+
     // ステータス
     private Integer Status;
+
     // 希望する解決方法
     private String ExpectResloveTypeValue;
+
     // その他 内容
     private String OtherContext;
+
     // 和解案 内容
     private String HtmlContext;
+
     // 和解案合意書 内容
     private String HtmlContext2;
+
     // 支払金額
     private double PayAmount;
+
     // 反訴の支払金額
     private double CounterClaimPayment;
+
     // 支払期日
     private Date PaymentEndDate;
+
     // 返送時送料負担区分
     private Integer ShipmentPayType;
+
     // 特記事項
     private String SpecialItem;
+
     // 提出ユーザ
     private String UserId;
+
     // 和解案提出日
     private Date SubmitDate;
+
     // 合意日
     private Date AgreementDate;
 

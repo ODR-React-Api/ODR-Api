@@ -36,8 +36,8 @@ public class MosDetailServiceImpl implements MosDetailService {
     public ParticipatedStatusChangeResultInfo participatedStatusSearch(String caseId) {
         // 1.参加表明対象ケースの状態の取得判定
         Cases participationSel = updCasesStatusMapper.participatedStatusSearch(caseId);
-
         ParticipatedStatusChangeResultInfo participatedFlag = new ParticipatedStatusChangeResultInfo();
+
         // 2.ケースの状態の更新
         if (participationSel != null) {
             participatedFlag = participatedCaseStatusChangeUpdate(participationSel, caseId);
@@ -52,7 +52,6 @@ public class MosDetailServiceImpl implements MosDetailService {
     }
 
     /**
-     * 参加済状態変更
      * ケース状態の更新
      * 
      * @param participationSel 参加表明対象ケースの状態に取得された
@@ -61,11 +60,11 @@ public class MosDetailServiceImpl implements MosDetailService {
      */
     private ParticipatedStatusChangeResultInfo participatedCaseStatusChangeUpdate(
             Cases participationSel, String caseId) {
-        // テーブル「cases」から、「ID」を取得
+        // 「ID」を取得
         String cid = participationSel.getCid();
-        // テーブル「cases」から、「案件ステージ」を取得
+        // 「案件ステージ」を取得
         Integer caseStage = participationSel.getCaseStage();
-        // テーブル「cases」から、「案件ステータス」を取得
+        // 「案件ステータス」を取得
         String status = participationSel.getCaseStatus();
 
         ParticipatedStatusChangeResultInfo participatedStatusChangeResultInfo = new ParticipatedStatusChangeResultInfo();
@@ -74,7 +73,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         if (caseStage == Constants.STR_CASES_CASESTAGE_0 && (Constants.CASE_STATUS_0.equals(status))) {
             // ケース状態の更新
             int updateNum = updCasesStatusMapper.caseStatusChangeUpdate(cid);
-            // ケース状態の更新の件数が0じゃない場合
+            // ケース状態の更新の件数が0以外場合
             if (updateNum != Constants.UPDATE_NUMBER_0) {
                 // 正常に更新の場合、参照表明更新済Flgに0（正常更新）を設定して、画面へ返す
                 participatedStatusChangeResultInfo.setParticipatedFlag(Constants.PARTICIPATED_FLAG_0);

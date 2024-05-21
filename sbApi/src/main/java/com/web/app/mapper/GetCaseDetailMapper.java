@@ -19,12 +19,12 @@ public interface GetCaseDetailMapper {
         CaseDetailCasesSelectInfo caseDetailCasesInforSearch(String caseId);
 
         // 「cases」から「MediatorDisclosureFlag」を取得した
-        Integer caseDetailCasesMediatorDisclosureFlagInfoSearch(String caseId);
+        Integer getMediatorDisclosureFlagInfoSearch(String caseId);
 
         // 「user_messages」から「notReadedCnt」を取得した
-        Integer messagesReadedCntSearch(@Param("caseId") String caseId, @Param("userId") String userId);
+        Integer getMessagesReadCntSearch(@Param("caseId") String caseId, @Param("userId") String userId);
 
         // 「user_messages」から、未読メッセージ件数取得
-        Integer caseDetailMessagesUserMessagesReadedCntSearch(String caseId, String userId);
+        Integer getUserMessagesReadCntSearch(String caseId, String userId);
 
 }

@@ -12,10 +12,8 @@ import com.web.app.domain.NegotiatMake.FromSessionLogin;
  */
 public interface NegotiatMakeService {
         // 和解案下書きデータ取得API
-        SettlementDraftDataResult settlementDraftDataInfoSearch(
-                        FromSessionLogin settlementDraftFromSessionLogin);
+        SettlementDraftDataResult settlementDraftDataInfoSearch(FromSessionLogin fromSessionLogin);
 
         // 下書き保存処理
-        SettlementDraftDataResult settlementDraftGetCaseNegotiationsStatusInfoSearch(
-                        FromSessionLogin sessionLogin);
+        SettlementDraftDataResult settlementDraftInfoSearch(FromSessionLogin sessionLogin);
 }

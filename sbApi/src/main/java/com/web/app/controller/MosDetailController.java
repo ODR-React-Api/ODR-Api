@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.MosDetail.ParticipatedStatusChangeResultInfo;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.MosDetailService;
 import com.web.app.tool.AjaxResult;
 
@@ -42,7 +43,10 @@ public class MosDetailController {
     public Response updCasesStatus(String caseId) {
         try {
             ParticipatedStatusChangeResultInfo participatedInfo = mosDetailService.participatedStatusSearch(caseId);
-            return Response.success(participatedInfo);
+            if (participatedInfo != null) {
+                return Response.success(participatedInfo);
+            }
+            return Response.error(Constants.RETCD_NG);
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
             return null;

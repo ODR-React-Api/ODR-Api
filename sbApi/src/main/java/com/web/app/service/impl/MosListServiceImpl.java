@@ -42,6 +42,7 @@ public class MosListServiceImpl implements MosListService {
         // 「case_negotiations」から「ステータス」を取得した
         // 「case_mediations」から「ステータス」を取得した
         CaseDetailCasesSelectInfo caseDetailCasesInfo = getCaseDetailMapper.caseDetailCasesInforSearch(caseId);
+
         if (caseDetailCasesInfo != null) {
             // ケース詳細調停案で「case_mediations」を取得
             ReturnResult caseInfo = caseDetailMediationsInfoSearch(caseDetailCasesInfo, caseId, idFlag, userId);
@@ -119,7 +120,8 @@ public class MosListServiceImpl implements MosListService {
                     if (caseDetailCasesSelInfo
                             .getNegotiationEndDateChangeStatus() == Constants.STR_CASES_NEGOTIATIONENDDATECHANGESTATUS_1
                             ||
-                            (caseDetailCasesSelInfo.getCaseNegotiationsStatus() == null ||
+                            (caseDetailCasesSelInfo.getCaseNegotiationsStatus() == null
+                                    ||
                                     caseDetailCasesSelInfo
                                             .getCaseNegotiationsStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_1
                                     ||
@@ -268,12 +270,12 @@ public class MosListServiceImpl implements MosListService {
                 // 1）未読メッセージ件数取得
                 Integer messagesReadedCnt = Constants.NOREADCNT_0;
                 // 「cases」から「調停人情報開示フラグ」を取得
-                Integer mediatorDisclosureFlagItem = getCaseDetailMapper
-                        .caseDetailCasesMediatorDisclosureFlagInfoSearch(caseId);
+                Integer mediatorDisclosureFlagItem = getCaseDetailMapper.getMediatorDisclosureFlagInfoSearch(caseId);
+
                 // 未読メッセージ取得（申立人・相手方・調停人受理開示後）
                 if (mediatorDisclosureFlagItem == Constants.STR_CASES_MEDIATORDISCLOSUREFLAG_1) {
                     // b ;未読メッセージ取得（申立人・相手方・調停人受理開示後）
-                    messagesReadedCnt = getCaseDetailMapper.messagesReadedCntSearch(caseId, userId);
+                    messagesReadedCnt = getCaseDetailMapper.getMessagesReadCntSearch(caseId, userId);
 
                     // 2）未読メッセージ有無の設定
                     if (messagesReadedCnt > Constants.NOREADCNT_0) {
@@ -289,13 +291,12 @@ public class MosListServiceImpl implements MosListService {
                 } else {
                     // 未読メッセージ件数取得 （調停人＋受理後＋未開示）
                     // A.3.
-                    Integer messagesUserMessagesReadedCnt = getCaseDetailMapper
-                            .caseDetailMessagesUserMessagesReadedCntSearch(caseId, userId);
+                    Integer userMessagesReadCnt = getCaseDetailMapper.getUserMessagesReadCntSearch(caseId, userId);
 
                     // 2）未読メッセージ有無の設定
-                    if (messagesUserMessagesReadedCnt > Constants.NOREADCNT_0) {
+                    if (userMessagesReadCnt > Constants.NOREADCNT_0) {
                         // 未読メッセージ件数の設定
-                        caseDetailCasesInfoItem.setMsgCount(messagesUserMessagesReadedCnt);
+                        caseDetailCasesInfoItem.setMsgCount(userMessagesReadCnt);
                         // 3）要対応有無の設定（メッセージ向け）
                         // 要対応有無に1（要対応）を設定する
                         caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
@@ -308,7 +309,7 @@ public class MosListServiceImpl implements MosListService {
         }
         // 未読メッセージ件数の取得
         // b ;未読メッセージ取得（申立人・相手方・調停人受理開示後）
-        Integer messagesReadedCnt = getCaseDetailMapper.messagesReadedCntSearch(caseId, userId);
+        Integer messagesReadedCnt = getCaseDetailMapper.getMessagesReadCntSearch(caseId, userId);
 
         // 2）未読メッセージ有無の設定
         if (messagesReadedCnt > Constants.NOREADCNT_0) {

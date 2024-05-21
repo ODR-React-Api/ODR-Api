@@ -19,7 +19,7 @@ import com.web.app.domain.NegotiatMake.SettlementDraftDataFiles;
 @Mapper
 public interface UpdNegotiationsTempMapper {
         // 下書き保存処理
-        SettlementDraftDataCaseNegotiations settlementDraftNegotiationsInfoSearch(String sessionCaseId,
+        SettlementDraftDataCaseNegotiations getNegotiationsStatusInfoSearch(String sessionCaseId,
                         String platformId);
 
         // テーブル「和解案」更新

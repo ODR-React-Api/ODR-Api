@@ -14,5 +14,5 @@ import com.web.app.domain.NegotiatMake.SettlementDraftDataCaseNegotiations;
 @Mapper
 public interface GetNegotiationsStatusMapper {
     // 下書き保存処理
-    SettlementDraftDataCaseNegotiations settlementDraftNegotiationsInfoSearch(String sessionCaseId, String platformId);
+    SettlementDraftDataCaseNegotiations getNegotiationsStatusInfoSearch(String sessionCaseId, String platformId);
 }

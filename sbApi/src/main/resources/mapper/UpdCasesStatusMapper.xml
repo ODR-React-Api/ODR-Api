@@ -3,27 +3,22 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.UpdCasesStatusMapper">
-    <resultMap id="caseDetailCasesInfoResultMap" type="com.web.app.domain.Entity.Cases">
-        <id property="caseId" column="caseId" jdbcType="VARCHAR" />
-        <result property="cid" column="cid" jdbcType="VARCHAR" />
-        <result property="CaseStage" column="CaseStage" jdbcType="INTEGER" />
-        <result property="CaseStatus" column="CaseStatus" jdbcType="VARCHAR" />
-    </resultMap>
-    <select id="participatedStatusSearch" resultMap="caseDetailCasesInfoResultMap"> 
+    <select id="participatedStatusSearch" resultType="com.web.app.domain.Entity.Cases"> 
         SELECT
-            Cases.cid AS cid,
-            Cases.CaseStage AS CaseStage,
-            Cases.CaseStatus AS CaseStatus
-        FROM cases Cases
+            cid,
+            CaseStage,
+            CaseStatus
+        FROM cases
         WHERE
-            Cases.cid = #{caseId}
-            AND Cases.DeleteFlag = 0
+            cid = #{caseId}
+            AND DeleteFlag = 0
     </select>
+
     <update id="caseStatusChangeUpdate"> 
         UPDATE cases
         SET CaseStatus = "0001"
         WHERE 
-            Cases.cid = #{caseId} 
-            AND Cases.DeleteFlag = 0
+            cid = #{caseId} 
+            AND DeleteFlag = 0
     </update>
 </mapper> 

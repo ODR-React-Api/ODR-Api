@@ -20,18 +20,25 @@ public class SettlementDraftFromWeb implements Serializable {
 
     // 希望する解決方法
     private String ExpectResloveTypeValue;
+
     // その他 内容
     private String OtherContext;
+
     // 支払金額
     private double PayAmount;
+
     // 反訴の支払金額
     private double CounterClaimPayment;
+
     // 支払期日
     private Date PaymentEndDate;
+
     // 返送時送料負担区分
     private Integer ShipmentPayType;
+
     // 特記事項
     private String SpecialItem;
+
     // 添付ファイル
     private List<AddFile> files;
 

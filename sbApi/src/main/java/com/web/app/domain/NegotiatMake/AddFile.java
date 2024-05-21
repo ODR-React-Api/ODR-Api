@@ -14,18 +14,25 @@ import lombok.Data;
 public class AddFile implements Serializable {
     // バッファリング
     private static final long serialVersionUID = 1L;
+
     // ファイルid
     private String fileId;
+
     // ファイル名
     private String fileName;
+
     // ファイル拡張子
     private String fileExtension;
+
     // ファイルURL
     private String fileUrl;
+
     // ファイルサイズ
     private Integer fileSize;
+
     // ストレージID
     private String fileBlobStorageId;
+
     // 削除フラグ
     private int deleteFlag;
 
