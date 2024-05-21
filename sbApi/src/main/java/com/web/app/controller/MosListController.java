@@ -51,7 +51,8 @@ public class MosListController {
             ReturnResult result = mosListService.searchDetailCase(searchCase);
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,result);
         } catch (Exception e) {
-            return AjaxResult.error("error" + e);
+            AjaxResult.fatal("error",e);
+            return null;
         }
     }
 
@@ -74,7 +75,8 @@ public class MosListController {
             // ページへのデータの戻り
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,returnResults);
         } catch (Exception e) {
-            return AjaxResult.error("error" + e);
+            AjaxResult.fatal("error",e);
+            return null;
         }
 
     }
@@ -98,7 +100,8 @@ public class MosListController {
                     queryString);
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,returnResult);
         } catch (Exception e) {
-            return AjaxResult.error("error:" + e);
+            AjaxResult.fatal("error",e);
+            return null;
         }
     }
 
@@ -116,11 +119,13 @@ public class MosListController {
             // サービスの呼び出し
             Integer res = mosListService.getSaveDataInfo(uid);
             if (res != null) {
-                return Response.success(res);
+                return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,res);
             }
-            return Response.error("失敗");
+            AjaxResult.error("res is null");
+            return null;
         } catch (Exception e) {
-            return Response.error("失敗");
+            AjaxResult.fatal("error",e);
+            return null;
         }
     }
 

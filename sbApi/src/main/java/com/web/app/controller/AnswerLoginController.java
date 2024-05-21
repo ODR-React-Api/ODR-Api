@@ -50,7 +50,8 @@ public class AnswerLoginController {
             list = getPetitionsDataService.getPetitionData(caseId, plateFormId);
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,list);
         } catch (Exception e) {
-            return AjaxResult.error("error:" + e);
+            AjaxResult.fatal("error",e);
+            return null;
         }
     }
 
@@ -67,7 +68,8 @@ public class AnswerLoginController {
         try {
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,getPetitionsDataService.getPetitionDataUser(plateFormId));
         } catch (Exception e) {
-            return AjaxResult.error("error:" + e);
+            AjaxResult.fatal("error",e);
+            return null;
         }
     }
 }

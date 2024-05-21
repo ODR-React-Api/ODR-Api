@@ -46,7 +46,8 @@ public class MosDetailController {
             WithdrawalReturn res = mosDetailService.applyWithdraw(caseId);
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,res);
         } catch (Exception e) {
-            return AjaxResult.error("error:" + e);
+            AjaxResult.fatal("error",e);
+            return null;
         }
     }
 
