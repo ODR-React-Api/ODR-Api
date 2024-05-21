@@ -29,10 +29,10 @@ public class CommonServiceImpl implements CommonService {
     /**
      * 案件別個人情報リレーションデータ取得(申立人/相手方)
      * 
-     * @param identity   = true 申立人;identity = false 相手方
+     * @param identity   true 申立人 false 相手方
      * @param languageId
      * @param platformId プラットフォームID
-     * @param caseId 案件ID
+     * @param caseId     案件ID
      * @return user
      * @throws Exception
      */
@@ -47,16 +47,28 @@ public class CommonServiceImpl implements CommonService {
         }
     }
 
+    /**
+     * アクション履歴新規登録
+     * 
+     * @param actionHistories アクション履歴
+     * @param fileId          ファイルId
+     * @param parametersFlag  Parametersのログインユーザ名があるフラグ 
+     * @param displayNameFlag 関係者内容取得するフラグ
+     * @return true false
+     */
     @Transactional(noRollbackFor = { ArithmeticException.class })
     @Override
-    public Boolean InsHistories(ActionHistories actionHistories, List<String> fileId, Boolean parametersFlag,
+    public Boolean InsertActionHistories(ActionHistories actionHistories, List<String> fileId, Boolean parametersFlag,
             Boolean displayNameFlag) {
+        // ファイルをアップロードしましたか
         if (fileId == null || fileId.size() == 0) {
             actionHistories.setHaveFile(false);
         } else {
             actionHistories.setHaveFile(true);
         }
+
         OdrUsers odrUser = new OdrUsers();
+        // get userInfo
         odrUser = this.commonMapper.FindUserByUidOrEmail(actionHistories.getUserId(),
                 null,
                 actionHistories.getPlatformId());
@@ -65,6 +77,7 @@ public class CommonServiceImpl implements CommonService {
             DisplayNameAddResult displayNameAddResult = GetDisplayName(odrUser.LanguageId, actionHistories.PlatformId,
                     odrUser.Email, odrUser.Uid);
 
+            // 関係者内容取得 displayName
             if (!displayNameFlag) {
                 displayNameAddResult = GetDisplayFullName(odrUser.LanguageId,
                         actionHistories.PlatformId, odrUser.Email,
@@ -75,16 +88,19 @@ public class CommonServiceImpl implements CommonService {
                 actionHistories.Parameters = displayNameAddResult.UserName;
             }
         }
+
         actionHistories.id = utilService.GetGuid();
         actionHistories.ActionDateTime = new Date();
         actionHistories.DeleteFlag = false;
         actionHistories.LastModifiedDate = new Date();
 
+        // アクション履歴新規登録
         int result = commonMapper.InsHistories(actionHistories);
         if (result == 0) {
             return false;
         }
 
+        // 「アクション履歴-添付ファイルリレーション」新規登録
         if (actionHistories.HaveFile == true) {
             for (String stringFileId : fileId) {
                 ActionFileRelations actionFileRelations = new ActionFileRelations();
@@ -98,17 +114,16 @@ public class CommonServiceImpl implements CommonService {
                 actionFileRelations.LastModifiedDate = new Date();
                 actionFileRelations.LastModifiedBy = actionHistories.LastModifiedBy;
 
-                ActionFileRelations actionFileRelationsCheckNull = commonMapper.FindFileRelations(actionFileRelations.Id);
+                ActionFileRelations actionFileRelationsCheckNull = commonMapper
+                        .FindFileRelations(actionFileRelations.Id);
 
-                if (actionFileRelationsCheckNull != null)
-                {
+                if (actionFileRelationsCheckNull != null) {
                     return false;
                 }
 
                 int actionFileCountRelations = commonMapper.InsertActionFileRelations(actionFileRelations);
 
-                if (actionFileCountRelations != 1)
-                {
+                if (actionFileCountRelations != 1) {
                     return false;
                 }
             }

@@ -158,6 +158,7 @@
             )
     </insert>
 
+    <!-- アクション履歴-添付ファイルリレーション -->
     <select id="FindFileRelations" resultType="com.web.app.domain.Entity.ActionFileRelations">
         select * from 
             Action_File_Relations
@@ -165,6 +166,8 @@
             id = #{id}
             And DeleteFlag = '0'
     </select>
+
+    <!-- 「アクション履歴-添付ファイルリレーション」新規登録 -->
     <insert id="InsertActionFileRelations">
         insert into Action_File_Relations(
             id,

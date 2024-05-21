@@ -61,17 +61,25 @@ public class CommonController {
         }
     }
 
+    /**
+     * アクション履歴新規登録
+     * 
+     * @param actionHistories アクション履歴
+     * @param fileId          ファイルId
+     * @param parametersFlag  Parametersのログインユーザ名があるフラグ
+     * @param displayNameFlag 関係者内容取得するフラグ
+     * @return true false
+     * @throws Exception
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @ApiOperation("アクション履歴新規登録")
     @PostMapping("/InsHistories")
-    public Response InsHistories(ActionHistories actionHistories, @RequestBody List<String> fileId,
+    public Response InsertActionHistories(ActionHistories actionHistories, @RequestBody List<String> fileId,
             Boolean parametersFlag,
             Boolean displayNameFlag) throws Exception {
         Response dataResponse = new Response<>();
         try {
-            actionHistories.setId(UUID.randomUUID().toString());
-            actionHistories.setActionDateTime(new Date());
-            Boolean res = commonService.InsHistories(actionHistories, fileId, parametersFlag, displayNameFlag);
+            Boolean res = commonService.InsertActionHistories(actionHistories, fileId, parametersFlag, displayNameFlag);
             dataResponse.setData(res);
             dataResponse.setCode(Constants.RETCD_SUCCESS);
             dataResponse.setMsg(Constants.RETCD_OK);
