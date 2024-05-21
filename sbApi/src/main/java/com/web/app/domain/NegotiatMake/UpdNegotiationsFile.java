@@ -14,6 +14,7 @@ import lombok.Data;
 public class UpdNegotiationsFile implements Serializable {
     private static final long serialVersionUID = 1L;
     //追加の場合は空白
+    //削除の場合は値を設定
     private String id;
     //ファイル名
     private String fileName;

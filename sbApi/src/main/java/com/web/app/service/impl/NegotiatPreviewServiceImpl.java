@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 和解案テンプレート取得サビース
+ * 和解案プレビュー画面
  * 
  * @author DUC 馬芹
  * @since 2024/05/14

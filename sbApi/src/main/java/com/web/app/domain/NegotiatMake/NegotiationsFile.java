@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 /**
- * 画面項目用
+ * フロントからの画面項目
  * 
  * @author DUC 馬芹
  * @since 2024/05/06

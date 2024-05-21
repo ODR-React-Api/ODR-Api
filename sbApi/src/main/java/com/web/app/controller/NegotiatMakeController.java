@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 和解案編集依頼コントローラ
+ * 和解案作成画面
  * 
  * @author DUC 馬芹
  * @since 2024/05/06
@@ -31,13 +31,13 @@ public class NegotiatMakeController {
     private NegotiatMakeService negotiationsMakeService;
 
     /**
-     * 新規登録
+     * 和解案編集依頼データ新規登録
      *
-     * @param param1 なし
+     * @param param1 フロントからの画面項目
      * @return Response
      * @throws Exception 異常終了
      */
-    @ApiOperation("新規登録")
+    @ApiOperation("和解案編集依頼データ新規登録")
     @PostMapping("/insNegotiationsEdit")
     @SuppressWarnings("rawtypes")
     public Response insNegotiationsEdit(@RequestBody NegotiationsFile negotiationsFile) {
@@ -47,7 +47,7 @@ public class NegotiatMakeController {
             if (num == Constants.RESULT_STATE_ERROR) {
                 return AjaxResult.success(Constants.MSG_ERROR);
             }
-            return AjaxResult.success(Constants.MSG_ERROR);
+            return AjaxResult.success(Constants.MSG_SUCCESS);
 
         } catch (Exception e) {
             AjaxResult.fatal(Constants.MSG_ERROR, e);
@@ -57,13 +57,13 @@ public class NegotiatMakeController {
     }
 
     /**
-     * 更新登録
+     * 和解案編集依頼データ更新
      *
-     * @param param1 なし
+     * @param param1 フロントからの画面項目
      * @return Response
      * @throws Exception 異常終了
      */
-    @ApiOperation("更新登録")
+    @ApiOperation("和解案編集依頼データ更新")
     @PostMapping("/updNegotiationsEdit")
     @SuppressWarnings("rawtypes")
     public Response updNegotiationsEdit(@RequestBody NegotiationsFile negotiationsFile) {
@@ -73,7 +73,7 @@ public class NegotiatMakeController {
             if (num == Constants.RESULT_STATE_ERROR) {
                 return AjaxResult.success(Constants.MSG_ERROR);
             }
-            return AjaxResult.success(Constants.MSG_ERROR);
+            return AjaxResult.success(Constants.MSG_SUCCESS);
 
         } catch (Exception e) {
             AjaxResult.fatal(Constants.MSG_ERROR, e);

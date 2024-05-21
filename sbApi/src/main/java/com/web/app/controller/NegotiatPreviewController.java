@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 和解案テンプレート取得コントローラ
+ * 和解案プレビュー画面
  * 
  * @author DUC 馬芹
  * @since 2024/05/14
  * @version 1.0
  */
 @CrossOrigin(origins = "*")
-@Api(tags = "和解案テンプレート取得")
+@Api(tags = "和解案プレビュー画面")
 @RestController
 @RequestMapping("/NegotiatPreviewController")
 public class NegotiatPreviewController {

@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.InsNegotiationsEditMapper">
-    <resultMap id="InsNegotiationsEditResultMap" type="com.web.app.domain.NegotiatMake.Negotiations">
+    <resultMap id="InsNegotiationsEditResultMap" type="com.web.app.domain.Entity.CaseNegotiations">
         <id property="id" column="ID" jdbcType="VARCHAR"/>
         <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
         <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
@@ -40,7 +40,7 @@
         <result property="relatedId" column="RelatedId" jdbcType="VARCHAR"/>
         <result property="fileId" column="FileId" jdbcType="VARCHAR"/>
     </resultMap>
-<insert id="insertNegotiations" parameterType="com.web.app.domain.NegotiatMake.Negotiations">
+<insert id="insertCaseNegotiations" parameterType="com.web.app.domain.Entity.CaseNegotiations">
     INSERT INTO case_negotiations (
         ID	
         ,PlatformId	
@@ -86,7 +86,7 @@
 
     )
 </insert>
-<insert id="insertFiles" parameterType="com.web.app.domain.NegotiatMake.Files">
+<insert id="insertFiles" parameterType="com.web.app.domain.Entity.Files">
     INSERT INTO files (
         id	
         ,PlatformId
@@ -128,7 +128,7 @@
         #{lastModifiedBy}
     )
 </insert>
-<insert id="insertCaseFileRelations" parameterType="com.web.app.domain.NegotiatMake.CaseFileRelations">
+<insert id="insertCaseFileRelations" parameterType="com.web.app.domain.Entity.CaseFileRelations">
     INSERT INTO case_file_relations (
         id
         ,PlatformId

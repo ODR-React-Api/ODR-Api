@@ -1,8 +1,8 @@
 package com.web.app.service.impl;
 
-import com.web.app.domain.NegotiatMake.CaseFileRelations;
-import com.web.app.domain.NegotiatMake.Files;
-import com.web.app.domain.NegotiatMake.Negotiations;
+import com.web.app.domain.Entity.CaseFileRelations;
+import com.web.app.domain.Entity.CaseNegotiations;
+import com.web.app.domain.Entity.Files;
 import com.web.app.domain.NegotiatMake.NegotiationsFile;
 import com.web.app.domain.NegotiatMake.SessionItems;
 import com.web.app.domain.NegotiatMake.UpdNegotiationsFile;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 和解案編集依頼サビース
+ * 和解案作成画面
  * 
  * @author DUC 馬芹
  * @since 2024/05/06
@@ -42,11 +42,11 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     private UtilService utilService;
 
     /**
-     * 新規登録
+     * 和解案編集依頼データ新規登録
      *
      * @param param1 フロントからの画面項目
      * @return int
-     * @throws
+     * @throws Exception
      */
     @Transactional
     @Override
@@ -56,54 +56,54 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         System.out.println("データアクセス：" + dataSource.getConnection());
 
         // 「和解案」新規登録の値設定
-        Negotiations negotiations = new Negotiations();
-        negotiations.setId(utilService.GetGuid());
-        negotiations.setPlatformId(sessionItem.getPlatformId());
-        negotiations.setCaseId(sessionItem.getCaseId());
+        CaseNegotiations caseNegotiations = new CaseNegotiations();
+        caseNegotiations.setId(utilService.GetGuid());
+        caseNegotiations.setPlatformId(sessionItem.getPlatformId());
+        caseNegotiations.setCaseId(sessionItem.getCaseId());
         // ログインユーザが申立人場合、ステータス更新値：14
         if (sessionItem.getFlag() == Constants.POSITIONFLAG_PETITION) {
-            negotiations.setStatus(Constants.S3B14);
+            caseNegotiations.setStatus(Constants.S3B14);
             // ログインユーザが相手方場合、ステータス更新値：1
         } else if (sessionItem.getFlag() == Constants.POSITIONFLAG_TRADER) {
-            negotiations.setStatus(Constants.S3B1);
+            caseNegotiations.setStatus(Constants.S3B1);
         }
-        negotiations.setExpectResloveTypeValue(negotiationsFile.getExpectResloveTypeValue());
-        negotiations.setOtherContext(negotiationsFile.getOtherContext());
-        negotiations.setHtmlContext(null);
-        negotiations.setHtmlContext2(null);
-        negotiations.setPayAmount(negotiationsFile.getPayAmount());
-        negotiations.setCounterClaimPayment(negotiationsFile.getCounterClaimPayment());
-        negotiations.setPaymentEndDate(negotiationsFile.getPaymentEndDate());
-        negotiations.setShipmentPayType(negotiationsFile.getShipmentPayType());
-        negotiations.setSpecialItem(negotiationsFile.getSpecialItem());
-        negotiations.setUserId(sessionItem.getUserId());
-        negotiations.setSubmitDate(null);
-        negotiations.setAgreementDate(null);
-        negotiations.setDeleteFlag(Constants.DELETE_FLAG_0);
-        negotiations.setLastModifiedDate(getSystemtime());
-        negotiations.setLastModifiedBy(sessionItem.getUserId());
+        caseNegotiations.setExpectResloveTypeValue(negotiationsFile.getExpectResloveTypeValue());
+        caseNegotiations.setOtherContext(negotiationsFile.getOtherContext());
+        caseNegotiations.setHtmlContext(null);
+        caseNegotiations.setHtmlContext2(null);
+        caseNegotiations.setPayAmount(negotiationsFile.getPayAmount());
+        caseNegotiations.setCounterClaimPayment(negotiationsFile.getCounterClaimPayment());
+        caseNegotiations.setPaymentEndDate(negotiationsFile.getPaymentEndDate());
+        caseNegotiations.setShipmentPayType(negotiationsFile.getShipmentPayType());
+        caseNegotiations.setSpecialItem(negotiationsFile.getSpecialItem());
+        caseNegotiations.setUserId(sessionItem.getUserId());
+        caseNegotiations.setSubmitDate(null);
+        caseNegotiations.setAgreementDate(null);
+        caseNegotiations.setDeleteFlag(Constants.DELETE_FLAG_0);
+        caseNegotiations.setLastModifiedDate(getSystemtime());
+        caseNegotiations.setLastModifiedBy(sessionItem.getUserId());
         // 「和解案」新規登録
-        int result = insNegotiationsEditMapper.insertNegotiations(negotiations);
+        int result = insNegotiationsEditMapper.insertCaseNegotiations(caseNegotiations);
         if (result == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
         }
-        // ファイルはnullではない場合、「添付ファイル」と「案件-添付ファイルリレーション」新規登録
+        // 画面からのファイルはnullではない場合、「添付ファイル」と「案件-添付ファイルリレーション」新規登録
         List<UpdNegotiationsFile> updNegotiationsFiles = negotiationsFile.getUpdNegotiationsFile();
         // // 添付ファイルがあるか判定
         if (!(updNegotiationsFiles == null || updNegotiationsFiles.isEmpty())) {
             for (UpdNegotiationsFile updNegotiationsFile : updNegotiationsFiles) {
-                addFiles(updNegotiationsFile, negotiations.getId());
+                addFiles(updNegotiationsFile, caseNegotiations.getId());
             }
         }
         return Constants.RESULT_STATE_SUCCESS;
     }
 
     /**
-     * 更新登録
+     * 和解案編集依頼データ更新
      *
      * @param param1 フロントからの画面項目
      * @return int
-     * @throws
+     * @throws Exception
      */
     @Transactional
     @Override
@@ -113,28 +113,28 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         System.out.println("データアクセス" + dataSource.getConnection());
 
         // 「和解案」
-        Negotiations negotiations = new Negotiations();
+        CaseNegotiations caseNegotiations = new CaseNegotiations();
         // ログインユーザが申立人場合、ステータス更新値：14
         if (sessionItem.getFlag() == Constants.POSITIONFLAG_PETITION) {
-            negotiations.setStatus(Constants.S3B14);
+            caseNegotiations.setStatus(Constants.S3B14);
             // ログインユーザが相手方場合、ステータス更新値：1
         } else if (sessionItem.getFlag() == Constants.POSITIONFLAG_TRADER) {
-            negotiations.setStatus(Constants.S3B1);
+            caseNegotiations.setStatus(Constants.S3B1);
         }
         // 「和解案」更新値設定
-        negotiations.setExpectResloveTypeValue(negotiationsFile.getExpectResloveTypeValue());
-        negotiations.setOtherContext(negotiationsFile.getOtherContext());
-        negotiations.setPayAmount(negotiationsFile.getPayAmount());
-        negotiations.setCounterClaimPayment(negotiationsFile.getCounterClaimPayment());
-        negotiations.setPaymentEndDate(negotiationsFile.getPaymentEndDate());
-        negotiations.setShipmentPayType(negotiationsFile.getShipmentPayType());
-        negotiations.setSpecialItem(negotiationsFile.getSpecialItem());
-        negotiations.setLastModifiedDate(getSystemtime());
-        negotiations.setLastModifiedBy(sessionItem.getUserId());
+        caseNegotiations.setExpectResloveTypeValue(negotiationsFile.getExpectResloveTypeValue());
+        caseNegotiations.setOtherContext(negotiationsFile.getOtherContext());
+        caseNegotiations.setPayAmount(negotiationsFile.getPayAmount());
+        caseNegotiations.setCounterClaimPayment(negotiationsFile.getCounterClaimPayment());
+        caseNegotiations.setPaymentEndDate(negotiationsFile.getPaymentEndDate());
+        caseNegotiations.setShipmentPayType(negotiationsFile.getShipmentPayType());
+        caseNegotiations.setSpecialItem(negotiationsFile.getSpecialItem());
+        caseNegotiations.setLastModifiedDate(getSystemtime());
+        caseNegotiations.setLastModifiedBy(sessionItem.getUserId());
         // セッション情報の和解案id
-        negotiations.setId(sessionItem.getId());
+        caseNegotiations.setId(sessionItem.getId());
         // 「和解案」DBに更新
-        int result = updNegotiationsEditMapper.updateNegotiations(negotiations);
+        int result = updNegotiationsEditMapper.updateCaseNegotiations(caseNegotiations);
         // 更新失敗の場合
         if (result == Constants.RESULT_STATE_ERROR) {
             return Constants.RESULT_STATE_ERROR;
@@ -172,7 +172,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
                     }
                     // updFileFlagは2の場合、ファイル追加
                 } else if (updNegotiationsFile.getUpdFileFlag() == Constants.TEMPLATE_TYPE_2) {
-                    addFiles(updNegotiationsFile, negotiations.getId());
+                    addFiles(updNegotiationsFile, caseNegotiations.getId());
                 }
 
             }

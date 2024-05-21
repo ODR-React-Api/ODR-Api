@@ -1,14 +1,15 @@
 package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import com.web.app.domain.NegotiatMake.CaseFileRelations;
-import com.web.app.domain.NegotiatMake.Files;
-import com.web.app.domain.NegotiatMake.Negotiations;
+
+import com.web.app.domain.Entity.CaseFileRelations;
+import com.web.app.domain.Entity.Files;
+import com.web.app.domain.Entity.CaseNegotiations;
 
 @Mapper
 public interface UpdNegotiationsEditMapper {
 
-    int updateNegotiations(Negotiations negotiationsEdit);
+    int updateCaseNegotiations(CaseNegotiations caseNegotiations);
 
     int deleteFiles(Files files);
 
