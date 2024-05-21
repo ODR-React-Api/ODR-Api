@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 @Api(tags = "和解案プレビュー画面")
 @RestController
-@RequestMapping("/NegotiatPreviewController")
+@RequestMapping("/negotiatPreview")
 public class NegotiatPreviewController {
     @Autowired
     private NegotiatPreviewService negotiationsPreviewService;
