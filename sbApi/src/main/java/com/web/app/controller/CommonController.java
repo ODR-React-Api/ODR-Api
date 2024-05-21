@@ -71,19 +71,15 @@ public class CommonController {
      * @return true false
      * @throws Exception
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes" })
     @ApiOperation("アクション履歴新規登録")
     @PostMapping("/InsHistories")
     public Response InsertActionHistories(ActionHistories actionHistories, @RequestBody List<String> fileId,
             Boolean parametersFlag,
             Boolean displayNameFlag) throws Exception {
-        Response dataResponse = new Response<>();
         try {
             Boolean res = commonService.InsertActionHistories(actionHistories, fileId, parametersFlag, displayNameFlag);
-            dataResponse.setData(res);
-            dataResponse.setCode(Constants.RETCD_SUCCESS);
-            dataResponse.setMsg(Constants.RETCD_OK);
-            return dataResponse;
+            return Response.success(res);
         } catch (Exception e) {
             throw e;
         }

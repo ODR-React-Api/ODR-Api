@@ -39,29 +39,20 @@ public class InfoPublicSeigenController {
 
     /**
      * 調停人情報開示制限
+     * 
      * @param mediatorDisclosureRequest 請求の変数
      * @return 変更状態
      * @throws Exception
      */
     @ApiOperation("調停人情報開示制限")
     @GetMapping("/updMediatorDisclosureFlag")
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes" })
     public Response updMediatorDisclosureFlag(MediatorDisclosureRequest mediatorDisclosureRequest) throws Exception {
         try {
 
             System.out.println("获取的数据库连接为:" + dataSource.getConnection());
             Boolean resultBoolean = infoPublicSeigenService.updMediatorDisclosureFlag(mediatorDisclosureRequest);
-            Response response = new Response<Boolean>();
-            if (resultBoolean) {
-                response.setCode(Constants.RETCD_SUCCESS);
-                response.setData(response);
-                response.setMsg(Constants.MSG_SUCCESS);
-            } else {
-                response.setCode(Constants.RETCD_ERROR);
-                response.setData(response);
-                response.setMsg(Constants.RETCD_NG);
-            }
-            return response;
+            return Response.success(resultBoolean);
         } catch (Exception e) {
             throw e;
         }
