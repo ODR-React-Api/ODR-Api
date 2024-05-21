@@ -5,8 +5,11 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.web.app.domain.Response;
 import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.NegotiatAgreeService;
+import com.web.app.tool.AjaxResult;
 
 /**
  * 和解案合意更新API
@@ -33,15 +36,21 @@ public class NegotiatAgreeController {
      * @return 和解案合意更新状態 1：更新に成功しました,0：更新失败
      * @throws Exception 和解案合意更新失敗
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("和解案合意更新")
     @PostMapping("/UpdNegotiatAgree")
-    public int UpdNegotiatAgree(@RequestBody UpdNegotiatAgree updNegotiatAgree) {
+    public Response UpdNegotiatAgree(@RequestBody UpdNegotiatAgree updNegotiatAgree) {
         try {
             // 和解案合意更新
             int updateCount = negotiatAgreeService.updNegotiatAgree(updNegotiatAgree);
-            return updateCount;
+            if (updateCount == Constants.NUM_1 ) {
+                return AjaxResult.success("和解案合意更新成功");
+            }else{
+                return AjaxResult.success("和解案合意更新失败");
+            }
         } catch (Exception e) {
-            return 0;
+            AjaxResult.fatal("和解案合意更新異常", e);
+            return null;
         }
     }
 }

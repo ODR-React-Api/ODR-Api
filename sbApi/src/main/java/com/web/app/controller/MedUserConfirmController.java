@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
+import com.web.app.domain.Response;
 import com.web.app.domain.medUserConfirm.GetMediatorGen;
 import com.web.app.service.MedUserConfirmService;
+import com.web.app.tool.AjaxResult;
 
 /**
  * 調停案ステータス取得
@@ -32,22 +34,25 @@ public class MedUserConfirmController {
     private MedUserConfirmService medUserConfirmService;
 
     /**
-     * 
+     *                
      * 調停案ステータス取得
      * 
      * @param CaseId 受付カウンターからの案件ID
      * @return 調停案ステータスを取得する
      * @throws Exception 調整案ステータス取得失敗
      */
+
+    @SuppressWarnings("rawtypes")
     @ApiOperation("調停案ステータス取得")
     @PostMapping("/GetMediationStatus")
-    public String GetMediationStatus(@RequestBody String CaseId) {
+    public Response GetMediationStatus(@RequestBody String CaseId) {
         try {
             // 調停案ステータスを取得
             String getMediationStatus = medUserConfirmService.getMediationStatus(CaseId);
             // 調停案ステータス
-            return getMediationStatus;
+            return AjaxResult.success("調停案ステータス取得成功", getMediationStatus);
         } catch (Exception e) {
+            AjaxResult.fatal("調停案ステタス取得異常", e);
             return null;
         }
     }
@@ -60,15 +65,17 @@ public class MedUserConfirmController {
      * @return 調停者メールとユザーID
      * @throws Exception 調停者メールとユザーIDを取得失敗
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("調停人メール取得")
     @PostMapping("/GetUserIDbyMail")
-    public GetUserIDbyMail GetUserIDbyMail(@RequestBody String CaseId) {
+    public Response GetUserIDbyMail(@RequestBody String CaseId) {
         try {
             // 調停者メールとユザーIDを取得
             GetUserIDbyMail getUserIDbyMail = medUserConfirmService.getUserIDbyMail(CaseId);
             // 調停者メールとユザーID
-            return getUserIDbyMail;
+            return AjaxResult.success("調停者メールとユザーIDを取得成功", getUserIDbyMail);
         } catch (Exception e) {
+            AjaxResult.fatal("調停者メールとユザーIDを取得異常", e);
             return null;
         }
     }
@@ -81,14 +88,16 @@ public class MedUserConfirmController {
      * @return 調停人情報取得
      * @throws Exception 調停人情報取得失敗
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("調停人情報取得")
     @PostMapping("/GetMediatorGen")
-    public ArrayList<GetMediatorGen> GetMediatorGen(@RequestBody String CaseId) {
+    public Response GetMediatorGen(@RequestBody String CaseId) {
         try {
             // 調停人情報取得
             ArrayList<GetMediatorGen> getMediatorGen = medUserConfirmService.getMediatorGen(CaseId);
-            return getMediatorGen;
+            return AjaxResult.success("調停人情報取得成功", getMediatorGen);
         } catch (Exception e) {
+            AjaxResult.fatal("調停人情報取得成功", e);
             return null;
         }
     }
