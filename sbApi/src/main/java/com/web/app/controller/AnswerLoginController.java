@@ -59,5 +59,4 @@ public class AnswerLoginController {
         return getPetitionsDataService.getPetitionDataUser(plateFormId);
     }
     
-    
 }
