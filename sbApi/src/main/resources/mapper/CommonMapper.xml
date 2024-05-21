@@ -310,6 +310,25 @@
         AND odr_users.Status = '0'
     </select>
 
+    <!-- 関係者内容取得 -->
+    <select id="FindDisplayName" resultType="com.web.app.domain.util.DisplayNameResult">
+        SELECT LanguageId,FirstName,MiddleName,LastName,FirstName_EN.MiddleName_EN,LastName_EN,FirstName_kana,MiddleName_kana
+                ,LastName_kana,CompanyName,CompanyName_EN,Email,NoticeEmail
+        FROM 
+            Odr_Users
+        WHERE
+        <choose>
+            <when test="uid != null and uid != ''">
+                Uid = #{uid}
+            </when>
+            <otherwise>
+                Email = #{email}
+            </otherwise>
+        </choose>
+            AND DeleteFlag = false
+            AND PlatformId = #{platformId}
+    </select>
+
     <!-- 「アクション履歴」新規登録 -->
     <insert id="InsHistories">
         insert into action_histories(
