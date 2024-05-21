@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.web.app.domain.Response;
 import com.web.app.domain.Nav.LanguagesData;
 import com.web.app.service.NavService;
 import com.web.app.tool.AjaxResult;
@@ -24,6 +25,7 @@ import io.swagger.annotations.Api;
 @Api(tags = "言語選択")
 @RequestMapping("/Nav")
 @RestController
+
 public class NavController {
 
     @Autowired
@@ -36,15 +38,16 @@ public class NavController {
      * @return 言語マスタにて存在する言語のList
      * @throws Exception 検索失敗時異常
      */
+    @SuppressWarnings("rawtypes")
     @GetMapping("/GetLanguagesData")
-    public List<LanguagesData> getLanguagesData() {
+    public Response getLanguagesData() {
 
         try {
             // 検索した取得言語
             List<LanguagesData> languagesList = navService.getLanguagesDataList();
-            return languagesList;
+            return  AjaxResult.success("回答の内容取得成功!", languagesList);
         } catch (Exception e) {
-            AjaxResult.fatal("検索失敗", e);
+            AjaxResult.fatal("検索失敗!", e);
             return null;
         }
     }

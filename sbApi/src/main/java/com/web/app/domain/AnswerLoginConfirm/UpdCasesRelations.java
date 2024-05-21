@@ -20,9 +20,9 @@ import lombok.Data;
 public class UpdCasesRelations implements Serializable {
 
     // frontからmailaddressのlist
-    public List<String> traderagentuserList;
+    private List<String> traderagentuserList;
     // frontからmailaddress---五つまで補足後のlist
-    public List<String> traderagentuserListAll;
+    private List<String> traderagentuserListAll;
     // 案件ID
     private String caseId;
     // プラットフォームID

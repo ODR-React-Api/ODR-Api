@@ -23,7 +23,7 @@ public class NavServiceImpl implements NavService {
     private GetLanguagesDataMapper languagesMapper;
     
      /**
-     * API_言語データ取得 
+     * API_言語データ取得
      * 検索条件によって、言語を取得する。
      *
      * @return  画面表示用の言語

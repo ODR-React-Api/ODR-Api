@@ -24,23 +24,23 @@ public class UpdCases implements Serializable {
     // プラットフォームID
     private String platformId;
     // 案件ステージ
-    public Integer caseStage;
+    private Integer caseStage;
     // 案件ステータス
-    public String caseStatus;
+    private String caseStatus;
     // 案件ステータス
     private Boolean deleteFlag;
     // 相手方メール
     private String traderUserEmail;
     // frontから相手方代理人 mailaddressのlist
-    public List<String> traderagentuserList;
+    private List<String> traderagentuserList;
     // frontからmailaddress---五つまで補足後のlist
-    public List<String> traderagentuserListAll;
+    private List<String> traderagentuserListAll;
     // 反訴機能
-    public Boolean phaseReply;
+    private Boolean phaseReply;
     // 交渉機能
-    public Boolean phaseNegotiation;
+    private Boolean phaseNegotiation;
     // 反訴の有無
-    public Integer counterclaimFlag;
+    private Integer counterclaimFlag;
     // 反訴の回答開始日
     private String counterclaimStartDate;
     // 反訴の回答期限日
@@ -60,9 +60,9 @@ public class UpdCases implements Serializable {
 
     private String lastModifiedBy;
     // システム時間
-    public String newDate;
+    private String newDate;
     // システム時間+CounterclaimLimitDays日
-    public String oldDate;
+    private String oldDate;
 
     private static final long serialVersionUID = 1L;
 

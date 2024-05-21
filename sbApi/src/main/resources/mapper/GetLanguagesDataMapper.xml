@@ -5,11 +5,16 @@
 <mapper namespace="com.web.app.mapper.GetLanguagesDataMapper">
 
     <resultMap id="BaseResultMap" type="com.web.app.domain.Nav.LanguagesData">
-            <id property="id" column="id" jdbcType="VARCHAR"/>
-            <result property="languageName" column="LanguageName" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="languageName" column="LanguageName" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="selectAllLanguages" resultMap="BaseResultMap">
-        select id,languageName from react_use.master_languages where deleteFlag = '0'
+        SELECT 
+              id,
+              languageName 
+        FROM  react_use.master_languages 
+        WHERE deleteFlag = '0'
+        ORDER BY languageName
     </select>
 
 </mapper>

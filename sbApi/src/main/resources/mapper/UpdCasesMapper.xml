@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.UpdCasesMapper">
 
+    <!--  API_案件更新 -->
     <update id="updateCasecase" parameterType="com.web.app.domain.AnswerLoginConfirm.UpdCases">
         UPDATE react_use.cases ca,react_use.case_relations re
         <set>
@@ -28,13 +29,13 @@
         </set>
         WHERE
             ca.PlatformId = re.PlatformId
-            AND ca.Cid = re.CaseId 
-            AND ca.cid = #{cid}
-            AND ca.PlatformId = #{platformId}
-            AND ca.CaseStage = '0'
-            AND ca.CaseStatus = '0001'
-            AND ca.DeleteFlag = '0'
-            AND
+        AND ca.Cid = re.CaseId 
+        AND ca.cid = #{cid}
+        AND ca.PlatformId = #{platformId}
+        AND ca.CaseStage = '0'
+        AND ca.CaseStatus = '0001'
+        AND ca.DeleteFlag = '0'
+        AND
             ( re.TraderUserEmail = #{traderUserEmail}
             OR re.TraderAgent1_UserEmail = #{traderagentuserListAll[0]}
             OR re.TraderAgent2_UserEmail = #{traderagentuserListAll[1]}

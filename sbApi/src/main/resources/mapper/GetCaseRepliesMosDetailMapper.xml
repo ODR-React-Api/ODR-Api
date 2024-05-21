@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetCaseRepliesMosDetailMapper">
+    <!--  API_回答の内容取得 -->
+
+    <!-- 下書き保存データを取得 個数-->
+    <resultMap id="BaseResultMap" type="com.web.app.domain.MosDetail.CaseRepliesMosDetail">
+    </resultMap>
+    <select id="selectCasereplies" resultType="int">
+        SELECT COUNT(*) 
+        FROM react_use.case_replies
+        WHERE CaseId = #{caseId}
+        AND Status = #{status}
+        AND DeleteFlag = #{deleteFlag}
+    </select>
+
+    <!--  回答・反訴の内容の取得 -->
+    <resultMap id="caserepliesAnswerContent" type="com.web.app.domain.MosDetail.CaseRepliesMosDetail">
+    </resultMap>
+    <select id="getCaserepliesAnswerContent" resultMap="caserepliesAnswerContent">
+        SELECT  CaseId,
+                Status,
+                ReplyType,
+                ReplyContext,
+                HaveCounterClaim,
+                CounterClaimContext,
+                LastModifiedDate 
+        FROM react_use.case_replies 
+        WHERE CaseId = #{caseId}
+        AND   Status != 0
+        AND   DeleteFlag = 0
+    </select>
+
+    <!-- 添付資料の取得 -->
+    <resultMap id="filesMap" type="com.web.app.domain.Entity.Files">
+    </resultMap>
+    <select id="getFiles" resultMap="filesMap">
+        SELECT
+            files.FileName,
+            files.FileUrl
+        FROM case_file_relations, files
+        WHERE
+            case_file_relations.CaseId = #{caseId}
+        AND (case_file_relations.RelationType = 1
+        OR  case_file_relations.RelationType = 2)
+        AND case_file_relations.DeleteFlag = 0
+        AND files.id = case_file_relations.fileId
+        AND files.DeleteFlag = 0
+        ORDER BY files.LastModifiedDate
+    </select>
+
+</mapper>

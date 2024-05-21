@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.web.app.domain.Response;
 import com.web.app.domain.AnswerLoginConfirm.UpdCases;
 import com.web.app.domain.AnswerLoginConfirm.UpdCasesRelations;
 import com.web.app.service.AnswerLoginConfirmService;
+import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -37,15 +39,23 @@ public class AnswerLoginConfirmController {
      * 
      * @return 更新した個数
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("代理人更新処理")
     @PostMapping("/UpdCasesRelations")
-    public String updCasesRelations(@RequestBody UpdCasesRelations caserelations) {
-
-        int count = answerLoginConfirmService.updateCaserelations(caserelations);
-        if (count > 0) {
-          return count + "件を更新しました(代理人更新)。";
+    public Response updCasesRelations(@RequestBody UpdCasesRelations caserelations) { 
+        try {
+            // 代理人更新成功 個数
+            int count = answerLoginConfirmService.updateCaserelations(caserelations);
+            if (count > 0) {
+                return AjaxResult.success("代理人更新成功!", count);
+            }
+            else{
+                return AjaxResult.success("更新がありません(代理人更新)。",null);
+            }
+        } catch (Exception e) {
+            AjaxResult.fatal("代理人更新失敗!", e);
+            return null;
         }
-        return "更新がありません(代理人更新)。";
     }
 
     /**
@@ -55,15 +65,22 @@ public class AnswerLoginConfirmController {
      * 
      * @return 更新した個数
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("案件状態更新処理")
     @PostMapping("/UpdCases")
-    public String updCases(@RequestBody UpdCases casecase) {
-
-        //条件によって、更新した個数
-        int count = answerLoginConfirmService.updateCasecase(casecase);
-        if (count > 0) {
-          return count + "件を更新しました(案件状態更新)。";
+    public Response updCases(@RequestBody UpdCases casecase) {
+        try {
+            //条件によって、案件状態更新した個数
+            int count = answerLoginConfirmService.updateCasecase(casecase);
+            if (count > 0) {
+                return AjaxResult.success("案件状態更新!", count);
+            }
+            else{
+                return AjaxResult.success("更新がありません(案件状態更新)。",null);
+            }
+        } catch (Exception e) {
+            AjaxResult.fatal("案件状態失敗!", e);
+            return null;
         }
-        return "更新がありません(案件状態更新)。";
     }
 }

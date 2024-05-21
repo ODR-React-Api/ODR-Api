@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.UpdCasesRelationsMapper">
-
+     <!--  API_案件別個人情報リレーションデータ更新 -->
     <update id="updateCaserelations" parameterType="com.web.app.domain.AnswerLoginConfirm.UpdCasesRelations">
         UPDATE react_use.case_relations
         SET
@@ -14,7 +14,7 @@
             TraderAgent5_UserEmail = #{traderagentuserListAll[4]}
         WHERE
             CaseId = #{caseId}
-            AND PlatformId = #{platformId}
+        AND PlatformId = #{platformId}
     </update>
 
 </mapper>
