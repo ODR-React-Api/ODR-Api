@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.UpdNegotiationsEditMapper">
-    <resultMap id="UpdNegotiationsEditResultMap" type="com.web.app.domain.NegotiatMake.Negotiations">
+    <resultMap id="UpdNegotiationsEditResultMap" type="com.web.app.domain.Entity.CaseNegotiations">
         <id property="id" column="ID" jdbcType="VARCHAR"/>
         <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
         <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
@@ -40,7 +40,7 @@
         <result property="relatedId" column="RelatedId" jdbcType="VARCHAR"/>
         <result property="fileId" column="FileId" jdbcType="VARCHAR"/>
     </resultMap>
-  <update id="updateNegotiations" parameterType="com.web.app.domain.NegotiatMake.Negotiations">
+  <update id="updateCaseNegotiations" parameterType="com.web.app.domain.Entity.CaseNegotiations">
         UPDATE case_negotiations
         SET
             ExpectResloveTypeValue = #{expectResloveTypeValue},
@@ -57,7 +57,7 @@
             Id = #{id}
     </update>
 
-    <update id="deleteFiles" parameterType="com.web.app.domain.NegotiatMake.Files">
+    <update id="deleteFiles" parameterType="com.web.app.domain.Entity.Files">
         UPDATE files
         SET
             DeleteFlag = #{deleteFlag},
@@ -66,7 +66,7 @@
         WHERE
             Id = #{id}
     </update>
-    <update id="deleteCaseFileRelations" parameterType="com.web.app.domain.NegotiatMake.CaseFileRelations">
+    <update id="deleteCaseFileRelations" parameterType="com.web.app.domain.Entity.CaseFileRelations">
         UPDATE case_file_relations
         SET
             DeleteFlag = #{deleteFlag},
