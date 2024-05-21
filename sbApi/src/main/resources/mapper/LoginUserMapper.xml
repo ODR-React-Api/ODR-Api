@@ -6,6 +6,7 @@
 
     <resultMap id="ResultMap" type="com.web.app.domain.Entity.OdrUsers">
     </resultMap>
+    <!-- 申立データ取得 -->
     <select id="getLoginUser" resultMap="ResultMap">
         select 
             FirstName,
@@ -27,7 +28,7 @@
             AND password = #{passWord} 
             AND DeleteFlag = 0
     </select>
-
+    <!-- TBL「ユーザ」更新 -->
     <update id="updateLoginDate">
         UPDATE 
             odr_users

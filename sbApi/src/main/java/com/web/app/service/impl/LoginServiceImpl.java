@@ -7,7 +7,6 @@ import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.domain.Login.LoginUser;
 import com.web.app.mapper.LoginUserMapper;
 import com.web.app.service.LoginService;
-import com.web.app.service.UtilService;
 
 /**
  * C1_ログイン画面
@@ -23,9 +22,6 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private LoginUserMapper loginUserMapper;
-
-    @Autowired
-    private UtilService utilService;
 
     /**
      * API_申立データ取得
@@ -52,18 +48,11 @@ public class LoginServiceImpl implements LoginService {
             if (updateNum == 0) {
                 return null;
             }
-            // 自動採番のid（Guid取得）
-            String loginOKId = utilService.GetGuid();
-            // ActionHistories ActionHistories = new ActionHistories();
             // TODO ログイン履歴を登録(成功）
-            // loginUserMapper.insertActionSuccess(email, newId);
+            // CommonService.InsHistories(actionHistories);
         } else {
-
-            // 自動採番のid（Guid取得）
-            String loginNGId = utilService.GetGuid();
-            // ActionHistories ActionHistories = new ActionHistories();
             // TODO ログイン履歴を登録
-            // loginUserMapper.insertActionFail(email, newId);
+            // CommonService.InsHistories(actionHistories);
         }
         return loginUserList;
     }
