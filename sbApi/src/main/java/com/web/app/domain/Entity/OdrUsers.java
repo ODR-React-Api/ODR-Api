@@ -13,123 +13,131 @@ import lombok.Data;
 public class OdrUsers {
 
     // ID
-    public String Uid;
+    private String Uid;
 
     // プラットフォームID
-    public String PlatformId;
+    private String PlatformId;
+
+    // パスワード
+    private String password;
 
     // サイトナンバー
-    public String RegisteredSiteNo;
+    private String RegisteredSiteNo;
 
     // メールアドレス
-    public String Email;
+    private String Email;
 
     // 通知用メールアドレス
-    public String NoticeEmail;
+    private String NoticeEmail;
 
     // 名前
-    public String FirstName;
+    private String FirstName;
 
     // ミドルネーム
-    public String MiddleName;
+    private String MiddleName;
 
     // 名字
-    public String LastName;
+    private String LastName;
 
     // 英語表示名
-    public String FirstName_EN;
+    private String FirstName_EN;
 
     // 英語表示ミドルネーム
-    public String MiddleName_EN;
+    private String MiddleName_EN;
 
     // 英語表示姓
-    public String LastName_EN;
+    private String LastName_EN;
 
     // 名前　カナ
-    public String FirstName_kana;
+    private String FirstName_kana;
 
     // ミドルネーム　カナ
-    public String MiddleName_kana;
+    private String MiddleName_kana;
 
     // 名字　カナ
-    public String LastName_kana;
+    private String LastName_kana;
 
     // 言語ID
-    public String LanguageId;
+    private String LanguageId;
 
     // 停止　ステータス
-    public int Status;
+    private int Status;
 
     // タイムゾーン
-    public String TimeZone;
+    private String TimeZone;
 
     // メインテーマ
-    public String ThemeId;
+    private String ThemeId;
 
     // 規約確認状況
-    public int TermsConfirmStatus;
+    private int TermsConfirmStatus;
 
     // 規約確認状況Version
-    public int ConfirmedVersionNoOfTerms;
+    private int ConfirmedVersionNoOfTerms;
 
     // プライバシーポリシー確認Version
-    public int ConfirmedVersionNoOfPolicy;
+    private int ConfirmedVersionNoOfPolicy;
+
+    private String MessageFrequency;
+
+    // 規約確認状況
+    private int TermsConfirmed;
 
     // 履歴書
-    public String ResumeFileId;
+    private String ResumeFileId;
 
     // 自己紹介
-    public String SelfIntroduce;
+    private String SelfIntroduce;
 
     // 略歴
-    public String HistoryInfo;
+    private String HistoryInfo;
 
     // 専門分野
-    public String Major;
+    private String Major;
 
     // 職位
-    public String Position;
+    private String Position;
 
     // プロフィール画像
-    public String ProfilePictureFileId;
+    private String ProfilePictureFileId;
 
     // ユーザ種類
-    public int UserType;
+    private int UserType;
 
     // 所属会社名
-    public String CompanyName;
+    private String CompanyName;
 
     // 所属会社名_英語表示
-    public String CompanyName_en;
+    private String CompanyName_en;
 
     // チュートリアル表示（申立）
-    public Integer ShowTuritor1;
+    private Integer ShowTuritor1;
 
     // チュートリアル表示（回答）
-    public Integer ShowTuritor2;
+    private Integer ShowTuritor2;
 
     // チュートリアル表示（調停）
-    public Integer ShowTuritor3;
+    private Integer ShowTuritor3;
 
     // 最終ログイン日
-    public String LastLoginDate;
+    private String LastLoginDate;
 
     // 登録日
-    public String RegisterDate;
+    private String RegisterDate;
 
-    public String Other01;
+    private String Other01;
 
-    public String Other02;
+    private String Other02;
 
-    public String Other03;
+    private String Other03;
 
-    public String Other04;
+    private String Other04;
 
-    public String Other05;
+    private String Other05;
 
-    public Integer DeleteFlag;
+    private Integer DeleteFlag;
 
-    public String LastModifiedDate;
+    private String LastModifiedDate;
 
-    public String LastModifiedBy;
+    private String LastModifiedBy;
 }
