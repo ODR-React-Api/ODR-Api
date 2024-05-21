@@ -39,8 +39,7 @@ public class MosDetailController {
     @PostMapping("/updCasesStatus")
     public ParticipatedStatusChangeResultInfo updCasesStatus(String caseId) {
         try {
-            ParticipatedStatusChangeResultInfo participatedInfo = mosDetailService
-                    .participatedStatusSearch(caseId);
+            ParticipatedStatusChangeResultInfo participatedInfo = mosDetailService.participatedStatusSearch(caseId);
             return participatedInfo;
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
