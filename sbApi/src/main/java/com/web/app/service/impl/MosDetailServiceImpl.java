@@ -33,9 +33,9 @@ public class MosDetailServiceImpl implements MosDetailService {
      * @return 戻り値は「 参照表明更新済FLG」に返される
      */
     @Override
-    public ParticipatedStatusChangeResultInfo participatedStatusChangeInfoSearch(String caseId) {
+    public ParticipatedStatusChangeResultInfo participatedStatusSearch(String caseId) {
         // 1.参加表明対象ケースの状態の取得判定
-        Cases participationSel = updCasesStatusMapper.participatedStatusChangeInfoSearch(caseId);
+        Cases participationSel = updCasesStatusMapper.participatedStatusSearch(caseId);
 
         ParticipatedStatusChangeResultInfo participatedFlag = new ParticipatedStatusChangeResultInfo();
         // 2.ケースの状態の更新

@@ -9,7 +9,7 @@
         <result property="CaseStage" column="CaseStage" jdbcType="INTEGER" />
         <result property="CaseStatus" column="CaseStatus" jdbcType="VARCHAR" />
     </resultMap>
-    <select id="participatedStatusChangeInfoSearch" resultMap="caseDetailCasesInfoResultMap"> 
+    <select id="participatedStatusSearch" resultMap="caseDetailCasesInfoResultMap"> 
         SELECT
             Cases.cid AS cid,
             Cases.CaseStage AS CaseStage,
@@ -19,7 +19,6 @@
             Cases.cid = #{caseId}
             AND Cases.DeleteFlag = 0
     </select>
-
     <update id="caseStatusChangeUpdate"> 
         UPDATE cases
         SET CaseStatus = "0001"

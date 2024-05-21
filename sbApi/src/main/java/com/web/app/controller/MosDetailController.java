@@ -31,16 +31,16 @@ public class MosDetailController {
     /**
      * 参加済状態変更
      * 
-     * @param 参加表明する渡された引数: 案件ID
+     * @param caseId 案件ID
      * @return 戻り値は「 参照表明更新済FLG」に返される
      * @throws Exception エラーの説明内容
      */
     @ApiOperation("参加済状態変更")
-    @PostMapping("/participation")
-    public ParticipatedStatusChangeResultInfo participation(String caseId) {
+    @PostMapping("/updCasesStatus")
+    public ParticipatedStatusChangeResultInfo updCasesStatus(String caseId) {
         try {
             ParticipatedStatusChangeResultInfo participatedInfo = mosDetailService
-                    .participatedStatusChangeInfoSearch(caseId);
+                    .participatedStatusSearch(caseId);
             return participatedInfo;
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
