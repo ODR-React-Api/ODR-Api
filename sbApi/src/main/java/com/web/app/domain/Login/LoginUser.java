@@ -22,13 +22,4 @@ public class LoginUser implements Serializable {
 
     // セッション.platformId
     private String platformId;
-
-    // ログインユーザーId
-    private String userId;
-
-    // ログインユーザー名
-    private String userName;
-
-    // ログインEmail
-    private String userEmail;
 }

@@ -28,6 +28,75 @@
             AND password = #{passWord} 
             AND DeleteFlag = 0
     </select>
+    <!-- ユーザーIDまたはユーザーメールボックスに基づいたユーザー情報の照会 -->
+    <select id="FindUserByUidOrEmail" resultType="com.web.app.domain.Entity.OdrUsers">
+        SELECT
+            Uid,
+            PlatformId,
+            password,
+            Email,
+            FirstName,
+            MiddleName,
+            LastName,
+            FirstName_EN,
+            LastName_EN,
+            FirstName_kana,
+            MiddleName_kana,
+            LastName_kana,
+            LanguageId,
+            Status,
+            TimeZone,
+            ThemeId,
+            TermsConfirmStatus,
+            ConfirmedVersionNoOfTerms,
+            ConfirmedVersionNoOfPolicy,
+            MessageFrequency,
+            TermsConfirmed,
+            ResumeFileId,
+            SelfIntroduce,
+            HistoryInfo,
+            Major,
+            Position,
+            ProfilePictureFileId,
+            UserType,
+            CompanyName,
+            CompanyName_en,
+            ShowTuritor1,
+            ShowTuritor2,
+            ShowTuritor3,
+            LastLoginDate,
+            RegisterDate,
+            AccessFailedCount,
+            LockoutEnd,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        FROM
+            odr_users
+        WHERE
+            <choose>
+                <when test="uid != null and uid != ''">
+                    Uid = #{uid}
+                </when>
+                <otherwise>
+                    Email = #{email}
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="platformId != null and platformId != ''">
+                    AND PlatformId = #{platformId}
+                </when>
+                <otherwise>
+                    AND 1 = 1
+                </otherwise>
+            </choose>
+            AND DeleteFlag = false
+    </select>
     <!-- TBL「ユーザ」更新 -->
     <update id="updateLoginDate">
         UPDATE 
