@@ -1,61 +1,86 @@
 package com.web.app.domain.Entity;
 
-import java.sql.Date;
-
 import lombok.Data;
 
+/**
+ * 案件別個人情報リレーション
+ * 
+ * @author DUC 耿浩哲
+ * @since 2024/05/10
+ * @version 1.0
+ */
 @Data
 public class CaseRelations {
 
-    public String Id;
+    // ID
+    private String id;
 
-    public String CaseId;
+    // 案件ID
+    private String CaseId;
     
-    public String CasePetition;
+    // 申立Id
+    private String CasePetition;
     
-    public String PlatformId;
+    // プラットフォームID
+    private String PlatformId;
     
-    public String PetitionUserId;
+    // 申立て人
+    private String PetitionUserId;
     
-    public String PetitionUserInfo_Email;
+    // 申立て人入力情報
+    private String PetitionUserInfo_Email;
     
-    public String Agent1_Email;
+    // 代理人1
+    private String Agent1_Email;
     
-    public String Agent2_Email;
+    // 代理人2
+    private String Agent2_Email;
     
-    public String Agent3_Email;
+    // 代理人3
+    private String Agent3_Email;
     
-    public String Agent4_Email;
+    // 代理人4
+    private String Agent4_Email;
     
-    public String Agent5_Email;
+    // 代理人5
+    private String Agent5_Email;
     
-    public String TraderUserEmail;
+    // 相手方メール
+    private String TraderUserEmail;
     
-    public String TraderAgent1_UserEmail;
+    // 相手方代理人1
+    private String TraderAgent1_UserEmail;
     
-    public String TraderAgent2_UserEmail;
+    // 相手方代理人2
+    private String TraderAgent2_UserEmail;
     
-    public String TraderAgent3_UserEmail;
+    // 相手方代理人3
+    private String TraderAgent3_UserEmail;
     
-    public String TraderAgent4_UserEmail;
+    // 相手方代理人4
+    private String TraderAgent4_UserEmail;
     
-    public String TraderAgent5_UserEmail;
+    // 相手方代理人5
+    private String TraderAgent5_UserEmail;
     
-    public String MediatorUserEmail;
+    // 調停人
+    private String MediatorUserEmail;
+
+    private String ArbitrationUserEmail;
     
-    public String Other01;
+    private String Other01;
     
-    public String Other02;
+    private String Other02;
     
-    public String Other03;
+    private String Other03;
     
-    public String Other04;
+    private String Other04;
     
-    public String Other05;
+    private String Other05;
     
-    public boolean DeleteFlag;
+    private Integer DeleteFlag;
     
-    public Date LastModifiedDate;
+    private String LastModifiedDate;
     
-    public String LastModifiedBy;
+    private String LastModifiedBy;
 }
