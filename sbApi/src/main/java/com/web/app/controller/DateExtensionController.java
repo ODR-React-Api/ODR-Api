@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins = "*")
 @Api(tags = "期日延長画面") 
 @RestController
-@RequestMapping("/dateExtension")
+@RequestMapping("/DateExtension")
 public class DateExtensionController {
 
     //サービスオブジェクト
