@@ -28,7 +28,7 @@ public class MosContentConfirmController {
   @PostMapping("/registrationInformationRegistration")
   public Response RegistrationInformationRegistration(@RequestBody S09ScreenIntelligence s09ScreenIntelligence) {
     try {
-      String uid = "";
+      String uid = "b082bc27-1a10-448d-a6d2-fb296d74f961";
       String platformId = null;
       Integer num = insPetitionsDataService.LoginIntelligence(s09ScreenIntelligence, uid,  platformId);
       if (num == 0) {
@@ -39,7 +39,7 @@ public class MosContentConfirmController {
     } catch (Exception e) {
       // 处理异常的场合
       AjaxResult.fatal("失败!", e);
-      return null;
+      throw e;
     }
   }
 }
