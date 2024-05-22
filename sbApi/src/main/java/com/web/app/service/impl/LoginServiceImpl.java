@@ -1,6 +1,5 @@
 package com.web.app.service.impl;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.web.app.domain.Entity.ActionHistories;
@@ -39,14 +38,48 @@ public class LoginServiceImpl implements LoginService {
      * @return list 申立データ取得のデータ
      */
     @Override
-    public List<OdrUsers> LoginUser(LoginUser loginUser) {
+    public OdrUsers LoginUser(LoginUser loginUser) {
 
         // 申立データ取得
-        List<OdrUsers> loginUserList = loginUserMapper.getLoginUser(loginUser.getEmail(), loginUser.getPassWord());
+        OdrUsers getOdrUsers = loginUserMapper.getLoginUser(loginUser.getEmail(), loginUser.getPassWord());
 
         // ユーザ取得
         OdrUsers odrUser = new OdrUsers();
         odrUser = loginUserMapper.FindUserByUidOrEmail(null, loginUser.getEmail(), loginUser.getPlatformId());
+
+        // 共通関数「アクション履歴新規登録」の内容を設定
+        ActionHistories actionHistories = getActionHistoriesIf(loginUser, odrUser);
+
+        // 取得ありの場合、TBL「ユーザ」.LastLoginDateがシステム日付に更新して、ログイン履歴を登録(成功）
+        // 取得なしの場合、ログイン履歴を登録(失敗の場合）
+        if (getOdrUsers != null) {
+
+            // TBL「ユーザ」更新
+            int updateNum = loginUserMapper.updateLoginDate(loginUser.getEmail(), loginUser.getPassWord());
+            if (updateNum == 0) {
+                return null;
+            }
+            // 共通関数「アクション履歴新規登録」
+            actionHistories.setActionType("LoginOK");
+            actionHistories.setLastModifiedBy(actionHistories.getUserId());
+            commonService.InsertActionHistories(actionHistories, null, false, true);
+        } else {
+            // 共通関数「アクション履歴新規登録」
+            actionHistories.setActionType("LoginNG");
+            actionHistories.setLastModifiedBy(odrUser.getEmail());
+            commonService.InsertActionHistories(actionHistories, null, false, true);
+        }
+        return getOdrUsers;
+    }
+
+    /**
+     * 共通関数「アクション履歴新規登録」の内容を設定
+     *
+     * @param loginUser 画面項目
+     * @param odrUser   ユーザ情報
+     * @return actionHistories 共通関数「アクション履歴新規登録」内容
+     */
+    private ActionHistories getActionHistoriesIf(LoginUser loginUser, OdrUsers odrUser) {
 
         // 登録用数据初期化
         ActionHistories actionHistories = new ActionHistories();
@@ -70,13 +103,13 @@ public class LoginServiceImpl implements LoginService {
         actionHistories.setMessageId("");
         // Parameters
         String userName = odrUser.getLastName() + " " + odrUser.getFirstName();
-        if (userName != "") {
+        if (userName != " ") {
             actionHistories.setParameters(userName);
         } else {
             actionHistories.setParameters(odrUser.getEmail());
         }
         // Other01
-        actionHistories.setOther01("");
+        // actionHistories.setOther01("");
         // Other02
         actionHistories.setOther02("");
         // Other03
@@ -86,25 +119,6 @@ public class LoginServiceImpl implements LoginService {
         // Other05
         actionHistories.setOther05("");
 
-        // 取得ありの場合、TBL「ユーザ」.LastLoginDateがシステム日付に更新して、ログイン履歴を登録(成功）
-        // 取得なしの場合、ログイン履歴を登録(失敗の場合）
-        if (loginUserList.size() > 0) {
-
-            // TBL「ユーザ」更新
-            int updateNum = loginUserMapper.updateLoginDate(loginUser.getEmail(), loginUser.getPassWord());
-            if (updateNum == 0) {
-                return null;
-            }
-            // 共通関数「アクション履歴新規登録」
-            actionHistories.setActionType("LoginOK");
-            actionHistories.setLastModifiedBy(actionHistories.getUserId());
-            commonService.InsertActionHistories(actionHistories, null, false, true);
-        } else {
-            // 共通関数「アクション履歴新規登録」
-            actionHistories.setActionType("LoginNG");
-            actionHistories.setLastModifiedBy(odrUser.getEmail());
-            commonService.InsertActionHistories(actionHistories, null, false, true);
-        }
-        return loginUserList;
+        return actionHistories;
     }
 }

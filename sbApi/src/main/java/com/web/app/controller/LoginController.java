@@ -1,6 +1,5 @@
 package com.web.app.controller;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,9 +48,9 @@ public class LoginController {
     public Response LoginUser(@RequestBody LoginUser loginUser) {
         try {
             // 申立データ取得
-            List<OdrUsers> list = loginService.LoginUser(loginUser);
-            if (list.size() > 0) {
-                return AjaxResult.success("検索成功!", list);
+            OdrUsers odrUsers = loginService.LoginUser(loginUser);
+            if (odrUsers != null) {
+                return AjaxResult.success("検索成功!", odrUsers);
             } else {
                 return AjaxResult.success("検索0件!");
             }

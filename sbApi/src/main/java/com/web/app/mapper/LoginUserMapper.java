@@ -1,6 +1,5 @@
 package com.web.app.mapper;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import com.web.app.domain.Entity.OdrUsers;
 
@@ -18,7 +17,7 @@ import com.web.app.domain.Entity.OdrUsers;
 public interface LoginUserMapper {
 
     // 申立データ取得
-    List<OdrUsers> getLoginUser(String email, String passWord);
+    OdrUsers getLoginUser(String email, String passWord);
 
     // ユーザ取得
     OdrUsers FindUserByUidOrEmail(String uid, String email, String platformId);

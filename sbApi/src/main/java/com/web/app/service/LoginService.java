@@ -1,6 +1,5 @@
 package com.web.app.service;
 
-import java.util.List;
 import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.domain.Login.LoginUser;
 
@@ -16,5 +15,5 @@ import com.web.app.domain.Login.LoginUser;
 public interface LoginService {
 
     // API_申立データ取得
-    List<OdrUsers> LoginUser(LoginUser loginUser);
+    OdrUsers LoginUser(LoginUser loginUser);
 }
