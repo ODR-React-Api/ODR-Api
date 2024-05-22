@@ -1,63 +1,88 @@
 package com.web.app.domain.Entity;
 
-import java.sql.Date;
-
 import lombok.Data;
 
+/**
+ * 送信メール履歴
+ * 
+ * @author DUC 耿浩哲
+ * @since 2024/05/10
+ * @version 1.0
+ */
 @Data
 public class MailsHistories {
 
-    public String Id;
+    // ID
+    private String id;
 
-    public String PlatformId;
+    // プラットフォームID
+    private String PlatformId;
 
-    public String CaseId;
+    // 案件ID
+    private String caseId;
 
-    public int Status;
+    // ステータス
+    private int status;
 
-    public String TemplateNo;
+    // テンプレート番号
+    private String TemplateNo;
 
-    public String FromEmail;
+    // 送信元メールアドレス
+    private String FromEmail;
 
-    public String FromName;
+    // 送信者
+    private String FromName;
 
-    public String ToEmail;
+    // 送信先メールアドレス
+    private String ToEmail;
 
-    public String ToName;
+    // 受信者
+    private String ToName;
 
-    public String Parameters;
+    // 送信パラメータ(フォーマット任意)
+    private String Parameters;
 
-    public Date SendDateTime;
+    // 送信時刻
+    private String SendDateTime;
 
-    public String LanguageId;
+    // 利用言語
+    private String LanguageId;
 
-    public String RedirectURL;
+    // リダイレクトURL
+    private String RedirectURL;
 
-    public String UniqueNumber;
+    // 乱数（GUID?）
+    private String UniqueNumber;
 
-    public boolean OpenFlag;
+    // 開封フラグ
+    private Integer OpenFlag;
 
-    public String Other01;
+    // 開封時刻
+    private String OpenDate;
 
-    public String Other02;
+    // クリックフラグ
+    private Integer LinkFlag;
 
-    public String Other03;
+    // クリック時刻
+    private String LinkDate;
 
-    public String Other04;
+    private String M023UniqueNumber;
 
-    public String Other05;
+    private String Other01;
 
-    public boolean DeleteFlag;
+    private String Other02;
 
-    public Date LastModifiedDate;
+    private String Other03;
 
-    public String LastModifiedBy;
+    private String Other04;
 
-    public Date OpenDate;
+    private String Other05;
 
-    public boolean LinkFlag;
+    private Integer DeleteFlag;
 
-    public Date LinkDate;
+    private String LastModifiedDate;
 
-    public String RealEmail;
+    private String LastModifiedBy;
+
+    private String RealEmail;
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.domain.Entity.UsersMessages;
+import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.Entity.CasePetitions;
 import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.MosDetail.PetitionsContent;
@@ -20,6 +21,7 @@ import com.web.app.mapper.GetCaseRelationsMapper;
 import com.web.app.mapper.GetPetitionsContentMapper;
 import com.web.app.mapper.MediatorResignMapper;
 import com.web.app.mapper.GetRelationsContentMapper;
+import com.web.app.service.CommonService;
 import com.web.app.service.MosDetailService;
 import com.web.app.service.UtilService;
 
@@ -49,6 +51,9 @@ public class MosDetailServiceImpl implements MosDetailService {
 
     @Autowired
     private UtilService utilService;
+
+    @Autowired
+    private CommonService commonService;
 
     /**
      * 申立ての内容取得
@@ -303,7 +308,7 @@ public class MosDetailServiceImpl implements MosDetailService {
 
         ArrayList<String> recipientEmail = new ArrayList<String>();
 
-        //調停人email取得
+        // 調停人email取得
         OdrUsers usersEmail = mediatorHistoriesMapper.userEmail(uid);
 
         // 送信email
@@ -368,7 +373,22 @@ public class MosDetailServiceImpl implements MosDetailService {
 
         boolean bool_073 = utilService.SendMail(sendMailRequest);
 
-        if (bool_072 && bool_073) {
+        ActionHistories actionHistory = new ActionHistories();
+
+        actionHistory.setId(utilService.GetGuid());
+        actionHistory.setPlatformId(platformId);
+        actionHistory.setCaseId(caseId);
+        actionHistory.setActionType("MediatiorResigned");
+        actionHistory.setCaseStage(7);
+        actionHistory.setUserId(uid);
+        actionHistory.setUserType(3);
+        actionHistory.setMessageGroupId(messageGroupId);
+        actionHistory.setHaveFile(false);
+        actionHistory.setLastModifiedBy(uid);
+
+        Boolean insertFlag = commonService.InsertActionHistories(actionHistory, null, true, false);
+
+        if (bool_072 && bool_073 && insertFlag) {
             // セッション情報のCaseId対応な申立人・相手方・代理人のuserid
             List<String> result = mediatorHistoriesMapper.usersId(messageGroupId, platformId, uid);
             // 調停人変更履歴の変更

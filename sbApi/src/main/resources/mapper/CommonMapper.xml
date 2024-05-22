@@ -3,10 +3,90 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.CommonMapper">
-    <!-- 根据platformID查询platform信息 -->
+    <!-- platformIDによるplatform情報の照会 -->
     <select id="FindMasterPlatforms" resultType="com.web.app.domain.Entity.MasterPlatforms">
         SELECT
-            *
+            Id,
+            PlatformName,
+            Logo,
+            Logo_small,
+            TimeZone,
+            Currency,
+            CurrencyMark,
+            HeatUpWeight,
+            RemindTiming_reply,
+            RemindTiming_claimreply,
+            RemindTiming_negotiation,
+            RemindTiming_ex_neg,
+            RemindTiming_mediation,
+            RemindTiming_ex_med,
+            InfoFrequency,
+            WorkDayBase,
+            PetitionNoticeMode,
+            PetitionNoticeEmail,
+            ReplyLimitDays,
+            CounterclaimLimitDays,
+            NegotiationLimitDays,
+            NegotiationExtendDays,
+            MediationLimitDays,
+            MediationExtentdDays,
+            UserProductId,
+            UseTraderName,
+            UseProductUrl,
+            UseOther,
+            UseRepliesOther,
+            UseClaimRepliesOther,
+            UseNegotiationsOther,
+            UseMediationsOther,
+            UseDefaultTraderEmail,
+            DefaultTraderEmail,
+            MessageUpdateFrequency,
+            languageId,
+            ShowMiddleName,
+            MediatorAssignType,
+            MediatorPrivateMessage,
+            MediatorPrivateMessageAddMode,
+            MediatorInfoLimit,
+            MediatorInfoLimitConfirmDays,
+            Phase_negotiation,
+            Phase_mediation,
+            Phase_arbitration,
+            Phase_reply,
+            ServiceSiteUrl,
+            PetitionsContexFile,
+            RepliesContextFile,
+            ClaimRepliesContextFileR,
+            ClaimRepliesContextFileC,
+            NegotiationsContextFile,
+            MediationsContextFile,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy,
+            moduleLastModifiedBy,
+            moduleLastModifiedDate,
+            functionlastModifiedBy,
+            functionlastModifiedDate,
+            limitLastModifiedBy,
+            limitLastModifiedDate,
+            notificationLastModifiedBy,
+            notificationLastModifiedDate,
+            platformLastModifiedBy,
+            platformLastModifiedDate,
+            pfOptionPetitionsLastModifiedBy,
+            pfOptionPetitionsLastModifiedDate,
+            pfOptionRepliesLastModifiedBy,
+            pfOptionRepliesLastModifiedDate,
+            pfOptionClaimRepliesLastModifiedBy,
+            pfOptionClaimRepliesLastModifiedDate,
+            pfOptionNegotiationsLastModifiedBy,
+            pfOptionNegotiationsLastModifiedDate,
+            pfOptionMediationsLastModifiedBy,
+            pfOptionMediationsLastModifiedDate
         FROM
             master_platforms
         WHERE
@@ -16,10 +96,54 @@
             Id
     </select>
 
-    <!-- 根据用户ID或用户邮箱查询用户信息 -->
+    <!-- ユーザーIDまたはユーザーメールボックスに基づいたユーザー情報の照会 -->
     <select id="FindUserByUidOrEmail" resultType="com.web.app.domain.Entity.OdrUsers">
         SELECT
-            *
+            Uid,
+            PlatformId,
+            password,
+            Email,
+            FirstName,
+            MiddleName,
+            LastName,
+            FirstName_EN,
+            LastName_EN,
+            FirstName_kana,
+            MiddleName_kana,
+            LastName_kana,
+            LanguageId,
+            Status,
+            TimeZone,
+            ThemeId,
+            TermsConfirmStatus,
+            ConfirmedVersionNoOfTerms,
+            ConfirmedVersionNoOfPolicy,
+            MessageFrequency,
+            TermsConfirmed,
+            ResumeFileId,
+            SelfIntroduce,
+            HistoryInfo,
+            Major,
+            Position,
+            ProfilePictureFileId,
+            UserType,
+            CompanyName,
+            CompanyName_en,
+            ShowTuritor1,
+            ShowTuritor2,
+            ShowTuritor3,
+            LastLoginDate,
+            RegisterDate,
+            AccessFailedCount,
+            LockoutEnd,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
         FROM
             odr_users
         WHERE
@@ -41,10 +165,66 @@
             </choose>
             AND DeleteFlag = false
     </select>
-    <!-- 根据caseID查询案件信息 -->
+    <!-- caseIDによる案件情報の照会 -->
     <select id="FindCasesInfoByCid" resultType="com.web.app.domain.Entity.Cases">
         SELECT
-            *
+            cid,
+            PlatformId,
+            CaseStage,
+            CaseStatus,
+            CaseTitle,
+            PetitionDate,
+            WithDrawDate,
+            ReplyStartDate,
+            ReplyEndDate,
+            CounterclaimFlag,
+            CounterclaimStartDate,
+            CounterclaimEndDate,
+            NegotiationStartDate,
+            NegotiationEndDate,
+            NegotiationEndDateChangeStatus,
+            NegotiationEndDateChangeCount,
+            CancelDate,
+            MediatorReuqestDate,
+            MediationStartDate,
+            MediationEndDate,
+            MediationEndDateChangeCount,
+            MediatorNoReasonChangeDate,
+            MediatorDisclosureDate,
+            MediatorChangeableCount1,
+            MediatorChangeableCount2,
+            MediatorDisclosureFlag,
+            GroupMessageFlag1,
+            GroupMessageFlag2,
+            GroupMessageComment1,
+            GroupMessageComment2,
+            ArbitrationStartDate,
+            ArbitrationEndDate,
+            ArbitrationEditDate,
+            ResolutionDate,
+            ResolutionFlag,
+            PayFlag,
+            CounterclaimPayFlag,
+            LanguageId,
+            QuestionnaireSendFlag,
+            CancelBy,
+            CancelActionDate,
+            CancelReuqestBy1,
+            CancelReuqestBy2,
+            CancelReuqestBy3,
+            OtherDate01,
+            OtherDate02,
+            OtherDate03,
+            OtherDate04,
+            OtherDate05,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
         FROM
             cases
         WHERE
@@ -52,24 +232,60 @@
             AND DeleteFlag = false
     </select>
 
-    <!-- 查询种类信息 -->
+    <!-- チェックボックスを取得する方法 -->
     <select id="FindMasterTypeName" resultType="com.web.app.domain.Entity.MasterTypes">
         SELECT
-            *
+            Id,
+            platformId,
+            type,
+            Value,
+            DisplayName,
+            OrderNo,
+            Required,
+            IsActive,
+            LanguageId,
+            Creator,
+            CreateDate,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
         FROM
             master_types
         WHERE
-            LanguageId = #{languageId}
-            AND PlatformId = #{platformId}
-            AND Type = #{type}
+            platformId = #{platformId}
+            AND type = #{type}
+            AND IsActive = 1
+            AND LanguageId = #{languageId}
+            AND DeleteFlag = false
         ORDER BY
             OrderNo
     </select>
 
-    <!-- 取得邮件模板 -->
+    <!-- メールテンプレートの取得 -->
     <select id="FindMailTemplatesList" resultType="com.web.app.domain.Entity.MailTemplates">
         SELECT
-            *
+            Id,
+            PlatformId,
+            TemplateNo,
+            SendFromMail,
+            SendFromName,
+            Subject,
+            HtmlContent,
+            TextContent,
+            LanguageId,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
         FROM
             mail_templates
         WHERE
@@ -77,4 +293,128 @@
             AND TemplateNo = #{tempId}
             AND LanguageId = 'jp'
     </select>
+
+    <select id="GetUserDataFromCaseIdentity" resultType="com.web.app.domain.User">
+        SELECT odr_users.FirstName,odr_users.MiddleName,odr_users.LastName FROM odr_users INNER JOIN case_relations
+        WHERE case_relations.CaseId = #{caseId}
+        AND case_relations.PlatformId = #{platformId}
+        AND case_relations.DeleteFlag = '0'
+        <if test="identity">
+            AND odr_users.Email = case_relations.PetitionUserInfo_Email
+        </if>
+        <if test="!identity">
+            AND odr_users.Email = case_relations.TraderUserEmail
+        </if>
+        AND odr_users.PlatformId = #{platformId}
+        AND odr_users.DeleteFlag = '0'
+        AND odr_users.Status = '0'
+    </select>
+
+    <!-- 関係者内容取得 -->
+    <select id="FindDisplayName" resultType="com.web.app.domain.util.DisplayNameResult">
+        SELECT LanguageId,FirstName,MiddleName,LastName,FirstName_EN,LastName_EN,FirstName_kana,MiddleName_kana
+                ,LastName_kana,CompanyName,CompanyName_EN,Email
+        FROM 
+            Odr_Users
+        WHERE
+        <choose>
+            <when test="uid != null and uid != ''">
+                Uid = #{uid}
+            </when>
+            <otherwise>
+                Email = #{email}
+            </otherwise>
+        </choose>
+            AND DeleteFlag = false
+            AND PlatformId = #{platformId}
+    </select>
+
+    <!-- 「アクション履歴」新規登録 -->
+    <insert id="InsHistories">
+        insert into action_histories(
+        id,
+        PlatformId,
+        CaseId,
+        ActionType,
+        CaseStage,
+        UserId,
+        UserType,
+        ActionDateTime,
+        MessageGroupId,
+        MessageId,
+        HaveFile,
+        Parameters,
+        Other01,
+        Other02,
+        Other03,
+        Other04,
+        Other05,
+        DeleteFlag,
+        LastModifiedDate,
+        LastModifiedBy) 
+        values(
+            #{id},
+            #{PlatformId},
+            #{CaseId},
+            #{ActionType},
+            #{CaseStage},
+            #{UserId},
+            #{UserType},
+            #{ActionDateTime},
+            #{MessageGroupId},
+            #{MessageId},
+            #{HaveFile},
+            #{Parameters},
+            #{Other01},
+            #{Other02},
+            #{Other03},
+            #{Other04},
+            #{Other05},
+            #{DeleteFlag},
+            #{LastModifiedDate},
+            #{LastModifiedBy}
+            )
+    </insert>
+
+    <!-- アクション履歴-添付ファイルリレーション -->
+    <select id="FindFileRelations" resultType="com.web.app.domain.Entity.ActionFileRelations">
+        select * from 
+            Action_File_Relations
+        where
+            id = #{id}
+            And DeleteFlag = '0'
+    </select>
+
+    <!-- 「アクション履歴-添付ファイルリレーション」新規登録 -->
+    <insert id="InsertActionFileRelations">
+        insert into Action_File_Relations(
+            id,
+            PlatformId,
+            CaseId,
+            ActionHistoryId,
+            fileId,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy)
+        values(
+            #{id},
+            #{PlatformId},
+            #{CaseId},
+            #{ActionHistoryId},
+            #{fileId},
+            #{Other01},
+            #{Other02},
+            #{Other03},
+            #{Other04},
+            #{Other05},
+            #{DeleteFlag},
+            #{LastModifiedDate},
+            #{LastModifiedBy}
+            )
+    </insert>
 </mapper>
