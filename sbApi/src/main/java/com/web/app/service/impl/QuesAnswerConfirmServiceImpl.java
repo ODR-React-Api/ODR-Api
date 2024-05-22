@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.web.app.domain.Entity.ActionHistories;
+import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.domain.Entity.QuestionnaireResults;
 import com.web.app.domain.QuesAnswerConfirm.InsQuestionnaireResults;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.util.SendMailRequest;
+import com.web.app.mapper.CommonMapper;
 import com.web.app.mapper.InsQuestionnairesResultsMapper;
+import com.web.app.service.CommonService;
 import com.web.app.service.QuesAnswerConfirmService;
 import com.web.app.service.UtilService;
 
@@ -28,7 +32,13 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
     private InsQuestionnairesResultsMapper insQuestionnairesResultsMapper;
 
     @Autowired
+    private CommonMapper commonMapper;
+
+    @Autowired
     private UtilService utilService;
+
+    @Autowired
+    private CommonService commonService;
 
     /**
      * * API_アンケート入力結果新規登録
@@ -61,8 +71,14 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
             return 0;
         }
 
-        // TODO
         // 2.3 アクション履歴登録
+        // 「アクション履歴」の新規登録の項目を設定
+        ActionHistories actionHistories = getActionHistories(insQuestionnaireResults);
+        Boolean insStatus = commonService.InsertActionHistories(actionHistories, null, false, false);
+        if (!insStatus) {
+            return 0;
+        }
+
         return 1;
     }
 
@@ -74,22 +90,22 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
      */
     public SendMailRequest getSendMailRequest(InsQuestionnaireResults insQuestionnaireResults) {
         SendMailRequest sendMailRequest = new SendMailRequest();
-        // 平台Id
+        // プラットフォームID
         sendMailRequest.setPlatformId(insQuestionnaireResults.getPlatformId());
-        // 语言ID
+        // 利用言語
         sendMailRequest.setLanguageId(Constants.JP);
-        // 邮件ID
+        // テンプレート番号
         sendMailRequest.setTempId(MailConstants.MailId_M058);
         // 案件ID
         sendMailRequest.setCaseId(insQuestionnaireResults.getCaseId());
-        // 收信人邮箱List
+        // 受信者メールアドレスList
         ArrayList<String> recipientEmail = new ArrayList<String>();
         recipientEmail.add(insQuestionnaireResults.getUserEmail());
         sendMailRequest.setRecipientEmail(recipientEmail);
-        // 邮件模板对应值
+        // メールテンプレート対応の引数値
         ArrayList<String> parameter = new ArrayList<String>();
         sendMailRequest.setParameter(parameter);
-        // 送信人ID
+        // 送信者ID
         sendMailRequest.setUserId("001");
         sendMailRequest.setControlType(1);
 
@@ -130,5 +146,30 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
         questionnaireResults.setLastModifiedBy("questionnaire");
 
         return questionnaireResults;
+    }
+
+    /**
+     * 「アクション履歴」の新規登録の項目を設定
+     * 
+     * @param insQuestionnaireResults アンケート回答登録処理の引数
+     * @return actionHistories 「アクション履歴」の新規登録の項目
+     */
+    public ActionHistories getActionHistories(InsQuestionnaireResults insQuestionnaireResults) {
+        ActionHistories actionHistories = new ActionHistories();
+        actionHistories.setPlatformId(insQuestionnaireResults.getPlatformId());
+        actionHistories.setCaseId(insQuestionnaireResults.getCaseId());
+        actionHistories.setActionType("QuestionaryAnswered");
+        // 【画面C8】.caseId対応なCaseStage
+        int caseStage = insQuestionnairesResultsMapper.getCaseStage(insQuestionnaireResults.getCaseId());
+        actionHistories.setCaseStage(caseStage);
+        actionHistories.setUserType(0);
+        // 【画面C8】.userEmail →ユーザdisplayName
+        OdrUsers odrUser = commonMapper.FindUserByUidOrEmail(null, insQuestionnaireResults.getUserEmail(),
+                insQuestionnaireResults.getPlatformId());
+        String displayName = odrUser.getLastName() + " " + odrUser.getFirstName();
+        actionHistories.setParameters(displayName);
+        actionHistories.setLastModifiedBy("questionnaire");
+
+        return actionHistories;
     }
 }

@@ -70,4 +70,12 @@
             #{LastModifiedBy}
         )
     </insert>
+    <!-- 【画面C8】.caseId対応なCaseStage -->
+    <select id="getCaseStage" resultType="java.lang.Integer">
+        SELECT
+            CaseStage
+        FROM cases
+        WHERE
+            cases.cid = #{caseId}
+    </select>
 </mapper>

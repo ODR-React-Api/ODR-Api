@@ -18,4 +18,7 @@ public interface InsQuestionnairesResultsMapper {
     // API_アンケート入力結果新規登録
     // 2.2 アンケート回答内容を登録
     int insQuestionnairesResults(QuestionnaireResults questionnaireResults);
+
+    // 【画面C8】.caseId対応なCaseStage
+    int getCaseStage(String caseId);
 }
