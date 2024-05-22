@@ -35,7 +35,7 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
      *
      * @param MedUserConfirmSession セッション情報
      * @return OdrUsers ユーザ情報
-     * @throws
+     * @throws Exception
      */
     @Transactional
     @Override
@@ -55,7 +55,7 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
      *
      * @param MedUserConfirmSession セッション情報
      * @return MediatorInfo 調停人の経験
-     * @throws
+     * @throws Exception
      */
     @Transactional
     @Override

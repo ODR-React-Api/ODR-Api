@@ -18,11 +18,12 @@
         <result property="lastName" column="LastName" jdbcType="VARCHAR"/> 
         <result property="firstName" column="FirstName" jdbcType="VARCHAR"/>
         <result property="email" column="Email" jdbcType="VARCHAR"/>
-       
     </resultMap>
-        <resultMap id="GetMediatorUserEmailResultMap" type="com.web.app.domain.Entity.CaseRelations">
+
+    <resultMap id="GetMediatorUserEmailResultMap" type="com.web.app.domain.Entity.CaseRelations">
         <result property="mediatorUserEmail" column="MediatorUserEmail" jdbcType="VARCHAR"/>
     </resultMap>
+
     <select id="getMediatorUserEmail" resultMap="GetMediatorUserEmailResultMap">
         SELECT
             MediatorUserEmail
@@ -32,7 +33,7 @@
             CaseId = #{caseId}
            
     </select>
-      <select id="getOdrUserInfo" resultMap="GetOdrUserInfoMapperResultMap">
+    <select id="getOdrUserInfo" resultMap="GetOdrUserInfoMapperResultMap">
         SELECT
             ResumeFileId,
             SelfIntroduce,
@@ -44,7 +45,6 @@
             CompanyName,
             LastName,
             FirstName
-
         FROM
             odr_users
         WHERE

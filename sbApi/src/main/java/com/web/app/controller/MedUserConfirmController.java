@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 調停人確認画面
  * 
  * @author DUC 馬芹
- * @since 2024/05/06
+ * @since 2024/05/17
  * @version 1.0
  */
 @CrossOrigin(origins = "*")
@@ -35,7 +35,7 @@ public class MedUserConfirmController {
      * 調停人ユーザ情報取得
      *
      * @param MedUserConfirmSession セッション情報
-     * @return Response
+     * @return OdrUsers 調停人ユーザ情報
      * @throws Exception 異常終了
      */
     @ApiOperation("調停人ユーザ情報取得")
