@@ -50,9 +50,9 @@ public class CouAnswerLoginController {
         try {
             List<RepliesContext> getRepliesContextList = new ArrayList<RepliesContext>();
             getRepliesContextList = couAnswerLoginService.getRepliesContext(caseId, platformId);
-            return AjaxResult.success("请求成功", getRepliesContextList);
+            return AjaxResult.success("反訴・回答データ取得に成功しました", getRepliesContextList);
         } catch (Exception e) {
-            AjaxResult.fatal("查询失败!", e);
+            AjaxResult.fatal("反訴・回答データ取得に失敗しました!", e);
             return null;
         }
     }
@@ -72,9 +72,9 @@ public class CouAnswerLoginController {
         try {
             List<CasesByCid> getCasesByCidList = new ArrayList<CasesByCid>();
             getCasesByCidList = utilService.casesByCid(caseId, platformId);
-            return AjaxResult.success("请求成功", getCasesByCidList);
+            return AjaxResult.success("案件データ取得に成功しました", getCasesByCidList);
         } catch (Exception e) {
-            AjaxResult.fatal("查询失败!", e);
+            AjaxResult.fatal("案件データ取得に失敗しました!", e);
             return null;
         }
     }

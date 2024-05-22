@@ -45,9 +45,9 @@ public class AnswerLoginController {
         try {
             List<RepliesData> userRepliesList = new ArrayList<RepliesData>();
             userRepliesList = answerLoginService.getRepliesData(caseId, platformId);
-            return AjaxResult.success("请求成功", userRepliesList);
+            return AjaxResult.success("会員登録の取得に成功しました。", userRepliesList);
         } catch (Exception e) {
-            AjaxResult.fatal("查询失败!", e);
+            AjaxResult.fatal("会員登録の取得に失敗しました!", e);
             return null;
         }
     }
