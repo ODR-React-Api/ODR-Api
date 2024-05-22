@@ -138,9 +138,9 @@ public class AnswerLoginServiceImpl implements AnswerLoginService {
                 }
             }
 
-            // 「反訴・回答.HaveCounterClaim」 0:反訴あり,1:反訴無し
+            // 「反訴・回答.HaveCounterClaim」 0:反訴無し,1:反訴あり
             // 反訴の添付資料ファイル名の判定
-            if (updRepliesDataParameter.getHaveCounterClaim() == 0 && fileNameCounterClaim != null) {
+            if (updRepliesDataParameter.getHaveCounterClaim() == 1 && fileNameCounterClaim != null) {
                 // 新規登録を実施Flg
                 boolean insExeFlg = true;
 
@@ -218,9 +218,9 @@ public class AnswerLoginServiceImpl implements AnswerLoginService {
                 }
             }
 
-            // 「反訴・回答.HaveCounterClaim」 0:反訴あり,1:反訴無し
+            // 「反訴・回答.HaveCounterClaim」 0:反訴無し,1:反訴あり
             // 反訴の添付資料ファイル名の判定
-            if (updRepliesDataParameter.getHaveCounterClaim() == 0 && fileNameCounterClaim != null) {
+            if (updRepliesDataParameter.getHaveCounterClaim() == 1 && fileNameCounterClaim != null) {
                 // 反訴の添付資料
                 // 「添付ファイル」の新規登録の項目を設定
                 Files filesCounterClaim = getFiles(updRepliesDataParameter, true);
