@@ -3,7 +3,6 @@ package com.web.app.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.web.app.domain.Entity.OdrUserUtil;
-import com.web.app.domain.Entity.OdrUsers;
 /**
  * @author lixiaoyue
  * @description 针对表【ord_users】的数据库操作Mapper

@@ -1,6 +1,11 @@
 package com.web.app.domain.Entity;
 
-public class OdrUserUtil {
+import java.io.Serializable;
+
+public class OdrUserUtil implements Serializable{
+    private static final long serialVersionUID = 1L;
+
+    private String Uid;
 
     private String Email;
 
@@ -10,17 +15,25 @@ public class OdrUserUtil {
 
     private String LastName;
 
-    private String FirstName_kana;
+    private String FirstName_Kana;
 
-    private String MiddleName_kana;
+    private String MiddleName_Kana;
 
-    private String LastName_kana;
+    private String LastName_Kana;
 
     private String CompanyName;
 
     private String PlatformId;
 
     private String LanguageId;
+
+    public String getUid() {
+        return Uid;
+    }
+
+    public void setUid(String uid) {
+        Uid = uid;
+    }
 
     public String getEmail() {
         return Email;

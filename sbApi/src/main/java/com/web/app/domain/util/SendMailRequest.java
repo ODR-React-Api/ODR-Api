@@ -31,4 +31,6 @@ public class SendMailRequest implements Serializable {
     private String UserId;
 
     private int ControlType;
+
+    
 }

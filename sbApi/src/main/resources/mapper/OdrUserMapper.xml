@@ -14,9 +14,9 @@
             <!-- <result property="FirstName_EN" column="FirstName_EN" jdbcType="VARCHAR"/>
             <result property="MiddleName_EN" column="MiddleName_EN" jdbcType="VARCHAR"/>
             <result property="LastName_EN" column="LastName_EN" jdbcType="VARCHAR"/> -->
-            <result property="FirstName_kana" column="FirstName_kana" jdbcType="VARCHAR"/>
-            <result property="MiddleName_kana" column="MiddleName_kana" jdbcType="VARCHAR"/>
-            <result property="LastName_kana" column="LastName_kana" jdbcType="VARCHAR"/>
+            <result property="FirstName_Kana" column="FirstName_kana" jdbcType="VARCHAR"/>
+            <result property="MiddleName_Kana" column="MiddleName_kana" jdbcType="VARCHAR"/>
+            <result property="LastName_Kana" column="LastName_kana" jdbcType="VARCHAR"/>
             <result property="CompanyName" column="CompanyName" jdbcType="VARCHAR"/>
             <result property="LanguageId" column="LanguageId" jdbcType="VARCHAR"/>
             <!-- <result property="Status" column="Status" jdbcType="INTEGER"/>
@@ -57,8 +57,8 @@
         update_time
     </sql>
     <insert id="insertUser">
-        insert into odr_user(Email,FirstName,MiddleName,LastName,FirstName_kana,MiddleName_kana,LastName_kana,CompanyName,PlatformId,LanguageId) 
-        values(#{Email},#{FirstName},#{MiddleName},#{LastName},#{FirstName_kana},#{MiddleName_kana},#{LastName_kana},#{CompanyName},#{PlatformId},#{LanguageId})
+        insert into odr_users(Uid,Email,FirstName,MiddleName,LastName,FirstName_kana,MiddleName_kana,LastName_kana,CompanyName,PlatformId,LanguageId) 
+        values(#{Uid},#{Email},#{FirstName},#{MiddleName},#{LastName},#{FirstName_Kana},#{MiddleName_Kana},#{LastName_Kana},#{CompanyName},#{PlatformId},#{LanguageId})
     </insert>
 
 
