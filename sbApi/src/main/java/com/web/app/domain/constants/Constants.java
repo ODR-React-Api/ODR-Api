@@ -143,8 +143,12 @@ public class Constants {
     public static final int UPDATE_NUMBER_0 = 0;
     public static final int PARTICIPATED_FLAG_1 = 1;
     public static final int PARTICIPATED_FLAG_0 = 0;
+
     // S03,S04 その他人と共有する
     public static final int STR_CASES_CASESTAGE_0 = 0;
+    public static final String PLATFORMID_0001 = "0001";
+    public static final int NUM_0 = 0;
+    public static final int NUM_2 = 2;
     // S03 その他人と共有する
     public static final int STR_CASES_CASESTAGE_2 = 2;
     public static final int STR_CASES_CASESTAGE_3 = 3;
