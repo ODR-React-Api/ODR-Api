@@ -105,6 +105,7 @@ public class Constants {
     //（申立人和解案下書き・共同編集）
     public static final int S3B14 = 14;
     public static final String FORMAT  = "yyyy-MM-dd HH:mm:ss";
+    public static final String MENU_FORMAT  = "yyyy年MM月dd日";
     //ログインユーザーは申立人の場合
     public static final int POSITIONFLAG_PETITION = 1;
     //ログインユーザーは相手方の場合
@@ -125,7 +126,13 @@ public class Constants {
     public static final int TEMPLATE_TYPE_3 = 3;
     //4: 調停案合意書
     public static final int TEMPLATE_TYPE_4 = 4;
-
+    // 解決率: 調停件数が0の場合→ "-"で表示
+    public static final String STR_YOKO = "-";
+    // 件
+    public static final String STR_KEN = "件";
+    // 現在
+    public static final String STR_GENZAI = "現在";
+    
     // public static final Map<Object,String> SIFANGJI_SIGNAL_STATE_MAP = new
     // HashMap<Object,String>(){{
 
