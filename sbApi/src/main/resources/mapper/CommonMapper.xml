@@ -312,8 +312,8 @@
 
     <!-- 関係者内容取得 -->
     <select id="FindDisplayName" resultType="com.web.app.domain.util.DisplayNameResult">
-        SELECT LanguageId,FirstName,MiddleName,LastName,FirstName_EN.MiddleName_EN,LastName_EN,FirstName_kana,MiddleName_kana
-                ,LastName_kana,CompanyName,CompanyName_EN,Email,NoticeEmail
+        SELECT LanguageId,FirstName,MiddleName,LastName,FirstName_EN,LastName_EN,FirstName_kana,MiddleName_kana
+                ,LastName_kana,CompanyName,CompanyName_EN,Email
         FROM 
             Odr_Users
         WHERE
