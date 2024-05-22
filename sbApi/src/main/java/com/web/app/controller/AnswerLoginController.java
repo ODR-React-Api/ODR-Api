@@ -39,7 +39,7 @@ public class AnswerLoginController {
      * @throws Exception エラーの説明内容
      */
     @SuppressWarnings("rawtypes")
-    @ApiOperation("会員登録取得")
+    @ApiOperation("反訴・回答データ取得")
     @GetMapping("/getRepliesData")
     public Response getRepliesData(String caseId, String platformId) {
         try {
