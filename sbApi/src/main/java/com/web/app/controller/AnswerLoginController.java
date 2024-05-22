@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
@@ -43,7 +44,7 @@ public class AnswerLoginController {
     @ApiOperation("申立データ取得API")
     @PostMapping("/getPetitionsData")
     @SuppressWarnings("rawtypes")
-    public Response getPetitionsData(String caseId, String plateFormId) {
+    public Response getPetitionsData(@RequestParam("caseId") String caseId,@RequestParam("plateFormId") String plateFormId) {
         try {
             List<PetitionsData> list;
             list = getPetitionsDataService.getPetitionData(caseId, plateFormId);
@@ -63,7 +64,7 @@ public class AnswerLoginController {
     @ApiOperation("案件別個人情報リレーションデータ取得(申立人)")
     @PostMapping("/getPetitionDataUser")
     @SuppressWarnings("rawtypes")
-    public Response GetPetitionDataUser(String plateFormId) {
+    public Response GetPetitionDataUser(@RequestParam String plateFormId) {
         try {
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,getPetitionsDataService.getPetitionDataUser(plateFormId));
         } catch (Exception e) {

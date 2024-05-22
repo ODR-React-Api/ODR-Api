@@ -3,6 +3,7 @@ package com.web.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,7 +45,7 @@ public class UserInfoConfirmController {
     @SuppressWarnings("rawtypes")
     @PostMapping("registerUser")
     @ApiOperation("ユーザ新規登録")
-    public Response registerUser(UserInfoModel userInfo) {
+    public Response registerUser(@RequestBody UserInfoModel userInfo) {
         try {
             // 新規ユーザーサービスの呼び出し
             int userInsertRep = registerUserService.registerUser(userInfo);

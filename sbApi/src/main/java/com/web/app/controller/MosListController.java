@@ -93,7 +93,8 @@ public class MosListController {
     @PostMapping("/fuzzyQueryDetailCase")
     @ApiOperation("曖昧検索用ケース詳細取得")
     @SuppressWarnings("rawtypes")
-    public Response fuzzyQueryDetailCase(String caseId, String petitionUserId, int positionFlag, String queryString) {
+    public Response fuzzyQueryDetailCase(@RequestParam("caseId") String caseId,@RequestParam("petitionUserId") String petitionUserId,
+    @RequestParam("positionFlag") int positionFlag,@RequestParam("queryString") String queryString) {
         try {
             // サービスの呼び出し
             ReturnResult returnResult = mosListService.getFuzzyQueryDetailCase(caseId, petitionUserId, positionFlag,
@@ -114,7 +115,7 @@ public class MosListController {
     @PostMapping("/getSaveDataInfo")
     @SuppressWarnings("rawtypes")
     @ApiOperation("申立て登録下書き保存データ取得")
-    public Response getSaveDataInfo(String uid) {
+    public Response getSaveDataInfo(@RequestParam String uid) {
         try {
             // サービスの呼び出し
             Integer res = mosListService.getSaveDataInfo(uid);
