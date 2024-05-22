@@ -2,7 +2,7 @@ package com.web.app.domain.NegotiatPreview;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+import com.web.app.controller.List;
 import com.web.app.domain.Entity.File;
 
 import lombok.Data;
@@ -61,7 +61,7 @@ public class NegotiatPreview implements Serializable{
     private String CounterClaimPayment;
 
     //ファイルID
-    private String fileId;
+    private ArrayList<String> fileId;
 
     //ファイル名
     private String FileName;
