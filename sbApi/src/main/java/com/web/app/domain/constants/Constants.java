@@ -105,6 +105,7 @@ public class Constants {
     // { "ddd.444@gmail.com", "ABCマート" },
     // { "eee.555@icloud.com", "ドン・キホーテ" },
     // };
+    public static final String PLATFORMID_0001 = "0001";
     public static final int STR_ODR_USERS_INSERTFLAG = 0;
     public static final int STR_ODR_USERS_INSERT_STATUS = 0;
     public static final String STR_ODR_USERS_INSERT_MESSAGEFREQUENCY = "100";

@@ -1,15 +1,21 @@
 package com.web.app.service.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.MosDetail.Withdrawal;
 import com.web.app.domain.MosDetail.WithdrawalReturn;
 import com.web.app.domain.constants.Constants;
+import com.web.app.domain.constants.MessageConstants;
 import com.web.app.mapper.ApplyWithdrawMapper;
+import com.web.app.service.CommonService;
 import com.web.app.service.MosDetailService;
+import com.web.app.service.UtilService;
 
 /**
  * 申立て概要画面
@@ -19,10 +25,18 @@ import com.web.app.service.MosDetailService;
  * @version 1.0
  */
 @Service
-public class MosDetailServiceImpl implements MosDetailService{
-    
+public class MosDetailServiceImpl implements MosDetailService {
+
+    private static final Logger log = LogManager.getLogger(UserInfoConfirmServiceImpl.class);
+
     @Autowired
     private ApplyWithdrawMapper applyWithdrawMapper;
+
+    @Autowired
+    private CommonService commonService;
+
+    @Autowired
+    private UtilService utilService;
 
     /**
      * ケースの状態を取り下げに変更する。
@@ -32,7 +46,7 @@ public class MosDetailServiceImpl implements MosDetailService{
      */
     @Override
     @Transactional
-    public WithdrawalReturn applyWithdraw(String caseId) {
+    public WithdrawalReturn applyWithdraw(String caseId, String uid) {
         // 戻り値オブジェクトの作成
         WithdrawalReturn withdrawalReturn = new WithdrawalReturn();
         // 取り下げ対象ケースの状態の判定
@@ -45,7 +59,23 @@ public class MosDetailServiceImpl implements MosDetailService{
                 // 正常に更新の場合、更新済Flgに0（正常更新）を設定して
                 withdrawalReturn.setUpdateFlag(Constants.MOSDETAIL_UPDATEFLAG_0);
 
-                // アクション履歴の登録 TODO
+                ActionHistories actionHistory = new ActionHistories();
+
+                actionHistory.setId(utilService.GetGuid());
+                actionHistory.setPlatformId(Constants.PLATFORMID_0001);
+                actionHistory.setCaseId(caseId);
+                actionHistory.setActionType("MediatiorResigned");
+                actionHistory.setCaseStage(Constants.NUM_1);
+                actionHistory.setUserId(uid);
+                actionHistory.setUserType(Constants.NUM_1);
+                actionHistory.setHaveFile(false);
+                actionHistory.setLastModifiedBy(uid);
+
+                Boolean insertFlag = commonService.InsertActionHistories(actionHistory, null, true, false);
+
+                if(!insertFlag){
+                    log.error(MessageConstants.C00018E);
+                }
 
                 // メール送信用関係者メアドの取得 TODO
                 withdrawalReturn.setCaseRelations(new CaseRelations());

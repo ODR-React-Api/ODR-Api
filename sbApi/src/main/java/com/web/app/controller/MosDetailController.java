@@ -41,9 +41,9 @@ public class MosDetailController {
     @GetMapping("/applyWithdraw")
     @ApiOperation("取り下げ済状態変更")
     @SuppressWarnings("rawtypes")
-    public Response applyWithdraw(@RequestParam String caseId) {
+    public Response applyWithdraw(@RequestParam("caseId") String caseId,@RequestParam("uid") String uid) {
         try {
-            WithdrawalReturn res = mosDetailService.applyWithdraw(caseId);
+            WithdrawalReturn res = mosDetailService.applyWithdraw(caseId,uid);
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,res);
         } catch (Exception e) {
             AjaxResult.fatal("error",e);

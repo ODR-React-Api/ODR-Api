@@ -4,6 +4,6 @@ import com.web.app.domain.MosDetail.WithdrawalReturn;
 
 public interface MosDetailService {
 
-    WithdrawalReturn applyWithdraw(String caseId);
+    WithdrawalReturn applyWithdraw(String caseId, String uid);
 
 }
