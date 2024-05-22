@@ -36,6 +36,7 @@ public class MosDetailController {
      * ケースの状態を取り下げに変更する。
      *
      * @param caseId 渡し項目.CaseId
+     * @param uid 渡し項目.uid
      * @return 変更結果
      */
     @GetMapping("/applyWithdraw")
