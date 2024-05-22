@@ -1,4 +1,4 @@
-﻿package com.web.app.domain.constants;
+package com.web.app.domain.constants;
 
 public class MessageConstants {
     public static final String C01001E = "ユーザーIDまたはパスワードが正しくありません。もう一度入力をお願いします。";
