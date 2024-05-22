@@ -1,6 +1,6 @@
 package com.web.app.service;
 
-import com.web.app.domain.QuesAnswer.Questionnaire_Mails;
+import com.web.app.domain.QuesAnswer.QuestionnaireMails;
 
 /**
  * アンケート回答画面
@@ -11,5 +11,5 @@ import com.web.app.domain.QuesAnswer.Questionnaire_Mails;
  */
 public interface QuesAnswerService {
     // アンケート情報取得
-    Questionnaire_Mails selectQuestionnaireData(String Id, String platformId);
+    QuestionnaireMails getQuestionnaires(String id, String platformId);
 }

@@ -16,7 +16,7 @@ import lombok.Data;
 
 @ApiModel
 @Data
-public class Questionnaire_Mails implements Serializable {
+public class QuestionnaireMails implements Serializable {
     
     private static final long serialVersionUID = 1L;
 

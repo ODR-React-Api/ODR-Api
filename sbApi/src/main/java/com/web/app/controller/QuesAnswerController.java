@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
-import com.web.app.domain.QuesAnswer.Questionnaire_Mails;
+import com.web.app.domain.QuesAnswer.QuestionnaireMails;
 import com.web.app.service.QuesAnswerService;
 import com.web.app.tool.AjaxResult;
 
@@ -25,14 +25,14 @@ import io.swagger.annotations.Api;
 public class QuesAnswerController {
 
     @Autowired
-    private QuesAnswerService getQuestionnairesService;
+    private QuesAnswerService quesAnswerService;
 
     @SuppressWarnings("rawtypes")
     @GetMapping("/getQuestionnaires")
-    public Response getQuestionnaires(String Id, String PlatformId) {
+    public Response getQuestionnaires(String id, String platformId) {
         try {
             // 確認画面用データ
-            Questionnaire_Mails allQuestionnaire = getQuestionnairesService.selectQuestionnaireData(Id, PlatformId);
+            QuestionnaireMails allQuestionnaire = quesAnswerService.getQuestionnaires(id, platformId);
 
             return AjaxResult.success("Success",allQuestionnaire);
 

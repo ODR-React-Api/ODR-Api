@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.web.app.domain.QuesAnswer.QuestionnaireData;
 import com.web.app.domain.QuesAnswer.QuestionnaireList;
-import com.web.app.domain.QuesAnswer.Questionnaire_Mails;
+import com.web.app.domain.QuesAnswer.QuestionnaireMails;
 import com.web.app.mapper.GetQuestionnairesMapper;
 import com.web.app.service.QuesAnswerService;
 
@@ -32,11 +32,12 @@ public class QuesAnswerServiceImpl implements QuesAnswerService {
      * @return アンケート情報取得必要なすべてのデータ
      */
     @Override
-    public Questionnaire_Mails selectQuestionnaireData(String Id, String platformId) {
+    public QuestionnaireMails getQuestionnaires(String id, String platformId) {
 
-        QuestionnaireData questionnaireData = getQuestionnairesMapper.questionnaieDataSearch(Id);
-        Questionnaire_Mails allQuestionnaire = new Questionnaire_Mails();
+        QuestionnaireMails allQuestionnaire = new QuestionnaireMails();
 
+        QuestionnaireData questionnaireData = getQuestionnairesMapper.questionnaieDataSearch(id);
+        
         // 確認画面用データ
         allQuestionnaire.setQuestionnaireData(questionnaireData);
 
