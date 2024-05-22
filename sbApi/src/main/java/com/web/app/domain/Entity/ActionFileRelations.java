@@ -6,14 +6,16 @@ import lombok.Data;
 
 @Data
 public class ActionFileRelations {
+
+    // ID
     private String Id;
-
+    // プラットフォームID
     private String PlatformId;
-
+    // 案件ID
     private String CaseId;
-
+    // アクション履歴ID
     private String ActionHistoryId;
-
+    // ファイルID
     private String FileId;
 
     private String Other01;
