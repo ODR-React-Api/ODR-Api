@@ -52,7 +52,7 @@ public class CommonServiceImpl implements CommonService {
      * 
      * @param actionHistories アクション履歴
      * @param fileId          ファイルId
-     * @param parametersFlag  Parametersのログインユーザ名があるフラグ 
+     * @param parametersFlag  Parametersのログインユーザ名があるフラグ
      * @param displayNameFlag 関係者内容取得するフラグ
      * @return true false
      */
@@ -73,26 +73,27 @@ public class CommonServiceImpl implements CommonService {
                 null,
                 actionHistories.getPlatformId());
 
-        if (odrUser != null && odrUser.Email != null && parametersFlag) {
-            DisplayNameAddResult displayNameAddResult = GetDisplayName(odrUser.LanguageId, actionHistories.PlatformId,
-                    odrUser.Email, odrUser.Uid);
+        if (odrUser != null && odrUser.getEmail() != null && parametersFlag) {
+            DisplayNameAddResult displayNameAddResult = GetDisplayName(odrUser.getLanguageId(),
+                    actionHistories.getPlatformId(),
+                    odrUser.getEmail(), odrUser.getUid());
 
             // 関係者内容取得 displayName
             if (!displayNameFlag) {
-                displayNameAddResult = GetDisplayFullName(odrUser.LanguageId,
-                        actionHistories.PlatformId, odrUser.Email,
+                displayNameAddResult = GetDisplayFullName(odrUser.getLanguageId(),
+                        actionHistories.getPlatformId(), odrUser.getEmail(),
                         null);
             }
 
             if (displayNameAddResult != null && displayNameAddResult.UserName != null) {
-                actionHistories.Parameters = displayNameAddResult.UserName;
+                actionHistories.setParameters(displayNameAddResult.UserName);
             }
         }
 
-        actionHistories.id = utilService.GetGuid();
-        actionHistories.ActionDateTime = new Date();
-        actionHistories.DeleteFlag = false;
-        actionHistories.LastModifiedDate = new Date();
+        actionHistories.setId(utilService.GetGuid());
+        actionHistories.setActionDateTime(new Date());
+        actionHistories.setDeleteFlag(false);
+        actionHistories.setLastModifiedDate(new Date());
 
         // アクション履歴新規登録
         int result = commonMapper.InsHistories(actionHistories);
@@ -101,21 +102,21 @@ public class CommonServiceImpl implements CommonService {
         }
 
         // 「アクション履歴-添付ファイルリレーション」新規登録
-        if (actionHistories.HaveFile == true) {
+        if (actionHistories.getHaveFile() == true) {
             for (String stringFileId : fileId) {
                 ActionFileRelations actionFileRelations = new ActionFileRelations();
 
-                actionFileRelations.Id = utilService.GetGuid();
-                actionFileRelations.PlatformId = actionHistories.PlatformId;
-                actionFileRelations.CaseId = actionHistories.CaseId;
-                actionFileRelations.ActionHistoryId = actionHistories.id;
-                actionFileRelations.FileId = stringFileId;
-                actionFileRelations.DeleteFlag = false;
-                actionFileRelations.LastModifiedDate = new Date();
-                actionFileRelations.LastModifiedBy = actionHistories.LastModifiedBy;
+                actionFileRelations.setId(utilService.GetGuid());
+                actionFileRelations.setPlatformId(actionHistories.getPlatformId());
+                actionFileRelations.setCaseId(actionHistories.getCaseId());
+                actionFileRelations.setActionHistoryId(actionHistories.getId());
+                actionFileRelations.setFileId(stringFileId);
+                actionFileRelations.setDeleteFlag(false);
+                actionFileRelations.setLastModifiedDate(new Date());
+                actionFileRelations.setLastModifiedBy(actionHistories.getLastModifiedBy());
 
                 ActionFileRelations actionFileRelationsCheckNull = commonMapper
-                        .FindFileRelations(actionFileRelations.Id);
+                        .FindFileRelations(actionFileRelations.getId());
 
                 if (actionFileRelationsCheckNull != null) {
                     return false;
@@ -143,7 +144,7 @@ public class CommonServiceImpl implements CommonService {
     private DisplayNameAddResult GetDisplayName(String languageId, String platformId, String email, String uid) {
         DisplayNameAddResult displayNameAddResult = new DisplayNameAddResult();
 
-        if ((email != null || email != "") && (uid != null || uid != "")) {
+        if ((email == null || email == "") && (uid == null || uid == "")) {
             return null;
         }
         DisplayNameResult displayNameResult = this.commonMapper.FindDisplayName(platformId, email, uid);

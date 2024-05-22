@@ -2,30 +2,33 @@ package com.web.app.domain.Entity;
 
 import java.util.Date;
 
+import lombok.Data;
+
+@Data
 public class ActionFileRelations {
-    public String Id;
+    private String Id;
 
-    public String PlatformId;
+    private String PlatformId;
 
-    public String CaseId;
+    private String CaseId;
 
-    public String ActionHistoryId;
+    private String ActionHistoryId;
 
-    public String FileId;
+    private String FileId;
 
-    public String Other01;
+    private String Other01;
 
-    public String Other02;
+    private String Other02;
 
-    public String Other03;
+    private String Other03;
 
-    public String Other04;
+    private String Other04;
 
-    public String Other05;
+    private String Other05;
 
-    public boolean DeleteFlag;
+    private boolean DeleteFlag;
 
-    public Date LastModifiedDate;
+    private Date LastModifiedDate;
 
-    public String LastModifiedBy;
+    private String LastModifiedBy;
 }

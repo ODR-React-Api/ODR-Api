@@ -2,8 +2,6 @@ package com.web.app.controller;
 
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +25,6 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/Common")
 public class CommonController {
-    @Autowired
-    DataSource dataSource;
 
     @Autowired
     private CommonService commonService;
@@ -49,7 +45,6 @@ public class CommonController {
     public Response GetUserDataFromCaseIdentity(Boolean identity, String languageId, String platformId, String caseId)
             throws Exception {
         try {
-            System.out.println("获取的数据库连接为:" + dataSource.getConnection());
             User user = commonService.GetUserDataFromCaseIdentity(identity, languageId, platformId, caseId);
 
             return AjaxResult.success(Constants.MSG_SUCCESS, user);

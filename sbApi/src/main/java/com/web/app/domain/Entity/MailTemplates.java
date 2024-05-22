@@ -13,45 +13,45 @@ import lombok.Data;
 public class MailTemplates {
 
     // ID
-    public String Id;
+    private String Id;
 
     // プラットフォームID
-    public String PlatformId;
+    private String PlatformId;
 
     // テンプレート番号
-    public String TemplateNo;
+    private String TemplateNo;
 
-    public String SendFromMail;
+    private String SendFromMail;
 
     // 送信元名
-    public String SendFromName;
+    private String SendFromName;
 
     // タイトル
-    public String Subject;
+    private String Subject;
 
     // HTML内容
-    public String HtmlContent;
+    private String HtmlContent;
 
     // Plain本文内容
-    public String TextContent;
+    private String TextContent;
 
     //言語ID
-    public String LanguageId;
+    private String LanguageId;
 
-    public String Other01;
+    private String Other01;
 
-    public String Other02;
+    private String Other02;
 
-    public String Other03;
+    private String Other03;
 
-    public String Other04;
+    private String Other04;
 
-    public String Other05;
+    private String Other05;
 
-    public Integer DeleteFlag;
+    private Integer DeleteFlag;
 
-    public String LastModifiedDate;
+    private String LastModifiedDate;
 
-    public String LastModifiedBy;
+    private String LastModifiedBy;
 
 }

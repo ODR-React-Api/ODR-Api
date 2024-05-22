@@ -5,45 +5,45 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class ActionHistories  {
+public class ActionHistories {
 
-    public String id;
+    private String id;
 
-    public String PlatformId;
+    private String PlatformId;
 
-    public String CaseId;
+    private String CaseId;
 
-    public String ActionType;
+    private String ActionType;
 
-    public Integer CaseStage;
+    private Integer CaseStage;
 
-    public String UserId;
+    private String UserId;
 
-    public Integer UserType;
+    private Integer UserType;
 
-    public Date ActionDateTime;
+    private Date ActionDateTime;
 
-    public String MessageGroupId;
+    private String MessageGroupId;
 
-    public String MessageId;
+    private String MessageId;
 
-    public Boolean HaveFile;
+    private Boolean HaveFile;
 
-    public String Parameters;
+    private String Parameters;
 
-    public String Other01;
+    private String Other01;
 
-    public String Other02;
+    private String Other02;
 
-    public String Other03;
+    private String Other03;
 
-    public String Other04;
+    private String Other04;
 
-    public String Other05;
+    private String Other05;
 
-    public Boolean DeleteFlag;
+    private Boolean DeleteFlag;
 
-    public Date LastModifiedDate;
+    private Date LastModifiedDate;
 
-    public String LastModifiedBy;
+    private String LastModifiedBy;
 }
