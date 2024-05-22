@@ -106,6 +106,20 @@ public class Constants {
     
     //交渉期限日変更回数
     public static final int NEGOTIATION_ENDDATE_CHANGE_COUNT_0 = 0;
+    
+    //反訴への回答取得
+    public static final int CLAIM_REPLIES_CNT_0 = 0;
+    public static final int CLAIM_REPLIES_DRAFT_FLG_0 = 0;
+    public static final int CLAIM_REPLIES_DRAFT_FLG_1 = 1;
+    
+    //回答の内容取得
+    public static final int REPLIES_DATA_CNT_0 = 0;
+    public static final int REPLIES_DRAFT_FLG_0 = 0;
+    public static final int REPLIES_DRAFT_FLG_1 = 1;
+    
+    
+
+
 
     // 2024/05/16 DUC 楊バイバイ 追加end
 

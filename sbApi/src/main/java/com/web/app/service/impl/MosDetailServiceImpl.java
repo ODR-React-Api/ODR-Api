@@ -7,6 +7,7 @@ import com.web.app.service.MosDetailService;
 import com.web.app.domain.Entity.Files;
 import com.web.app.domain.MosDetail.CaseClaimrepliesMosDetail;
 import com.web.app.domain.MosDetail.CaseRepliesMosDetail;
+import com.web.app.domain.constants.Constants;
 import com.web.app.mapper.GetCaseClaimrepliesMosDetailMapper;
 import com.web.app.mapper.GetCaseRepliesMosDetailMapper;
 
@@ -42,15 +43,15 @@ public class MosDetailServiceImpl implements MosDetailService{
         // 下書き保存データを取得 個数
         int dataCnt = getCaseRepliesMosDetailMapper.selectCasereplies(caseId);
         //draftFlgを設定して、画面へ返す。
-        int draftFlg = 0;
-        if(dataCnt > 0) {
-            draftFlg = 1;
+        int draftFlg;
+        if(dataCnt > Constants.CLAIM_REPLIES_CNT_0) {
+            draftFlg = Constants.REPLIES_DRAFT_FLG_0;
         } else {
-            draftFlg = 0;
+            draftFlg = Constants.REPLIES_DRAFT_FLG_1;
         }      
         
         //回答・反訴の内容の取得
-        if(dataCnt == 0) {
+        if(dataCnt == Constants.CLAIM_REPLIES_CNT_0) {
             caseRepliesMosDetail = getCaseRepliesMosDetailMapper.getCaserepliesAnswerContent(caseId);    
         }
         
@@ -82,15 +83,15 @@ public class MosDetailServiceImpl implements MosDetailService{
         // 下書き保存データを取得 個数
         int claimrepliesCnt = getCaseClaimrepliesMosDetailMapper.selectCaseClaimreplies(caseId);
         //claimrepliesDraftFlgを設定して、画面へ返す。
-        int claimrepliesDraftFlg = 0;
-        if(claimrepliesCnt > 0) {
-            claimrepliesDraftFlg = 1;
+        int claimrepliesDraftFlg;
+        if(claimrepliesCnt > Constants.CLAIM_REPLIES_CNT_0) {
+            claimrepliesDraftFlg = Constants.CLAIM_REPLIES_DRAFT_FLG_0;
         } else {
-            claimrepliesDraftFlg = 0;
+            claimrepliesDraftFlg = Constants.CLAIM_REPLIES_DRAFT_FLG_1;
         }      
 
         //回答・反訴の内容の取得
-        if(claimrepliesCnt == 0) {
+        if(claimrepliesCnt == Constants.CLAIM_REPLIES_CNT_0) {
             caseClaimrepliesMosDetail = getCaseClaimrepliesMosDetailMapper.getCaseClaimrepliesMosDetailContent(caseId);    
         }
 
