@@ -23,7 +23,7 @@ public interface AnswerLoginService {
     List<PetitionsData> getPetitionData(String caseId, String plateFormId);
 
     /**
-     * 申立データ取得API
+     * API_プラットフォ情報取得
      *
      * @param plateFormId 画面のプラットフォームID
      * @return プラットフォ情報

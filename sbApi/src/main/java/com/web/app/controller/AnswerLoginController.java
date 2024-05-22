@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
 public class AnswerLoginController {
 
     @Autowired
-    private AnswerLoginService getPetitionsDataService;
+    private AnswerLoginService answerLoginService;
 
     /**
      * 申立データ取得API
@@ -47,7 +47,7 @@ public class AnswerLoginController {
     public Response getPetitionsData(@RequestParam("caseId") String caseId,@RequestParam("plateFormId") String plateFormId) {
         try {
             List<PetitionsData> list;
-            list = getPetitionsDataService.getPetitionData(caseId, plateFormId);
+            list = answerLoginService.getPetitionData(caseId, plateFormId);
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,list);
         } catch (Exception e) {
             AjaxResult.fatal("error",e);
@@ -56,7 +56,7 @@ public class AnswerLoginController {
     }
 
     /**
-     * 申立データ取得API
+     * API_プラットフォ情報取得
      *
      * @param plateFormId 画面のプラットフォームID
      * @return プラットフォ情報
@@ -66,7 +66,7 @@ public class AnswerLoginController {
     @SuppressWarnings("rawtypes")
     public Response GetPetitionDataUser(@RequestParam String plateFormId) {
         try {
-            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,getPetitionsDataService.getPetitionDataUser(plateFormId));
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,answerLoginService.getPetitionDataUser(plateFormId));
         } catch (Exception e) {
             AjaxResult.fatal("error",e);
             return null;
