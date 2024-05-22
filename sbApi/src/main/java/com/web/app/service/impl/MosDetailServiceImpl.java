@@ -27,7 +27,7 @@ import com.web.app.service.UtilService;
 @Service
 public class MosDetailServiceImpl implements MosDetailService {
 
-    private static final Logger log = LogManager.getLogger(UserInfoConfirmServiceImpl.class);
+    private static final Logger log = LogManager.getLogger(MosDetailServiceImpl.class);
 
     @Autowired
     private ApplyWithdrawMapper applyWithdrawMapper;
