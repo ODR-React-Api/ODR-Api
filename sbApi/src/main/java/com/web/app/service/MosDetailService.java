@@ -11,5 +11,5 @@ import com.web.app.domain.MosDetail.ParticipatedStatusChangeResultInfo;
  */
 public interface MosDetailService {
     // 参加済状態変更
-    ParticipatedStatusChangeResultInfo participatedStatusSearch(String caseId);
+    ParticipatedStatusChangeResultInfo participatedStatusSearch(String caseId, String uId);
 }
