@@ -1,7 +1,6 @@
 package com.web.app.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,7 +67,7 @@ public class MediationsMakeController {
      */
     @ApiOperation("調停案データ更新")
     @PostMapping("/saveMediton")
-    public Response SaveMediton(@RequestBody ResultMediation resultMediation, HttpServletRequest request,HttpServletResponse response){
+    public Response SaveMediton(@RequestBody ResultMediation resultMediation){
         try {
             if (mediationsMakeService.isExistMediations(resultMediation.getMediationId()) != 0) {
                 mediationsMakeService.saveMediton(resultMediation);
