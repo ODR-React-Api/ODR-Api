@@ -50,8 +50,6 @@ public class MediationsConConServiceImpl implements MediationsConConService {
     @Override
     public List<MediationsTemplate> findMediationsTemplate(String platformId, String languageId, Integer templateType) {
         List<MediationsTemplate> list = new ArrayList<MediationsTemplate>();
-        // 初期画面templateType=1 調停案を提出templateType=4
-        templateType = 4;
         list = getMediationsTemplateMapper.findMediationsTemplate(platformId, languageId, templateType);
         return list;
     }

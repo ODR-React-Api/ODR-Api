@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.app.domain.MedDateExtension.CasesForMediationEndDate;
 import com.web.app.mapper.UpdCasesForMediationEndDateMapper;
 import com.web.app.service.MedDateExtensionService;
 
@@ -36,12 +35,10 @@ public class MedDateExtensionServiceImpl implements MedDateExtensionService {
      */
     @Override
     @Transactional
-    public int updCasesForMediationEndDate(CasesForMediationEndDate casesForMediationEndDate) {
-        Date mediationEndDate = casesForMediationEndDate.getMediationEndDate();
+    public int updCasesForMediationEndDate(Date mediationEndDate, String cid) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         String date = sdf.format(mediationEndDate);
 
-        return updCasesForMediationEndDateMapper.setUpdCasesForMediationEndDate(date,
-                casesForMediationEndDate.getCid());
+        return updCasesForMediationEndDateMapper.setUpdCasesForMediationEndDate(date, cid);
     }
 }

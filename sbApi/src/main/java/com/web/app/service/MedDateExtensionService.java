@@ -1,6 +1,6 @@
 package com.web.app.service;
 
-import com.web.app.domain.MedDateExtension.CasesForMediationEndDate;
+import java.util.Date;
 
 /**
  * S29_調停期日延長画面
@@ -13,5 +13,5 @@ import com.web.app.domain.MedDateExtension.CasesForMediationEndDate;
  */
 public interface MedDateExtensionService {
     // API_案件情報更新
-    int updCasesForMediationEndDate(CasesForMediationEndDate casesForMediationEndDate);
+    int updCasesForMediationEndDate(Date mediationEndDate, String cid);
 }
