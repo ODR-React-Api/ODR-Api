@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.web.app.service.MosDetailService;
 import com.web.app.domain.Entity.Files;
+import com.web.app.domain.MosDetail.CaseClaimrepliesMosDetail;
 import com.web.app.domain.MosDetail.CaseRepliesMosDetail;
+import com.web.app.mapper.GetCaseClaimrepliesMosDetailMapper;
 import com.web.app.mapper.GetCaseRepliesMosDetailMapper;
 
 /**
@@ -22,6 +24,8 @@ public class MosDetailServiceImpl implements MosDetailService{
 
     @Autowired
     private GetCaseRepliesMosDetailMapper getCaseRepliesMosDetailMapper;
+    @Autowired
+    private GetCaseClaimrepliesMosDetailMapper getCaseClaimrepliesMosDetailMapper;
     
     /**
      * 回答の内容取得
@@ -44,12 +48,13 @@ public class MosDetailServiceImpl implements MosDetailService{
         } else {
             draftFlg = 0;
         }      
-        caseRepliesMosDetail.setDraftFlg(draftFlg);
-
+        
         //回答・反訴の内容の取得
         if(dataCnt == 0) {
             caseRepliesMosDetail = getCaseRepliesMosDetailMapper.getCaserepliesAnswerContent(caseId);    
         }
+        
+        caseRepliesMosDetail.setDraftFlg(draftFlg);
 
         //添付資料の取得
         if (caseRepliesMosDetail != null) {
@@ -59,5 +64,45 @@ public class MosDetailServiceImpl implements MosDetailService{
         }
 
         return caseRepliesMosDetail;
+    }      
+
+    
+    /**
+     * 反訴への回答取得
+     * API_GetCaseClaimrepliesMosDetail
+     * 
+     * @param caseId 渡し項目.CaseId
+     * @return caseClaimrepliesMosDetail API「反訴への回答取得」を呼び出すData
+     */
+    @Override
+    public CaseClaimrepliesMosDetail getCaseClaimrepliesMosDetail(String caseId) {
+
+        CaseClaimrepliesMosDetail caseClaimrepliesMosDetail = new CaseClaimrepliesMosDetail();
+
+        // 下書き保存データを取得 個数
+        int claimrepliesCnt = getCaseClaimrepliesMosDetailMapper.selectCaseClaimreplies(caseId);
+        //claimrepliesDraftFlgを設定して、画面へ返す。
+        int claimrepliesDraftFlg = 0;
+        if(claimrepliesCnt > 0) {
+            claimrepliesDraftFlg = 1;
+        } else {
+            claimrepliesDraftFlg = 0;
+        }      
+
+        //回答・反訴の内容の取得
+        if(claimrepliesCnt == 0) {
+            caseClaimrepliesMosDetail = getCaseClaimrepliesMosDetailMapper.getCaseClaimrepliesMosDetailContent(caseId);    
+        }
+
+        caseClaimrepliesMosDetail.setClaimrepliesDraftFlg(claimrepliesDraftFlg);
+
+        //添付資料の取得
+        if (caseClaimrepliesMosDetail != null) {
+            List<Files> files = getCaseClaimrepliesMosDetailMapper.getFiles(caseId);
+            // 添付資料リストの設定
+            caseClaimrepliesMosDetail.setFile(files);
+        }
+
+        return caseClaimrepliesMosDetail;
     }      
 }

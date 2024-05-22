@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import com.web.app.domain.Response;
+import com.web.app.domain.MosDetail.CaseClaimrepliesMosDetail;
 import com.web.app.domain.MosDetail.CaseRepliesMosDetail;
 import com.web.app.service.MosDetailService;
 import com.web.app.tool.AjaxResult;
@@ -30,7 +31,7 @@ public class MosDetailController {
 
     @Autowired
     private MosDetailService mosDetailService;
-    
+
     /**
      * 回答の内容取得
      * API_回答の内容取得
@@ -46,10 +47,33 @@ public class MosDetailController {
         try {
             // 回答の内容取得
             CaseRepliesMosDetail returnCaseRepliesMosDetail = mosDetailService
-              .getCaseRepliesMosDetail(caseRepliesMosDetail.getCaseId());
+                    .getCaseRepliesMosDetail(caseRepliesMosDetail.getCaseId());
             return AjaxResult.success("回答の内容取得成功!", returnCaseRepliesMosDetail);
         } catch (Exception e) {
             AjaxResult.fatal("回答の内容取得失敗!", e);
+            return null;
+        }
+    }
+
+    /**
+     * 反訴への回答取得
+     * API_反訴への回答取得
+     * 渡し項目.CaseIdを引数に、DBよりケースに該当する反訴への回答を取得して、画面へ返す。
+     * 
+     * @param caseClaimrepliesMosDetail 渡し項目.CaseId
+     * @return Response API「反訴への回答取得」を呼び出すData
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("API_反訴への回答取得")
+    @GetMapping("/GetCaseClaimrepliesMosDetail")
+    public Response getCaseClaimrepliesMosDetail(@RequestBody CaseClaimrepliesMosDetail caseClaimrepliesMosDetail) {
+        try {
+            // 反訴への回答取得
+            CaseClaimrepliesMosDetail returnCaseClaimrepliesMosDetail = mosDetailService
+                    .getCaseClaimrepliesMosDetail(caseClaimrepliesMosDetail.getCaseId());
+            return AjaxResult.success("反訴への回答取得成功!", returnCaseClaimrepliesMosDetail);
+        } catch (Exception e) {
+            AjaxResult.fatal("反訴への回答取得失敗!", e);
             return null;
         }
     }

@@ -2,32 +2,29 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.GetCaseRepliesMosDetailMapper">
-    <!--  API_回答の内容取得 -->
+<mapper namespace="com.web.app.mapper.GetCaseClaimrepliesMosDetailMapper">
+    <!--  API_反訴への回答取得 -->
 
     <!-- 下書き保存データを取得 個数-->
-    <resultMap id="BaseResultMap" type="com.web.app.domain.MosDetail.CaseRepliesMosDetail">
+    <resultMap id="BaseResultMap" type="com.web.app.domain.MosDetail.CaseClaimrepliesMosDetail">
     </resultMap>
-    <select id="selectCasereplies" resultType="int">
+    <select id="selectCaseClaimreplies" resultType="int">
         SELECT COUNT(*) 
-        FROM react_use.case_replies
+        FROM react_use.case_claimreplies
         WHERE CaseId = #{caseId}
         AND Status = 0
         AND DeleteFlag = 0
     </select>
 
-    <!--  回答・反訴の内容の取得 -->
-    <resultMap id="caserepliesAnswerContent" type="com.web.app.domain.MosDetail.CaseRepliesMosDetail">
+    <!--  反訴への回答内容の取得 -->
+    <resultMap id="caseClaimrepliesMosDetailContent" type="com.web.app.domain.MosDetail.CaseClaimrepliesMosDetail">
     </resultMap>
-    <select id="getCaserepliesAnswerContent" resultMap="caserepliesAnswerContent">
+    <select id="getCaseClaimrepliesMosDetailContent" resultMap="caseClaimrepliesMosDetailContent">
         SELECT  CaseId,
                 Status,
-                ReplyType,
                 ReplyContext,
-                HaveCounterClaim,
-                CounterClaimContext,
                 LastModifiedDate 
-        FROM react_use.case_replies 
+        FROM react_use.case_claimreplies 
         WHERE CaseId = #{caseId}
         AND   Status != 0
         AND   DeleteFlag = 0
@@ -43,8 +40,7 @@
         FROM case_file_relations, files
         WHERE
             case_file_relations.CaseId = #{caseId}
-        AND (case_file_relations.RelationType = 1
-        OR  case_file_relations.RelationType = 2)
+        AND case_file_relations.RelationType = 3
         AND case_file_relations.DeleteFlag = 0
         AND files.id = case_file_relations.fileId
         AND files.DeleteFlag = 0
