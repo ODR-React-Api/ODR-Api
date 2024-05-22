@@ -24,7 +24,7 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
     private UtilService utilService;
 
     @Autowired
-    private InsertFileInfoMapper medUserChangeMapper;
+    private InsertFileInfoMapper insertFileInfoMapper;
 
     /**
      * ファイル関連情報更新API
@@ -35,12 +35,12 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
      */
     @Transactional
     @Override
-    public int insertFileInfo (InsertFileInfo insertFileInfo) throws Exception {
+    public int insertFileInfo(InsertFileInfo insertFileInfo) throws Exception {
         insertFileInfo.setFileId(utilService.GetGuid());
         insertFileInfo.setCaseFileRelationsId(utilService.GetGuid());
 
-        int fileInsertNum = medUserChangeMapper.insertFile(insertFileInfo);
-        int caseFileRelationsInsertNum = medUserChangeMapper.insertCaseFileRelations(insertFileInfo);
+        int fileInsertNum = insertFileInfoMapper.insertFile(insertFileInfo);
+        int caseFileRelationsInsertNum = insertFileInfoMapper.insertCaseFileRelations(insertFileInfo);
 
         if(fileInsertNum == 1 && caseFileRelationsInsertNum == 1) {
             return 1;
