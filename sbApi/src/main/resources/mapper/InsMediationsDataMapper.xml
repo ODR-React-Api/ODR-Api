@@ -26,12 +26,12 @@
             on r.fileId = f.id
         WHERE
             c.CaseId =#{CaseId} AND
-            c.PlatformId ='001'AND
+            c.PlatformId =#{PlatformId}AND
             c.DeleteFlag = 0  AND
-            r.PlatformId='001'AND
+            r.PlatformId=#{PlatformId}AND
             r.RelationType =5 AND
             r.DeleteFlag = 0 AND
-            r.PlatformId='001'
+            r.PlatformId=#{PlatformId}
     </select>
 
     <insert id="insMediationsData" parameterType="com.web.app.domain.mediationsMake.InsMediationsData">
