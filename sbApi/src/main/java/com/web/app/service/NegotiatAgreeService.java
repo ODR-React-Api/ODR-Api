@@ -9,7 +9,6 @@ import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;;
  * @since 2024/05/13
  * @version 1.0
  */
-
 public interface NegotiatAgreeService {
 
     // 和解案合意更新
