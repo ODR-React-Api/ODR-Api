@@ -17,7 +17,7 @@ import com.web.app.tool.AjaxResult;
  * @author DUC 賈文志
  * @since 2024/05/13
  * @version 1.0
- */
+ */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 
 @CrossOrigin(origins = "*")
 @Api(tags = "和解案合意更新模块")
@@ -27,7 +27,7 @@ public class NegotiatAgreeController {
 
     @Autowired
     private NegotiatAgreeService negotiatAgreeService;
-
+                                          
     /**
      * 
      * 和解案合意更新
@@ -42,8 +42,8 @@ public class NegotiatAgreeController {
     public Response UpdNegotiatAgree(@RequestBody UpdNegotiatAgree updNegotiatAgree) {
         try {
             // 和解案合意更新
-            int updateCount = negotiatAgreeService.updNegotiatAgree(updNegotiatAgree);
-            if (updateCount == Constants.NUM_1 ) {
+            Boolean updateCount = negotiatAgreeService.updNegotiatAgree(updNegotiatAgree);
+            if (updateCount == true) {
                 return AjaxResult.success("和解案合意更新成功");
             }else{
                 return AjaxResult.success("和解案合意更新失败");

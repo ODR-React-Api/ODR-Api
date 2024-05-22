@@ -14,5 +14,37 @@
             LastModifiedBy = #{LastModifiedBy}
         WHERE
             id = #{id}
-    </update> 
+    </update>
+    
+    <select id="UserSearch" resultType="com.web.app.domain.Entity.CaseRelations">
+    SELECT
+        PetitionUserInfo_Email,
+        Agent1_Email,
+        Agent2_Email,
+        Agent3_Email,
+        Agent4_Email,
+        Agent5_Email,
+        TraderUserEmail,
+        TraderAgent1_UserEmail,
+        TraderAgent2_UserEmail,
+        TraderAgent3_UserEmail,
+        TraderAgent4_UserEmail,
+        TraderAgent5_UserEmail,
+        MediatorUserEmail
+    FROM
+        case_relations
+    WHERE
+        CaseId = #{CaseId}
+        AND DeleteFlag = 0
+</select> 
+
+<select id="CaseTitleSearch" resultType="String">
+    SELECT
+        CaseTitle
+    FROM
+        cases
+    WHERE
+        cid = #{Cid}
+</select>
+
 </mapper>

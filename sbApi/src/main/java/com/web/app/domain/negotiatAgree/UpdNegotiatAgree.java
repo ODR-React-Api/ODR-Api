@@ -1,6 +1,8 @@
 package com.web.app.domain.negotiatAgree;
 
 import java.io.Serializable;
+import java.sql.Date;
+
 import lombok.Data;
 
 /**
@@ -12,12 +14,15 @@ import lombok.Data;
  */
 @Data
 public class UpdNegotiatAgree implements Serializable {
-    
+
     // 缓冲
     private static final long serialVersionUID = 1L;
 
-    // ID
+    // 和解案id
     private String id;
+
+    // 案件ID
+    private String CaseId;
 
     // 和解案 内容
     private String HtmlContext;
@@ -28,10 +33,19 @@ public class UpdNegotiatAgree implements Serializable {
     // 合意日
     private String AgreementDate;
 
-    // システム日付
+    // 'システム日付
     private String LastModifiedDate;
 
-    // ログインユーザ
+    // 'ログインユーザ
     private String LastModifiedBy;
+
+    // メールアドレス
+    private String Email;
+
+    // 'ログインユーザ
+    private String Uid;
+    
+    // プラットフォームID
+    private String PlatformId;
 
 }

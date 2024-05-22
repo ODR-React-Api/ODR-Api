@@ -13,6 +13,6 @@ import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;;
 public interface NegotiatAgreeService {
 
     // 和解案合意更新
-    int updNegotiatAgree(UpdNegotiatAgree updNegotiatAgree);
+    Boolean updNegotiatAgree(UpdNegotiatAgree updNegotiatAgree);
 
 }
