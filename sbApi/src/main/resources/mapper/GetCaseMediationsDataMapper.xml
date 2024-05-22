@@ -4,10 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetCaseMediationsDataMapper">
     <!-- API_調停内容取得 -->
-    <resultMap id="caseMediationsMap" type="com.web.app.domain.Entity.CaseMediations">
-    </resultMap>
     <!-- 調停内容の取得 -->
-    <select id="getCaseMediations" resultMap="caseMediationsMap">
+    <select id="getCaseMediations" resultType="com.web.app.domain.Entity.CaseMediations">
         SELECT
             CaseId,
             Status,
@@ -25,10 +23,8 @@
         AND DeleteFlag = 0
     </select>
 
-    <resultMap id="filesMap" type="com.web.app.domain.Entity.Files">
-    </resultMap>
     <!-- 添付資料の取得 -->
-    <select id="getFiles" resultMap="filesMap">
+    <select id="getFiles" resultType="com.web.app.domain.Entity.Files">
         SELECT
             files.FileName,
             files.FileUrl

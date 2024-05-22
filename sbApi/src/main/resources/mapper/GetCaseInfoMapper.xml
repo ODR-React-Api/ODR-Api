@@ -4,10 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetCaseInfoMapper">
     <!-- API_案件状態取得 -->
-    <resultMap id="casesDataMap" type="com.web.app.domain.MosDetail.CasesData">
-    </resultMap>
     <!-- 該当案件のステータスを取得 -->
-    <select id="getCasesData" resultMap="casesDataMap">
+    <select id="getCasesData" resultType="com.web.app.domain.MosDetail.CasesData">
         SELECT
             cases.cid,
             cases.CaseStage,
@@ -42,10 +40,8 @@
         AND case_mediations.DeleteFlag = 0
     </select>
 
-    <resultMap id="masterPlatformsMap" type="com.web.app.domain.Entity.MasterPlatforms">
-    </resultMap>
     <!-- 利用モジュール状況取得 -->
-    <select id="getPhases" resultMap="masterPlatformsMap">
+    <select id="getPhases" resultType="com.web.app.domain.Entity.MasterPlatforms">
         SELECT
             Phase_negotiation,
             Phase_mediation,
@@ -57,10 +53,8 @@
         AND DeleteFlag = 0
     </select>
 
-    <resultMap id="odrUsersMap" type="com.web.app.domain.Entity.OdrUsers">
-    </resultMap>
     <!-- チュートリアル表示制御取得 -->
-    <select id="getShowTuritor" resultMap="odrUsersMap">
+    <select id="getShowTuritor" resultType="com.web.app.domain.Entity.OdrUsers">
         SELECT
             ShowTuritor1,
             ShowTuritor2,
