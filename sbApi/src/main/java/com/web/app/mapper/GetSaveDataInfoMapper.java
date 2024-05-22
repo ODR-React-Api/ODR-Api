@@ -13,7 +13,6 @@ import com.web.app.domain.MosList.DraftSavingDate;
  */
 @Mapper
 public interface GetSaveDataInfoMapper {
-
     /**
      * テーブルより下書き保存のデータを取得する。
      *
@@ -21,5 +20,4 @@ public interface GetSaveDataInfoMapper {
      * @return 関連ユーザの下書き保存のデータ
      */
     DraftSavingDate getSaveDataInfo(String uid);
-
 }
