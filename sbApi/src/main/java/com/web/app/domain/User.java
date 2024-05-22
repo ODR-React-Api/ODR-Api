@@ -15,35 +15,35 @@ import lombok.Data;
 @ApiModel // 声明当前对象是用来封装数据的对象
 @Data
 public class User implements Serializable {
-  // @ApiModelProperty在文档中介绍当前对象作为方法参数时，介绍当前属性
-  @ApiModelProperty(name = "id", value = "主键", dataType = "Integer", required = true)
-  private Integer id;
+    // @ApiModelProperty在文档中介绍当前对象作为方法参数时，介绍当前属性
+    @ApiModelProperty(name = "id", value = "主键", dataType = "Integer", required = true)
+    private Integer id;
 
-  @ApiModelProperty(name = "name", value = "用户名", dataType = "String", required = true)
-  private String name;
+    @ApiModelProperty(name = "name", value = "用户名", dataType = "String", required = true)
+    private String name;
 
-  @ApiModelProperty(name = "portrait", value = "用户头像地址", dataType = "String", required = false)
-  private String portrait;
+    @ApiModelProperty(name = "portrait", value = "用户头像地址", dataType = "String", required = false)
+    private String portrait;
 
-  private String phone;
+    private String phone;
 
-  private String password;
+    private String password;
 
-  private String regIp;
+    private String regIp;
 
-  private Boolean accountNonExpired;
+    private Boolean accountNonExpired;
 
-  private Boolean credentialsNonExpired;
+    private Boolean credentialsNonExpired;
 
-  private Boolean accountNonLocked;
+    private Boolean accountNonLocked;
 
-  private String status;
+    private String status;
 
-  private Boolean isDel;
+    private Boolean isDel;
 
-  private Date createTime;
+    private Date createTime;
 
-  private Date updateTime;
+    private Date updateTime;
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 }
