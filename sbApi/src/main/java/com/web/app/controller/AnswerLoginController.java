@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
-import com.web.app.domain.AnswerLogin.PetitionDataUser;
 import com.web.app.domain.AnswerLogin.PetitionsData;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.AnswerLoginService;
@@ -32,13 +31,13 @@ import io.swagger.annotations.ApiOperation;
 public class AnswerLoginController {
 
     @Autowired
-    AnswerLoginService getPetitionsDataService;
+    private AnswerLoginService getPetitionsDataService;
 
     /**
      * 申立データ取得API
      *
-     * @param caseId      セッション情報の案件ID
-     * @param plateFormId セッション情報のプラットフォームID
+     * @param caseId      画面の案件ID
+     * @param plateFormId 画面のプラットフォームID
      * @return 申立データ取得結果
      */
     @ApiOperation("申立データ取得API")
@@ -58,7 +57,7 @@ public class AnswerLoginController {
     /**
      * 申立データ取得API
      *
-     * @param plateFormId セッション情報のプラットフォームID
+     * @param plateFormId 画面のプラットフォームID
      * @return プラットフォ情報
      */
     @ApiOperation("案件別個人情報リレーションデータ取得(申立人)")

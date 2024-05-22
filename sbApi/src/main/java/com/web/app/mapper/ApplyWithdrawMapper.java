@@ -17,7 +17,7 @@ public interface ApplyWithdrawMapper {
     /**
      * 取り下げ対象ケースの状態の判定
      *
-     * @param caseId 渡し項目.CaseId
+     * @param caseId 画面.CaseId
      * @return cases.cidとcases.CaseStage
      */
     Withdrawal getCaseStage(String caseId);
@@ -25,7 +25,7 @@ public interface ApplyWithdrawMapper {
     /**
      * ケース状態の更新
      *
-     * @param caseId 渡し項目.CaseId
+     * @param caseId 画面.CaseId
      * @return 結果の更新
      */
     int updateWithdrawal(String cid);

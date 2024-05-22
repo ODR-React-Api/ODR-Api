@@ -42,7 +42,7 @@ public class AnswerLoginServiceImpl implements AnswerLoginService{
     /**
      * 申立データ取得API
      *
-     * @param plateFormId セッション情報のプラットフォームID
+     * @param plateFormId 画面のプラットフォームID
      * @return プラットフォ情報
      */
     @Override

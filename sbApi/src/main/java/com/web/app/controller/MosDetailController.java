@@ -38,10 +38,10 @@ public class MosDetailController {
      * @param caseId 渡し項目.CaseId
      * @return 変更結果
      */
-    @GetMapping("/withdrawal")
+    @GetMapping("/applyWithdraw")
     @ApiOperation("取り下げ済状態変更")
     @SuppressWarnings("rawtypes")
-    public Response getMethodName(@RequestParam String caseId) {
+    public Response applyWithdraw(@RequestParam String caseId) {
         try {
             WithdrawalReturn res = mosDetailService.applyWithdraw(caseId);
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,res);

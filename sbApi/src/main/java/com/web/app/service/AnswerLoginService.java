@@ -16,8 +16,8 @@ public interface AnswerLoginService {
     /**
      * 申立データ取得API
      *
-     * @param caseId セッション情報の案件ID
-     * @param plateFormId セッション情報のプラットフォームID
+     * @param caseId 画面の案件ID
+     * @param plateFormId 画面のプラットフォームID
      * @return 申立データ取得結果
      */
     List<PetitionsData> getPetitionData(String caseId, String plateFormId);
@@ -25,7 +25,7 @@ public interface AnswerLoginService {
     /**
      * 申立データ取得API
      *
-     * @param plateFormId セッション情報のプラットフォームID
+     * @param plateFormId 画面のプラットフォームID
      * @return プラットフォ情報
      */
     PetitionDataUser getPetitionDataUser(String plateFormId);

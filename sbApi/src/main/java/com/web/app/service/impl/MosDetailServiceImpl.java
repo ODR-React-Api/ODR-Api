@@ -59,6 +59,5 @@ public class MosDetailServiceImpl implements MosDetailService{
         // 正常に更新の場合、更新済Flgに1（更新不可）を設定し、画面へ返す
         withdrawalReturn.setUpdateFlag(Constants.MOSDETAIL_UPDATEFLAG_1);
         return withdrawalReturn;
-
     }
 }
