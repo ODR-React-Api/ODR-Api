@@ -1,11 +1,11 @@
 package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import com.web.app.domain.answerLogin.GetReplies;
+import com.web.app.domain.answerLogin.RepliesData;
 import java.util.List;
 
 /**
- * S11_回答登録画面
+ * API_反訴・回答データ取得
  * 
  * @author DUC 信召艶
  * @since 2024/04/25
@@ -14,6 +14,6 @@ import java.util.List;
 @Mapper
 public interface GetRepliesDataMapper {
     //反訴・回答データ取得
-    List<GetReplies> getReplies(String caseId,String platformId);
+    List<RepliesData> getReplies(String caseId,String platformId);
 }
 

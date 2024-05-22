@@ -1,8 +1,9 @@
 package com.web.app.service;
 
 import java.util.List;
-import com.web.app.domain.couAnswerLogin.CasesByCid;
-import com.web.app.domain.couAnswerLogin.GetRepliesContext;
+
+
+import com.web.app.domain.couAnswerLogin.RepliesContext;
 
 /**
  * S14_反訴回答登録画面
@@ -15,7 +16,5 @@ import com.web.app.domain.couAnswerLogin.GetRepliesContext;
  */
 public interface CouAnswerLoginService {
     //API_反訴・回答データ取得
-    List<GetRepliesContext> getRepliesContext(String caseId,String platformId);
-    //API_案件データ取得
-    List<CasesByCid> casesByCid(String caseId,String platformId);
+    List<RepliesContext> getRepliesContext(String caseId,String platformId);
 }

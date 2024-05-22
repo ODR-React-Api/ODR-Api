@@ -26,13 +26,13 @@ public class UserLoginController {
     private UserLoginService userLoginService;
 
     /**
-     * API_ID:ケース詳細取得
+     * API_ID:仮会員登録データ取得
      *
      * @param guid ユーザ識別用GUID
      * @return Email メールアドレス
      * @throws Exception エラーの説明内容
      */
-    @ApiOperation("ケース詳細取得")
+    @ApiOperation("仮会員登録データ取得")
     @GetMapping("/getPreUserData")
     public String getPreUserData(String guid) {
         System.out.println(guid);

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.web.app.domain.answerLogin.GetReplies;
+import com.web.app.domain.answerLogin.RepliesData;
 import com.web.app.service.AnswerLoginService;
 import com.web.app.domain.Response;
 import com.web.app.tool.AjaxResult;
@@ -40,11 +40,11 @@ public class AnswerLoginController {
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("会員登録取得")
-    @GetMapping("/GetReplies")
-    public Response getReplies(String caseId, String platformId) {
+    @GetMapping("/getRepliesData")
+    public Response getRepliesData(String caseId, String platformId) {
         try {
-            List<GetReplies> userRepliesList = new ArrayList<GetReplies>();
-            userRepliesList = answerLoginService.getReplies(caseId, platformId);
+            List<RepliesData> userRepliesList = new ArrayList<RepliesData>();
+            userRepliesList = answerLoginService.getRepliesData(caseId, platformId);
             return AjaxResult.success("请求成功", userRepliesList);
         } catch (Exception e) {
             AjaxResult.fatal("查询失败!", e);

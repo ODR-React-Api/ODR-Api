@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @ApiModel 
 @Data
-public class GetReplies implements Serializable{
+public class RepliesData implements Serializable{
     //バッファリング
     private static final long serialVersionUID = 1L;
     //申立種類、希望する解決方法種類、回答種類、対応方法の種類など

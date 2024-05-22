@@ -9,6 +9,7 @@ import com.web.app.domain.Entity.MailTemplates;
 import com.web.app.domain.Entity.MasterPlatforms;
 import com.web.app.domain.Entity.MasterTypes;
 import com.web.app.domain.Entity.OdrUsers;
+import com.web.app.domain.Entity.CasesByCid;
 
 /**
  * 工具類Mapper
@@ -34,5 +35,8 @@ public interface CommonMapper {
 
     // メールテンプレートの取得
     List<MailTemplates> FindMailTemplatesList(String platformId, String tempId);
+
+    //API_反訴・回答データ取得
+    List<CasesByCid> casesByCid(String caseId,String platformId);
 
 }

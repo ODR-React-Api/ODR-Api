@@ -1,6 +1,6 @@
 package com.web.app.service;
 
-import com.web.app.domain.answerLogin.GetReplies;
+import com.web.app.domain.answerLogin.RepliesData;
 import java.util.List;
 
 /**
@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface AnswerLoginService {
       //API_反訴・回答データ取得
-      List<GetReplies> getReplies(String caseId,String platformId);
+      List<RepliesData> getRepliesData(String caseId,String platformId);
 }

@@ -15,6 +15,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.web.app.domain.Entity.Cases;
+import com.web.app.domain.Entity.CasesByCid;
 import com.web.app.domain.Entity.MailTemplates;
 import com.web.app.domain.Entity.MasterPlatforms;
 import com.web.app.domain.Entity.MasterTypes;
@@ -304,5 +305,20 @@ public class UtilServiceImpl implements UtilService {
     @Override
     public List<MasterTypes> GetMasterTypeName(String type, String languageId, String platformId) {
         return commonMapper.FindMasterTypeName(type, languageId, platformId);
+    }
+
+    /**
+     * 案件データ取得
+     *
+     * @param caseId セッション情報のcaseid
+     * @param PlatformId セッション情報のプラットフォームID
+     * @return casesByCidList
+     * @throws Exception エラーの説明内容
+     */ 
+    @Override
+    public List<CasesByCid> casesByCid(String caseId,String platformId) {
+        List<CasesByCid> casesByCidList = new ArrayList<CasesByCid>();
+        casesByCidList = commonMapper.casesByCid(caseId,platformId);
+        return casesByCidList;
     }
 }

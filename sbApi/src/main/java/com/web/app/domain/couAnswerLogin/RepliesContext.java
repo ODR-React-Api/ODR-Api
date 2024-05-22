@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @ApiModel
 @Data
-public class GetRepliesContext implements Serializable {
+public class RepliesContext implements Serializable {
     // バッファリング
     private static final long serialVersionUID = 1L;
     //反訴内容

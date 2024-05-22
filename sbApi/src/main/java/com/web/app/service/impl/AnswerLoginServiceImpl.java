@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.web.app.domain.answerLogin.GetReplies;
+import com.web.app.domain.answerLogin.RepliesData;
 import com.web.app.mapper.GetRepliesDataMapper;
 import com.web.app.service.AnswerLoginService;
 
@@ -28,8 +28,8 @@ public class AnswerLoginServiceImpl  implements AnswerLoginService {
      * @return getRepliesList
      */    
     @Override
-    public List<GetReplies> getReplies(String caseId,String platformId) {
-        List<GetReplies> getRepliesList = new ArrayList<GetReplies>();
+    public List<RepliesData> getRepliesData(String caseId,String platformId) {
+        List<RepliesData> getRepliesList = new ArrayList<RepliesData>();
         getRepliesList = getRepliesDataMapper.getReplies(caseId,platformId);
         return getRepliesList;
     }

@@ -293,4 +293,18 @@
             AND TemplateNo = #{tempId}
             AND LanguageId = 'jp'
     </select>
+
+    <resultMap id="casesByCidResultMap" type="com.web.app.domain.Entity.CasesByCid">
+    <result column="CaseTitle" jdbcType="VARCHAR" property="CaseTitle" />
+    </resultMap>
+    <select id="casesByCid" resultMap="casesByCidResultMap">
+        SELECT
+            CaseTitle
+        FROM
+            react_use.cases
+        WHERE
+            cid = #{caseId}
+            and PlatformId = #{platformId} 
+            and DeleteFlag = 0
+    </select>
 </mapper>

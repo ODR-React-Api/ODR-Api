@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetRepliesDataMapper">
-    <resultMap id="getGetRepliesResultMap" type="com.web.app.domain.answerLogin.GetReplies">
+    <resultMap id="getGetRepliesResultMap" type="com.web.app.domain.answerLogin.RepliesData">
         <result column="replyType" jdbcType="VARCHAR" property="replyType" />
         <result column="replyContext" jdbcType="VARCHAR" property="replyContext" />
         <result column="HaveCounterClaim" jdbcType="VARCHAR" property="HaveCounterClaim" />
@@ -18,31 +18,30 @@
     </resultMap>
     <select id="getReplies" resultMap="getGetRepliesResultMap">
         SELECT
-            c.replyType,
-            c.replyContext,
-            c.HaveCounterClaim,
-            C.CounterClaimContext,
-            C.TraderAgent1_UserEmail,
-            C.TraderAgent2_UserEmail,
-            C.TraderAgent3_UserEmail,
-            C.TraderAgent4_UserEmail,
-            C.TraderAgent5_UserEmail,
-            f.FileName,
-            f.FileUrl
+            react_use.case_replies.replyType,
+            react_use.case_replies.replyContext,
+            react_use.case_replies.HaveCounterClaim,
+            react_use.case_replies.CounterClaimContext,
+            react_use.case_replies.TraderAgent1_UserEmail,
+            react_use.case_replies.TraderAgent2_UserEmail,
+            react_use.case_replies.TraderAgent3_UserEmail,
+            react_use.case_replies.TraderAgent4_UserEmail,
+            react_use.case_replies.TraderAgent5_UserEmail,
+            react_use.files.FileName,
+            react_use.files.FileUrl
         FROM
-            react_use.case_replies c,react_use.files f,react_use.case_file_relations r
-        WHERE
-            c.CaseId = #{CaseId} 
-            and c.PlatformId = #{PlatformId}  
-            and c.Status = 0
-            and c.DeleteFlag = 0
-            and r.CaseId = c.CaseId 
-            and r.PlatformId = #{PlatformId} 
-            and r.RelationType in (1,2)
-            and r.RelatedId = c.id 
-            and r.DeleteFlag = 0
-            and f.id = r.fileId
-            and f.PlatformId = #{PlatformId}  
+            react_use.case_replies,react_use.files,react_use.case_file_relations
+            react_use.case_replies.CaseId = #{CaseId} 
+            and react_use.case_replies.PlatformId = #{PlatformId}  
+            and react_use.case_replies.Status = 0
+            and react_use.case_replies.DeleteFlag = 0
+            and react_use.case_file_relations.CaseId = react_use.case_replies.CaseId 
+            and react_use.case_file_relations.PlatformId = #{PlatformId} 
+            and react_use.case_file_relations.RelationType in (1,2)
+            and react_use.case_file_relations.RelatedId = react_use.case_replies.id 
+            and react_use.case_file_relations.DeleteFlag = 0
+            and react_use.files.id = react_use.case_file_relations.fileId
+            and react_use.files.PlatformId = #{PlatformId}  
     </select>
 </mapper>
 
