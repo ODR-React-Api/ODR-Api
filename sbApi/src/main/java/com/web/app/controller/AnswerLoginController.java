@@ -43,9 +43,9 @@ public class AnswerLoginController {
     @GetMapping("/getRepliesData")
     public Response getRepliesData(String caseId, String platformId) {
         try {
-            List<RepliesData> userRepliesList = new ArrayList<RepliesData>();
-            userRepliesList = answerLoginService.getRepliesData(caseId, platformId);
-            return AjaxResult.success("会員登録の取得に成功しました。", userRepliesList);
+            List<RepliesData> getRepliesDataList = new ArrayList<RepliesData>();
+            getRepliesDataList = answerLoginService.getRepliesData(caseId, platformId);
+            return AjaxResult.success("会員登録の取得に成功しました。", getRepliesDataList);
         } catch (Exception e) {
             AjaxResult.fatal("会員登録の取得に失敗しました!", e);
             return null;
