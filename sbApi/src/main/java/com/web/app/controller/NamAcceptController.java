@@ -34,7 +34,7 @@ public class NamAcceptController {
     /**
      * 調停人変更履歴変更API
      *
-     * @param ReplyWithdraw 調停人変更履歴変更オブジェクト
+     * @param UpdMediatorHistories 調停人変更履歴変更オブジェクト
      * @return に答える
      * @throws Exception エラーの説明内容
      */
