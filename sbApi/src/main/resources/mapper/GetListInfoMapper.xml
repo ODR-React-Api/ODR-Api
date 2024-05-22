@@ -10,7 +10,7 @@
     </resultMap>
 
     <!-- ユーザ情報を取得 -->
-    <select id="selectEmailOdrUsers" resultType="String">
+    <select id="selectEmailOdrUsers" resultType="string">
         select
             email
         from
@@ -68,5 +68,4 @@
         order by
             caseId
     </select>
-
 </mapper>

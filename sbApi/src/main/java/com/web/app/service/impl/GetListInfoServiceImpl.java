@@ -21,8 +21,8 @@ public class GetListInfoServiceImpl implements GetListInfoService {
   @Override
   public List<ReturnResult> getListInfo(String uid) {
 
-    // ユーザ情報のメールを初期化
-    String email = null;
+    // // ユーザ情報のメールを初期化
+    // String email = null;
     // 立場フラグ：1（申立人）を初期化
     Integer flag1 = 1;
     // 立場フラグ：2（相手方）を初期化
@@ -35,7 +35,7 @@ public class GetListInfoServiceImpl implements GetListInfoService {
     List<ReturnResult> returnResultList2 = new ArrayList<>();
 
     // ユーザ情報を取得する
-    email = getListInfoMapper.selectEmailOdrUsers(uid);
+    String email = getListInfoMapper.selectEmailOdrUsers(uid);
 
     // ユーザが申立人の場合
     List<UserCase> caseIdPetition1 = getListInfoMapper.selectCaseIdPetition1(email);
@@ -58,6 +58,7 @@ public class GetListInfoServiceImpl implements GetListInfoService {
         ReturnResult returnResult1 = new ReturnResult();
         // 相手方详细情报
         if (returnResult1.getCid() != null) {
+          // 最终返回值设定
           returnResultList.add(returnResult1);
         }
       }

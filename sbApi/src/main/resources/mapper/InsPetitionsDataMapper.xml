@@ -14,7 +14,7 @@
             <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap id="BaseResultMap3" type="com.web.app.domain.Entity.IdPetitionUserId">
+    <resultMap id="BaseResultMap3" type="com.web.app.domain.MosContentConfirm.IdPetitionUserId">
             <result property="extensionitemId" column="ExtensionitemId" jdbcType="VARCHAR"/>
             <result property="extensionitemValue" column="ExtensionitemValue" jdbcType="VARCHAR"/>
     </resultMap>
@@ -31,14 +31,6 @@
             a.petitionUserId = #{uid} and
             b.status = '0' and
             a.casePetition = b.id
-    </select>
-
-    <!-- 案件別個人情報リレーション（case_relations）のMAX（id）の取得 -->
-    <select id="selectMaxId" resultType="String">
-        select 
-            MAX(id) AS id
-        from 
-            case_relations
     </select>
 
     <!-- TBL「案件別個人情報リレーション（case_relations）」の更新 -->
@@ -80,14 +72,6 @@
             Email = #{email} and
             PlatformId = #{platformId} and
             DeleteFlag = #{deleteFlag}
-    </select>
-
-    <!-- ユーザ情報を取得 -->
-    <select id="selectMaxCid" resultType="String">
-        select 
-            MAX(cid) AS cid
-        from 
-            cases
     </select>
 
     <!-- TBL「案件（cases）」の新規登録 -->
@@ -163,14 +147,6 @@
             id = #{id}
     </update>
 
-    <!-- TBL「案件-添付ファイルリレーション（case_file_relations）」のMAX（id）の取得 -->
-    <select id="selectMaxId2" resultType="String">
-        select 
-            MAX(id) AS id
-        from 
-            case_file_relations
-    </select>
-
     <!-- .TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する -->
     <insert id="insertCaseFileRelations" parameterType="com.web.app.domain.MosContentConfirm.InsertCaseFileRelations">
         insert into cases(
@@ -239,16 +215,8 @@
         )
     </insert>
 
-    <!-- TBL「添付ファイル（files）」のMAX（id）の取得 -->
-    <select id="selectMaxId3" resultType="String">
-        select 
-            MAX(id) AS id
-        from 
-            files
-    </select>
-
     <!-- 拡張項目内容を取得 -->
-    <select id="selectCaseIdPetition1" resultMap="BaseResultMap">
+    <select id="selectCaseIdPetition1" resultMap="BaseResultMap3">
         select ExtensionitemId, 
             ExtensionitemValue
         from 
@@ -276,14 +244,6 @@
             ExtensionitemId = #{extensionitemId}
     </update> 
 
-    <!-- case_extensionitem_valuesのMAX（id）の取得 -->
-    <select id="selectMaxId4" resultType="String">
-        select 
-            MAX(id) AS id
-        from 
-            case_extensionitem_values
-    </select>
-
     <!-- case_extensionitem_valuesのMAX（id）を新規登録する -->
     <insert id="insertCaseExtensionitemValues" parameterType="com.web.app.domain.MosContentConfirm.UpdateOrInsertCaseExtensionitemValues">
         insert into cases(
@@ -309,5 +269,4 @@
             #{lastModifiedBy}
         )
     </insert>
-
 </mapper>

@@ -20,9 +20,6 @@ public interface InsPetitionsDataMapper {
   //TBL「案件別個人情報リレーション（case_relations）」と「申立（case_petitions）」より用意した下書き保存データを取得する
   IdPetitionUserId selectIdPetitionUserId(String uid);
 
-  // TBL「案件別個人情報リレーション（case_relations）のMAXID情報を取得する
-  String selectMaxId();
-
   // TBL「案件別個人情報リレーション（case_relations）」の更新
   int updateCaseRelations(UpdateCaseRelations updateCaseRelations, String casePetitions, String petitionUserId);
 
@@ -31,9 +28,6 @@ public interface InsPetitionsDataMapper {
 
   // 販売者メールアドレス登録有無の判定
   int selectCount(String email, String platformId, short deleteFlag);
-
-  // 案件（cases）情報を取得する
-  String selectMaxCid(); 
 
   // TBL「案件（cases）」の新規登録
   int insertCases(InsertCases insertCases);
@@ -47,9 +41,6 @@ public interface InsPetitionsDataMapper {
   // TBL「案件-添付ファイルリレーション（case_file_relations）」を論理削除する
   void updateDeleteFlag(short deleteFlag, String id);
 
-  // 自動採番のid（Id）
-  String selectMaxId2();
-
   // TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する
   int insertCaseFileRelations(InsertCaseFileRelations insertCaseFileRelations);
 
@@ -58,9 +49,6 @@ public interface InsPetitionsDataMapper {
 
   // TBL「添付ファイル（files）」を新規登録する。
   int insertFiles(InsertFiles insertFiles);
-
-  // 自動採番ID
-  String selectMaxId3();
 
   // 拡張項目設定値情報を取得する
   ExtensionItem selectExtensionitemIdExtensionitemValue(String platformId, String id, short deleteFlag0, String extensionitemId); 
@@ -71,6 +59,4 @@ public interface InsPetitionsDataMapper {
   // case_extensionitem_values登録
   void insertCaseExtensionitemValues(UpdateOrInsertCaseExtensionitemValues updateOrInsertCaseExtensionitemValues);
 
-  // MaxのID
-  String selectMaxId4();
 }
