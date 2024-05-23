@@ -40,9 +40,10 @@ public class MosDetailController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("参加済状態変更")
     @PostMapping("/updCasesStatus")
-    public Response updCasesStatus(String caseId) {
+    public Response updCasesStatus(String caseId, String uId) {
         try {
-            ParticipatedStatusChangeResultInfo participatedInfo = mosDetailService.participatedStatusSearch(caseId);
+            ParticipatedStatusChangeResultInfo participatedInfo = mosDetailService.participatedStatusSearch(caseId,
+                    uId);
             if (participatedInfo != null) {
                 return Response.success(participatedInfo);
             }
