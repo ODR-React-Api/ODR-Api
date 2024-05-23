@@ -293,4 +293,128 @@
             AND TemplateNo = #{tempId}
             AND LanguageId = 'jp'
     </select>
+
+    <select id="GetUserDataFromCaseIdentity" resultType="com.web.app.domain.User">
+        SELECT odr_users.FirstName,odr_users.MiddleName,odr_users.LastName FROM odr_users INNER JOIN case_relations
+        WHERE case_relations.CaseId = #{caseId}
+        AND case_relations.PlatformId = #{platformId}
+        AND case_relations.DeleteFlag = '0'
+        <if test="identity">
+            AND odr_users.Email = case_relations.PetitionUserInfo_Email
+        </if>
+        <if test="!identity">
+            AND odr_users.Email = case_relations.TraderUserEmail
+        </if>
+        AND odr_users.PlatformId = #{platformId}
+        AND odr_users.DeleteFlag = '0'
+        AND odr_users.Status = '0'
+    </select>
+
+    <!-- 関係者内容取得 -->
+    <select id="FindDisplayName" resultType="com.web.app.domain.util.DisplayNameResult">
+        SELECT LanguageId,FirstName,MiddleName,LastName,FirstName_EN,LastName_EN,FirstName_kana,MiddleName_kana
+                ,LastName_kana,CompanyName,CompanyName_EN,Email
+        FROM 
+            Odr_Users
+        WHERE
+        <choose>
+            <when test="uid != null and uid != ''">
+                Uid = #{uid}
+            </when>
+            <otherwise>
+                Email = #{email}
+            </otherwise>
+        </choose>
+            AND DeleteFlag = false
+            AND PlatformId = #{platformId}
+    </select>
+
+    <!-- 「アクション履歴」新規登録 -->
+    <insert id="InsHistories">
+        insert into action_histories(
+        id,
+        PlatformId,
+        CaseId,
+        ActionType,
+        CaseStage,
+        UserId,
+        UserType,
+        ActionDateTime,
+        MessageGroupId,
+        MessageId,
+        HaveFile,
+        Parameters,
+        Other01,
+        Other02,
+        Other03,
+        Other04,
+        Other05,
+        DeleteFlag,
+        LastModifiedDate,
+        LastModifiedBy) 
+        values(
+            #{id},
+            #{PlatformId},
+            #{CaseId},
+            #{ActionType},
+            #{CaseStage},
+            #{UserId},
+            #{UserType},
+            #{ActionDateTime},
+            #{MessageGroupId},
+            #{MessageId},
+            #{HaveFile},
+            #{Parameters},
+            #{Other01},
+            #{Other02},
+            #{Other03},
+            #{Other04},
+            #{Other05},
+            #{DeleteFlag},
+            #{LastModifiedDate},
+            #{LastModifiedBy}
+            )
+    </insert>
+
+    <!-- アクション履歴-添付ファイルリレーション -->
+    <select id="FindFileRelations" resultType="com.web.app.domain.Entity.ActionFileRelations">
+        select * from 
+            Action_File_Relations
+        where
+            id = #{id}
+            And DeleteFlag = '0'
+    </select>
+
+    <!-- 「アクション履歴-添付ファイルリレーション」新規登録 -->
+    <insert id="InsertActionFileRelations">
+        insert into Action_File_Relations(
+            id,
+            PlatformId,
+            CaseId,
+            ActionHistoryId,
+            fileId,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy)
+        values(
+            #{id},
+            #{PlatformId},
+            #{CaseId},
+            #{ActionHistoryId},
+            #{fileId},
+            #{Other01},
+            #{Other02},
+            #{Other03},
+            #{Other04},
+            #{Other05},
+            #{DeleteFlag},
+            #{LastModifiedDate},
+            #{LastModifiedBy}
+            )
+    </insert>
 </mapper>
