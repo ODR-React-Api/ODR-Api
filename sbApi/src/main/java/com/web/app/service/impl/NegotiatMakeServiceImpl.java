@@ -51,21 +51,23 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     @Override
     public int addNegotiationsEdit(NegotiationsFile negotiationsFile) throws Exception {
         // sessions取得
-        // SessionItems sessionItem = getSessionItems();
         System.out.println("データアクセス：" + dataSource.getConnection());
 
         // 「和解案」新規登録の値設定
         CaseNegotiations caseNegotiations = new CaseNegotiations();
-        caseNegotiations.setId(utilService.GetGuid());
-        caseNegotiations.setPlatformId(negotiationsFile.getPlatformId());
-        caseNegotiations.setCaseId(negotiationsFile.getCaseId());
-        // ログインユーザが申立人場合、ステータス更新値：14
-        if (negotiationsFile.getFlag() == Constants.POSITIONFLAG_PETITION) {
+         // ログインユーザが申立人場合、ステータス更新値：14
+         if (negotiationsFile.getFlag() == Constants.POSITIONFLAG_PETITION) {
             caseNegotiations.setStatus(Constants.S3B14);
             // ログインユーザが相手方場合、ステータス更新値：1
         } else if (negotiationsFile.getFlag() == Constants.POSITIONFLAG_TRADER) {
             caseNegotiations.setStatus(Constants.S3B1);
+        }else {
+            return Constants.RESULT_STATE_ERROR;
         }
+        caseNegotiations.setId(utilService.GetGuid());
+        caseNegotiations.setPlatformId(negotiationsFile.getPlatformId());
+        caseNegotiations.setCaseId(negotiationsFile.getCaseId());
+     
         caseNegotiations.setExpectResloveTypeValue(negotiationsFile.getExpectResloveTypeValue());
         caseNegotiations.setOtherContext(negotiationsFile.getOtherContext());
         caseNegotiations.setHtmlContext(null);
@@ -82,10 +84,8 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         caseNegotiations.setLastModifiedDate(getSystemtime());
         caseNegotiations.setLastModifiedBy(negotiationsFile.getUserId());
         // 「和解案」新規登録
-        int result = insNegotiationsEditMapper.insertCaseNegotiations(caseNegotiations);
-        if (result == Constants.RESULT_STATE_ERROR) {
-            return Constants.RESULT_STATE_ERROR;
-        }
+        insNegotiationsEditMapper.insertCaseNegotiations(caseNegotiations);
+        
         // 画面からのファイルはnullではない場合、「添付ファイル」と「案件-添付ファイルリレーション」新規登録
         List<UpdNegotiationsFile> updNegotiationsFiles = negotiationsFile.getUpdNegotiationsFile();
         // // 添付ファイルがあるか判定
@@ -107,9 +107,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     @Transactional
     @Override
     public int updateNegotiationsEdit(NegotiationsFile negotiationsFile) throws Exception {
-
         System.out.println("データアクセス" + dataSource.getConnection());
-
         // 「和解案」
         CaseNegotiations caseNegotiations = new CaseNegotiations();
         // ログインユーザが申立人場合、ステータス更新値：14
@@ -118,6 +116,8 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // ログインユーザが相手方場合、ステータス更新値：1
         } else if (negotiationsFile.getFlag() == Constants.POSITIONFLAG_TRADER) {
             caseNegotiations.setStatus(Constants.S3B1);
+        }else {
+            return Constants.RESULT_STATE_ERROR;
         }
         // 「和解案」更新値設定
         caseNegotiations.setExpectResloveTypeValue(negotiationsFile.getExpectResloveTypeValue());
@@ -135,7 +135,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         int result = updNegotiationsEditMapper.updateCaseNegotiations(caseNegotiations);
         // 更新失敗の場合
         if (result == Constants.RESULT_STATE_ERROR) {
-            return Constants.RESULT_STATE_ERROR;
+            throw new RuntimeException();
         }
         // 添付ファイルの添削によりファイルの増減が発生しますので、レコード論理削除＋新規登録で行う
         List<UpdNegotiationsFile> updNegotiationsFiles = negotiationsFile.getUpdNegotiationsFile();
@@ -153,7 +153,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
                     // 「添付ファイル」論理削除
                     int resultDeleteFiles = updNegotiationsEditMapper.deleteFiles(filesDelete);
                     if (resultDeleteFiles == Constants.RESULT_STATE_ERROR) {
-                        return Constants.RESULT_STATE_ERROR;
+                        throw new RuntimeException();
                     }
                     // 「案件-添付ファイルリレーション」の値設定
                     CaseFileRelations caseFileRelationsDelete = new CaseFileRelations();
@@ -166,7 +166,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
                     int resultDeleteCaseFileRelations = updNegotiationsEditMapper
                             .deleteCaseFileRelations(caseFileRelationsDelete);
                     if (resultDeleteCaseFileRelations == Constants.RESULT_STATE_ERROR) {
-                        return Constants.RESULT_STATE_ERROR;
+                        throw new RuntimeException();
                     }
                     // updFileFlagは2の場合、ファイル追加
                 } else if (updNegotiationsFile.getUpdFileFlag() == Constants.TEMPLATE_TYPE_2) {
@@ -192,18 +192,14 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // 「添付ファイル」の値設定
             Files reFiles = insFiles(updNegotiationsFile,negotiationsFile);
             // 「添付ファイル」の新規登録
-            int result2 = insNegotiationsEditMapper.insertFiles(reFiles);
-            if (result2 == Constants.RESULT_STATE_ERROR) {
-                return Constants.RESULT_STATE_ERROR;
-            }
+            insNegotiationsEditMapper.insertFiles(reFiles);
+           
             // 「案件-添付ファイルリレーション」の値設定
             CaseFileRelations resCaseFileRelations = insCaseFileRelations(negotiationsFile,negotiationsId,
                     reFiles.getId());
             // 「案件-添付ファイルリレーション」の新規登録
-            int result3 = insNegotiationsEditMapper.insertCaseFileRelations(resCaseFileRelations);
-            if (result3 == Constants.RESULT_STATE_ERROR) {
-                return Constants.RESULT_STATE_ERROR;
-            }
+            insNegotiationsEditMapper.insertCaseFileRelations(resCaseFileRelations);
+            
         }
         return Constants.RESULT_STATE_SUCCESS;
     }
