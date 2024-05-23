@@ -6,13 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.web.app.domain.Response;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.mediationsMake.InsMediationsData;
 import com.web.app.service.MediationsMakeService;
 import com.web.app.tool.AjaxResult;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
