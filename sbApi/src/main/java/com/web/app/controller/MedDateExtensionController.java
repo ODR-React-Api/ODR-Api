@@ -5,9 +5,11 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.MedDateExtensionService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
@@ -26,7 +28,6 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "調停期日延長画面")
 @RestController
 @RequestMapping("/medDateExtension")
-@SuppressWarnings("rawtypes")
 public class MedDateExtensionController {
 
   @Autowired
@@ -42,14 +43,16 @@ public class MedDateExtensionController {
    */
   @ApiOperation("案件情報更新")
   @PostMapping("/updCasesForMediationEndDate")
-  public Response updCasesForMediationEndDate(Date mediationEndDate, String cid) {
+  @SuppressWarnings("unchecked")
+  public Response<Integer> updCasesForMediationEndDate(Date mediationEndDate, String cid) {
+    System.out.println(mediationEndDate);
     try {
       if (medDateExtensionService.updCasesForMediationEndDate(mediationEndDate, cid) != 0) {
         System.out.println("====================successed================================");
-        return AjaxResult.success("案件情報が更新されました!");
+        return AjaxResult.success("案件情報が更新されました!", Constants.RESULT_CODE_SUCCESS);
       }
       System.out.println("====================failed================================");
-      return AjaxResult.success("案件情報が更新されませんでした!");
+      return AjaxResult.success("案件情報が更新されませんでした!", Constants.RESULT_CODE_ERROR);
     } catch (Exception e) {
       System.out.println("=====================throw Exception=====================");
       System.out.println(e.toString());
