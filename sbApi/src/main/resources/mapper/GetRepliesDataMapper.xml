@@ -18,30 +18,31 @@
     </resultMap>
     <select id="getReplies" resultMap="getGetRepliesResultMap">
         SELECT
-            react_use.case_replies.replyType,
-            react_use.case_replies.replyContext,
-            react_use.case_replies.HaveCounterClaim,
-            react_use.case_replies.CounterClaimContext,
-            react_use.case_replies.TraderAgent1_UserEmail,
-            react_use.case_replies.TraderAgent2_UserEmail,
-            react_use.case_replies.TraderAgent3_UserEmail,
-            react_use.case_replies.TraderAgent4_UserEmail,
-            react_use.case_replies.TraderAgent5_UserEmail,
-            react_use.files.FileName,
-            react_use.files.FileUrl
+            case_replies.replyType,
+            case_replies.replyContext,
+            case_replies.HaveCounterClaim,
+            case_replies.CounterClaimContext,
+            case_replies.TraderAgent1_UserEmail,
+            case_replies.TraderAgent2_UserEmail,
+            case_replies.TraderAgent3_UserEmail,
+            case_replies.TraderAgent4_UserEmail,
+            case_replies.TraderAgent5_UserEmail,
+            files.FileName,
+            files.FileUrl
         FROM
-            react_use.case_replies,react_use.files,react_use.case_file_relations
-            react_use.case_replies.CaseId = #{CaseId} 
-            and react_use.case_replies.PlatformId = #{PlatformId}  
-            and react_use.case_replies.Status = 0
-            and react_use.case_replies.DeleteFlag = 0
-            and react_use.case_file_relations.CaseId = react_use.case_replies.CaseId 
-            and react_use.case_file_relations.PlatformId = #{PlatformId} 
-            and react_use.case_file_relations.RelationType in (1,2)
-            and react_use.case_file_relations.RelatedId = react_use.case_replies.id 
-            and react_use.case_file_relations.DeleteFlag = 0
-            and react_use.files.id = react_use.case_file_relations.fileId
-            and react_use.files.PlatformId = #{PlatformId}  
+            react_use.case_replies case_replies,react_use.files files,react_use.case_file_relations case_file_relations
+        WHERE
+            case_replies.CaseId = #{CaseId} 
+            and case_replies.PlatformId = #{PlatformId}  
+            and case_replies.Status = 0
+            and case_replies.DeleteFlag = 0
+            and case_file_relations.CaseId = case_replies.CaseId 
+            and case_file_relations.PlatformId = #{PlatformId} 
+            and case_file_relations.RelationType in (1,2)
+            and case_file_relations.RelatedId = case_replies.id 
+            and case_file_relations.DeleteFlag = 0
+            and files.id = case_file_relations.fileId
+            and files.PlatformId = #{PlatformId}  
     </select>
 </mapper>
 

@@ -10,27 +10,27 @@
     </resultMap>
     <select id="getRepliesContext" resultMap="getRepliesContextResultMap">
         SELECT
-            react_use.case_replies.CounterClaimContext,
-            react_use.files.FileName,
-            react_use.files.FileUrl
+            case_replies.CounterClaimContext,
+            files.FileName,
+            files.FileUrl
         FROM
-            react_use.case_replies,react_use.cases,react_use.case_file_relations,react_use.files
+            react_use.case_replies case_replies,react_use.cases cases,react_use.case_file_relations case_file_relations,react_use.files files
         WHERE
-            react_use.case_replies.CaseId = #{CaseId}
-            and react_use.case_replies.PlatformId = #{PlatformId} 
-            and react_use.case_replies.Status = 2
-            and react_use.case_replies.DeleteFlag = 0
-            and react_use.cases.cid = #{PlatformId}            
-            and react_use.cases.PlatformId = 0
-            and react_use.cases.DeleteFlag = 0
-            and react_use.case_file_relations.CaseId = react_use.case_replies.CaseId
-            and react_use.case_file_relations.RelationType = 1
-            and react_use.case_file_relations.PlatformId = #{PlatformId} 
-            and react_use.case_file_relations.RelatedId = react_use.case_replies.id
-            and react_use.case_file_relations.DeleteFlag = 0
-            and react_use.files.id = react_use.case_file_relations.fileId
-            and react_use.files.PlatformId = #{PlatformId} 
-            order by react_use.files.LastModifiedDate asc;
+            case_replies.CaseId = #{CaseId}
+            and case_replies.PlatformId = #{PlatformId} 
+            and case_replies.Status = 2
+            and case_replies.DeleteFlag = 0
+            and cases.cid = #{PlatformId}            
+            and cases.PlatformId = 0
+            and cases.DeleteFlag = 0
+            and case_file_relations.CaseId = case_replies.CaseId
+            and case_file_relations.RelationType = 1
+            and case_file_relations.PlatformId = #{PlatformId} 
+            and case_file_relations.RelatedId = case_replies.id
+            and case_file_relations.DeleteFlag = 0
+            and files.id = case_file_relations.fileId
+            and files.PlatformId = #{PlatformId} 
+            order by files.LastModifiedDate asc;
     </select>
 </mapper>
 
