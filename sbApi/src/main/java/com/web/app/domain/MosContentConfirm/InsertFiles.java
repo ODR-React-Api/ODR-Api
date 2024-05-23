@@ -27,7 +27,7 @@ public class InsertFiles implements Serializable {
     private String fileUrl;
 
     // ファイルサイズ
-    private String fileSize;
+    private int fileSize;
 
     // ユーザーID
     private String registerUserId;

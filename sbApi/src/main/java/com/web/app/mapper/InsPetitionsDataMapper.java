@@ -1,4 +1,6 @@
 package com.web.app.mapper;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.web.app.domain.MosContentConfirm.ExtensionItem;
@@ -21,7 +23,7 @@ public interface InsPetitionsDataMapper {
   IdPetitionUserId selectIdPetitionUserId(String uid);
 
   // TBL「案件別個人情報リレーション（case_relations）」の更新
-  int updateCaseRelations(UpdateCaseRelations updateCaseRelations, String casePetitions, String petitionUserId);
+  int updateCaseRelations(UpdateCaseRelations updateCaseRelations);
 
   // ユーザ情報の取得
   UserLanguageIdPlatformId selectLanguageIdAndPlatformId(String uid);
@@ -33,10 +35,10 @@ public interface InsPetitionsDataMapper {
   int insertCases(InsertCases insertCases);
 
   // TBL「申立（case_petitions）」の更新
-  int updateCasePetitions(UpdateCasePetitions updateCasePetitions, String id);
+  int updateCasePetitions(UpdateCasePetitions updateCasePetitions);
 
   // 案件-添付ファイルリレーションの取得
-  String selectFileId(int relationType, String RelatedId);
+  List<String> selectFileId(int relationType, String relatedId);
 
   // TBL「案件-添付ファイルリレーション（case_file_relations）」を論理削除する
   void updateDeleteFlag(short deleteFlag, String id);

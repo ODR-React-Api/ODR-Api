@@ -78,19 +78,23 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
     returnFlag = updateCasePetitions(returnFlag, idPetitionUserId, cid, s09ScreenIntelligence, userLanguageIdPlatformId);
 
     // 6.a案件-添付ファイルリレーションの取得
-    fileId = insPetitionsDataMapper.selectFileId(relationType, idPetitionUserId.getId());
+    List<String> fileIdList = insPetitionsDataMapper.selectFileId(relationType, idPetitionUserId.getId());
 
     // 6.b上記取得(案件-添付ファイルリレーションの取得)有りの場合は関連のデータを初期化する
-    if (fileId != null) {
-      // TBL「添付ファイル（files）」を論理削除する
-      insPetitionsDataMapper.updateDeleteFlag(deleteFlag1, fileId);
+    if (fileIdList.size() != 0) {
 
-      // TBL「案件-添付ファイルリレーション（case_file_relations）」を論理削除する
-      insPetitionsDataMapper.updateDeleteFlag(deleteFlag1, id);
+      for (int i = 0; i < fileIdList.size(); i++) {
+        // TBL「添付ファイル（files）」を論理削除する
+        insPetitionsDataMapper.updateDeleteFlag(deleteFlag1, fileIdList.get(i));
+
+        // TBL「案件-添付ファイルリレーション（case_file_relations）」を論理削除する
+        insPetitionsDataMapper.updateDeleteFlag(deleteFlag1, id);
+      }
+
     }
 
     // 7.画面に添付資料が添付有りの場合、添付資料がなくなるまで以下の処理を行う。
-    if (s09ScreenIntelligence.getFileSize() != "0") {
+    if (s09ScreenIntelligence.getFileSize() != 0) {
 
       // 自動採番のid（Id）
       String fileMaxId = utilService.GetGuid();
@@ -123,7 +127,9 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
         // 既存の拡張項目内容を取得
         ExtensionItem extensionItem = insPetitionsDataMapper.selectExtensionitemIdExtensionitemValue(platformId, idPetitionUserId.getId(), deleteFlag0, s09ScreenIntelligence.getExtensionItem().get(i).getExtensionitemId());
         // 全部数据
-        extensionItemList.add(extensionItem);
+        if (extensionItem != null) {
+          extensionItemList.add(extensionItem);
+        }
       }
       // 取得したデータがある場合、2)へ(データを更新)
       if (extensionItemList.size() > 0) {
@@ -132,9 +138,9 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
           updateCaseExtensionitemValues(extensionItemList.get(i),  deleteFlag0, uid, cid, platformId, id);
         }
       } else {
-        for (int i = 0; i < extensionItemList.size(); i++) {
+        for (int i = 0; i < s09ScreenIntelligence.getExtensionItem().size(); i++) {
           // データを更新
-          insertCaseExtensionitemValues(extensionItemList.get(i), deleteFlag0, uid, cid, platformId, id);
+          insertCaseExtensionitemValues(s09ScreenIntelligence.getExtensionItem().get(i), deleteFlag0, uid, cid, platformId, id);
         }
       }
     }
@@ -201,8 +207,12 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
     updateCaseRelations.setAgent5Email(s09ScreenIntelligence.getAgent5Email());
     // 相手方メール
     updateCaseRelations.setTraderUserEmail(s09ScreenIntelligence.getTraderMail());
+    // 申立Id
+    updateCaseRelations.setCasePetitions(idPetitionUserId.getId());
+    // 申立て人
+    updateCaseRelations.setPetitionUserId(idPetitionUserId.getPetitionUserId());
     // TBL「案件別個人情報リレーション（case_relations）」の更新
-    returnFlag = insPetitionsDataMapper.updateCaseRelations(updateCaseRelations, idPetitionUserId.getId(), idPetitionUserId.getPetitionUserId());
+    returnFlag = insPetitionsDataMapper.updateCaseRelations(updateCaseRelations);
     return returnFlag;
   }
 
@@ -238,11 +248,11 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
     updateCasePetitions.setExpectResloveTypeValue(s09ScreenIntelligence.getExpectResloveTypeValue());
     // その他
     updateCasePetitions.setOther(s09ScreenIntelligence.getOther());
-    // 言語ID
-    updateCasePetitions.setLanguageId(userLanguageIdPlatformId.getLanguageId());
+    // ID
+    updateCasePetitions.setId(idPetitionUserId.getId());
 
     // TBL「申立（case_petitions）」の更新
-    returnFlag = insPetitionsDataMapper.updateCasePetitions(updateCasePetitions, idPetitionUserId.getId());
+    returnFlag = insPetitionsDataMapper.updateCasePetitions(updateCasePetitions);
     return returnFlag;
   }
 

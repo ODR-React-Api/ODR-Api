@@ -35,4 +35,10 @@ public class UpdateCaseRelations implements Serializable {
 
     // 相手方メール
     private String traderUserEmail;
+
+    // 申立Id
+    private  String casePetitions;
+
+    // 申立て人
+    private String petitionUserId;
 }

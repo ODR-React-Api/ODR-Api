@@ -1,6 +1,8 @@
 package com.web.app.domain.MosContentConfirm;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -46,10 +48,10 @@ public class S09ScreenIntelligence implements Serializable {
     private String traderUrl;
 
     // 購入日
-    private String boughtDate;
+    private Date boughtDate;
 
     // 購入金額
-    private String price;
+    private BigDecimal price;
 
     // 申立ての種類
     private String petitionTypeValue;
@@ -70,7 +72,7 @@ public class S09ScreenIntelligence implements Serializable {
     private String fileUrl;
 
     // FileSize
-    private String fileSize;
+    private int fileSize;
 
     //画面上拡張項目
     private List<ExtensionItem> extensionItem;

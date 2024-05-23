@@ -1,6 +1,9 @@
 package com.web.app.domain.MosContentConfirm;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -29,10 +32,10 @@ public class UpdateCasePetitions implements Serializable {
     private String traderUrl;
 
     // 購入日
-    private String boughtDate;
+    private Date boughtDate;
 
     // 購入金額
-    private String price;
+    private BigDecimal price;
 
     // 申立ての種類
     private String petitionTypeValue;
@@ -46,6 +49,6 @@ public class UpdateCasePetitions implements Serializable {
     // その他
     private String other;
 
-    // 言語ID
-    private String languageId;
+    // ID
+    private String id;
 }

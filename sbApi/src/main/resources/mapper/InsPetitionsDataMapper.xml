@@ -41,7 +41,7 @@
             id = #{ id },
             CaseId = #{ caseId },
             PlatformId = #{ platformId },
-            etitionUserInfo_Email = #{ petitionUserInfoEmail },
+            PetitionUserInfo_Email = #{ petitionUserInfoEmail },
             Agent1_Email = #{ agent1Email },
             Agent2_Email = #{ agent2Email },
             Agent3_Email = #{ agent3Email },
@@ -49,7 +49,7 @@
             Agent5_Email = #{ agent5Email },
             TraderUserEmail = #{ traderUserEmail }
         where
-            CasePetitions = #{casePetitions} and
+            CasePetition = #{casePetitions} and
             PetitionUserId = #{petitionUserId}
     </update> 
 
@@ -134,8 +134,8 @@
             petitionTypeValue = #{petitionTypeValue},
             petitionContext = #{petitionContext},
             ExpectResloveTypeValue = #{expectResloveTypeValue},
-            Other = #{other},
-            LanguageId = #{languageId}
+            Other = #{other}
+            <!-- LanguageId = #{languageId} -->
         where
             id = #{id} 
     </update> 
@@ -150,7 +150,7 @@
             files as b
         where 
             a.RelationType = #{relationType} and
-            a.RelatedId = #{RelatedId} and
+            a.RelatedId = #{relatedId} and
             a.fileId = b.id
     </select>
 
@@ -166,7 +166,7 @@
 
     <!-- .TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する -->
     <insert id="insertCaseFileRelations" parameterType="com.web.app.domain.MosContentConfirm.InsertCaseFileRelations">
-        insert into cases(
+        insert into case_file_relations(
             id,
             PlatformId,
             CaseId,
@@ -233,21 +233,21 @@
     </insert>
 
     <!-- 拡張項目内容を取得 -->
-    <select id="selectCaseIdPetition1" resultMap="BaseResultMap3">
+    <select id="selectExtensionitemIdExtensionitemValue" resultMap="BaseResultMap3">
         select ExtensionitemId, 
             ExtensionitemValue
         from 
             case_extensionitem_values
         where
             PlatformId = #{platformId} and
-            Case_petitionId = #{casePetitionId} and
+            Case_petitionId = #{id} and
             DeleteFlag = #{deleteFlag0} and
-            ExtensionitemId = #{extensionitemId} and
+            ExtensionitemId = #{extensionitemId}
     </select>
 
     <!-- case_extensionitem_valuesのMAX（id）を新規登録する -->
     <insert id="insertCaseExtensionitemValues" parameterType="com.web.app.domain.MosContentConfirm.UpdateOrInsertCaseExtensionitemValues">
-        insert into cases(
+        insert into case_extensionitem_values(
             id,
             PlatformId,
             CaseId,
