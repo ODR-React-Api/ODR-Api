@@ -59,9 +59,6 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
         // 下書きデータ存在の判定
         if (caseClaimrepliesCount > 0) {
             // 下書きデータ存在する場合、下記のAPIをコールし、画面入力したデータをDBへ更新を行う
-            // 「反訴への回答.id」取得
-            String caseClaimrepliesId = updClaimRepliesDataMapper.getCaseClaimrepliesId(caseId, platformId);
-
             // 「反訴への回答」更新
             int updCaseClaimrepliesNum = updClaimRepliesDataMapper.updCaseClaimreplies(updClaimRepliesDataParameter);
             if (updCaseClaimrepliesNum == 0) {
@@ -110,6 +107,9 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
                     if (insFilesNum == 0) {
                         return 0;
                     }
+
+                    // 「反訴への回答.id」取得
+                    String caseClaimrepliesId = updClaimRepliesDataMapper.getCaseClaimrepliesId(caseId, platformId);
 
                     // 「案件-添付ファイルリレーション」新規登録の項目を設定
                     CaseFileRelations caseFileRelations = getCaseFileRelations(updClaimRepliesDataParameter);

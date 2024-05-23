@@ -60,6 +60,8 @@ public class AnswerLoginServiceImpl implements AnswerLoginService {
         String fileNameCounterClaim = updRepliesDataParameter.getFileNameCounterClaim();
         // 拡張子
         String fileExtensionCounterClaim = updRepliesDataParameter.getFileExtensionCounterClaim();
+        // 反訴・回答.id 初期値:xxxx
+        String caseRepliesId = "xxxx";
 
         // 画面上の申立番号を利用してテーブル「反訴・回答」で検索し、検索できれば更新し、検索できなければ挿入する。
         // 「反訴・回答」取得
@@ -67,9 +69,6 @@ public class AnswerLoginServiceImpl implements AnswerLoginService {
         // 下書きデータ存在の判定
         if (caseRepliesCount > 0) {
             // 下書きデータ存在する場合、下記のAPIをコールし、画面入力したデータをDBへ更新を行う
-            // 「反訴・回答.id」取得
-            String caseRepliesId = updRepliesDataMapper.getCaseRepliesId(caseId, platformId);
-
             // 「反訴・回答」更新の項目を設定
             CaseReplies caseReplies = getCaseReplies(updRepliesDataParameter, false);
             // 「反訴・回答」更新
@@ -123,6 +122,9 @@ public class AnswerLoginServiceImpl implements AnswerLoginService {
                         return 0;
                     }
 
+                    // 「反訴・回答.id」取得
+                    caseRepliesId = updRepliesDataMapper.getCaseRepliesId(caseId, platformId);
+
                     // 「案件-添付ファイルリレーション」新規登録の項目を設定
                     CaseFileRelations caseFileRelationsReply = getCaseFileRelations(updRepliesDataParameter, false);
                     // 案件種類ID 反訴への回答.id
@@ -165,6 +167,12 @@ public class AnswerLoginServiceImpl implements AnswerLoginService {
                     int insFilesCounterClaimNum = updRepliesDataMapper.insFiles(filesCounterClaim);
                     if (insFilesCounterClaimNum == 0) {
                         return 0;
+                    }
+
+                    // caseRepliesId=初期値の場合
+                    if(caseRepliesId.equals("xxxx")){
+                        // 「反訴・回答.id」取得
+                        caseRepliesId = updRepliesDataMapper.getCaseRepliesId(caseId, platformId);
                     }
 
                     // 「案件-添付ファイルリレーション」新規登録の項目を設定
