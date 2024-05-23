@@ -69,7 +69,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
         //フロントに添付ファイル
         List<SubsidiaryFile> files = resultMediation.getFiles();
         //SQL文が更新されない場合は例外をスローし、DBが更新されないようにトランザクションをロールバックさせる
-        if (!(saveMeditonMapper.updateMediations(setMediation(resultMediation, null, true)) <= 0)) {
+        if (!(saveMeditonMapper.updateMediations(setMediation(resultMediation, null, true)) > 0)) {
             throw new RuntimeException();
         }
         if(files == null || files.isEmpty()){
