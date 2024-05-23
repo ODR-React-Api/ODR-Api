@@ -42,6 +42,7 @@ public class NegotiatMakeController {
     @SuppressWarnings("rawtypes")
     public Response insNegotiationsEdit(@RequestBody NegotiationsFile negotiationsFile) {
         try {
+    
             int num = negotiationsMakeService.addNegotiationsEdit(negotiationsFile);
 
             if (num == Constants.RESULT_STATE_ERROR) {

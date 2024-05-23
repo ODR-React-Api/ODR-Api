@@ -30,5 +30,19 @@ public class NegotiationsFile implements Serializable {
     private String specialItem;
     // フロントからのファイル
     private List<UpdNegotiationsFile> updNegotiationsFile;
-
+    
+    // セッション情報
+    //ログインユーザが申立人場合：1
+    //ログインユーザが相手方場合：2
+    private int flag;
+    //更新時用セッション情報の和解案id
+    private String id;
+    //ファイルID
+    private String filesId;
+    //プラットフォームID
+    private String platformId;
+    //'セッション情報のCaseId
+    private String caseId;
+    //ログインユーザID
+    private String userId;
 }
