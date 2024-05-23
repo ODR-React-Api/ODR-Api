@@ -85,12 +85,18 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     public int InsNegotiationData(NegotiatPreview negotiatPreview) {
 
         ArrayList<String> fileIdList = new ArrayList<>();
+        String userStance = GetUserStance(negotiatPreview.getUserId(), negotiatPreview.getPlatformId(),
+                negotiatPreview.getCaseId());
         // 「和解案」新規登録
         CaseNegotiations caseNegotiations = new CaseNegotiations();
         caseNegotiations.setId(utilService.GetGuid());
         caseNegotiations.setPlatformId(negotiatPreview.getPlatformId());
         caseNegotiations.setCaseId(negotiatPreview.getCaseId());
-        caseNegotiations.setStatus(negotiatPreview.getStatus());
+        if (userStance == "1") {
+            caseNegotiations.setStatus(15);
+        }else if(userStance == "2"){
+            caseNegotiations.setStatus(2);
+        }
         caseNegotiations.setExpectResloveTypeValue(negotiatPreview.getExpectResloveTypeValue());
         caseNegotiations.setOtherContext(negotiatPreview.getOtherContext());
         caseNegotiations.setHtmlContext(negotiatPreview.getHtmlContext());
@@ -174,7 +180,9 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         ArrayList<String> fileIdList = new ArrayList<>();
         // Status設定
         // Num未マージ
-        if (Num.NUM15.equals(negotiatPreview.getStatus())) {
+        String userStance = GetUserStance(negotiatPreview.getUserId(), negotiatPreview.getPlatformId(),
+                negotiatPreview.getCaseId());
+        if (userStance == "1") {
             if (Num.NUM7.equals(caseNegotiations.getStatus()) ||
                     Num.NUM8.equals(caseNegotiations.getStatus()) ||
                     Num.NUM9.equals(caseNegotiations.getStatus())) {
@@ -186,7 +194,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
             } else {
                 return Constants.RESULT_STATE_ERROR;
             }
-        } else if (Num.NUM2.equals(negotiatPreview.getStatus())) {
+        } else if (userStance == "2") {
             if (Num.NUM0.equals(caseNegotiations.getStatus()) ||
                     Num.NUM1.equals(caseNegotiations.getStatus()) ||
                     Num.NUM2.equals(caseNegotiations.getStatus())) {
