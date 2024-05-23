@@ -294,7 +294,7 @@
             AND LanguageId = 'jp'
     </select>
 
-    <select id="casesByCid" resultType="java.lang.String">
+    <select id="findCasesByCid" resultType="java.lang.String">
         SELECT
             CaseTitle
         FROM
@@ -304,7 +304,7 @@
             and PlatformId = #{platformId} 
             and DeleteFlag = 0
     </select>
-    
+
     <select id="GetUserDataFromCaseIdentity" resultType="com.web.app.domain.User">
         SELECT odr_users.FirstName,odr_users.MiddleName,odr_users.LastName FROM odr_users INNER JOIN case_relations
         WHERE case_relations.CaseId = #{caseId}
