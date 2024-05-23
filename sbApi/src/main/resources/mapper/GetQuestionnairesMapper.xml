@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetQuestionnairesMapper">
+    <select id="questionnaieDataSearch" resultType="com.web.app.domain.QuesAnswer.QuestionnaireData">
+        SELECT 
+            QuestionId,
+            UserEmail,
+            UserType,
+            CaseId
+        FROM
+            react_use.questionnaire_mails
+        WHERE
+            GUID = #{Id}
+    </select>
+
+    <select id="questionnaieCountSearch" resultType="Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            react_use.questionnaire_mails
+        WHERE
+            QuestionId = #{questionId}  and
+            CaseId = #{caseId} and
+            UserType = #{userType} 
+    </select>
+
+    <select id="searchQuestionnaieList" resultType="com.web.app.domain.QuesAnswer.QuestionnaireList">
+        SELECT
+            questionnaires.Description,
+            questionnaires.Type,
+            questionnaires.ActiveFlag,
+            questionnaires.Order,
+            questionnaires.RequireFlag
+        FROM
+            react_use.questionnaires as questionnaires
+        WHERE
+            questionnaires.PlatformId = #{platformId} and
+            questionnaires.EffectiveDate >  CURRENT_DATE() and
+            questionnaires.Open = 1 and
+            questionnaires.ActiveFlag = 1 and
+            questionnaires.QuestionId = #{questionId} 
+        Order By
+            questionnaires.Order ASC
+    </select>
+</mapper>
