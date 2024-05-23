@@ -14,6 +14,6 @@ import java.util.List;
 @Mapper
 public interface GetRepliesDataMapper {
     //反訴・回答データ取得
-    List<RepliesData> getReplies(String caseId,String platformId);
+    List<RepliesData> getReplies(String caseId, String platformId);
 }
 

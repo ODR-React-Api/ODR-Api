@@ -12,7 +12,6 @@ import com.web.app.domain.Entity.MailTemplates;
 import com.web.app.domain.Entity.MasterPlatforms;
 import com.web.app.domain.Entity.MasterTypes;
 import com.web.app.domain.Entity.OdrUsers;
-import com.web.app.domain.Entity.CasesByCid;
 import com.web.app.domain.util.DisplayNameResult;
 
 /**
@@ -41,7 +40,7 @@ public interface CommonMapper {
     List<MailTemplates> FindMailTemplatesList(String platformId, String tempId);
 
     // API_反訴・回答データ取得
-    List<CasesByCid> casesByCid(String caseId, String platformId);
+    String casesByCid(String caseId, String platformId);
 
     User GetUserDataFromCaseIdentity(Boolean identity, String languageId, String platformId, String caseId);
 

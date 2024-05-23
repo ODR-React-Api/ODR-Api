@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.web.app.domain.Entity.Cases;
-import com.web.app.domain.Entity.CasesByCid;
 import com.web.app.domain.Entity.MasterPlatforms;
 import com.web.app.domain.Entity.MasterTypes;
 import com.web.app.domain.Entity.OdrUsers;
@@ -44,6 +43,6 @@ public interface UtilService {
     List<MasterTypes> GetMasterTypeName(String type, String languageId, String platformId);
 
     // 案件データ取得
-    List<CasesByCid> casesByCid(String caseId,String platformId);
+    String casesByCid(String caseId, String platformId);
 
 }

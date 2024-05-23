@@ -16,5 +16,5 @@ import com.web.app.domain.couAnswerLogin.RepliesContext;
  */
 public interface CouAnswerLoginService {
     //API_反訴・回答データ取得
-    List<RepliesContext> getRepliesContext(String caseId,String platformId);
+    List<RepliesContext> getRepliesContext(String caseId, String platformId);
 }

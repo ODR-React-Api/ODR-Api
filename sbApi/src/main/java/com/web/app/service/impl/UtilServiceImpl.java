@@ -15,7 +15,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.web.app.domain.Entity.Cases;
-import com.web.app.domain.Entity.CasesByCid;
 import com.web.app.domain.Entity.MailTemplates;
 import com.web.app.domain.Entity.MasterPlatforms;
 import com.web.app.domain.Entity.MasterTypes;
@@ -316,9 +315,8 @@ public class UtilServiceImpl implements UtilService {
      * @throws Exception エラーの説明内容
      */ 
     @Override
-    public List<CasesByCid> casesByCid(String caseId,String platformId) {
-        List<CasesByCid> casesByCidList = new ArrayList<CasesByCid>();
-        casesByCidList = commonMapper.casesByCid(caseId,platformId);
-        return casesByCidList;
+    public String casesByCid(String caseId, String platformId) {
+        String strCasesByCid = commonMapper.casesByCid(caseId, platformId);
+        return strCasesByCid;
     }
 }

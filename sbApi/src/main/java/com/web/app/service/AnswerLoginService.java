@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface AnswerLoginService {
       //API_反訴・回答データ取得
-      List<RepliesData> getRepliesData(String caseId,String platformId);
+      List<RepliesData> getRepliesData(String caseId, String platformId);
 }

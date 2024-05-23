@@ -14,5 +14,5 @@ import java.util.List;
 @Mapper
 public interface GetRepliesContextMapper {
     //反訴・回答データ取得
-    List<RepliesContext> getRepliesContext(String caseId,String platformId);
+    List<RepliesContext> getRepliesContext(String caseId, String platformId);
 }

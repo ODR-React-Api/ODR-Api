@@ -9,7 +9,6 @@ import com.web.app.service.CouAnswerLoginService;
 import com.web.app.service.UtilService;
 import com.web.app.tool.AjaxResult;
 import com.web.app.domain.Response;
-import com.web.app.domain.Entity.CasesByCid;
 import com.web.app.domain.couAnswerLogin.RepliesContext;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -70,9 +69,8 @@ public class CouAnswerLoginController {
     @GetMapping("/getCasesByCid")
     public Response getCasesByCid(String caseId, String platformId) {
         try {
-            List<CasesByCid> getCasesByCidList = new ArrayList<CasesByCid>();
-            getCasesByCidList = utilService.casesByCid(caseId, platformId);
-            return AjaxResult.success("案件データ取得に成功しました", getCasesByCidList);
+            String strCasesByCid = utilService.casesByCid(caseId, platformId);
+            return AjaxResult.success("案件データ取得に成功しました", strCasesByCid);
         } catch (Exception e) {
             AjaxResult.fatal("案件データ取得に失敗しました!", e);
             return null;
