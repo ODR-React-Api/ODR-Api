@@ -37,7 +37,7 @@ public class CaseNegotiations implements Serializable{
     private String HtmlContext2;
 
     //支払金額
-    private String PayAmount;
+    private double PayAmount;
 
     //支払期日
     private String PaymentEndDate;
@@ -70,7 +70,7 @@ public class CaseNegotiations implements Serializable{
     private String CounterClaimContext;
 
     //反訴の支払金額
-    private String CounterClaimPayment;
+    private double CounterClaimPayment;
 
     //支払人
     private String PaymentUser;

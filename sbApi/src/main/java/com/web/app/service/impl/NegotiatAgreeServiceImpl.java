@@ -1,10 +1,8 @@
 package com.web.app.service.impl;
 
 import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.NegotiatAgree.NegotiatAgree;
 import com.web.app.domain.constants.Num;

@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.web.app.domain.Entity.CaseFileRelations;
 import com.web.app.domain.Entity.CaseNegotiations;
+import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.Entity.File;
 
 /**
@@ -23,4 +24,7 @@ public interface UpdNegotiationsDataMapper {
     int UpFile(File file);
     //「案件-添付ファイルリレーション」論理削除
     int UpCaseFileRelations(CaseFileRelations caseFileRelations);
+
+    //案件関係者Email
+    CaseRelations SearchCaseRelations(String caseId);
 }

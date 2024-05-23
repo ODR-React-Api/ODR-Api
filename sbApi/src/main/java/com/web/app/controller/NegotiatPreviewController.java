@@ -3,6 +3,7 @@ package com.web.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
@@ -35,9 +36,10 @@ public class NegotiatPreviewController {
      * @return Response
      * @throws Exception 和解案提出失敗
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("和解案プレビュー画面")
     @PostMapping("NegotiatPreview")
-    public Response NegotiatPreview(NegotiatPreview negotiatPreview){
+    public Response NegotiatPreview(@RequestBody NegotiatPreview negotiatPreview){
         try{
             int status = negotiatPreviewService.NegotiatPreview(negotiatPreview);
             if (status == Constants.RESULT_STATE_SUCCESS) {

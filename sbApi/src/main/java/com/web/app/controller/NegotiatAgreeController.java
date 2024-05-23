@@ -6,13 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.NegotiatAgree.NegotiatAgree;
 import com.web.app.service.NegotiatAgreeService;
 import com.web.app.tool.AjaxResult;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -38,6 +36,7 @@ public class NegotiatAgreeController {
      * @return Response
      * @throws Exception 和解案提出失敗
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("和解案確認データ取得")
     @PostMapping("GetNegotiatConInfo")
     public Response GetNegotiatConInfo(@RequestBody NegotiatAgree negotiatAgree) {

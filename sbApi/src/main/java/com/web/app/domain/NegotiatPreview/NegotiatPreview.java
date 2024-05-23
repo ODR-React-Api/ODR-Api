@@ -2,7 +2,6 @@ package com.web.app.domain.NegotiatPreview;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import com.web.app.controller.List;
 import com.web.app.domain.Entity.File;
 
 import lombok.Data;
@@ -37,7 +36,7 @@ public class NegotiatPreview implements Serializable{
     private String HtmlContext2;
 
     //支払金額
-    private String PayAmount;
+    private double PayAmount;
 
     //支払期日
     private String PaymentEndDate;
@@ -58,7 +57,7 @@ public class NegotiatPreview implements Serializable{
     private String AgreementDate;
 
     //反訴の支払金額
-    private String CounterClaimPayment;
+    private double CounterClaimPayment;
 
     //ファイルID
     private ArrayList<String> fileId;

@@ -52,4 +52,14 @@
         WHERE
             fileId = #{fileId}
     </update>
+
+    <select id="SearchCaseRelations" resultType="com.web.app.domain.Entity.CaseRelations">
+        SELECT
+            *
+        FROM
+            case_relations
+        WHERE
+            CaseId = #{caseId}
+            AND DeleteFlag = false
+    </select>
 </mapper>

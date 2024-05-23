@@ -1,17 +1,13 @@
 package com.web.app.service.impl;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import org.apache.ibatis.annotations.Case;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.web.app.domain.User;
 import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.Entity.CaseFileRelations;
 import com.web.app.domain.Entity.CaseNegotiations;
+import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.Entity.File;
 import com.web.app.domain.Entity.OdrUsers;
@@ -63,11 +59,16 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         // 和解案抽出
         CaseNegotiations caseNegotiations = updNegotiationsDataMapper
                 .SearchCaseNegotiations(negotiatPreview.getCaseId());
-        // Num未マージ
         if (caseNegotiations != null) {
-            UpdNegotiationsData(negotiatPreview, caseNegotiations);
+            int upStatus = UpdNegotiationsData(negotiatPreview, caseNegotiations);
+            if (upStatus == Constants.RESULT_STATE_SUCCESS) {
+                return Constants.RESULT_STATE_SUCCESS;
+            }
         } else {
-            InsNegotiationData(negotiatPreview);
+            int insStatus =InsNegotiationData(negotiatPreview);
+            if (insStatus == Constants.RESULT_STATE_SUCCESS) {
+                return Constants.RESULT_STATE_SUCCESS;
+            }
         }
         return Constants.RESULT_STATE_ERROR;
     }
@@ -109,7 +110,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
             return Constants.RESULT_STATE_ERROR;
         }
 
-        if (!(negotiatPreview.getFileList().isEmpty())) {
+        if (negotiatPreview.getFileList() != null && !(negotiatPreview.getFileList().isEmpty())) {
             // 「添付ファイル」の新規登録
             for (int i = 0; i < negotiatPreview.getFileList().size(); i++) {
                 File file = new File();
@@ -143,16 +144,16 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
             }
         }
 
-        // メール送信
-        SendMailRequest sendMailRequest = SetMail(negotiatPreview);
-        Boolean bool = utilService.SendMail(sendMailRequest);
-        if (bool != true) {
-            return Constants.RESULT_STATE_ERROR;
-        }
-
         // 和解案提出アクション履歴新規登録
         ActionHistories actionHistories = SetActionHistories(negotiatPreview, caseNegotiations);
         Boolean boolean1 = commonService.InsertActionHistories(actionHistories, fileIdList, false, false);
+        if (boolean1 != true) {
+            return Constants.RESULT_STATE_ERROR;
+        }
+
+        // メール送信
+        SendMailRequest sendMailRequest = SetMail(negotiatPreview);
+        Boolean bool = utilService.SendMail(sendMailRequest);
         if (bool != true) {
             return Constants.RESULT_STATE_ERROR;
         }
@@ -172,6 +173,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     public int UpdNegotiationsData(NegotiatPreview negotiatPreview, CaseNegotiations caseNegotiations) {
         ArrayList<String> fileIdList = new ArrayList<>();
         // Status設定
+        // Num未マージ
         if (Num.NUM15.equals(negotiatPreview.getStatus())) {
             if (Num.NUM7.equals(caseNegotiations.getStatus()) ||
                     Num.NUM8.equals(caseNegotiations.getStatus()) ||
@@ -276,16 +278,16 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
             }
         }
 
-        // メール送信
-        SendMailRequest sendMailRequest = SetMail(negotiatPreview);
-        boolean bool = utilService.SendMail(sendMailRequest);
-        if (bool != true) {
-            return Constants.RESULT_STATE_ERROR;
-        }
-
         // 和解案提出アクション履歴新規登録
         ActionHistories actionHistories = SetActionHistories(negotiatPreview, caseNegotiations);
         Boolean boolean1 = commonService.InsertActionHistories(actionHistories, fileIdList, false, false);
+        if (boolean1 != true) {
+            return Constants.RESULT_STATE_ERROR;
+        }
+
+        // メール送信
+        SendMailRequest sendMailRequest = SetMail(negotiatPreview);
+        boolean bool = utilService.SendMail(sendMailRequest);
         if (bool != true) {
             return Constants.RESULT_STATE_ERROR;
         }
@@ -300,9 +302,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         sendMailRequest.setLanguageId(Constants.JP);
         sendMailRequest.setTempId("M028");
         sendMailRequest.setCaseId(negotiatPreview.getCaseId());
-        ArrayList<String> recipientEmail = new ArrayList<String>();
-
-        recipientEmail.add("li.zhiwen@trans-cosmos.com.cn");
+        ArrayList<String> recipientEmail = GetEmail(negotiatPreview);
 
         sendMailRequest.setRecipientEmail(recipientEmail);
 
@@ -310,13 +310,19 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         parameter.add(negotiatPreview.getCaseId());
 
         Cases case1 = commonMapper.FindCasesInfoByCid(negotiatPreview.getCaseId());
+
         parameter.add(case1.getCaseTitle());
 
         OdrUsers user = commonMapper.FindUserByUidOrEmail(negotiatPreview.getUserId(), null,
                 negotiatPreview.getPlatformId());
-        String name = user.getFirstName() + user.getMiddleName() + user.getLastName();
-        parameter.add(name);
-
+        if (user != null) {
+            String name = (user.getFirstName() != null ? " " + user.getFirstName() : "")
+                    + (user.getMiddleName() != null ? " " + user.getMiddleName() : "")
+                    + (user.getLastName() != null ? " " + user.getLastName() : "");
+            parameter.add(name);
+        } else {
+            return null;
+        }
         parameter.add("http://www.baidu.com");
 
         sendMailRequest.setParameter(parameter);
@@ -352,9 +358,86 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     // メールの取得
     public ArrayList<String> GetEmail(NegotiatPreview negotiatPreview) {
         ArrayList<String> recipientEmail = new ArrayList<String>();
-        OdrUsers user = commonMapper.FindUserByUidOrEmail(negotiatPreview.getUserId(), null,
-                negotiatPreview.getPlatformId());
-        
-        return recipientEmail;
+        CaseRelations caseRelations = updNegotiationsDataMapper.SearchCaseRelations(negotiatPreview.getCaseId());
+        String userStance = GetUserStance(negotiatPreview.getUserId(), negotiatPreview.getPlatformId(),
+                negotiatPreview.getCaseId());
+        if (userStance != null) {
+            // ユーザは申立人であり、相手方に送信する
+            if (userStance == "1") {
+                if (caseRelations.getTraderUserEmail() != null) {
+                    recipientEmail.add(caseRelations.getTraderUserEmail());
+                }
+                if (caseRelations.getTraderAgent1_UserEmail() != null) {
+                    recipientEmail.add(caseRelations.getTraderAgent1_UserEmail());
+                }
+                if (caseRelations.getTraderAgent2_UserEmail() != null) {
+                    recipientEmail.add(caseRelations.getTraderAgent2_UserEmail());
+                }
+                if (caseRelations.getTraderAgent3_UserEmail() != null) {
+                    recipientEmail.add(caseRelations.getTraderAgent3_UserEmail());
+                }
+                if (caseRelations.getTraderAgent4_UserEmail() != null) {
+                    recipientEmail.add(caseRelations.getTraderAgent4_UserEmail());
+                }
+                if (caseRelations.getTraderAgent5_UserEmail() != null) {
+                    recipientEmail.add(caseRelations.getTraderAgent5_UserEmail());
+                }
+                return recipientEmail;
+                // ユーザは相手方であり、申立人に送信する
+            } else if (userStance == "2") {
+                if (caseRelations.getPetitionUserInfo_Email() != null) {
+                    recipientEmail.add(caseRelations.getPetitionUserInfo_Email());
+                }
+                if (caseRelations.getAgent1_Email() != null) {
+                    recipientEmail.add(caseRelations.getAgent1_Email());
+                }
+                if (caseRelations.getAgent2_Email() != null) {
+                    recipientEmail.add(caseRelations.getAgent2_Email());
+                }
+                if (caseRelations.getAgent3_Email() != null) {
+                    recipientEmail.add(caseRelations.getAgent3_Email());
+                }
+                if (caseRelations.getAgent4_Email() != null) {
+                    recipientEmail.add(caseRelations.getAgent4_Email());
+                }
+                if (caseRelations.getAgent5_Email() != null) {
+                    recipientEmail.add(caseRelations.getAgent5_Email());
+                }
+                return recipientEmail;
+            }
+        }
+        return null;
+    }
+
+    // ログインユーザーの立場の取得
+    public String GetUserStance(String userId, String platformId, String caseId) {
+        OdrUsers user = commonMapper.FindUserByUidOrEmail(userId, null, platformId);
+        CaseRelations caseRelations = updNegotiationsDataMapper.SearchCaseRelations(caseId);
+        if (user != null && caseRelations != null) {
+            if (user.getEmail().equals(caseRelations.getPetitionUserInfo_Email()) ||
+                    user.getEmail().equals(caseRelations.getAgent1_Email()) ||
+                    user.getEmail().equals(caseRelations.getAgent2_Email()) ||
+                    user.getEmail().equals(caseRelations.getAgent3_Email()) ||
+                    user.getEmail().equals(caseRelations.getAgent4_Email()) ||
+                    user.getEmail().equals(caseRelations.getAgent5_Email())) {
+                // 申立人
+                return "1";
+            } else if (user.getEmail().equals(caseRelations.getTraderUserEmail()) ||
+                    user.getEmail().equals(caseRelations.getTraderAgent1_UserEmail()) ||
+                    user.getEmail().equals(caseRelations.getTraderAgent2_UserEmail()) ||
+                    user.getEmail().equals(caseRelations.getTraderAgent3_UserEmail()) ||
+                    user.getEmail().equals(caseRelations.getTraderAgent4_UserEmail()) ||
+                    user.getEmail().equals(caseRelations.getTraderAgent5_UserEmail())) {
+                // 相手方
+                return "2";
+            } else if (user.getEmail().equals(caseRelations.getMediatorUserEmail())) {
+                // 調停人
+                return "3";
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 }
