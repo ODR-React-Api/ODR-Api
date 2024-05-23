@@ -89,9 +89,8 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                     //追加添付ファイル
                     case 2:
                         mediation = setMediation(resultMediation, file, false);
-                        if (!(saveMeditonMapper.addFiles(mediation) > 0 && saveMeditonMapper.addFileRelations(mediation) > 0)) {
-                            throw new RuntimeException();
-                        }
+                        saveMeditonMapper.addFiles(mediation);
+                        saveMeditonMapper.addFileRelations(mediation);
                         break;
                     //添付ファイルは変更されていません
                     default:
