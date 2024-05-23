@@ -4,7 +4,6 @@ import com.web.app.domain.Entity.CaseFileRelations;
 import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.Entity.Files;
 import com.web.app.domain.NegotiatMake.NegotiationsFile;
-import com.web.app.domain.NegotiatMake.SessionItems;
 import com.web.app.domain.NegotiatMake.UpdNegotiationsFile;
 import com.web.app.domain.constants.Constants;
 import com.web.app.mapper.InsNegotiationsEditMapper;
