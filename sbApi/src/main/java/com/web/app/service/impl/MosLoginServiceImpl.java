@@ -12,7 +12,6 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.web.app.domain.Entity.MasterPlatforms;
-import com.web.app.domain.Entity.MasterTypes;
 import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.domain.Entity.CaseExtensionitemValues;
 import com.web.app.domain.Entity.CaseFileRelations;
@@ -67,68 +66,63 @@ public class MosLoginServiceImpl implements MosLoginService {
      *         申立て登録画面の「申立ての種類」と「希望する解決方法」の選択肢の内容、画面制御表示項目の表示状態、拡張項目の内容を表示する
      */
     @Override
-    public GetPlatform getPlatform(String sessionId) {
+    public GetPlatform getPlatform(SessionInfo sessionInfo) {
 
         // 申立ての種類の表示内容の取得List
-        List<String> petitionTypeList1 = new ArrayList<>();
+        List<String> petitionTypeList = new ArrayList<>();
         // 希望する解決方法の表示内容の取得List
-        List<String> resloveTypeList1 = new ArrayList<>();
-        // 画面制御表示項目取得List
-        GetPlatform itemsResultList1 = new GetPlatform();
+        List<String> resloveTypeList = new ArrayList<>();
+        // 画面制御表示項目取得
+        GetPlatform itemsResult = new GetPlatform();
 
         // ユーザ情報取得
-        OdrUsers odrUsers = getPlatformMapper.selectOdrUsers(sessionId);
+        OdrUsers odrUsers = getPlatformMapper.selectOdrUsers(sessionInfo.getSessionId());
         // ユーザ情報取得有りの場合、下記処理を行う）
         if (odrUsers.getPlatformId() != null) {
 
+            String PetitionType = "PetitionType";
+            String ResloveType = "ResloveType";
+
             // TBL「種類マスタ」より申立種類取得
-            List<MasterTypes> petitionTypeList = getPlatformMapper.masterTypesSearch1(odrUsers.getPlatformId());
+            petitionTypeList = getPlatformMapper.masterTypesSearch(odrUsers.getPlatformId(), PetitionType);
 
             // master_types.DisplayNameを配列に設定して、master_types.OrderNo.でソート（昇順）して、画面の「申立ての種類」の選択肢に表示する。
-            if (petitionTypeList.size() > 0) {
-                for (int i = 0; i < petitionTypeList.size(); i++) {
-                    petitionTypeList1.add(petitionTypeList.get(i).getDisplayName());
-                }
-                itemsResultList1.setPetitionTypeDisplayName(petitionTypeList1);
-            }
+            itemsResult.setPetitionTypeDisplayName(petitionTypeList);
 
             // TBL「種類マスタ」より希望する解決方法取得
-            List<MasterTypes> resloveTypeList = getPlatformMapper.masterTypesSearch2(odrUsers.getPlatformId());
+            resloveTypeList = getPlatformMapper.masterTypesSearch(odrUsers.getPlatformId(), ResloveType);
 
             // master_types.DisplayNameを配列に設定して、master_types.OrderNo.でソート（昇順）して、画面の「希望する解決方法」の選択肢に表示する。
-            if (resloveTypeList.size() > 0) {
-                for (int i = 0; i < resloveTypeList.size(); i++) {
-                    resloveTypeList1.add(resloveTypeList.get(i).getDisplayName());
-                }
-                itemsResultList1.setResloveTypeDisplayName(resloveTypeList1);
-            }
+            itemsResult.setResloveTypeDisplayName(resloveTypeList);
 
             // 画面制御表示項目表示状態取得
             MasterPlatforms result1 = getPlatformMapper.masterPlatformsSearch(odrUsers.getPlatformId());
             if (result1 != null) {
                 // 取得した項目を戻す
                 // 商品ＩＤ表示状態
-                itemsResultList1.setUserProductId(result1.getUserProductId());
+                itemsResult.setUserProductId(result1.getUserProductId());
                 // 販売者名表示状態
-                itemsResultList1.setUseTraderName(result1.getUseTraderName());
+                itemsResult.setUseTraderName(result1.getUseTraderName());
                 // 販売者ＵＲＬ表示状態
-                itemsResultList1.setUseProductUrl(result1.getUseProductUrl());
+                itemsResult.setUseProductUrl(result1.getUseProductUrl());
                 // 拡張項目の表示状態
-                itemsResultList1.setUseOther(result1.getUseOther());
-            }
-            if (result1.getUseOther() == 1) {
-                // 拡張項目の取得
-                List<ExpandItems> expandProjectList = getPlatformMapper.expandProjectSearch(odrUsers.getPlatformId());
-                if (expandProjectList.size() > 0) {
-                    // 取得した項目を戻す
-                    // 画面表示項目.拡張項目
-                    itemsResultList1.setExpandItems(expandProjectList);
-                }
+                itemsResult.setUseOther(result1.getUseOther());
 
+                if (result1.getUseOther() == 1) {
+                    // 拡張項目の取得
+                    List<ExpandItems> expandProjectList = getPlatformMapper
+                            .expandProjectSearch(sessionInfo.getPlatformId());
+                    if (expandProjectList.size() > 0) {
+                        // 取得した項目を戻す
+                        // 画面表示項目.拡張項目
+                        itemsResult.setExpandItems(expandProjectList);
+                    }
+
+                }
             }
         }
 
-        return itemsResultList1;
+        return itemsResult;
     }
 
     /**
@@ -145,68 +139,71 @@ public class MosLoginServiceImpl implements MosLoginService {
     @Override
     public GetPetitionTemp getPetitionsTemp(SessionInfo sessionInfo) {
         // 申立て下書き保存データ取得内容
-        GetPetitionTemp petitionInfoList1 = new GetPetitionTemp();
+        GetPetitionTemp petitionInfo = new GetPetitionTemp();
         // 申立人情報取得内容
         OdrUsers getPetitionInfo = new OdrUsers();
 
         // TBL「案件別個人情報リレーション（case_relations）」とTBL「申立（case_petitions）」より関連ユーザの下書き保存のデータを取得する。
         PetitionTemp petitionsTemp = getPetitionsTempMapper.selectPetitionsTemp(sessionInfo.getSessionId());
-        if (petitionsTemp != null) {
-            // 申立て人
-            petitionInfoList1.setPetitionUserId(petitionsTemp.getPetitionUserId());
-            // 申立Id
-            petitionInfoList1.setCasePetition(petitionsTemp.getCasePetition());
-            // 画面表示項目.メールアドレス
-            petitionInfoList1.setPetitionUserInfo_Email(petitionsTemp.getPetitionUserInfo_Email());
-            // 画面表示項目.代理人1メールアドレス
-            petitionInfoList1.setAgent1_Email(petitionsTemp.getAgent1_Email());
-            // 画面表示項目.代理人2メールアドレス
-            petitionInfoList1.setAgent2_Email(petitionsTemp.getAgent2_Email());
-            // 画面表示項目.代理人3メールアドレス
-            petitionInfoList1.setAgent3_Email(petitionsTemp.getAgent3_Email());
-            // 画面表示項目.代理人4メールアドレス
-            petitionInfoList1.setAgent4_Email(petitionsTemp.getAgent4_Email());
-            // 画面表示項目.代理人5メールアドレス
-            petitionInfoList1.setAgent5_Email(petitionsTemp.getAgent5_Email());
-            // 画面表示項目.販売者メールアドレス
-            petitionInfoList1.setTraderUserEmail(petitionsTemp.getTraderUserEmail());
-            // 画面表示項目.購入商品
-            petitionInfoList1.setProductName(petitionsTemp.getProductName());
-            // 画面表示項目.商品ID
-            petitionInfoList1.setProductId(petitionsTemp.getProductId());
-            // 画面表示項目.販売者
-            petitionInfoList1.setTraderName(petitionsTemp.getTraderName());
-            // 画面表示項目.販売者ＵＲＬ
-            petitionInfoList1.setTraderUrl(petitionsTemp.getTraderUrl());
-            // 画面表示項目.購入日
-            petitionInfoList1.setBoughtDate(petitionsTemp.getBoughtDate());
-            // 画面表示項目.購入金額
-            petitionInfoList1.setPrice(petitionsTemp.getPrice());
-            // 画面表示項目.申立ての種類
-            petitionInfoList1.setPetitionTypeValue(petitionsTemp.getPetitionTypeValue());
-            // 画面表示項目.申立て内容
-            petitionInfoList1.setPetitionContext(petitionsTemp.getPetitionContext().toString());
-            // 画面表示項目.希望する解決方法
-            petitionInfoList1.setExpectResloveTypeValue(petitionsTemp.getExpectResloveTypeValue());
-            // 画面表示項目.その他
-            petitionInfoList1.setOther(petitionsTemp.getOther());
+        if (petitionsTemp == null) {
+            return null;
         }
+        // 申立て人
+        petitionInfo.setPetitionUserId(petitionsTemp.getPetitionUserId());
+        // 申立Id
+        petitionInfo.setCasePetition(petitionsTemp.getCasePetition());
+        // 画面表示項目.メールアドレス
+        petitionInfo.setPetitionUserInfo_Email(petitionsTemp.getPetitionUserInfo_Email());
+        // 画面表示項目.代理人1メールアドレス
+        petitionInfo.setAgent1_Email(petitionsTemp.getAgent1_Email());
+        // 画面表示項目.代理人2メールアドレス
+        petitionInfo.setAgent2_Email(petitionsTemp.getAgent2_Email());
+        // 画面表示項目.代理人3メールアドレス
+        petitionInfo.setAgent3_Email(petitionsTemp.getAgent3_Email());
+        // 画面表示項目.代理人4メールアドレス
+        petitionInfo.setAgent4_Email(petitionsTemp.getAgent4_Email());
+        // 画面表示項目.代理人5メールアドレス
+        petitionInfo.setAgent5_Email(petitionsTemp.getAgent5_Email());
+        // 画面表示項目.販売者メールアドレス
+        petitionInfo.setTraderUserEmail(petitionsTemp.getTraderUserEmail());
+        // 画面表示項目.購入商品
+        petitionInfo.setProductName(petitionsTemp.getProductName());
+        // 画面表示項目.商品ID
+        petitionInfo.setProductId(petitionsTemp.getProductId());
+        // 画面表示項目.販売者
+        petitionInfo.setTraderName(petitionsTemp.getTraderName());
+        // 画面表示項目.販売者ＵＲＬ
+        petitionInfo.setTraderUrl(petitionsTemp.getTraderUrl());
+        // 画面表示項目.購入日
+        petitionInfo.setBoughtDate(petitionsTemp.getBoughtDate());
+        // 画面表示項目.購入金額
+        petitionInfo.setPrice(petitionsTemp.getPrice());
+        // 画面表示項目.申立ての種類
+        petitionInfo.setPetitionTypeValue(petitionsTemp.getPetitionTypeValue());
+        // 画面表示項目.申立て内容
+        petitionInfo.setPetitionContext(petitionsTemp.getPetitionContext().toString());
+        // 画面表示項目.希望する解決方法
+        petitionInfo.setExpectResloveTypeValue(petitionsTemp.getExpectResloveTypeValue());
+        // 画面表示項目.その他
+        petitionInfo.setOther(petitionsTemp.getOther());
 
         // TBL「ユーザ（odr_users）」より申立人情報を取得する
         if (petitionsTemp.getPetitionUserInfo_Email() != null) {
             // 申立人情報を取得する
             getPetitionInfo = getPetitionsTempMapper.selectOdrUsers(sessionInfo.getSessionId(),
                     petitionsTemp.getPetitionUserInfo_Email());
-            // 画面表示項目.お問い合わせをされる方についての情報の氏名の名
-            petitionInfoList1.setFirstName(getPetitionInfo.getFirstName());
-            // 画面表示項目.お問い合わせをされる方についての情報の氏名の姓
-            petitionInfoList1.setLastName(getPetitionInfo.getLastName());
-            // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の名
-            petitionInfoList1.setFirstName_kana(getPetitionInfo.getFirstName_kana());
-            // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の姓
-            petitionInfoList1.setLastName_kana(getPetitionInfo.getLastName_kana());
-            // 画面表示項目.お問い合わせをされる方についての情報の所属会社
-            petitionInfoList1.setCompanyName(getPetitionInfo.getCompanyName());
+            if (getPetitionInfo != null) {
+                // 画面表示項目.お問い合わせをされる方についての情報の氏名の名
+                petitionInfo.setFirstName(getPetitionInfo.getFirstName());
+                // 画面表示項目.お問い合わせをされる方についての情報の氏名の姓
+                petitionInfo.setLastName(getPetitionInfo.getLastName());
+                // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の名
+                petitionInfo.setFirstName_kana(getPetitionInfo.getFirstName_kana());
+                // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の姓
+                petitionInfo.setLastName_kana(getPetitionInfo.getLastName_kana());
+                // 画面表示項目.お問い合わせをされる方についての情報の所属会社
+                petitionInfo.setCompanyName(getPetitionInfo.getCompanyName());
+            }
         }
 
         // 上記画面表示項目（画面上で必須となっている項目）取得有り（Nullでない）場合、下記の下書き案件のファイルIDと拡張項目内容取得を行う。
@@ -215,16 +212,16 @@ public class MosLoginServiceImpl implements MosLoginService {
             List<FileId> getFileId = getPetitionsTempMapper.selectFileId(petitionsTemp.getCasePetition());
             if (getFileId.size() > 0) {
                 // 画面表示項目.添付資料
-                petitionInfoList1.setFileName(getFileId);
+                petitionInfo.setFileName(getFileId);
             }
             // 拡張項目内容取得
             List<ScaleItems> scaleItemsList = getPetitionsTempMapper.scaleItemsSearch(sessionInfo.getPlatformId());
             if (scaleItemsList.size() > 0) {
                 // 画面表示項目.拡張項目
-                petitionInfoList1.setPetitionTypeDisplayName(scaleItemsList);
+                petitionInfo.setPetitionTypeDisplayName(scaleItemsList);
             }
         }
-        return petitionInfoList1;
+        return petitionInfo;
     }
 
     /**
@@ -438,8 +435,8 @@ public class MosLoginServiceImpl implements MosLoginService {
     /**
      * 共通関数「TBL「申立（case_petitions）」の更新」
      *
-     * @param ScreenInfo 画面に入力した内容
-     * @param OdrUsers 取得したユーザ情報内容
+     * @param ScreenInfo        画面に入力した内容
+     * @param OdrUsers          取得したユーザ情報内容
      * @param case_petitions_id API「下書き用準備データ登録」戻ったcase_petitions.id
      * @return int TBL「申立（case_petitions）更新成功の件数
      */
@@ -484,10 +481,10 @@ public class MosLoginServiceImpl implements MosLoginService {
     /**
      * 共通関数「TBL「案件別個人情報リレーション（case_relations）」の更新」
      *
-     * @param case_petitions_id API「下書き用準備データ登録」戻ったcase_petitions.id
+     * @param case_petitions_id             API「下書き用準備データ登録」戻ったcase_petitions.id
      * @param case_relations_PetitionUserId API「下書き用準備データ登録」戻ったcase_relations_PetitionUserId
-     * @param userInfo 取得したユーザ情報内容
-     * @param screenInfo 画面に入力した内容
+     * @param userInfo                      取得したユーザ情報内容
+     * @param screenInfo                    画面に入力した内容
      * @return int TBL「案件別個人情報リレーション（case_relations）」の更新成功の件数
      */
     private int updateCaseRelations(String case_petitions_id, String case_relations_PetitionUserId, OdrUsers userInfo,
@@ -528,9 +525,9 @@ public class MosLoginServiceImpl implements MosLoginService {
      * 共通関数「TBL「添付ファイル（files）」の登録」
      *
      * @param fileMaxId1 自動採番のID
-     * @param userInfo 取得したユーザ情報内容
+     * @param userInfo   取得したユーザ情報内容
      * @param screenInfo 画面に入力した内容
-     * @param sysDate システム日付
+     * @param sysDate    システム日付
      * @return int TBL「添付ファイル（files）」の登録成功の件数
      */
     private int insertFiles(String fileMaxId1, OdrUsers userInfo, ScreenInfo screenInfo, String sysDate) {
@@ -564,11 +561,11 @@ public class MosLoginServiceImpl implements MosLoginService {
     /**
      * 共通関数「TBL「案件-添付ファイルリレーション（case_file_relations）」の登録」
      *
-     * @param userInfo 取得したユーザ情報内容
+     * @param userInfo          取得したユーザ情報内容
      * @param case_petitions_id API「下書き用準備データ登録」戻ったcase_petitions.id
-     * @param fileMaxId1 自動採番のID
-     * @param sysDate システム日付
-     * @param screenInfo 画面に入力した内容
+     * @param fileMaxId1        自動採番のID
+     * @param sysDate           システム日付
+     * @param screenInfo        画面に入力した内容
      * @return int TBL「案件-添付ファイルリレーション（case_file_relations）」の登録成功の件数
      */
     private int insertCaseFileRelations(OdrUsers userInfo, String case_petitions_id, String fileMaxId1, String sysDate,

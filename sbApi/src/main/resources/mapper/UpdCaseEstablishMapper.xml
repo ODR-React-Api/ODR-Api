@@ -3,10 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.UpdCaseEstablishMapper">
-    <resultMap id="caseNegotiationsResultMap" type="com.web.app.domain.Entity.CaseNegotiations">
-    </resultMap>
     <!-- 和解案確認データ（StatusとPayAmount）を取得する -->
-    <select id="selectCaseNegotiations" resultMap="caseNegotiationsResultMap">
+    <select id="selectCaseNegotiations" resultType="com.web.app.domain.Entity.CaseNegotiations">
         SELECT
             Status,
             PayAmount

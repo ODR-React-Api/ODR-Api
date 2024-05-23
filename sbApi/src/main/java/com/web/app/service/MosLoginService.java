@@ -18,7 +18,7 @@ import com.web.app.domain.MosLogin.SessionInfo;
 public interface MosLoginService {
 
     // API_画面制御表示項目取得
-    GetPlatform getPlatform(String sessionId);
+    GetPlatform getPlatform(SessionInfo sessionInfo);
 
     // API_申立て下書き保存データ取得
     GetPetitionTemp getPetitionsTemp(SessionInfo sessionInfo);

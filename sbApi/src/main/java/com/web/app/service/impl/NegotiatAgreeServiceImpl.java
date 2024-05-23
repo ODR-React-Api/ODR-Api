@@ -36,7 +36,7 @@ public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
         // 「和解案確認更新API」をコール後、和解案確認データ（StatusとPayAmount）を取得する
         CaseNegotiations caseNegotiations = updCaseEstablishMapper
                 .selectCaseNegotiations(caseEstablish.getCaseNegotiationsId());
-        if (caseNegotiations.getStatus() == 6) {
+        if (caseNegotiations != null && caseNegotiations.getStatus() == 6) {
 
             // 案件更新用数据初期化
             Cases cases = new Cases();

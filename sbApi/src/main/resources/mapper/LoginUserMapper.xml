@@ -3,11 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.LoginUserMapper">
-
-    <resultMap id="ResultMap" type="com.web.app.domain.Entity.OdrUsers">
-    </resultMap>
     <!-- 申立データ取得 -->
-    <select id="getLoginUser" resultMap="ResultMap">
+    <select id="getLoginUser" resultType="com.web.app.domain.Entity.OdrUsers">
         select 
             FirstName,
             MiddleName,

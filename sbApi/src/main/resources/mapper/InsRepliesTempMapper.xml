@@ -3,12 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.InsRepliesTempMapper">
-    <resultMap id="odrUsersResultMap" type="com.web.app.domain.Entity.OdrUsers">
-    </resultMap>
-    <resultMap id="scaleItemsResultMap" type="com.web.app.domain.MosLogin.ScaleItems">
-    </resultMap>
     <!-- ユーザ情報取得 -->
-    <select id="selectOdrUsers" resultMap="odrUsersResultMap">
+    <select id="selectOdrUsers" resultType="com.web.app.domain.Entity.OdrUsers">
         SELECT
             LanguageId,
             PlatformId
@@ -135,7 +131,7 @@
         )
     </insert>
     <!-- 既存の拡張項目内容取得 -->
-    <select id="selectScaleItemIdValue" parameterType="com.web.app.domain.Entity.CaseExtensionitemValues" resultMap="scaleItemsResultMap">
+    <select id="selectScaleItemIdValue" parameterType="com.web.app.domain.Entity.CaseExtensionitemValues" resultType="com.web.app.domain.MosLogin.ScaleItems">
         SELECT
             ExtensionitemId,
             ExtensionitemValue

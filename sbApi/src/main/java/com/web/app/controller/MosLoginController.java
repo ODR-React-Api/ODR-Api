@@ -38,6 +38,8 @@ public class MosLoginController {
 
   /**
    * 申立て登録画面の初期画面全ての内容を取得する。
+   * API_画面制御表示項目取得
+   * API_申立て下書き保存データ取得
    *
    * @param sessionInfo セッション.ユーザID セッション.PlatformId
    * @return PictureDisplay
@@ -53,32 +55,17 @@ public class MosLoginController {
 
     try {
 
-      /**
-       * API_画面制御表示項目取得
-       * 申立て登録画面の「申立ての種類」と「希望する解決方法」の選択肢の内容を表示するために、種類マスタから対応する内容を取得する。
-       * プラットフォームマスタより画面制御表示項目の表示状態を取得する。
-       *
-       * @param sessionId セッション.ユーザID
-       * @return GetPlatform
-       *         申立て登録画面の「申立ての種類」と「希望する解決方法」の選択肢の内容、画面制御表示項目の表示状態、拡張項目の内容を表示する
-       */
-      GetPlatform platformList = mosLoginService.getPlatform(sessionInfo.getSessionId());
+      // 画面制御表示項目取得
+      GetPlatform platformList = mosLoginService.getPlatform(sessionInfo);
+
       mospictureResult.setGetPlatform(platformList);
       if (platformList.getUseOther() == 1) {
         return AjaxResult.success("拡張項目の表示状態が1の画面表示成功!", mospictureResult);
       } else if (platformList.getUseOther() == 0) {
-        /**
-         * API_申立て下書き保存データ取得
-         * TBL「案件別個人情報リレーション（case_relations）」とTBL「申立（case_petitions）」より関連ユーザの下書き保存のデータを取得する。
-         * TBL「ユーザ（odr_users）」より申立人情報を取得する
-         * TBL「案件-添付ファイルリレーション（case_file_relations）」より関連下書き案件のファイルIDを取得する。
-         * TBL「拡張項目設定値（case_extensionitem_values）」とTBL「案件-拡張項目-関連表（case_extensionitem_relations）」より拡張項目内容を取得する。
-         *
-         * @param sessionInfo セッション.ユーザID セッション.PlatformId
-         * @return GetPetitionTemp
-         *         取得した下書き保存データを画面に表示する。
-         */
+
+        // 申立て下書き保存データ取得
         GetPetitionTemp petitionsTempList = mosLoginService.getPetitionsTemp(sessionInfo);
+
         if (petitionsTempList == null) {
           // TODO API「下書き用準備データ登録」を呼び出す。
           return AjaxResult.success("API「下書き用準備データ登録」を呼び出す");

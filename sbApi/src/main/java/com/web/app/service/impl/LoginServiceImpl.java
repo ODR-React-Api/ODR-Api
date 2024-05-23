@@ -47,33 +47,35 @@ public class LoginServiceImpl implements LoginService {
         OdrUsers odrUser = new OdrUsers();
         odrUser = loginUserMapper.FindUserByUidOrEmail(null, loginUser.getEmail(), loginUser.getPlatformId());
 
-        // 共通関数「アクション履歴新規登録」の内容を設定
-        ActionHistories actionHistories = getActionHistoriesIf(loginUser, odrUser);
+        // 共通関数「アクション履歴新規登録」(成功と失敗）の共通内容を設定
+        if (odrUser != null) {
+            ActionHistories actionHistories = getActionHistoriesIf(loginUser, odrUser);
 
-        // 取得ありの場合、TBL「ユーザ」.LastLoginDateがシステム日付に更新して、ログイン履歴を登録(成功）
-        // 取得なしの場合、ログイン履歴を登録(失敗の場合）
-        if (getOdrUsers != null) {
+            // 取得ありの場合、TBL「ユーザ」.LastLoginDateがシステム日付に更新して、ログイン履歴を登録(成功）
+            // 取得なしの場合、ログイン履歴を登録(失敗の場合）
+            if (getOdrUsers != null) {
 
-            // TBL「ユーザ」更新
-            int updateNum = loginUserMapper.updateLoginDate(loginUser.getEmail(), loginUser.getPassWord());
-            if (updateNum == 0) {
-                return null;
+                // TBL「ユーザ」更新
+                int updateNum = loginUserMapper.updateLoginDate(loginUser.getEmail(), loginUser.getPassWord());
+                if (updateNum == 0) {
+                    return null;
+                }
+                // 共通関数「アクション履歴新規登録」
+                actionHistories.setActionType("LoginOK");
+                actionHistories.setLastModifiedBy(actionHistories.getUserId());
+                commonService.InsertActionHistories(actionHistories, null, false, true);
+            } else {
+                // 共通関数「アクション履歴新規登録」
+                actionHistories.setActionType("LoginNG");
+                actionHistories.setLastModifiedBy(odrUser.getEmail());
+                commonService.InsertActionHistories(actionHistories, null, false, true);
             }
-            // 共通関数「アクション履歴新規登録」
-            actionHistories.setActionType("LoginOK");
-            actionHistories.setLastModifiedBy(actionHistories.getUserId());
-            commonService.InsertActionHistories(actionHistories, null, false, true);
-        } else {
-            // 共通関数「アクション履歴新規登録」
-            actionHistories.setActionType("LoginNG");
-            actionHistories.setLastModifiedBy(odrUser.getEmail());
-            commonService.InsertActionHistories(actionHistories, null, false, true);
         }
         return getOdrUsers;
     }
 
     /**
-     * 共通関数「アクション履歴新規登録」の内容を設定
+     * 共通関数「アクション履歴新規登録」(成功と失敗）の共通内容を設定
      *
      * @param loginUser 画面項目
      * @param odrUser   ユーザ情報
@@ -109,7 +111,7 @@ public class LoginServiceImpl implements LoginService {
             actionHistories.setParameters(odrUser.getEmail());
         }
         // Other01
-        // actionHistories.setOther01("");
+        actionHistories.setOther01("");
         // Other02
         actionHistories.setOther02("");
         // Other03
