@@ -40,7 +40,7 @@ public interface CommonMapper {
     List<MailTemplates> FindMailTemplatesList(String platformId, String tempId);
 
     // API_反訴・回答データ取得
-    String casesByCid(String caseId, String platformId);
+    String findCasesByCid(String caseId, String platformId);
 
     User GetUserDataFromCaseIdentity(Boolean identity, String languageId, String platformId, String caseId);
 

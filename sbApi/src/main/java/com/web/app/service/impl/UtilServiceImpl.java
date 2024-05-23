@@ -315,8 +315,8 @@ public class UtilServiceImpl implements UtilService {
      * @throws Exception エラーの説明内容
      */ 
     @Override
-    public String casesByCid(String caseId, String platformId) {
-        String strCasesByCid = commonMapper.casesByCid(caseId, platformId);
-        return strCasesByCid;
+    public String findCasesByCid(String caseId, String platformId) {
+        String findCasesByCid = commonMapper.findCasesByCid(caseId, platformId);
+        return findCasesByCid;
     }
 }

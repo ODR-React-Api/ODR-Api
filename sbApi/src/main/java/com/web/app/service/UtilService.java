@@ -43,6 +43,6 @@ public interface UtilService {
     List<MasterTypes> GetMasterTypeName(String type, String languageId, String platformId);
 
     // 案件データ取得
-    String casesByCid(String caseId, String platformId);
+    String findCasesByCid(String caseId, String platformId);
 
 }

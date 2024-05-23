@@ -66,11 +66,11 @@ public class CouAnswerLoginController {
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("案件データ取得")
-    @GetMapping("/getCasesByCid")
-    public Response getCasesByCid(String caseId, String platformId) {
+    @GetMapping("/findCasesByCid")
+    public Response findCasesByCid(String caseId, String platformId) {
         try {
-            String strCasesByCid = utilService.casesByCid(caseId, platformId);
-            return AjaxResult.success("案件データ取得に成功しました", strCasesByCid);
+            String findCasesByCid = utilService.findCasesByCid(caseId, platformId);
+            return AjaxResult.success("案件データ取得に成功しました", findCasesByCid);
         } catch (Exception e) {
             AjaxResult.fatal("案件データ取得に失敗しました!", e);
             return null;
