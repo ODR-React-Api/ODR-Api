@@ -373,6 +373,7 @@ public class MosDetailServiceImpl implements MosDetailService {
 
         boolean bool_073 = utilService.SendMail(sendMailRequest);
 
+        // アクション履歴記録
         ActionHistories actionHistory = new ActionHistories();
 
         actionHistory.setId(utilService.GetGuid());
@@ -388,6 +389,7 @@ public class MosDetailServiceImpl implements MosDetailService {
 
         Boolean insertFlag = commonService.InsertActionHistories(actionHistory, null, true, false);
 
+        // 調停人退出メッセージ登録
         if (bool_072 && bool_073 && insertFlag) {
             // セッション情報のCaseId対応な申立人・相手方・代理人のuserid
             List<String> result = mediatorHistoriesMapper.usersId(messageGroupId, platformId, uid);
@@ -418,6 +420,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         } else {
             log.error("通知メールの送信に失敗しました。");
         }
+        
         return 1;
     }
 }
