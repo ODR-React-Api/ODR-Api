@@ -1,6 +1,7 @@
 package com.web.app.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -74,12 +75,12 @@ public class MediationsConConController {
    * @param platformId API_ユーザデータ取得の引数「プラットフォームID」
    * @return mediationsUserDataList 呼び出すData
    */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "unchecked" })
   @ApiOperation("ユーザデータ取得")
   @PostMapping("/getMediationsUserData")
-  public Response getMediationsUserData(String caseId, String platformId) {
+  public Response<MediationsUserData> getMediationsUserData(String caseId, String platformId) {
     try {
-      ArrayList<MediationsUserData> mediationsUserDataList = new ArrayList<MediationsUserData>();
+      ArrayList<MediationsUserData> mediationsUserDataList = new ArrayList<>();
       mediationsUserDataList = (ArrayList<MediationsUserData>) mediationsConConService.findAllUser(caseId, platformId);
       return AjaxResult.success("ユーザデータ取得成功", mediationsUserDataList);
     } catch (Exception e) {

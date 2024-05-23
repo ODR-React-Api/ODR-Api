@@ -86,6 +86,12 @@ public class Constants {
     public static final String STR_ACTION_TYPE_ABORTEDCONFIRM = "CaseAbortedConfirmMailSend";
     public static final String HELP_URL = "http://uat-odr-service.azurewebsites.net/help";
 
+    
+    //手続き中止APIの結果コード 0:成功
+    public static final int RESULT_CODE_SUCCESS = 0;
+    //手続き中止APIの結果コード 1:失敗
+    public static final int RESULT_CODE_ERROR = 1;
+
     // public static final Map<Object,String> SIFANGJI_SIGNAL_STATE_MAP = new
     // HashMap<Object,String>(){{
 
