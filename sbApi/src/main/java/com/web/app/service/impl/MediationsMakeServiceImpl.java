@@ -82,7 +82,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             caseMediations.setLastModifiedBy(insMediationsData.getLastModifiedBy());
             // 「調停案」新規登録
             int mediationCaseInsert = mediationcaseMapper.insMediationsData(caseMediations);
-            // 「調停案」データ新規登録が成功した場合
+            // 「調停案」データの新規登録の成否と「添付ファイル」のデータの有無によって「添付ファイル」、「案件-添付ファイル」の新規登録の成否を判断する
             if (mediationCaseInsert == Constants.NUM_1 && insMediationsData.getInsertFiles().getFileUrl() != null
                     && insMediationsData.getInsertFiles().getFileUrl() != "") {
                 // フロントから転送されたファイルデータを保存する
