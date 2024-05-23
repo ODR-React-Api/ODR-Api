@@ -49,10 +49,11 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             // 「案件-添付ファイル」、「添付ファイル」データが発生しないと判断した場合
             if (filesDataCount == Constants.NUM_0) {
                 // 調停案データ更新API
+                dataStatus = Constants.NUM_2;
             } else {
                 // 調停案データ更新API
+                dataStatus = Constants.NUM_2;
             }
-            dataStatus = Constants.NUM_2;
         } else {
             // 調停案データ新規登録API
             // 「調停案」新規登録に必要なデータを保存する
@@ -82,7 +83,8 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             // 「調停案」新規登録
             int mediationCaseInsert = mediationcaseMapper.insMediationsData(caseMediations);
             // 「調停案」データ新規登録が成功した場合
-            if (mediationCaseInsert == Constants.NUM_1) {
+            if (mediationCaseInsert == Constants.NUM_1 && insMediationsData.getInsertFiles().getFileUrl() != null
+                    && insMediationsData.getInsertFiles().getFileUrl() != "") {
                 // フロントから転送されたファイルデータを保存する
                 Files filesData = insMediationsData.getInsertFiles();
                 UUID filesId = UUID.randomUUID();
@@ -116,8 +118,10 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                     // 「案件-添付ファイルリレーション」新規登録
                     mediationcaseMapper.insCaseFileRelations(caseFileRelations);
                 }
+                dataStatus = Constants.NUM_1;
+            } else {
+                dataStatus = Constants.NUM_0;
             }
-            dataStatus = Constants.NUM_1;
         }
         return dataStatus;
     }
