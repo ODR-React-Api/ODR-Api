@@ -34,11 +34,10 @@ public class NamAcceptController {
         int result;
         try {
             // 申立状態を更新
-            int updCaseCount = updCaseStatusForAcceptService.updCase(caseId);
             // 調停人履歴レコードを更新
-            int updMedHisCount = updCaseStatusForAcceptService.updMediatorHistories(caseId);
+            int updMedHisCount = updCaseStatusForAcceptService.updCaseStatusForAccept(caseId);
             // 更新成功：戻り値
-            if(updCaseCount > 0 && updMedHisCount > 0){
+            if(updMedHisCount > 0){
                 result = 0;
                 return AjaxResult.success("更新成功!", result);  
             }else{

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.web.app.domain.Relations;
 import com.web.app.domain.Response;
+import com.web.app.domain.MosLogin.Relations;
 import com.web.app.service.MosLoginService;
 import com.web.app.service.UtilService;
 import com.web.app.tool.AjaxResult;
@@ -59,9 +59,8 @@ public class MosLoginController {
             relations.setUuId(uuId);
             relations.setUserId(userId);
             // TBL「申立（case_petitions）」の新規登録
-            mosLoginService.insCasePetitions(uuId, loginUser);
             // TBL「案件別個人情報リレーション（case_relations）」の新規登録
-            mosLoginService.insCaseRelations(uuId, loginUser, userId);
+            mosLoginService.insRelationsTemp(uuId, loginUser, userId);
             return AjaxResult.success("登録成功!", relations);
         } catch (Exception e) {
             AjaxResult.fatal("TBL「申立（case_petitions）、案件別個人情報リレーション（case_relations）」の新規登録失败!", e);

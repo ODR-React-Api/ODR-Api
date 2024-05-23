@@ -1,6 +1,6 @@
 package com.web.app.service;
 
-import com.web.app.domain.PoliciesInfo;
+import com.web.app.domain.PoliciesConfirm.PoliciesInfo;
 
 /**
  * S1_利用規約確認画面

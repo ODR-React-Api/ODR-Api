@@ -1,7 +1,7 @@
 package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import com.web.app.domain.GetFileInfo;
+import com.web.app.domain.MosFileList.GetFileInfo;
 
 /**
  * API_ ログインユーザのロールと開示情報取得

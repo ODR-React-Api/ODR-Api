@@ -2,7 +2,7 @@ package com.web.app.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
-import com.web.app.domain.CaseFileInfo;
+import com.web.app.domain.MosFileList.CaseFileInfo;
 
 /**
  * API_案件添付ファイル取得

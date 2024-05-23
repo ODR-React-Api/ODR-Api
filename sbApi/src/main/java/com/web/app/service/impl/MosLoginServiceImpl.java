@@ -21,16 +21,6 @@ public class MosLoginServiceImpl implements MosLoginService {
 
     /**
      * TBL「申立（case_petitions）」の新規登録
-     * 
-     * @param uuId      自動採番
-     * @param loginUser ログインユーザ
-     */
-    @Override
-    public int insCasePetitions(String uuId, String loginUser) {
-        return insRelationsTempMapper.insCasePetitions(uuId, loginUser);
-    }
-
-    /**
      * TBL「案件別個人情報リレーション（case_relations）」の新規登録
      * 
      * @param uuId      自動採番
@@ -38,7 +28,11 @@ public class MosLoginServiceImpl implements MosLoginService {
      * @param userId    セッション.ユーザID
      */
     @Override
-    public int insCaseRelations(String uuId, String loginUser, String userId) {
-        return insRelationsTempMapper.insCaseRelations(uuId, loginUser, userId);
+    public int insRelationsTemp(String uuId, String loginUser, String userId) {
+        // TBL「申立（case_petitions）」の新規登録
+        insRelationsTempMapper.insCasePetitions(uuId, loginUser);
+        // TBL「案件別個人情報リレーション（case_relations）」の新規登録
+        int insCaseRelationsCount = insRelationsTempMapper.insCaseRelations(uuId, loginUser, userId);
+        return insCaseRelationsCount;
     }
 }

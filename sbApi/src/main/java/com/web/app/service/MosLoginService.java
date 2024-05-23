@@ -10,10 +10,8 @@ package com.web.app.service;
  * @version 1.0
  */
 public interface MosLoginService {
-    // TBL「申立（case_petitions）」の新規登録
-    int insCasePetitions(String uuId, String loginUser);
-
+    // TBL「申立（case_petitions）」の新規登
     // TBL「案件別個人情報リレーション（case_relations）」の新規登録
-    int insCaseRelations(String uuId, String loginUser, String userId);
+    int insRelationsTemp(String uuId, String loginUser, String userId);
 
 }

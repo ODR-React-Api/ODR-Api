@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.web.app.domain.CaseFileInfo;
-import com.web.app.domain.GetFileInfo;
+
+import com.web.app.domain.MosFileList.CaseFileInfo;
+import com.web.app.domain.MosFileList.GetFileInfo;
 import com.web.app.mapper.GetFileInfoMapper;
 import com.web.app.mapper.GetLoginUserRoleOpenInfoMapper;
 import com.web.app.service.MosFileListService;

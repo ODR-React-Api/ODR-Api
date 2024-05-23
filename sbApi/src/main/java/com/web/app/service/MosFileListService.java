@@ -1,8 +1,9 @@
 package com.web.app.service;
 
 import java.util.List;
-import com.web.app.domain.CaseFileInfo;
-import com.web.app.domain.GetFileInfo;
+
+import com.web.app.domain.MosFileList.CaseFileInfo;
+import com.web.app.domain.MosFileList.GetFileInfo;
 
 /**
  * S7_申立てファイル一覧画面

@@ -1,4 +1,4 @@
-package com.web.app.domain;
+package com.web.app.domain.PoliciesConfirm;
 
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;

@@ -1,7 +1,7 @@
 package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import com.web.app.domain.PoliciesInfo;
+import com.web.app.domain.PoliciesConfirm.PoliciesInfo;
 
 /**
  * API_利用規約情報取得

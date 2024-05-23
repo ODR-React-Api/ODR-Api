@@ -22,22 +22,15 @@ public class NamAcceptServiceImpl implements NamAcceptService {
 
     /**
      * 申立状態を更新
-     * 
-     * @param caseId 案件ID
-     */
-    @Override
-    public int updCase(String caseId) {
-        return updCaseStatusForAcceptMapper.updCase(caseId);
-    }
-
-    /**
      * 調停人履歴レコードを更新
      * 
      * @param caseId 案件ID
      */
     @Override
-    public int updMediatorHistories(String caseId) {
-        return updCaseStatusForAcceptMapper.updMediatorHistories(caseId);
+    public int updCaseStatusForAccept(String caseId) {
+        updCaseStatusForAcceptMapper.updCase(caseId);
+        int updMediatorHistoriesCount = updCaseStatusForAcceptMapper.updMediatorHistories(caseId);
+        return updMediatorHistoriesCount;
     }
 
 }

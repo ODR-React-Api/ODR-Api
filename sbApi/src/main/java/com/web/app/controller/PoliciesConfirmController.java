@@ -1,7 +1,7 @@
 package com.web.app.controller;
 
-import com.web.app.domain.PoliciesInfo;
 import com.web.app.domain.Response;
+import com.web.app.domain.PoliciesConfirm.PoliciesInfo;
 import com.web.app.service.PoliciesConfirmService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
