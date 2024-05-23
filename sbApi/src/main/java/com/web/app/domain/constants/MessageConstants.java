@@ -334,4 +334,7 @@ public class MessageConstants {
     public static final String C08001E = "アンケート情報の取得に失敗しました。";
     
     public static final String C00003I = "拡張項目の多言語は対応できません。";
+    public static final String MSG_NegotiatMakeERROR = "申立の状態が別ユーザより更新されました。申立一覧画面から確認するようにお願いします。";
+    // public static final String C00018E = "アクション履歴の登録に失敗しました。";
+
 }

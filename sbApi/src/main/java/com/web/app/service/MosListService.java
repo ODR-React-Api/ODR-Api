@@ -2,13 +2,14 @@ package com.web.app.service;
 
 import java.util.List;
 
+import com.web.app.domain.MosList.CaseIdListInfo;
 import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.domain.MosList.SelectCondition;
 
 /**
  * 申立て一覧画面
  * 
- * @author DUC 張万超
+ * @author DUC 張万超 朱暁芳
  * @since 2024/4/22
  * @version 1.0
  */
@@ -48,4 +49,7 @@ public interface MosListService {
      * @return 申立て登録下書き保存データ有無
      */
     public Integer getSaveDataInfo(String uid);
+
+        // API_ケース詳細取得
+    ReturnResult caseDetailCasesInfoSearch(CaseIdListInfo caseIdListInfo);
 }

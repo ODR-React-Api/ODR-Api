@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
+import com.web.app.domain.MosList.CaseIdListInfo;
 import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.domain.MosList.SelectCondition;
 import com.web.app.domain.constants.Constants;
@@ -49,9 +50,9 @@ public class MosListController {
         try {
             // 詳細caseを呼び出してサービスを取得する
             ReturnResult result = mosListService.searchDetailCase(searchCase);
-            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,result);
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS, result);
         } catch (Exception e) {
-            AjaxResult.fatal("error",e);
+            AjaxResult.fatal("error", e);
             return null;
         }
     }
@@ -73,9 +74,9 @@ public class MosListController {
             // 申立して一覧サービスを呼び出す曖昧検索用一覧取得方法
             List<ReturnResult> returnResults = mosListService.getFuzzyQueryListInfo(uid, queryString);
             // ページへのデータの戻り
-            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,returnResults);
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS, returnResults);
         } catch (Exception e) {
-            AjaxResult.fatal("error",e);
+            AjaxResult.fatal("error", e);
             return null;
         }
 
@@ -93,15 +94,16 @@ public class MosListController {
     @PostMapping("/fuzzyQueryDetailCase")
     @ApiOperation("曖昧検索用ケース詳細取得")
     @SuppressWarnings("rawtypes")
-    public Response fuzzyQueryDetailCase(@RequestParam("caseId") String caseId,@RequestParam("petitionUserId") String petitionUserId,
-    @RequestParam("positionFlag") int positionFlag,@RequestParam("queryString") String queryString) {
+    public Response fuzzyQueryDetailCase(@RequestParam("caseId") String caseId,
+            @RequestParam("petitionUserId") String petitionUserId,
+            @RequestParam("positionFlag") int positionFlag, @RequestParam("queryString") String queryString) {
         try {
             // サービスの呼び出し
             ReturnResult returnResult = mosListService.getFuzzyQueryDetailCase(caseId, petitionUserId, positionFlag,
                     queryString);
-            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,returnResult);
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS, returnResult);
         } catch (Exception e) {
-            AjaxResult.fatal("error",e);
+            AjaxResult.fatal("error", e);
             return null;
         }
     }
@@ -120,14 +122,36 @@ public class MosListController {
             // サービスの呼び出し
             Integer res = mosListService.getSaveDataInfo(uid);
             if (res != null) {
-                return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,res);
+                return AjaxResult.success(Constants.AJAXRESULT_SUCCESS, res);
             }
             AjaxResult.error("res is null");
             return null;
         } catch (Exception e) {
-            AjaxResult.fatal("error",e);
+            AjaxResult.fatal("error", e);
             return null;
         }
     }
 
+    /**
+     * ケース詳細取得
+     *
+     * @param API「 一覧取得」より渡された引数
+     * @return 戻り値はAPI「 一覧取得」に返される
+     * @throws Exception エラーの説明内容
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("ケース詳細取得API")
+    @PostMapping("/getCaseDetailnfo")
+    public Response getCaseDetailnfo(@RequestBody CaseIdListInfo caseListInfo) {
+        try {
+            ReturnResult caseDetail = mosListService.caseDetailCasesInfoSearch(caseListInfo);
+            if (caseDetail != null) {
+                return Response.success(caseDetail);
+            }
+            return Response.error(Constants.RETCD_NG);
+        } catch (Exception e) {
+            AjaxResult.fatal("失敗しました。", e);
+            return null;
+        }
+    }
 }
