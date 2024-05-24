@@ -25,16 +25,16 @@ public class MosDetailController {
   private GetListInfoService getListInfoService;
 
   // セッション.ユーザID
-  String uid = "33929963-3660-487b-a4e6-1ea52cddabb8";
+  // String uid = "33929963-3660-487b-a4e6-1ea52cddabb8";
   @ApiOperation("ケース检索")
   @PostMapping("/selectEmail")
-  public List<ReturnResult> User() {
+  public List<ReturnResult> User(@RequestBody String uid) {
     // 返回值初始化
-    List<ReturnResult> aaaList = new ArrayList<>();
+    List<ReturnResult> returnResultList = new ArrayList<>();
     try {
-      aaaList = getListInfoService.getListInfo(uid);
+      returnResultList = getListInfoService.getListInfo(uid);
       // 返回值
-      return aaaList;
+      return returnResultList;
       // 异常的场合
     } catch (Exception e) {
       // 处理异常的场合
