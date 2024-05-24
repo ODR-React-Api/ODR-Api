@@ -39,9 +39,6 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
     // 自動採番のid（Id）
     String id = null;
 
-    // ファイルID
-    String fileId = null;
-
     // 案件種類
     int relationType = 0;
 
@@ -82,7 +79,6 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
 
     // 6.b上記取得(案件-添付ファイルリレーションの取得)有りの場合は関連のデータを初期化する
     if (fileIdList.size() != 0) {
-
       for (int i = 0; i < fileIdList.size(); i++) {
         // TBL「添付ファイル（files）」を論理削除する
         insPetitionsDataMapper.updateDeleteFlag(deleteFlag1, fileIdList.get(i));
@@ -90,7 +86,6 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
         // TBL「案件-添付ファイルリレーション（case_file_relations）」を論理削除する
         insPetitionsDataMapper.updateDeleteFlag(deleteFlag1, id);
       }
-
     }
 
     // 7.画面に添付資料が添付有りの場合、添付資料がなくなるまで以下の処理を行う。

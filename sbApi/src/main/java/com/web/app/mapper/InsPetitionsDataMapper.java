@@ -1,8 +1,6 @@
 package com.web.app.mapper;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
-
 import com.web.app.domain.MosContentConfirm.ExtensionItem;
 import com.web.app.domain.MosContentConfirm.IdPetitionUserId;
 import com.web.app.domain.MosContentConfirm.InsertCaseFileRelations;
