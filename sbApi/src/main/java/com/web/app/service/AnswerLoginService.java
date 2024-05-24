@@ -1,18 +1,19 @@
 package com.web.app.service;
 
-import java.util.List;
-
 import com.web.app.domain.AnswerLogin.PetitionDataUser;
 import com.web.app.domain.AnswerLogin.PetitionsData;
+import com.web.app.domain.AnswerLogin.RepliesData;
 import com.web.app.domain.AnswerLogin.UpdRepliesDataParameter;
+
+import java.util.List;
 
 /**
  * S11_回答登録画面
  * Service層
  * AnswerLoginService
  * 
- * @author DUC 張明慧 王大安
- * @since 2024/4/25
+ * @author DUC 信召艶 張明慧 王大安
+ * @since 2024/04/25
  * @version 1.0
  */
 public interface AnswerLoginService {
@@ -35,4 +36,7 @@ public interface AnswerLoginService {
 
     // API_反訴・回答データ新規登録/更新
     int UpdRepliesData(UpdRepliesDataParameter updRepliesDataParameter);
+
+    // API_反訴・回答データ取得
+    List<RepliesData> getRepliesData(String caseId, String platformId);
 }

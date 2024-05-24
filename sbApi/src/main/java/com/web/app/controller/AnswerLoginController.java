@@ -1,32 +1,32 @@
 package com.web.app.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.web.app.domain.AnswerLogin.RepliesData;
+import com.web.app.service.AnswerLoginService;
+import com.web.app.tool.AjaxResult;
 import com.web.app.domain.Response;
 import com.web.app.domain.AnswerLogin.PetitionsData;
 import com.web.app.domain.AnswerLogin.UpdRepliesDataParameter;
 import com.web.app.domain.constants.Constants;
-import com.web.app.service.AnswerLoginService;
-import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * S11_回答登録画面
- * Controller層
- * AnswerLoginController
+ * 回答登録画面 Controller
  * 
- * @author DUC 張明慧 王大安
- * @since 2024/4/25
+ * @author DUC 信召艶 張明慧 王大安
+ * @since 2024/04/25
  * @version 1.0
  */
 @CrossOrigin(origins = "*")
@@ -109,6 +109,28 @@ public class AnswerLoginController {
             }
         } else {
             return AjaxResult.error("セッションを取得しない。");
+        }
+    }
+
+    /**
+     * API_ID:反訴・回答データ取得
+     *
+     * @param CaseId セッション情報のCaseId 
+     * @param PlatformId セッション情報のプラットフォームID
+     * @return userRepliesList
+     * @throws Exception エラーの説明内容
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("反訴・回答データ取得")
+    @GetMapping("/getRepliesData")
+    public Response getRepliesData(String caseId, String platformId) {
+        try {
+            List<RepliesData> getRepliesDataList = new ArrayList<RepliesData>();
+            getRepliesDataList = answerLoginService.getRepliesData(caseId, platformId);
+            return AjaxResult.success("会員登録の取得に成功しました。", getRepliesDataList);
+        } catch (Exception e) {
+            AjaxResult.fatal("会員登録の取得に失敗しました!", e);
+            return null;
         }
     }
 }
