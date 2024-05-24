@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.InsRelationsTempMapper">
+    <!-- TBL「申立（case_petitions）」の新規登録 -->
+    <insert id="insCasePetitions" >
+        INSERT INTO react_use.case_petitions (
+            id,
+            Status,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )VALUES(
+            #{uuId},
+            0,
+            0,
+            CURRENT_TIMESTAMP(),
+            #{loginUser}
+            )
+    </insert>
+    <!-- TBL「案件別個人情報リレーション（case_relations）」の新規登録 -->
+    <insert id="insCaseRelations">
+        INSERT INTO react_use.case_relations (
+            id,
+            CasePetition,
+            PetitionUserId,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )VALUES(
+            #{uuId},
+            #{uuId},
+            #{userId},
+            0,
+            CURRENT_TIMESTAMP(),
+            #{loginUser}
+            )
+    </insert>
+</mapper>
