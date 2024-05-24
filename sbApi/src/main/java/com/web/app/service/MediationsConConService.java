@@ -18,7 +18,7 @@ import com.web.app.domain.MediationsConCon.MediationsUserData;
  */
 public interface MediationsConConService {
     // API_ユーザデータ取得
-    List<MediationsUserData> findAllUser(String caseId, String platformId);
+    MediationsUserData findAllUser(String caseId, String platformId);
 
     // API_調停案テンプレート取得
     List<MediationsTemplate> findMediationsTemplate(String platformId, String languageId, Integer templateType);

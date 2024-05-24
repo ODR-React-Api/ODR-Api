@@ -55,9 +55,7 @@ public class MedDateExtensionController {
       return AjaxResult.success("案件情報が更新されませんでした!", Constants.RESULT_CODE_ERROR);
     } catch (Exception e) {
       System.out.println("=====================throw Exception=====================");
-      System.out.println(e.toString());
-      AjaxResult.fatal("更新に失敗しました!", e);
-      return null;
+      return AjaxResult.fatal("更新に失敗しました!", e);
     }
   }
 }

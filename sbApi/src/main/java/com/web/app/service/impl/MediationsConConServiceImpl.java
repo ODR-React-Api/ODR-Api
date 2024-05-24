@@ -62,8 +62,8 @@ public class MediationsConConServiceImpl implements MediationsConConService {
      * @return list DBから取得の状況
      */
     @Override
-    public List<MediationsUserData> findAllUser(String caseId, String platformId) {
-        List<MediationsUserData> list = new ArrayList<MediationsUserData>();
+    public MediationsUserData findAllUser(String caseId, String platformId) {
+        MediationsUserData list = new MediationsUserData();
         list = getMediationsUserDataMapper.findAllUser(caseId, platformId);
         return list;
     }

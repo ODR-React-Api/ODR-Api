@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.*;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.NegotiatAgreeService;
 import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 /**
  * 和解案確認更新API Controller
@@ -44,13 +44,12 @@ public class NegotiatAgreeController {
     try {
       // 和解案が更新されたかどうかを判断する
       if (negotiatAgreeService.updateNegotiatData(updNegotiatCon) != 0) {
-        return AjaxResult.success("和解案が更新されました!");
+        return AjaxResult.success("和解案が更新されました!", Constants.RESULT_CODE_SUCCESS);
       }
-      return AjaxResult.success("和解案が更新されませんでした!");
+      return AjaxResult.success("和解案が更新されませんでした!", Constants.RESULT_CODE_ERROR);
     } catch (Exception e) {
       System.out.println(e.toString());
-      AjaxResult.fatal("更新に失敗しました!", e);
-      return null;
+      return AjaxResult.fatal("更新に失敗しました!", e);
     }
   }
 }

@@ -63,8 +63,7 @@ public class MediationsConConController {
           .findMediationsTemplate(platformId, languageId, templateType);
       return AjaxResult.success("調停案テンプレート取得成功", mediationsTemplateList);
     } catch (Exception e) {
-      AjaxResult.fatal("取得に失敗しました!", e);
-      return null;
+      return AjaxResult.fatal("取得に失敗しました!", e);
     }
   }
 
@@ -80,12 +79,11 @@ public class MediationsConConController {
   @PostMapping("/getMediationsUserData")
   public Response<MediationsUserData> getMediationsUserData(String caseId, String platformId) {
     try {
-      ArrayList<MediationsUserData> mediationsUserDataList = new ArrayList<>();
-      mediationsUserDataList = (ArrayList<MediationsUserData>) mediationsConConService.findAllUser(caseId, platformId);
+      MediationsUserData mediationsUserDataList = new MediationsUserData();
+      mediationsUserDataList = (MediationsUserData) mediationsConConService.findAllUser(caseId, platformId);
       return AjaxResult.success("ユーザデータ取得成功", mediationsUserDataList);
     } catch (Exception e) {
-      AjaxResult.fatal("取得に失敗しました!", e);
-      return null;
+      return AjaxResult.fatal("取得に失敗しました!", e);
     }
   }
 
@@ -108,8 +106,7 @@ public class MediationsConConController {
       return AjaxResult.success("調停案が更新されませんでした!");
     } catch (Exception e) {
       System.out.println(e.toString());
-      AjaxResult.fatal("更新に失敗しました!", e);
-      return null;
+      return AjaxResult.fatal("更新に失敗しました!", e);
     }
   }
 
