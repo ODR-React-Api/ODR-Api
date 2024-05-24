@@ -1,6 +1,8 @@
 package com.web.app.controller;
+
+import com.web.app.domain.Response;
 import com.web.app.domain.MosDetail.ReturnResult;
-import com.web.app.service.GetListInfoService;
+import com.web.app.service.MosListService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,38 +11,42 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-// 跨域注解
 @CrossOrigin(origins = "*")
-
-// API接口文档识别
-@Api(tags = "API_一覧取得") 
-// 当前类可接受HTTP请求
+@Api(tags = "API_一覧取得")
 @RestController
-// 接受请求URL
 @RequestMapping("/user")
+/**
+ * API_一覧取得
+ * 
+ * @author DUC 王魯興
+ * @since 2024/05/28
+ * @version 1.0
+ */
 public class MosListController {
 
-  // Service接口引入
   @Autowired
-  private GetListInfoService getListInfoService;
+  private MosListService getListInfoService;
 
-  // セッション.ユーザID
-  // String uid = "33929963-3660-487b-a4e6-1ea52cddabb8";
+  /**
+   * メソッドの説明内容
+   *
+   * @param param1 セッション.ユーザID
+   * @return API_一覧取得の取得内容
+   * @throws Exception 
+   */
   @ApiOperation("ケース检索")
-  @PostMapping("/selectEmail")
-  public List<ReturnResult> User(@RequestBody String uid) {
-    // 返回值初始化
+  @PostMapping("/getListInfo")
+  public Response<List> User(@RequestBody String uid) {
+    // 戻り値初期化
     List<ReturnResult> returnResultList = new ArrayList<>();
     try {
       returnResultList = getListInfoService.getListInfo(uid);
-      // 返回值
-      return returnResultList;
-      // 异常的场合
+      // 戻り値
+      return AjaxResult.success("查询成功", returnResultList);
+      // 異常な場合
     } catch (Exception e) {
-      // 处理异常的场合
-      AjaxResult.fatal("查询失败!", e);
-      return null;
+      // 異常を処置した場合
+      return AjaxResult.fatal("查询失败!", e);
     }
   }
 }
-

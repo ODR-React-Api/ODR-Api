@@ -1,4 +1,5 @@
 package com.web.app.service.impl;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,31 +9,30 @@ import java.util.Comparator;
 import com.web.app.domain.MosDetail.CaseDetails;
 import com.web.app.domain.MosDetail.ReturnResult;
 import com.web.app.domain.MosDetail.UserCase;
+import com.web.app.domain.constants.Constants;
 import com.web.app.mapper.GetListInfoMapper;
-import com.web.app.service.GetListInfoService;
+import com.web.app.service.MosListService;
 
+/**
+ * 一覧取得
+ * 
+ * @author DUC 王魯興
+ * @since 2024/05/28
+ * @version 1.0
+ */
 @Service
-public class GetListInfoServiceImpl implements GetListInfoService {
+public class MosListServiceImpl implements MosListService {
 
-  // 引入Dao层
   @Autowired
   private GetListInfoMapper getListInfoMapper;
 
   @Override
   public List<ReturnResult> getListInfo(String uid) {
 
-    // // ユーザ情報のメールを初期化
-    // String email = null;
-    // 立場フラグ：1（申立人）を初期化
-    Integer flag1 = 1;
-    // 立場フラグ：2（相手方）を初期化
-    Integer flag2 = 2;
-    // 立場フラグ：3（調停人）を初期化
-    Integer flag3 = 3;
-    // 返回值初始化
+    // 戻り値初期化
     List<ReturnResult> returnResultList = new ArrayList<>();
-    // 最终返回值初始化
-    List<ReturnResult> returnResultList2 = new ArrayList<>();
+    // ソート後の戻り値の初期化
+    List<ReturnResult> returnResultListSort = new ArrayList<>();
 
     // ユーザ情報を取得する
     String email = getListInfoMapper.selectEmailOdrUsers(uid);
@@ -42,12 +42,12 @@ public class GetListInfoServiceImpl implements GetListInfoService {
 
     // 调用API「ケース詳細取得」参数初始化
     CaseDetails caseDetails1 = new CaseDetails();
-    // 立場フラグ
-    caseDetails1.setFlag(flag1);
+    // 立場フラグ=1
+    caseDetails1.setFlag(Constants.STR_CASE_STAGE_REMOVE);
     // セッション.ユーザID
     caseDetails1.setUid(uid);
     // ユーザ情報
-    if (caseIdPetition1.size() > 0) {
+    if (caseIdPetition1.size() > Constants.STR_CASE_STAGE_REPLY) {
       for (int i = 0; i < caseIdPetition1.size(); i++) {
         // ①取得したCaseId
         caseDetails1.setCaseId(caseIdPetition1.get(i).getCaseId());
@@ -56,9 +56,9 @@ public class GetListInfoServiceImpl implements GetListInfoService {
         // API「ケース詳細取得」を呼び出す。
         // TODO
         ReturnResult returnResult1 = new ReturnResult();
-        // 相手方详细情报
+        // 詳細内容の取得
         if (returnResult1.getCid() != null) {
-          // 最终返回值设定
+          // 最終戻り値設定
           returnResultList.add(returnResult1);
         }
       }
@@ -67,14 +67,14 @@ public class GetListInfoServiceImpl implements GetListInfoService {
     // ユーザが相手方の場合
     List<UserCase> caseIdPetition2 = getListInfoMapper.selectCaseIdPetition2(email);
 
-    // 调用API「ケース詳細取得」参数初始化
+    // API「ケース詳細取得」パラメータ初期化
     CaseDetails caseDetails2 = new CaseDetails();
-    // 立場フラグ
-    caseDetails2.setFlag(flag2);
+    // 立場フラグ=2
+    caseDetails2.setFlag(Constants.STR_CASE_STAGE_CLAIMREPLY);
     // セッション.ユーザID
     caseDetails2.setUid(uid);
     // ユーザ情報
-    if (caseIdPetition2.size() > 0) {
+    if (caseIdPetition2.size() > Constants.STR_CASE_STAGE_REPLY) {
       for (int i = 0; i < caseIdPetition2.size(); i++) {
         // ①取得したCaseId
         caseDetails2.setCaseId(caseIdPetition2.get(i).getCaseId());
@@ -83,8 +83,11 @@ public class GetListInfoServiceImpl implements GetListInfoService {
         // API「ケース詳細取得」を呼び出す。
         // TODO
         ReturnResult returnResult2 = new ReturnResult();
-        // 相手方详细情报
-        returnResultList.add(returnResult2);
+        // 詳細内容の取得
+        if (returnResult2.getCid() != null) {
+          // 最終戻り値設定
+          returnResultList.add(returnResult2);
+        }
       }
     }
 
@@ -92,13 +95,13 @@ public class GetListInfoServiceImpl implements GetListInfoService {
     List<UserCase> caseIdPetition3 = getListInfoMapper.selectCaseIdPetition3(email);
 
     // 调用API「ケース詳細取得」参数初始化
-    CaseDetails caseDetails3 =  new CaseDetails();
-    // 立場フラグ
-    caseDetails3.setFlag(flag3);
+    CaseDetails caseDetails3 = new CaseDetails();
+    // 立場フラグ=3
+    caseDetails3.setFlag(Constants.STR_CASE_STAGE_NEGOTIATION);
     // セッション.ユーザID
     caseDetails3.setUid(uid);
     // ユーザ情報
-    if (caseIdPetition3.size() > 0) {
+    if (caseIdPetition3.size() > Constants.STR_CASE_STAGE_REPLY) {
       for (int i = 0; i < caseIdPetition3.size(); i++) {
         // ①取得したCaseId
         caseDetails3.setCaseId(caseIdPetition3.get(i).getCaseId());
@@ -107,15 +110,18 @@ public class GetListInfoServiceImpl implements GetListInfoService {
         // API「ケース詳細取得」を呼び出す。
         // TODO
         ReturnResult returnResult3 = new ReturnResult();
-        // 相手方详细情报
-        returnResultList.add(returnResult3);
+        // 詳細内容の取得
+        if (returnResult3.getCid() != null) {
+          // 最終戻り値設定
+          returnResultList.add(returnResult3);
+        }
       }
     }
-    // 要対応有無の降順　かつ　対応期日の昇順で結合後の２次元配列（もしくはリスト）をソートする
-    // if (returnResultList.size() != 0) {
-      returnResultList2 = returnResultList.stream().sorted(Comparator.comparing(ReturnResult::getCorrespondence)
-      .reversed().thenComparing(ReturnResult::getCorrespondDate)).collect(Collectors.toList());
-    // }
-    return returnResultList2;
+    // 要対応有無の降順 かつ 対応期日の昇順で結合後の２次元配列（もしくはリスト）をソートする
+    if (returnResultList.size() != 0) {
+      returnResultListSort = returnResultList.stream().sorted(Comparator.comparing(ReturnResult::getCorrespondence)
+          .reversed().thenComparing(ReturnResult::getCorrespondDate)).collect(Collectors.toList());
+    }
+    return returnResultListSort;
   }
 }
