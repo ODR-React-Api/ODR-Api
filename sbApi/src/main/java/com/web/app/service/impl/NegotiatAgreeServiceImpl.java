@@ -186,6 +186,7 @@ public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
                         if (UserSearch.getAgent5_Email() != null) {
                             recipientEmail.add(UserSearch.getAgent5_Email());
                         }
+                        recipientEmail.add("jia.wenzhi@trans-cosmos.com.cn");
                     }
                     sendMailRequest.setRecipientEmail(recipientEmail);
                     ArrayList<String> parameter = new ArrayList<String>();

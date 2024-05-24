@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.Cases;
+import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;
 
 import lombok.SneakyThrows;
 
@@ -33,7 +34,7 @@ import javax.annotation.Resource;
 @AutoConfigureMockMvc
 // 启动模拟HTTP客户端注解
 @AutoConfigureWebTestClient
-public class TestUserServiceTest {
+public class TestNegotiatAgreeTest {
 
     // 按照名称进行匹配并注入
     @Resource
@@ -47,26 +48,36 @@ public class TestUserServiceTest {
     @Test
     public void test1() {
         // 将要使用的数据转换成json类型的字符串
-        Cases cases = new Cases();
-        cases.setCid("1000000010");
-        cases.setPlatformId("0001");
+        UpdNegotiatAgree updNegotiatAgree = new UpdNegotiatAgree();
+        updNegotiatAgree.setAgreementDate("2024/05/23 11:14:15");
+        updNegotiatAgree.setCaseId("0000000044");
+        updNegotiatAgree.setEmail("trnd0001+m13@gmail.com");
+        updNegotiatAgree.setHtmlContext("05");
+        updNegotiatAgree.setHtmlContext2("23");
+        updNegotiatAgree.setId("DC99149C836F43B7B467650F480E914D");
+        updNegotiatAgree.setLastModifiedBy("2222222222");
+        updNegotiatAgree.setLastModifiedDate("2024/05/23 11:21:40");
+        updNegotiatAgree.setPlatformId("0001");
+        updNegotiatAgree.setUid("b082bc27-1a10-448d-a6d2-fb296d74f961");
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonData = objectMapper.writeValueAsString(cases);
-
+        String jsonData = objectMapper.writeValueAsString(updNegotiatAgree);
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/DateExtension/getToCaseInfo").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/NegotiatAgree/UpdNegotiatAgree").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
         // 将返回值从json类型的字符串转成对象
         Response response = objectMapper.readValue(body, Response.class);
         // 将返回值从泛型转换成指定类型
-        Cases casesResponse = objectMapper.convertValue(response.getData(), Cases.class);
+        // Cases casesResponse = objectMapper.convertValue(response.getData(), Cases.class);
+        String UpdNegotiatAgreeResponse = objectMapper.convertValue(response.getData(), String.class);
 
         // 断言
-        assertEquals(1, response.getCode());
-        assertEquals("1000000010", casesResponse.getCid());
-        assertEquals("0001", casesResponse.getPlatformId());
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        assertEquals("2020-08-12 14:19:14", formatter.format(casesResponse.getNegotiationEndDate()));
+        assertEquals("和解案合意更新成功", UpdNegotiatAgreeResponse);
+        // assertEquals("0001", casesResponse.getPlatformId());
+        // SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // assertEquals("2020-08-12 14:19:14", formatter.format(casesResponse.getNegotiationEndDate()));
     }
 }

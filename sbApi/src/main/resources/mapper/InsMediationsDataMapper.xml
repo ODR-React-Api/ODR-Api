@@ -4,37 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.InsMediationsDataMapper">
 
-     <select id="mediationDataCount" resultType="int">
-        SELECT
-            Count(1) 
-        FROM 
-            case_mediations
-        WHERE
-            CaseId =#{CaseId}    
-    </select>  
-
-    <select id="filesDataCount" resultType="int">
-        SELECT
-            Count(1)
-        FROM 
-            case_mediations c
-        LEFT JOIN
-            case_file_relations r 
-            on c.CaseId = r.CaseId and c.id =r.RelatedId
-        LEFT JOIN
-            files f
-            on r.fileId = f.id
-        WHERE
-            c.CaseId =#{CaseId} AND
-            c.PlatformId =#{PlatformId}AND
-            c.DeleteFlag = 0  AND
-            r.PlatformId=#{PlatformId}AND
-            r.RelationType =5 AND
-            r.DeleteFlag = 0 AND
-            r.PlatformId=#{PlatformId}
-    </select>
-
-    <insert id="insMediationsData" parameterType="com.web.app.domain.mediationsMake.InsMediationsData">
+    <insert id="insMediationsData" parameterType="com.web.app.domain.Entity.CaseMediations">
         INSERT INTO case_mediations (
             id,
             PlatformId,
