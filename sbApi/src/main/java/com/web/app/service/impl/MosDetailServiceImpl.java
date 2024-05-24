@@ -209,46 +209,46 @@ public class MosDetailServiceImpl implements MosDetailService {
         // 案件ステータスの判定
         if (caseStage == 0) {
             // CaseStatus
-            if (Constants.WAIT_FOR_JOIN.equals(status)) {
+            if (status.equals(Constants.WAIT_FOR_JOIN)) {
                 caseStatus = Constants.S01;
-            } else if (Constants.WAIT_FOR_REPLY.equals(status)) {
+            } else if (status.equals(Constants.WAIT_FOR_REPLY)) {
                 caseStatus = Constants.S02;
             } else {
                 caseStatus = Constants.S9A9B9C9;
             }
         } else if (caseStage == 3) {
             // CaseStatus
-            if (negotiationStatus == "0") {
-                caseStatus = Constants.S3B0;
-            } else if (negotiationStatus == null) {
+            if (negotiationStatus == null) {
                 caseStatus = Constants.S3B99;
-            } else if (negotiationStatus == "1") {
+            } else if (negotiationStatus.equals("0")) {
+                caseStatus = Constants.S3B0;
+            } else if (negotiationStatus.equals("1")) {
                 caseStatus = Constants.S3B1;
-            } else if (negotiationStatus == "2") {
+            } else if (negotiationStatus.equals("2")) {
                 caseStatus = Constants.S3B2;
-            } else if (negotiationStatus == "3") {
+            } else if (negotiationStatus.equals("3")) {
                 caseStatus = Constants.S3B3;
-            } else if (negotiationStatus == "4") {
+            } else if (negotiationStatus.equals("4")) {
                 caseStatus = Constants.S3B4;
-            } else if (negotiationStatus == "5") {
+            } else if (negotiationStatus.equals("5")) {
                 caseStatus = Constants.S3B5;
-            } else if (negotiationStatus == "7") {
+            } else if (negotiationStatus.equals("7")) {
                 caseStatus = Constants.S3B7;
-            } else if (negotiationStatus == "8") {
+            } else if (negotiationStatus.equals("8")) {
                 caseStatus = Constants.S3B8;
-            } else if (negotiationStatus == "9") {
+            } else if (negotiationStatus.equals("9")) {
                 caseStatus = Constants.S3B9;
-            } else if (negotiationStatus == "10") {
+            } else if (negotiationStatus.equals("10")) {
                 caseStatus = Constants.S3B10;
-            } else if (negotiationStatus == "11") {
+            } else if (negotiationStatus.equals("11")) {
                 caseStatus = Constants.S3B11;
-            } else if (negotiationStatus == "12") {
+            } else if (negotiationStatus.equals("12")) {
                 caseStatus = Constants.S3B12;
-            } else if (negotiationStatus == "13") {
+            } else if (negotiationStatus.equals("13")) {
                 caseStatus = Constants.S3B13;
-            } else if (negotiationStatus == "14") {
+            } else if (negotiationStatus.equals("14")) {
                 caseStatus = Constants.S3B14;
-            } else if (negotiationStatus == "15") {
+            } else if (negotiationStatus.equals("15")) {
                 caseStatus = Constants.S3B15;
             } else {
                 caseStatus = Constants.S9A9B9C9;
@@ -272,21 +272,21 @@ public class MosDetailServiceImpl implements MosDetailService {
             }
         } else if (caseStage == 7) {
             // CaseStatus
-            if (mediationStatus == "0") {
-                caseStatus = Constants.S7C0;
-            } else if (mediationStatus == null) {
+            if (mediationStatus == null) {
                 caseStatus = Constants.S7C99;
-            } else if (mediationStatus == "1") {
+            } else if (mediationStatus.equals("0")) {
+                caseStatus = Constants.S7C0;
+            } else if (mediationStatus.equals("1")) {
                 caseStatus = Constants.S7C1;
-            } else if (mediationStatus == "2") {
+            } else if (mediationStatus.equals("2")) {
                 caseStatus = Constants.S7C2;
-            } else if (mediationStatus == "3") {
+            } else if (mediationStatus.equals("3")) {
                 caseStatus = Constants.S7C3;
-            } else if (mediationStatus == "4") {
+            } else if (mediationStatus.equals("4")) {
                 caseStatus = Constants.S7C4;
-            } else if (mediationStatus == "7") {
+            } else if (mediationStatus.equals("7")) {
                 caseStatus = Constants.S7C5;
-            } else if (mediationStatus == "8") {
+            } else if (mediationStatus.equals("8")) {
                 caseStatus = Constants.S7C6;
             } else {
                 caseStatus = Constants.S9A9B9C9;

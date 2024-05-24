@@ -23,8 +23,8 @@
             cases.GroupMessageFlag1 ,
             cases.GroupMessageFlag2,
             case_relations.MediatorUserEmail,
-            case_negotiations.Status AS negotiationsStatus,
-            case_mediations.Status As mediationsStatus
+            case_negotiations.Status AS negotiationStatus,
+            case_mediations.Status As mediationStatus
         FROM cases
         INNER JOIN case_relations
         ON cases.cid = case_relations.CaseId
