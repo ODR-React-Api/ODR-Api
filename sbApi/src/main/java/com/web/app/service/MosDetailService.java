@@ -2,18 +2,22 @@ package com.web.app.service;
 
 import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.MosDetail.CaseClaimrepliesMosDetail;
+import com.web.app.domain.MosDetail.CaseInfo;
+import com.web.app.domain.MosDetail.CaseMediationsData;
+import com.web.app.domain.MosDetail.CaseNegotiationsData;
 import com.web.app.domain.MosDetail.CaseRepliesMosDetail;
 import com.web.app.domain.MosDetail.ParticipatedStatusChangeResultInfo;
 import com.web.app.domain.MosDetail.PetitionsContent;
 import com.web.app.domain.MosDetail.RelationsContent;
+import com.web.app.domain.MosDetail.UpdShowTuritorParameter;
 import com.web.app.domain.MosDetail.WithdrawalReturn;
 
 /**
- * S4 申立て詳細画面
+ * S04_申立て概要画面
  * Service層
  * MosDetailService
  * 
- * @author DUC 楊バイバイ耿浩哲 朱暁芳 張万超 王亞テイ
+ * @author DUC 張明慧 楊バイバイ耿浩哲 朱暁芳 張万超 王亞テイ
  * @since 2024/04/17
  * @version 1.0
  */
@@ -47,4 +51,16 @@ public interface MosDetailService {
 
     // API_反訴への回答取得
     CaseClaimrepliesMosDetail getCaseClaimrepliesMosDetail(String caseId);
+
+    // API_案件状態取得
+    CaseInfo GetCaseInfo(String caseId, String platformId, String userId);
+
+    // API_チュートリアル表示制御変更
+    int UpdShowTuritor(UpdShowTuritorParameter updShowTuritorParameter);
+
+    // API_和解内容取得
+    CaseNegotiationsData GetCaseNegotiationsData(String caseId);
+
+    // API_調停内容取得
+    CaseMediationsData GetCaseMediationsData(String caseId);
 }
