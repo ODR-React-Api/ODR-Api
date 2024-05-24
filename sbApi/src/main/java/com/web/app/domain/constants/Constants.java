@@ -1,6 +1,5 @@
 package com.web.app.domain.constants;
 
-import org.springframework.boot.autoconfigure.web.ServerProperties.Jetty.Accesslog.FORMAT;
 
 // import java.util.Map;
 
@@ -88,22 +87,22 @@ public class Constants {
     public static final String STR_ACTION_TYPE_ABORTEDCONFIRM = "CaseAbortedConfirmMailSend";
     public static final String HELP_URL = "http://uat-odr-service.azurewebsites.net/help";
     //（相手方和解案作成待ち）
-    public static final int S3B0 = 0;
+    public static final String S3B0 = "0";
     //（相手方和解案下書き（共同編集））
-    public static final int S3B1 = 1;
+    public static final String S3B1 = "1";
    
     //（申立人対案作成まち）
-    public static final int S3B7 = 7;
+    public static final String S3B7 = "7";
     //（申立人対案作成まち・下書き中）
-    public static final int S3B8 = 8;
+    public static final String S3B8 = "8";
     //（相手方対案作成待ち）
-    public static final int S3B10 = 10;
+    public static final String S3B10 = "10";
     //（相手方対案下書き）
-    public static final int S3B11 = 11;
+    public static final String S3B11 = "11";
     //（申立人和解案下書き）
-    public static final int S3B13 = 13;
+    public static final String S3B13 = "13";
     //（申立人和解案下書き・共同編集）
-    public static final int S3B14 = 14;
+    public static final String S3B14 = "14";
     public static final String FORMAT  = "yyyy-MM-dd HH:mm:ss";
     public static final String MENU_FORMAT  = "yyyy年MM月dd日";
     //ログインユーザーは申立人の場合
@@ -132,24 +131,4 @@ public class Constants {
     public static final String STR_KEN = "件";
     // 現在
     public static final String STR_GENZAI = "現在";
-    
-    // public static final Map<Object,String> SIFANGJI_SIGNAL_STATE_MAP = new
-    // HashMap<Object,String>(){{
-
-    // }};
-
-    // public static String[,] PRODUCTNAMELIST => new string[5, 3] {
-    // { "SH0001", "ツヤ肌サプリメント", "aaa.111@yahoo.co.jp" },
-    // { "SH0002", "ダウンコード", "bbb.222@gmail.com" },
-    // { "SH0003", "パンホームベーカリー", "ccc.333@qq.com" },
-    // { "SH0004", "美白肌ファンテーション", "ddd.444@gmail.com" },
-    // { "SH0005", "書きやすいボールペン", "eee.555@icloud.com" },
-    // };
-    // public static string[,] HANBAISHALIST => new string[5, 2] {
-    // { "aaa.111@yahoo.co.jp", "渡部 順" },
-    // { "bbb.222@gmail.com", "大野 花子" },
-    // { "ccc.333@qq.com", "さくら 商店" },
-    // { "ddd.444@gmail.com", "ABCマート" },
-    // { "eee.555@icloud.com", "ドン・キホーテ" },
-    // };
 }

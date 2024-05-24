@@ -18,7 +18,7 @@ public class CaseNegotiations implements Serializable {
     // 案件ID
     private String CaseId;
     // ステータス
-    private int Status;
+    private String Status;
     // プラットフォームID
     private String PlatformId;
     // 希望する解決方法
