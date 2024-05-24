@@ -31,7 +31,7 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
   private UtilService utilService;
 
   @Override
-  public Integer LoginIntelligence(S09ScreenIntelligence s09ScreenIntelligence, String uid, String platformId) {
+  public Integer LoginIntelligence(S09ScreenIntelligence s09ScreenIntelligence) {
 
     // 自動採番のcid（CaseId）
     String cid = null;
@@ -55,10 +55,10 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
     int salesBrokerFlg = 0;
 
     // 1.TBL「案件別個人情報リレーション（case_relations）」と「申立（case_petitions）」より用意した下書き保存データを取得する。
-    IdPetitionUserId idPetitionUserId = insPetitionsDataMapper.selectIdPetitionUserId(uid);
+    IdPetitionUserId idPetitionUserId = insPetitionsDataMapper.selectIdPetitionUserId(s09ScreenIntelligence.getUid());
 
     // 2.ユーザ情報の取得
-    UserLanguageIdPlatformId userLanguageIdPlatformId = insPetitionsDataMapper.selectLanguageIdAndPlatformId(uid);
+    UserLanguageIdPlatformId userLanguageIdPlatformId = insPetitionsDataMapper.selectLanguageIdAndPlatformId(s09ScreenIntelligence.getUid());
 
     // 自動採番のcid（CaseId）
     cid = utilService.GetGuid();
@@ -95,9 +95,9 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
       String fileMaxId = utilService.GetGuid();
 
       // a.TBL「添付ファイル（files）」を新規登録する
-      returnFlag = insertFiles(returnFlag, fileMaxId, userLanguageIdPlatformId, cid, s09ScreenIntelligence, uid, deleteFlag0);
+      returnFlag = insertFiles(returnFlag, fileMaxId, userLanguageIdPlatformId, cid, s09ScreenIntelligence, s09ScreenIntelligence.getUid(), deleteFlag0);
       // b.TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する
-      returnFlag = insertCaseFileRelations(returnFlag, userLanguageIdPlatformId, relationType, cid, idPetitionUserId, fileMaxId, s09ScreenIntelligence, uid, deleteFlag0);
+      returnFlag = insertCaseFileRelations(returnFlag, userLanguageIdPlatformId, relationType, cid, idPetitionUserId, fileMaxId, s09ScreenIntelligence, s09ScreenIntelligence.getUid(), deleteFlag0);
     }
     // 8.③～⑦の登録処理が正常終了の場合、アクション履歴登録を行う
     // TODO(メール・アクション一覧_v1.04.xlsx在哪里？)
@@ -120,7 +120,7 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
       // 既存の拡張項目内容を取得
       for (int i = 0; i < s09ScreenIntelligence.getExtensionItem().size(); i++) {
         // 既存の拡張項目内容を取得
-        ExtensionItem extensionItem = insPetitionsDataMapper.selectExtensionitemIdExtensionitemValue(platformId, idPetitionUserId.getId(), deleteFlag0, s09ScreenIntelligence.getExtensionItem().get(i).getExtensionitemId());
+        ExtensionItem extensionItem = insPetitionsDataMapper.selectExtensionitemIdExtensionitemValue(s09ScreenIntelligence.getPlatformId(), idPetitionUserId.getId(), deleteFlag0, s09ScreenIntelligence.getExtensionItem().get(i).getExtensionitemId());
         // 全部数据
         if (extensionItem != null) {
           extensionItemList.add(extensionItem);
@@ -130,12 +130,12 @@ public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
       if (extensionItemList.size() > 0) {
         for (int i = 0; i < extensionItemList.size(); i++) {
           // データを更新
-          updateCaseExtensionitemValues(extensionItemList.get(i),  deleteFlag0, uid, cid, platformId, id);
+          updateCaseExtensionitemValues(extensionItemList.get(i),  deleteFlag0, s09ScreenIntelligence.getUid(), cid, s09ScreenIntelligence.getPlatformId(), id);
         }
       } else {
         for (int i = 0; i < s09ScreenIntelligence.getExtensionItem().size(); i++) {
           // データを更新
-          insertCaseExtensionitemValues(s09ScreenIntelligence.getExtensionItem().get(i), deleteFlag0, uid, cid, platformId, id);
+          insertCaseExtensionitemValues(s09ScreenIntelligence.getExtensionItem().get(i), deleteFlag0, s09ScreenIntelligence.getUid(), cid, s09ScreenIntelligence.getPlatformId(), id);
         }
       }
     }
