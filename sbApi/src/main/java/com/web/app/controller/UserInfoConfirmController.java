@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.OdrUserUtil;
-import com.web.app.service.OdrUserService;
+import com.web.app.service.UserInfoConfirmService;
 import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
@@ -25,12 +25,12 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "odr用户模块") 
 @RestController
 @RequestMapping("/odrUser")
-public class OdrUserController {
+public class UserInfoConfirmController {
   
   private static final long serialVersionUID = 1L;
 
   @Autowired
-  OdrUserService odrUserService;
+  UserInfoConfirmService userInfoConfirmService;
 
     /**
      *
@@ -43,7 +43,7 @@ public class OdrUserController {
   @SuppressWarnings("rawtypes")
   public Response addUser(OdrUserUtil odrUserUtil) {
     try {
-      odrUserService.addUser(odrUserUtil);
+      userInfoConfirmService.addUser(odrUserUtil);
       return AjaxResult.success("添加用户成功!");
     } catch (Exception e) {
       AjaxResult.fatal("上传单文件失败!", e);

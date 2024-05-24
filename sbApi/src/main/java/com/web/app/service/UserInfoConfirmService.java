@@ -6,7 +6,7 @@ import com.web.app.domain.Response;
 import com.web.app.domain.Entity.OdrUserUtil;
 
 @Service
-public interface OdrUserService {
+public interface UserInfoConfirmService {
 
      Response addUser(OdrUserUtil odrUserUtil);
 

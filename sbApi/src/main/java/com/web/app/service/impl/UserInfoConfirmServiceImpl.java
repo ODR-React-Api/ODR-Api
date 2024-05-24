@@ -11,15 +11,15 @@ import com.web.app.domain.Response;
 import com.web.app.domain.Entity.OdrUserUtil;
 import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.util.SendMailRequest;
-import com.web.app.mapper.OdrUserMapper;
-import com.web.app.service.OdrUserService;
+import com.web.app.mapper.RegisterUserMapper;
+import com.web.app.service.UserInfoConfirmService;
 import com.web.app.service.UtilService;
 import com.web.app.tool.AjaxResult;
 
 @Service
-public class OdrUserServiceImpl implements OdrUserService {
+public class UserInfoConfirmServiceImpl implements UserInfoConfirmService {
     @Autowired
-    OdrUserMapper odrUserMapper;
+    RegisterUserMapper registerUserMapper;
 
     @Autowired
     UtilService utilService;
@@ -35,7 +35,7 @@ public class OdrUserServiceImpl implements OdrUserService {
     odrUserUtil.setUid(utilService.GetGuid());
     odrUserUtil.setPlatformId("0001");
     odrUserUtil.setLanguageId("JP");
-    int result = odrUserMapper.insertUser(odrUserUtil);
+    int result = registerUserMapper.insertUser(odrUserUtil);
 
     SendMailRequest sendMailRequest=new SendMailRequest();
     sendMailRequest.setPlatformId(odrUserUtil.getPlatformId());

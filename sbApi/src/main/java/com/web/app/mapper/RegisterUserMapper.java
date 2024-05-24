@@ -10,7 +10,7 @@ import com.web.app.domain.Entity.OdrUserUtil;
  * @Entity com.web.app.react_user.ord_users
  */
 @Mapper
-public interface OdrUserMapper {
+public interface RegisterUserMapper {
     int insertUser(OdrUserUtil odrUserUtil);
 
 }
