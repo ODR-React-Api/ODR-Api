@@ -68,7 +68,7 @@
             NULL,
             NULL,
             NULL,
-            0,
+            #{DeleteFlag},
             #{LastModifiedDate},
             #{LastModifiedBy}
             );
@@ -110,7 +110,7 @@
             NULL,
             NULL,
             NULL,
-            0,
+            #{DeleteFlag},
             #{LastModifiedDate},
             #{LastModifiedBy}
         );
@@ -145,7 +145,7 @@
             NULL,
             NULL,
             NULL,
-            0,
+            #{DeleteFlag},
             #{LastModifiedDate},
             #{LastModifiedBy}
         );

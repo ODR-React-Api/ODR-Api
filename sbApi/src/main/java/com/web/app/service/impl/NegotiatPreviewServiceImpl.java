@@ -109,6 +109,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         caseNegotiations.setUserId(negotiatPreview.getUserId());
         caseNegotiations.setSubmitDate(negotiatPreview.getSubmitDate());
         caseNegotiations.setAgreementDate(negotiatPreview.getAgreementDate());
+        caseNegotiations.setDeleteFlag(false);
         caseNegotiations.setLastModifiedDate(negotiatPreview.getLastModifiedDate());
         caseNegotiations.setLastModifiedBy(negotiatPreview.getLastModifiedBy());
         int addCaseNegotiationsStatus = insNegotiationDataMapper.AddCaseNegotiations(caseNegotiations);
@@ -129,6 +130,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
                 file.setFileSize(negotiatPreview.getFileList().get(i).getFileSize());
                 file.setRegisterUserId(negotiatPreview.getFileList().get(i).getRegisterUserId());
                 file.setRegisterDate(negotiatPreview.getFileList().get(i).getRegisterDate());
+                file.setDeleteFlag(false);
                 file.setLastModifiedDate(negotiatPreview.getFileList().get(i).getLastModifiedDate());
                 file.setLastModifiedBy(negotiatPreview.getFileList().get(i).getLastModifiedBy());
                 fileIdList.add(file.getId());
@@ -143,6 +145,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
                 caseFileRelations.setCaseId(negotiatPreview.getCaseId());
                 caseFileRelations.setRelatedId(caseNegotiations.getId());
                 caseFileRelations.setFileId(file.getId());
+                caseFileRelations.setDeleteFlag(false);
                 int addCaseFileRelationsStatus = insNegotiationDataMapper.AddCaseFileRelations(caseFileRelations);
                 if (addCaseFileRelationsStatus == Constants.RESULT_STATE_ERROR) {
                     return Constants.RESULT_STATE_ERROR;
@@ -237,6 +240,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
                 // 「添付ファイル」論理削除
                 File upFile = new File();
                 upFile.setId(fileId);
+                upFile.setDeleteFlag(true);
                 int upFileStatus = updNegotiationsDataMapper.UpFile(upFile);
                 if (upFileStatus == Constants.RESULT_STATE_ERROR) {
                     return Constants.RESULT_STATE_ERROR;
@@ -244,6 +248,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
                 // 「案件-添付ファイルリレーション」論理削除
                 CaseFileRelations upCaseFileRelations = new CaseFileRelations();
                 upCaseFileRelations.setFileId(fileId);
+                upCaseFileRelations.setDeleteFlag(true);
                 int upCaseFileRelationsStatus = updNegotiationsDataMapper.UpCaseFileRelations(upCaseFileRelations);
                 if (upCaseFileRelationsStatus == Constants.RESULT_STATE_ERROR) {
                     return Constants.RESULT_STATE_ERROR;
@@ -255,20 +260,20 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
             for (int i = 0; i < negotiatPreview.getFileList().size(); i++) {
                 // 「添付ファイル」の新規登録
                 File addFile = new File();
-                File file = new File();
-                file.setId(utilService.GetGuid());
-                file.setPlatformId(negotiatPreview.getFileList().get(i).getPlatformId());
-                file.setCaseId(negotiatPreview.getCaseId());
-                file.setFileName(negotiatPreview.getFileList().get(i).getFileName());
-                file.setFileExtension(negotiatPreview.getFileList().get(i).getFileExtension());
-                file.setFileUrl(negotiatPreview.getFileList().get(i).getFileUrl());
-                file.setFileSize(negotiatPreview.getFileList().get(i).getFileSize());
-                file.setRegisterUserId(negotiatPreview.getFileList().get(i).getRegisterUserId());
-                file.setRegisterDate(negotiatPreview.getFileList().get(i).getRegisterDate());
-                file.setLastModifiedDate(negotiatPreview.getFileList().get(i).getLastModifiedDate());
-                file.setLastModifiedBy(negotiatPreview.getFileList().get(i).getLastModifiedBy());
-                fileIdList.add(file.getId());
-                int addFileStatus = insNegotiationDataMapper.AddFile(file);
+                addFile.setId(utilService.GetGuid());
+                addFile.setPlatformId(negotiatPreview.getFileList().get(i).getPlatformId());
+                addFile.setCaseId(negotiatPreview.getCaseId());
+                addFile.setFileName(negotiatPreview.getFileList().get(i).getFileName());
+                addFile.setFileExtension(negotiatPreview.getFileList().get(i).getFileExtension());
+                addFile.setFileUrl(negotiatPreview.getFileList().get(i).getFileUrl());
+                addFile.setFileSize(negotiatPreview.getFileList().get(i).getFileSize());
+                addFile.setRegisterUserId(negotiatPreview.getFileList().get(i).getRegisterUserId());
+                addFile.setRegisterDate(negotiatPreview.getFileList().get(i).getRegisterDate());
+                addFile.setDeleteFlag(false);
+                addFile.setLastModifiedDate(negotiatPreview.getFileList().get(i).getLastModifiedDate());
+                addFile.setLastModifiedBy(negotiatPreview.getFileList().get(i).getLastModifiedBy());
+                fileIdList.add(addFile.getId());
+                int addFileStatus = insNegotiationDataMapper.AddFile(addFile);
                 if (addFileStatus == Constants.RESULT_STATE_ERROR) {
                     return Constants.RESULT_STATE_ERROR;
                 }
@@ -279,6 +284,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
                 addCaseFileRelations.setCaseId(negotiatPreview.getCaseId());
                 addCaseFileRelations.setRelatedId(upCaseNegotiations.getId());
                 addCaseFileRelations.setFileId(addFile.getId());
+                addCaseFileRelations.setDeleteFlag(false);
                 int addCaseFileRelationsStatus = insNegotiationDataMapper.AddCaseFileRelations(addCaseFileRelations);
                 if (addCaseFileRelationsStatus == Constants.RESULT_STATE_ERROR) {
                     return Constants.RESULT_STATE_ERROR;

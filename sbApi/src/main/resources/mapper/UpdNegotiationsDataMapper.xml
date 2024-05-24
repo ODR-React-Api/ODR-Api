@@ -36,7 +36,7 @@
     <update id="UpFile" parameterType="com.web.app.domain.Entity.File">
         UPDATE files
         SET
-            DeleteFlag = 1,
+            DeleteFlag = #{DeleteFlag},
             LastModifiedDate = CURRENT_TIMESTAMP(),
             LastModifiedBy = #{LastModifiedBy}
         WHERE
@@ -46,7 +46,7 @@
     <update id="UpCaseFileRelations" parameterType="com.web.app.domain.Entity.CaseFileRelations">
         UPDATE case_file_relations
         SET
-            DeleteFlag = 1,
+            DeleteFlag = #{DeleteFlag},
             LastModifiedDate = CURRENT_TIMESTAMP(),
             LastModifiedBy = #{LastModifiedBy}
         WHERE
