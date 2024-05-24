@@ -19,6 +19,6 @@ public interface MosDetailService {
     RelationsContent selectRelationsContentData(String caseId);
 
     // 調停人退出メッセージ登録
-    int updateMediatorHistoriesData(String caseId, String uid, String platformId, String messageGroupId);
+    int AddMessages(String caseId, String uid, String platformId, String messageGroupId);
 
 }

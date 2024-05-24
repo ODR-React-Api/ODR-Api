@@ -3,25 +3,19 @@ package com.web.app.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.domain.Entity.UsersMessages;
-import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.Entity.CasePetitions;
 import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.MosDetail.PetitionsContent;
 import com.web.app.domain.MosDetail.RelationsContent;
-import com.web.app.domain.constants.MailConstants;
-import com.web.app.domain.util.SendMailRequest;
 import com.web.app.mapper.GetCaseRelationsMapper;
 import com.web.app.mapper.GetPetitionsContentMapper;
-import com.web.app.mapper.MediatorResignMapper;
+import com.web.app.mapper.AddMessagesMapper;
 import com.web.app.mapper.GetRelationsContentMapper;
-import com.web.app.service.CommonService;
 import com.web.app.service.MosDetailService;
 import com.web.app.service.UtilService;
 
@@ -35,25 +29,20 @@ import com.web.app.service.UtilService;
 @Service
 public class MosDetailServiceImpl implements MosDetailService {
 
-    private static final Logger log = LogManager.getLogger(MosDetailServiceImpl.class);
+    @Autowired
+    private GetPetitionsContentMapper getPetitionsContentMapper;
 
     @Autowired
-    private GetPetitionsContentMapper petitionsContentMapper;
+    private AddMessagesMapper addMessagesMapper;
 
     @Autowired
-    private MediatorResignMapper mediatorHistoriesMapper;
+    private GetCaseRelationsMapper getCaseRelationsMapper;
 
     @Autowired
-    private GetCaseRelationsMapper caseRelationsMapper;
-
-    @Autowired
-    private GetRelationsContentMapper relationsContentMapper;
+    private GetRelationsContentMapper getRelationsContentMapper;
 
     @Autowired
     private UtilService utilService;
-
-    @Autowired
-    private CommonService commonService;
 
     /**
      * 申立ての内容取得
@@ -67,15 +56,15 @@ public class MosDetailServiceImpl implements MosDetailService {
         PetitionsContent petitionsContent = new PetitionsContent();
 
         // 申立ての内容取得
-        CasePetitions casePetitions = petitionsContentMapper.petitionListDataSearch(caseId);
+        CasePetitions casePetitions = getPetitionsContentMapper.petitionListDataSearch(caseId);
 
         petitionsContent.setCasePetitions(casePetitions);
 
         // 添付資料取得
-        petitionsContent.setAttachedFile(petitionsContentMapper.petitionFileSearch(casePetitions.getCaseId()));
+        petitionsContent.setAttachedFile(getPetitionsContentMapper.petitionFileSearch(casePetitions.getCaseId()));
 
         // 拡張項目取得
-        petitionsContent.setExtensionItem(petitionsContentMapper.petitionExtensionitemSearch(caseId));
+        petitionsContent.setExtensionItem(getPetitionsContentMapper.petitionExtensionitemSearch(caseId));
 
         return petitionsContent;
     }
@@ -89,12 +78,12 @@ public class MosDetailServiceImpl implements MosDetailService {
     @Override
     public RelationsContent selectRelationsContentData(String caseId) {
         // 関係者メアド取得API呼び出し
-        CaseRelations caseRelations = caseRelationsMapper.getCaseRelations(caseId);
+        CaseRelations caseRelations = getCaseRelationsMapper.getCaseRelations(caseId);
 
         RelationsContent relationsContent = new RelationsContent();
 
         // メールベースクエリ対応userの名前
-        OdrUsers petitionUser = relationsContentMapper
+        OdrUsers petitionUser = getRelationsContentMapper
                 .RelationsContentListDataSearch(caseRelations.getPetitionUserInfo_Email());
 
         if (petitionUser != null) {
@@ -110,7 +99,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
 
         if (caseRelations.getAgent1_Email() != null) {
-            OdrUsers users = relationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent1_Email());
+            OdrUsers users = getRelationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent1_Email());
             if (users != null) {
                 // 代理人1氏名
                 relationsContent.setAgent1Name(users.getFirstName() + " " + users.getLastName());
@@ -125,7 +114,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
 
         if (caseRelations.getAgent2_Email() != null) {
-            OdrUsers users = relationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent2_Email());
+            OdrUsers users = getRelationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent2_Email());
             if (users != null) {
                 // 代理人2氏名
                 relationsContent.setAgent2Name(users.getFirstName() + " " + users.getLastName());
@@ -140,7 +129,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
 
         if (caseRelations.getAgent3_Email() != null) {
-            OdrUsers users = relationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent3_Email());
+            OdrUsers users = getRelationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent3_Email());
             if (users != null) {
                 // 代理人3氏名
                 relationsContent.setAgent3Name(users.getFirstName() + " " + users.getLastName());
@@ -155,7 +144,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
 
         if (caseRelations.getAgent4_Email() != null) {
-            OdrUsers users = relationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent4_Email());
+            OdrUsers users = getRelationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent4_Email());
             if (users != null) {
                 // 代理人4氏名
                 relationsContent.setAgent4Name(users.getFirstName() + " " + users.getLastName());
@@ -170,7 +159,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
 
         if (caseRelations.getAgent5_Email() != null) {
-            OdrUsers users = relationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent5_Email());
+            OdrUsers users = getRelationsContentMapper.RelationsContentListDataSearch(caseRelations.getAgent5_Email());
             if (users != null) {
                 // 代理人5氏名
                 relationsContent.setAgent5Name(users.getFirstName() + " " + users.getLastName());
@@ -184,7 +173,8 @@ public class MosDetailServiceImpl implements MosDetailService {
             }
         }
 
-        OdrUsers traderUser = relationsContentMapper.RelationsContentListDataSearch(caseRelations.getTraderUserEmail());
+        OdrUsers traderUser = getRelationsContentMapper
+                .RelationsContentListDataSearch(caseRelations.getTraderUserEmail());
 
         if (traderUser != null) {
             // 相手方氏名
@@ -199,7 +189,7 @@ public class MosDetailServiceImpl implements MosDetailService {
 
         if (caseRelations.getTraderAgent1_UserEmail() != null) {
 
-            OdrUsers users = relationsContentMapper
+            OdrUsers users = getRelationsContentMapper
                     .RelationsContentListDataSearch(caseRelations.getTraderAgent1_UserEmail());
             if (users != null) {
                 // 代理人1氏名
@@ -215,7 +205,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
 
         if (caseRelations.getTraderAgent2_UserEmail() != null) {
-            OdrUsers users = relationsContentMapper
+            OdrUsers users = getRelationsContentMapper
                     .RelationsContentListDataSearch(caseRelations.getTraderAgent2_UserEmail());
             if (users != null) {
                 // 代理人2氏名
@@ -231,7 +221,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
 
         if (caseRelations.getTraderAgent3_UserEmail() != null) {
-            OdrUsers users = relationsContentMapper
+            OdrUsers users = getRelationsContentMapper
                     .RelationsContentListDataSearch(caseRelations.getTraderAgent3_UserEmail());
             if (users != null) {
                 // 代理人3氏名
@@ -247,7 +237,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
 
         if (caseRelations.getTraderAgent4_UserEmail() != null) {
-            OdrUsers users = relationsContentMapper
+            OdrUsers users = getRelationsContentMapper
                     .RelationsContentListDataSearch(caseRelations.getTraderAgent4_UserEmail());
             if (users != null) {
                 // 代理人4氏名
@@ -263,7 +253,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         }
 
         if (caseRelations.getTraderAgent5_UserEmail() != null) {
-            OdrUsers users = relationsContentMapper
+            OdrUsers users = getRelationsContentMapper
                     .RelationsContentListDataSearch(caseRelations.getTraderAgent5_UserEmail());
             if (users != null) {
                 // 代理人5氏名
@@ -284,143 +274,40 @@ public class MosDetailServiceImpl implements MosDetailService {
     /**
      * 調停人退出メッセージ登録
      *
-     * @param caseId         フロントエンド転送
-     * @param uid            フロントエンド転送
-     * @param platformId     フロントエンド転送
-     * @param messageGroupId フロントエンド転送
-     * @return 調停人退出メッセージ登録
+     * @param caseId         フロントエンド転送の案件ID
+     * @param uid            フロントエンド転送のユーザーID
+     * @param platformId     フロントエンド転送のplatformId
+     * @param messageGroupId フロントエンド転送のmessageGroupId
+     * @return 調停人退出メッセージ登録の状態
      */
     @Override
-    public int updateMediatorHistoriesData(String caseId, String uid, String platformId, String messageGroupId) {
-        // 案件関連情報取得
-        CaseRelations caseRelations = caseRelationsMapper.getCaseRelations(caseId);
+    public int AddMessages(String caseId, String uid, String platformId, String messageGroupId) {
 
-        SendMailRequest sendMailRequest = new SendMailRequest();
+        // セッション情報のCaseId対応な申立人・相手方・代理人のuserid
+        List<String> result = addMessagesMapper.usersId(messageGroupId, platformId, uid);
 
-        sendMailRequest.setPlatformId("001");
+        // GUID呼び出し
+        String id = utilService.GetGuid();
+        // 「メッセージ」新規登録
+        int insertMessageNum = addMessagesMapper.messagesInsert(caseId, uid, id);
+        // 「ユーザメッセージ」新規登録
+        List<UsersMessages> usersMessagesList = new ArrayList<>();
 
-        sendMailRequest.setLanguageId("JP");
-
-        // テンプレートNO
-        sendMailRequest.setTempId(MailConstants.MailId_M072);
-
-        sendMailRequest.setCaseId(caseId);
-
-        ArrayList<String> recipientEmail = new ArrayList<String>();
-
-        // 調停人email取得
-        OdrUsers usersEmail = mediatorHistoriesMapper.userEmail(uid);
-
-        // 送信email
-        recipientEmail.add(usersEmail.getEmail());
-
-        sendMailRequest.setRecipientEmail(recipientEmail);
-
-        // 申立種別取得
-        CasePetitions casePetitions = petitionsContentMapper.petitionListDataSearch(caseId);
-
-        ArrayList<String> parameter = new ArrayList<>();
-
-        parameter.add(caseId);
-        parameter.add(casePetitions.getPetitionTypeValue());
-
-        sendMailRequest.setParameter(parameter);
-
-        sendMailRequest.setUserId("ODR_Front");
-
-        sendMailRequest.setControlType(2);
-
-        boolean bool_072 = utilService.SendMail(sendMailRequest);
-
-        // 送信者メールのクリア
-        recipientEmail.removeAll(recipientEmail);
-
-        // 相手方・申立人・代理人送信
-        sendMailRequest.setTempId(MailConstants.MailId_M073);
-
-        // 相手方・申立人・代理人email 取得
-        recipientEmail.add(caseRelations.getPetitionUserInfo_Email());
-
-        recipientEmail.add(caseRelations.getTraderUserEmail());
-
-        if (caseRelations.getAgent1_Email() != null) {
-            recipientEmail.add(caseRelations.getAgent1_Email());
-        }
-        if (caseRelations.getAgent2_Email() != null) {
-            recipientEmail.add(caseRelations.getAgent2_Email());
-        }
-        if (caseRelations.getAgent3_Email() != null) {
-            recipientEmail.add(caseRelations.getAgent3_Email());
-        }
-        if (caseRelations.getAgent4_Email() != null) {
-            recipientEmail.add(caseRelations.getAgent4_Email());
-        }
-        if (caseRelations.getTraderAgent1_UserEmail() != null) {
-            recipientEmail.add(caseRelations.getTraderAgent1_UserEmail());
-        }
-        if (caseRelations.getTraderAgent2_UserEmail() != null) {
-            recipientEmail.add(caseRelations.getTraderAgent2_UserEmail());
-        }
-        if (caseRelations.getTraderAgent3_UserEmail() != null) {
-            recipientEmail.add(caseRelations.getTraderAgent3_UserEmail());
-        }
-        if (caseRelations.getTraderAgent4_UserEmail() != null) {
-            recipientEmail.add(caseRelations.getTraderAgent4_UserEmail());
-        }
-        if (caseRelations.getTraderAgent5_UserEmail() != null) {
-            recipientEmail.add(caseRelations.getAgent5_Email());
+        for (String item : result) {
+            UsersMessages usersMessages = new UsersMessages();
+            usersMessages.setId(utilService.GetGuid());
+            usersMessages.setMessageId(id);
+            usersMessages.setUserId(item);
+            usersMessages.setCaseId(caseId);
+            usersMessages.setPlatformId(platformId);
+            usersMessagesList.add(usersMessages);
         }
 
-        boolean bool_073 = utilService.SendMail(sendMailRequest);
+        int insertUMessageNum = addMessagesMapper.usersMessagesInsert(usersMessagesList);
 
-        // アクション履歴記録
-        ActionHistories actionHistory = new ActionHistories();
-
-        actionHistory.setId(utilService.GetGuid());
-        actionHistory.setPlatformId(platformId);
-        actionHistory.setCaseId(caseId);
-        actionHistory.setActionType("MediatiorResigned");
-        actionHistory.setCaseStage(7);
-        actionHistory.setUserId(uid);
-        actionHistory.setUserType(3);
-        actionHistory.setMessageGroupId(messageGroupId);
-        actionHistory.setHaveFile(false);
-        actionHistory.setLastModifiedBy(uid);
-
-        Boolean insertFlag = commonService.InsertActionHistories(actionHistory, null, true, false);
-
-        // 調停人退出メッセージ登録
-        if (bool_072 && bool_073 && insertFlag) {
-            // セッション情報のCaseId対応な申立人・相手方・代理人のuserid
-            List<String> result = mediatorHistoriesMapper.usersId(messageGroupId, platformId, uid);
-            // 調停人変更履歴の変更
-            int updateNum = mediatorHistoriesMapper.mediatorHistoriesUpdate(caseId, uid);
-            // GUID呼び出し
-            String id = utilService.GetGuid();
-            // 「メッセージ」新規登録
-            int insertMessageNum = mediatorHistoriesMapper.messagesInsert(caseId, uid, id);
-            // 「ユーザメッセージ」新規登録
-            List<UsersMessages> usersMessagesList = new ArrayList<>();
-
-            for (String item : result) {
-                UsersMessages usersMessages = new UsersMessages();
-                usersMessages.setId(utilService.GetGuid());
-                usersMessages.setMessageId(id);
-                usersMessages.setUserId(item);
-                usersMessages.setCaseId(caseId);
-                usersMessages.setPlatformId(platformId);
-                usersMessagesList.add(usersMessages);
-            }
-
-            int insertUMessageNum = mediatorHistoriesMapper.usersMessagesInsert(usersMessagesList);
-
-            if (updateNum == 0 || insertMessageNum == 0 || insertUMessageNum == 0) {
-                return 0;
-            }
-        } else {
-            log.error("通知メールの送信に失敗しました。");
+        if (insertMessageNum == 0 || insertUMessageNum == 0) {
+            return 0;
         }
-        
         return 1;
     }
 }

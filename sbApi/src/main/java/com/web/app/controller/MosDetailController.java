@@ -85,11 +85,11 @@ public class MosDetailController {
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停人退出メッセージ登録")
-    @GetMapping("/mediatorResign")
-    public Response MediatorResign(String caseId, String uid, String platformId, String messageGroupId) {
+    @GetMapping("/addMessages")
+    public Response AddMessages(String caseId, String uid, String platformId, String messageGroupId) {
         try {
             // 調停人退出メッセージ登録
-            int num = mosDetailService.updateMediatorHistoriesData(caseId, uid, platformId, messageGroupId);
+            int num = mosDetailService.AddMessages(caseId, uid, platformId, messageGroupId);
 
             return AjaxResult.success("Success",num);
 

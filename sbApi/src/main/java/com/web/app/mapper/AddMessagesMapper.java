@@ -16,7 +16,7 @@ import com.web.app.domain.Entity.UsersMessages;
  * @version 1.0
  */
 @Mapper
-public interface MediatorResignMapper {
+public interface AddMessagesMapper {
 
     // セッション情報のCaseId対応な申立人・相手方・代理人のuserid
     List<String> usersId(String messageGroupId, String platformId, String uid);

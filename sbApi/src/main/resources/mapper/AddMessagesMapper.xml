@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.MediatorResignMapper">
+<mapper namespace="com.web.app.mapper.AddMessagesMapper">
 
   <select id="usersId" resultType="string">
         SELECT 
@@ -15,26 +15,6 @@
             PlatformId = #{platformId} AND
             userId != #{uid}
   </select >
-
-  <select id="userEmail" resultType="com.web.app.domain.Entity.OdrUsers">
-        SELECT  
-            Email
-        FROM 
-            react_use.odr_users
-        WHERE 
-            Uid = #{uid}
-  </select>
-
-  <update id="mediatorHistoriesUpdate">
-        UPDATE
-            react_use.mediator_histories
-        SET 
-            Status=4, 
-            ResignFlag=1
-        WHERE 
-            CaseId = #{caseId} AND
-            userId = #{uid}
-  </update>
 
   <insert id="messagesInsert">
         INSERT INTO react_use.messages (
