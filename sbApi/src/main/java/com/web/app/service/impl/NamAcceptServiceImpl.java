@@ -1,0 +1,36 @@
+package com.web.app.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.web.app.mapper.UpdCaseStatusForAcceptMapper;
+import com.web.app.service.NamAcceptService;
+
+/**
+ * S33_指名受理画面
+ * Service層実現類
+ * NamAcceptServiceImpl
+ * 
+ * @author DUC 閆文静
+ * @since 2024/05/14
+ * @version 1.0
+ */
+@Service
+public class NamAcceptServiceImpl implements NamAcceptService {
+
+    @Autowired
+    private UpdCaseStatusForAcceptMapper updCaseStatusForAcceptMapper;
+
+    /**
+     * 申立状態を更新
+     * 調停人履歴レコードを更新
+     * 
+     * @param caseId 案件ID
+     */
+    @Override
+    public int updCaseStatusForAccept(String caseId) {
+        updCaseStatusForAcceptMapper.updCase(caseId);
+        int updMediatorHistoriesCount = updCaseStatusForAcceptMapper.updMediatorHistories(caseId);
+        return updMediatorHistoriesCount;
+    }
+
+}
