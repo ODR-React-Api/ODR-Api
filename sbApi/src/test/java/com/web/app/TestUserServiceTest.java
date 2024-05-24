@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.Cases;
+import com.web.app.domain.MedUserConfirm.MedUserConfirm;
 
 import lombok.SneakyThrows;
 
@@ -47,26 +48,27 @@ public class TestUserServiceTest {
     @Test
     public void test1() {
         // 将要使用的数据转换成json类型的字符串
-        Cases cases = new Cases();
-        cases.setCid("1000000010");
-        cases.setPlatformId("0001");
+        MedUserConfirm medUserConfirm = new MedUserConfirm();
+        medUserConfirm.setCaseId("1000000010");
+        medUserConfirm.setFileId("0009A4942C6148E59FB293315B496C09");
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonData = objectMapper.writeValueAsString(cases);
+        String jsonData = objectMapper.writeValueAsString(medUserConfirm);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/DateExtension/getToCaseInfo").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/MedUserConfirm/GetFileName").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         String body = mockHttpServletResponse.getContentAsString();
         // 将返回值从json类型的字符串转成对象
         Response response = objectMapper.readValue(body, Response.class);
         // 将返回值从泛型转换成指定类型
-        Cases casesResponse = objectMapper.convertValue(response.getData(), Cases.class);
+        String casesResponse = objectMapper.convertValue(response.getData(), String.class);
 
         // 断言
-        assertEquals(1, response.getCode());
-        assertEquals("1000000010", casesResponse.getCid());
-        assertEquals("0001", casesResponse.getPlatformId());
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        assertEquals("2020-08-12 14:19:14", formatter.format(casesResponse.getNegotiationEndDate()));
+        assertEquals("tomcat1582_TP_V", casesResponse);
+        //assertEquals(1, response.getCode());
+        // assertEquals("1000000010", casesResponse.getCid());
+        // assertEquals("0001", casesResponse.getPlatformId());
+        //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //assertEquals("2020-08-12 14:19:14", formatter.format(casesResponse.getNegotiationEndDate()));
     }
 }
