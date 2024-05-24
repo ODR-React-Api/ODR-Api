@@ -10,5 +10,6 @@ import com.web.app.domain.NegotiatPreview.MasterTemplates;
  * @version 1.0
  */
 public interface NegotiatPreviewService {
+    // 和解案テンプレート取得
     List<MasterTemplates> getNegotiationsTemplate() throws Exception;
 }

@@ -1,7 +1,6 @@
 package com.web.app.domain.NegotiatPreview;
 
 import java.io.Serializable;
-import java.util.List;
 import lombok.Data;
 
 /**
@@ -43,7 +42,5 @@ public class MasterTemplates implements Serializable {
     private int deleteFlag;
     private String lastModifiedDate;
     private String lastModifiedBy;
-    //0:和解案,1:調停案,2:仲裁案,3:和解案合意書, 4: 調停案合意書
-    private List<Integer> templateTypes;
     
 }

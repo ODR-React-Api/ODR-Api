@@ -1,6 +1,5 @@
 package com.web.app.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import com.web.app.domain.NegotiatPreview.MasterTemplates;
 import com.web.app.domain.constants.Constants;
@@ -26,23 +25,17 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     /**
      * 和解案テンプレート取得
      *
-     * @param param1 和解案テンプレート 
-     * @return List<MasterTemplates> 
+     * @return List<MasterTemplates>
      * @throws
      */
     @Transactional
     @Override
-    public List<MasterTemplates>  getNegotiationsTemplate() throws Exception {
-        
-            MasterTemplates masterTemplates = new MasterTemplates();
-            masterTemplates.setDeleteFlag(Constants.DELETE_FLAG_0);
-            List<Integer> templateType = new ArrayList<>();
-            //0:和解案テンプレート　　3：和解案合意書テンプレート
-            templateType.add(Constants.TEMPLATE_TYPE_0);
-            templateType.add(Constants.TEMPLATE_TYPE_3);
-            masterTemplates.setTemplateTypes(templateType);
-            masterTemplates.setLanguageId(Constants.JP);
-        List<MasterTemplates>  contextList = getNegotiationsTemplateMapper.selectContext( masterTemplates);
+    public List<MasterTemplates> getNegotiationsTemplate() throws Exception {
+
+        MasterTemplates masterTemplates = new MasterTemplates();
+        masterTemplates.setDeleteFlag(Constants.DELETE_FLAG_0);
+        masterTemplates.setLanguageId(Constants.JP);
+        List<MasterTemplates> contextList = getNegotiationsTemplateMapper.selectContext(masterTemplates);
         return contextList;
     }
 }

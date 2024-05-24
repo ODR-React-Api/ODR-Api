@@ -1,5 +1,6 @@
 package com.web.app.controller;
 
+import com.web.app.domain.Response;
 import com.web.app.domain.NegotiatPreview.MasterTemplates;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.NegotiatPreviewService;
@@ -35,16 +36,16 @@ public class NegotiatPreviewController {
      * @return List<MasterTemplates>
      * @throws Exception 異常終了
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("和解案テンプレート取得")
     @PostMapping("/getNegotiationsTemplate")
-    public List<MasterTemplates> getNegotiationsTemplate() {
+    public Response getNegotiationsTemplate() {
         try {
             List<MasterTemplates> asterTemplatesList = negotiationsPreviewService
                     .getNegotiationsTemplate();
-            return asterTemplatesList;
+            return AjaxResult.success(Constants.MSG_SUCCESS, asterTemplatesList);
         } catch (Exception e) {
-            AjaxResult.fatal(Constants.MSG_ERROR, e);
-            return null;
+            return AjaxResult.fatal(Constants.MSG_ERROR, e);
         }
     }
 }

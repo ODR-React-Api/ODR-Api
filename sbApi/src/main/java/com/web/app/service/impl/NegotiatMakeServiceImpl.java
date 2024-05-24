@@ -55,19 +55,19 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
 
         // 「和解案」新規登録の値設定
         CaseNegotiations caseNegotiations = new CaseNegotiations();
-         // ログインユーザが申立人場合、ステータス更新値：14
-         if (negotiationsFile.getFlag() == Constants.POSITIONFLAG_PETITION) {
+        // ログインユーザが申立人場合、ステータス更新値：14
+        if (negotiationsFile.getFlag() == Constants.POSITIONFLAG_PETITION) {
             caseNegotiations.setStatus(Constants.S3B14);
             // ログインユーザが相手方場合、ステータス更新値：1
         } else if (negotiationsFile.getFlag() == Constants.POSITIONFLAG_TRADER) {
             caseNegotiations.setStatus(Constants.S3B1);
-        }else {
+        } else {
             return Constants.RESULT_STATE_ERROR;
         }
         caseNegotiations.setId(utilService.GetGuid());
         caseNegotiations.setPlatformId(negotiationsFile.getPlatformId());
         caseNegotiations.setCaseId(negotiationsFile.getCaseId());
-     
+
         caseNegotiations.setExpectResloveTypeValue(negotiationsFile.getExpectResloveTypeValue());
         caseNegotiations.setOtherContext(negotiationsFile.getOtherContext());
         caseNegotiations.setHtmlContext(null);
@@ -85,13 +85,13 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         caseNegotiations.setLastModifiedBy(negotiationsFile.getUserId());
         // 「和解案」新規登録
         insNegotiationsEditMapper.insertCaseNegotiations(caseNegotiations);
-        
+
         // 画面からのファイルはnullではない場合、「添付ファイル」と「案件-添付ファイルリレーション」新規登録
         List<UpdNegotiationsFile> updNegotiationsFiles = negotiationsFile.getUpdNegotiationsFile();
         // // 添付ファイルがあるか判定
         if (!(updNegotiationsFiles == null || updNegotiationsFiles.isEmpty())) {
             for (UpdNegotiationsFile updNegotiationsFile : updNegotiationsFiles) {
-                addFiles(updNegotiationsFile,negotiationsFile, caseNegotiations.getId());
+                addFiles(updNegotiationsFile, negotiationsFile, caseNegotiations.getId());
             }
         }
         return Constants.RESULT_STATE_SUCCESS;
@@ -116,7 +116,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // ログインユーザが相手方場合、ステータス更新値：1
         } else if (negotiationsFile.getFlag() == Constants.POSITIONFLAG_TRADER) {
             caseNegotiations.setStatus(Constants.S3B1);
-        }else {
+        } else {
             return Constants.RESULT_STATE_ERROR;
         }
         // 「和解案」更新値設定
@@ -170,15 +170,15 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
                     }
                     // updFileFlagは2の場合、ファイル追加
                 } else if (updNegotiationsFile.getUpdFileFlag() == Constants.TEMPLATE_TYPE_2) {
-                    addFiles(updNegotiationsFile,negotiationsFile, caseNegotiations.getId());
+                    addFiles(updNegotiationsFile, negotiationsFile, caseNegotiations.getId());
                 }
 
             }
         }
         return Constants.RESULT_STATE_SUCCESS;
     }
-    
-   /**
+
+    /**
      * ファイル追加
      *
      * @param param1 フロントからの画面項目
@@ -186,20 +186,21 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
      * @return int
      * @throws
      */
-    private int addFiles(UpdNegotiationsFile updNegotiationsFile, NegotiationsFile negotiationsFile, String negotiationsId) {
+    private int addFiles(UpdNegotiationsFile updNegotiationsFile, NegotiationsFile negotiationsFile,
+            String negotiationsId) {
         // updFileFlagは2の場合、ファイル追加
         if (updNegotiationsFile.getUpdFileFlag() == Constants.TEMPLATE_TYPE_2) {
             // 「添付ファイル」の値設定
-            Files reFiles = insFiles(updNegotiationsFile,negotiationsFile);
+            Files reFiles = insFiles(updNegotiationsFile, negotiationsFile);
             // 「添付ファイル」の新規登録
             insNegotiationsEditMapper.insertFiles(reFiles);
-           
+
             // 「案件-添付ファイルリレーション」の値設定
-            CaseFileRelations resCaseFileRelations = insCaseFileRelations(negotiationsFile,negotiationsId,
+            CaseFileRelations resCaseFileRelations = insCaseFileRelations(negotiationsFile, negotiationsId,
                     reFiles.getId());
             // 「案件-添付ファイルリレーション」の新規登録
             insNegotiationsEditMapper.insertCaseFileRelations(resCaseFileRelations);
-            
+
         }
         return Constants.RESULT_STATE_SUCCESS;
     }
@@ -211,7 +212,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
      * @return Files 添付ファイル
      * @throws
      */
-    private Files insFiles(UpdNegotiationsFile updNegotiationsFile,NegotiationsFile negotiationsFile) {
+    private Files insFiles(UpdNegotiationsFile updNegotiationsFile, NegotiationsFile negotiationsFile) {
         Files files = new Files();
         files.setId(utilService.GetGuid());
         files.setPlatformId(negotiationsFile.getPlatformId());

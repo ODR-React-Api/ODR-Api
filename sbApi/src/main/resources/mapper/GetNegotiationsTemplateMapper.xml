@@ -4,24 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetNegotiationsTemplateMapper">
     <resultMap id="GetNegotiationsTemplateResultMap" type="com.web.app.domain.NegotiatPreview.MasterTemplates">
-        <id property="id" column="Id" jdbcType="VARCHAR"/>
-        <result property="deleteFlag" column="DeleteFlag" jdbcType="INTEGER"/>
         <result property="templateType" column="TemplateType" jdbcType="INTEGER"/>
-        <result property="languageId" column="LanguageId" jdbcType="VARCHAR"/>  
-        <result property="platformId" column="platformId" jdbcType="INTEGER"/>
-        <result property="templateId" column="templateId" jdbcType="VARCHAR"/>
-        <result property="startDate" column="startDate" jdbcType="VARCHAR"/>          
-        <result property="templateName" column="templateName" jdbcType="INTEGER"/>
-        <result property="context" column="context" jdbcType="VARCHAR"/>
-        <result property="usageCount" column="usageCount" jdbcType="VARCHAR"/>  
-        <result property="registerUserId" column="RegisterUserId" jdbcType="VARCHAR"/>
-        <result property="registerDate" column="RegisterDate" jdbcType="VARCHAR"/>
-        <result property="other01" column="Other01" jdbcType="VARCHAR"/>
-        <result property="other02" column="Other02" jdbcType="VARCHAR"/>
-        <result property="other03" column="Other03" jdbcType="VARCHAR"/>
-        <result property="other04" column="Other04" jdbcType="VARCHAR"/>
-        <result property="other05" column="Other05" jdbcType="VARCHAR"/>
-        <result property="isActive" column="IsActive" jdbcType="INTEGER"/>
+        <result property="context" column="Context" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="selectContext" resultMap="GetNegotiationsTemplateResultMap">
         SELECT
@@ -32,11 +16,6 @@
         WHERE
             DeleteFlag = #{deleteFlag}
             AND LanguageId = #{languageId}
-            AND 
-                TemplateType IN
-                <foreach collection="templateTypes" item="templateTypes" separator="," open="(" close=")">
-                    #{templateTypes}
-                </foreach>
+            AND TemplateType IN (0,3)
     </select>
-   
 </mapper>
