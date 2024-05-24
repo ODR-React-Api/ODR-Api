@@ -41,7 +41,7 @@ public class NegotiatAgreeController {
    */
   @SuppressWarnings("rawtypes")
   @ApiOperation("案件成立更新")
-  @PostMapping("/UpdCases")
+  @PostMapping("/updCaseEstablish")
   public Response caseEstablish(@RequestBody CaseEstablish caseEstablish) {
     try {
       // 案件成立更新
