@@ -19,17 +19,17 @@ import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * 調停人変更画面Controller
+ * 
+ * @author DUC 李健,耿浩哲
+ * @since 2024/04/29
+ * @version 1.0
+ */
 @CrossOrigin(origins = "*")
 @Api(tags = "調停人変更画面")
 @RestController
 @RequestMapping("/MedUserChange")
-/**
- * 調停人変更画面
- * 
- * @author DUC 李健
- * @since 2024/04/29
- * @version 1.0
- */
 public class MedUserChangeController {
     @Autowired
     DataSource dataSource;
@@ -83,14 +83,25 @@ public class MedUserChangeController {
         }
     }
 
+    /**
+     * ファイル関連情報更新API
+     *
+     * @param InsertFileInfo ファイル関連情報更新オブジェクト
+     * @return に答える
+     * @throws Exception エラーの説明内容
+     */
     @SuppressWarnings("rawtypes")
     @ApiOperation("ファイル関連情報更新API")
     @PostMapping("/insertFileInfo")
     public Response insertFileInfo(@RequestBody InsertFileInfo insertFileInfo) {
-        int insertfileInfoNum = medUserChangeService.insertFileInfo(insertFileInfo);
-        if (insertfileInfoNum == 1) {
-            return Response.success("成功");
+        try {
+            int insertfileInfoNum = medUserChangeService.insertFileInfo(insertFileInfo);
+            if(insertfileInfoNum == 1) {
+                return Response.success(Constants.RETCD_OK);
+            }
+            return Response.error(Constants.RETCD_NG);
+        } catch (Exception e) {
+            return Response.error(e.getMessage());
         }
-        return Response.error("失败");
     }
 }
