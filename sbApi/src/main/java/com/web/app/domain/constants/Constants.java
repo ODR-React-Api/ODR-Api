@@ -211,6 +211,25 @@ public class Constants {
     // public static final int DELETE_FLAG_1 = 1;
     // 2024/05/11 DUC 張明慧 追加end
 
+    //2024/05/10 DUC徐義然 追加
+    //画面「S22」のエラーメッセージ
+    public static final String AGREEMENT_MESSAGE = "合意済みの調停案は、編集を行うことはできません。";
+    //画面「S22」のエラーメッセージ
+    public static final String REFUSED_MESSAGE = "拒否済みの調停案は、編集を行うことはできません。";
+    //画面「S22」のエラーメッセージ
+    public static final String CONFIRMED_MESSAGE = "確認済みの調停案は、編集を行うことはできません。";
+    //画面「S22」のエラーメッセージ
+    public static final String FINSHED_MESSAGE = "成立済みの調停案は、編集を行うことはできません。";
+    //手続き中止APIの結果コード 0:成功
+    public static final int RESULT_CODE_SUCCESS = 0;
+    //手続き中止APIの結果コード 1:失敗
+    public static final int RESULT_CODE_ERROR = 1;
+
+
+
+
+
+
     // public static final Map<Object,String> SIFANGJI_SIGNAL_STATE_MAP = new
     // HashMap<Object,String>(){{
 
