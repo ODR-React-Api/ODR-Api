@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
+import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.MosDetail.ParticipatedStatusChangeResultInfo;
 import com.web.app.domain.MosDetail.PetitionsContent;
 import com.web.app.domain.MosDetail.RelationsContent;
@@ -23,7 +24,7 @@ import io.swagger.annotations.ApiOperation;
 /**
  * 申立て詳細画面_概要Controller
  * 
- * @author DUC 朱暁芳 張万超 王亞テイ
+ * @author DUC 耿浩哲 朱暁芳 張万超 王亞テイ
  * @since 2024/04/23
  * @version 1.0
  */
@@ -146,6 +147,28 @@ public class MosDetailController {
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
             return null;
+        }
+    }
+
+    /**
+     * 関係者メアド取得ControllerAPI
+     *
+     * @param CaseId 案件ID
+     * @return 案件別個人情報リレーション
+     * @throws Exception エラーの説明内容
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("関係者メアド取得")
+    @PostMapping("/getCaseRelations")
+    public Response getCaseRelations(String CaseId) {
+        try {
+            CaseRelations caseRelations = mosDetailService.getCaseRelations(CaseId);
+            if (caseRelations != null) {
+                return Response.success(caseRelations);
+            }
+            return Response.error(Constants.RETCD_NG);
+        } catch (Exception e) {
+            return Response.error(e.getMessage());
         }
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,8 +38,8 @@ import com.web.app.service.UtilService;
 /**
  * 申立て詳細画面_概要ServiceImpl
  * 
- * @author DUC 朱暁芳
- * @since 2024/04/23
+ * @author DUC 耿浩哲 張万超 王亞テイ 朱暁芳
+ * @since 2024/04/25
  * @version 1.0
  */
 @Service
@@ -479,5 +480,17 @@ public class MosDetailServiceImpl implements MosDetailService {
             participatedStatusChangeResultInfo.setParticipatedFlag(Constants.PARTICIPATED_FLAG_1);
         }
         return participatedStatusChangeResultInfo;
+    }
+
+    /**
+     * 関係者メアド取得ControllerAPI
+     *
+     * @param CaseId 案件ID
+     * @return 案件別個人情報リレーション
+     * @throws Exception エラーの説明内容
+     */
+    @Override
+    public CaseRelations getCaseRelations(String CaseId) throws Exception {
+        return getCaseRelationsMapper.getCaseRelations(CaseId);
     }
 }

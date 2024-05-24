@@ -1,5 +1,6 @@
 package com.web.app.service;
 
+import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.MosDetail.ParticipatedStatusChangeResultInfo;
 import com.web.app.domain.MosDetail.PetitionsContent;
 import com.web.app.domain.MosDetail.RelationsContent;
@@ -8,7 +9,7 @@ import com.web.app.domain.MosDetail.WithdrawalReturn;
 /**
  * 申立て詳細画面_概要Service
  * 
- * @author DUC 朱暁芳 張万超 王亞テイ
+ * @author DUC 耿浩哲 朱暁芳 張万超 王亞テイ
  * @since 2024/04/17
  * @version 1.0
  */
@@ -34,4 +35,7 @@ public interface MosDetailService {
 
     // 参加済状態変更
     ParticipatedStatusChangeResultInfo participatedStatusSearch(String caseId, String uId);
+
+    CaseRelations getCaseRelations(String CaseId) throws Exception;
+
 }
