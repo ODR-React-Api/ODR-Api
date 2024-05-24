@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.web.app.domain.MosFileList.CaseFileInfo;
 import com.web.app.domain.MosFileList.GetFileInfo;
+import javax.servlet.http.HttpServletResponse;
+import com.web.app.domain.Response;
+import com.web.app.domain.MosFileList.BatchDownloadOfCaseFilesParameter;
 
 /**
  * S7_申立てファイル一覧画面
@@ -21,5 +24,10 @@ public interface MosFileListService {
 
     // 案件添付ファイル取得
     List<CaseFileInfo> getCaseFileInfo(String caseId, String id, Integer positionFlg, Integer mediatorDisclosureFlag);
+
+    // API_案件添付ファイル一括ダウンロード
+    @SuppressWarnings("rawtypes")
+    Response BatchDownloadOfCaseFiles(BatchDownloadOfCaseFilesParameter batchDownloadOfCaseFilesParameter,
+            HttpServletResponse response);
 
 }
