@@ -11,7 +11,7 @@ import lombok.Data;
 public class S09ScreenIntelligence implements Serializable {
     private static final long serialVersionUID = 1L;
     // セッション.ユーザID
-    private String uid = "b082bc27-1a10-448d-a6d2-fb296d74f961";
+    private String uid;
 
     // セッション.PlatformId
     private String platformId;
