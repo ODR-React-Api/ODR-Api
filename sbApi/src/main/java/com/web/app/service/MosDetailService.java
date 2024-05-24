@@ -1,14 +1,15 @@
 package com.web.app.service;
 
+import com.web.app.domain.MosDetail.ParticipatedStatusChangeResultInfo;
 import com.web.app.domain.MosDetail.PetitionsContent;
 import com.web.app.domain.MosDetail.RelationsContent;
 import com.web.app.domain.MosDetail.WithdrawalReturn;
 
 /**
- * 申立て概要画面
+ * 申立て詳細画面_概要Service
  * 
- * @author DUC 張万超 王亞テイ
- * @since 2024/4/23
+ * @author DUC 朱暁芳 張万超 王亞テイ
+ * @since 2024/04/17
  * @version 1.0
  */
 public interface MosDetailService {
@@ -31,4 +32,6 @@ public interface MosDetailService {
     // 調停人退出メッセージ登録
     int AddMessages(String caseId, String uid, String platformId, String messageGroupId);
 
+    // 参加済状態変更
+    ParticipatedStatusChangeResultInfo participatedStatusSearch(String caseId, String uId);
 }
