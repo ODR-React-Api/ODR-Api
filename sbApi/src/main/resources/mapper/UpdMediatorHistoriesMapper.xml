@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdMediatorHistoriesMapper">
+
+    <update id="UpdMediatorHistories" parameterType="com.web.app.domain.NamAccept.UpdMediatorHistories">
+        UPDATE
+            mediator_histories
+        SET
+            Status = 4
+        WHERE
+            userId = #{userId}
+            AND caseId = #{caseId}
+            AND Status IN (0)
+    </update>
+</mapper>
