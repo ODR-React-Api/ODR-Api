@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetPetitionsTempMapper">
+    <resultMap id="petitionTempResultMap" type="com.web.app.domain.MosLogin.PetitionTemp">
+    </resultMap>
+    <resultMap id="infoResultMap" type="com.web.app.domain.Entity.OdrUsers"> 
+    </resultMap>
+    <resultMap id="fileIdResultMap" type="com.web.app.domain.MosLogin.FileId">
+    </resultMap>
+    <resultMap id="scaleItemsResultMap" type="com.web.app.domain.MosLogin.ScaleItems">
+    </resultMap>
+    <!-- 下書き保存のデータを取得する -->
+    <select id="selectPetitionsTemp"  resultMap="petitionTempResultMap">
+        SELECT 
+            cr.PetitionUserId,
+            cr.CasePetition,	
+            cr.PetitionUserInfo_Email,	
+            cr.Agent1_Email,	
+            cr.Agent2_Email,	
+            cr.Agent3_Email,	
+            cr.Agent4_Email,	
+            cr.Agent5_Email,	
+            cr.TraderUserEmail,
+            cp.productName,
+            cp.ProductId,
+            cp.TraderName,
+            cp.TraderUrl,
+            cp.BoughtDate,
+            cp.Price,
+            cp.petitionTypeValue,
+            cp.petitionContext,
+            cp.ExpectResloveTypeValue,
+            cp.Other
+        FROM
+            case_relations cr, case_petitions cp
+        WHERE
+            cr.PetitionUserId = #{sessionId}
+            AND cr.CasePetition = cp.id
+            AND cp.Status = 0
+    </select>
+    <!-- 申立人情報取得 -->
+    <select id="selectOdrUsers" resultMap="infoResultMap">
+        SELECT
+            FirstName,
+            LastName,
+            FirstName_kana,
+            LastName_kana,
+            CompanyName
+        FROM
+            odr_users
+        WHERE
+            Email = #{infoEmail}
+            AND Uid = #{sessionId}
+    </select>
+    <!-- 案件のファイルID取得 -->
+    <select id="selectFileId" resultMap="fileIdResultMap">
+        SELECT
+            f.FileName,
+            f.FileUrl
+        FROM
+            files f, case_file_relations cf
+        WHERE
+            cf.RelationType = 0
+            AND cf.RelatedId = #{casePetition}
+            AND cf.fileId = f.id
+    </select>
+    <!-- 拡張項目内容取得 -->
+    <select id="scaleItemsSearch" resultMap="scaleItemsResultMap">
+        SELECT
+            cv.ExtensionitemId,
+            cv.ExtensionitemValue
+        FROM
+            case_extensionitem_values cv, case_extensionitem_relations cr, case_petitions cp
+        WHERE
+            cv.PlatformId = #{platformId}
+            AND cv.Case_petitionId = cp.id
+            AND cv.DeleteFlag = 0
+            AND cr.ExtensionitemId = cv.ExtensionitemId
+        ORDER BY cr.DisplayOrder ASC
+    </select>
+</mapper>

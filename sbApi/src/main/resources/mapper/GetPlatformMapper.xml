@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetPlatformMapper">
+    <resultMap id="masterTypesResultMap" type="String">
+        <result property="DisplayName" column="DisplayName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- ユーザ情報を取得する -->
+    <select id="selectOdrUsers"  resultType="com.web.app.domain.Entity.OdrUsers">
+        SELECT 
+            PlatformId
+        FROM
+            odr_users
+        WHERE
+            Uid = #{sessionId}
+    </select>
+    <!-- 申立ての種類の表示内容の取得と希望する解決方法の表示内容の取得 -->
+    <select id="masterTypesSearch" resultMap="masterTypesResultMap">
+        SELECT 
+            DisplayName
+        FROM
+            master_types
+        WHERE
+            platformId = concat(#{getPlatformId},'- P001')
+            AND type = #{type}
+        ORDER BY OrderNo ASC
+    </select>
+    <!-- 画面制御表示項目表示状態の取得 -->
+    <select id="masterPlatformsSearch" resultType="com.web.app.domain.Entity.MasterPlatforms">
+        SELECT 
+            UserProductId,
+            UseTraderName,
+            UseProductUrl,
+            UseOther
+        FROM
+            master_platforms
+        WHERE
+            Id = #{getPlatformId}
+    </select>
+    <!-- 拡張項目の取得 -->
+    <select id="expandProjectSearch" resultType="com.web.app.domain.MosLogin.ExpandItems">
+        SELECT 
+            me.ItemDisplayName,
+            me.ItemType,
+            ce.IsRequired
+        FROM
+            case_extensionitem_relations ce, master_extensionitems me
+        WHERE
+            ce.PlatformId = #{getPlatformId}
+            AND ce.RelationType = 0
+            AND ce.DeleteFlag = 0
+            AND me.Id = ce.ExtensionItemId
+            AND me.LanguageId = "jp"
+            AND me.DeleteFlag = 0
+        ORDER BY ce.DisplayOrder ASC
+    </select>
+</mapper>

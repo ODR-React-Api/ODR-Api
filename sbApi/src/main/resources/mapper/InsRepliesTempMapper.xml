@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.InsRepliesTempMapper">
+    <!-- ユーザ情報取得 -->
+    <select id="selectOdrUsers" resultType="com.web.app.domain.Entity.OdrUsers">
+        SELECT
+            LanguageId,
+            PlatformId
+        FROM
+            odr_users
+        WHERE
+            Uid = #{sessionId}
+    </select>
+    <!-- TBL「申立（case_petitions）」更新 -->
+    <update id="casePetitionsUpd" parameterType="com.web.app.domain.Entity.CasePetitions">
+        UPDATE case_petitions
+        SET
+            PlatformId = #{PlatformId},
+            productName = #{productName},
+            ProductId = #{ProductId},
+            TraderName = #{TraderName},
+            TraderMail = #{TraderMail},
+            TraderUrl = #{TraderUrl},
+            BoughtDate = #{BoughtDate},
+            Price = #{Price},
+            petitionTypeValue = #{petitionTypeValue},
+            petitionContext = #{petitionContext},
+            ExpectResloveTypeValue = #{ExpectResloveTypeValue},
+            Other = #{Other}
+        WHERE
+            id = #{id}
+            AND Status = 0
+    </update>
+    <!-- TBL「案件別個人情報リレーション（case_relations）」更新 -->
+    <update id="caseRelationsUpd" parameterType="com.web.app.domain.Entity.CaseRelations">
+        UPDATE case_relations
+        SET
+            id = #{id},
+            PlatformId = #{PlatformId},
+            PetitionUserInfo_Email = #{PetitionUserInfo_Email},
+            Agent1_Email = #{Agent1_Email},
+            Agent2_Email = #{Agent2_Email},
+            Agent3_Email = #{Agent3_Email},
+            Agent4_Email = #{Agent4_Email},
+            Agent5_Email = #{Agent5_Email},
+            TraderUserEmail = #{TraderUserEmail}
+        WHERE
+            CasePetition = #{CasePetition}
+            AND PetitionUserId = #{PetitionUserId}
+    </update>
+    <!-- 案件-添付ファイルリレーション取得 -->
+    <select id="caseFileRelationsSelect" resultType="String">
+        SELECT
+            cf.fileId
+        FROM
+            case_file_relations cf,files f
+        WHERE
+            cf.RelationType = 0
+            AND cf.RelatedId = #{case_petitions_id}
+            AND cf.fileId = f.id
+    </select>
+    <!-- TBL「添付ファイル（files）」を論理削除する -->    
+    <update id="filesDelete" >
+        UPDATE files
+        SET
+            DeleteFlag = 1
+        WHERE
+            id = #{fildId}
+    </update>
+        <!-- TBL「案件-添付ファイルリレーション（case_file_relations）」を論理削除する -->    
+    <update id="caseFileRelationsDelete" >
+        UPDATE case_file_relations
+        SET
+            DeleteFlag = 1
+        WHERE
+            RelationType = 0
+            AND RelatedId = #{case_petitions_id}
+    </update>
+    <!-- TBL「添付ファイル（files）」を新規登録する -->
+    <insert id="insertFiles" parameterType="com.web.app.domain.Entity.Files">
+        INSERT INTO files (
+            id,
+            PlatformId,
+            FileName,
+            FileExtension,
+            FileUrl,
+            FileSize,
+            RegisterUserId,
+            RegisterDate,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )
+        VALUES (
+            #{id},
+            #{PlatformId},
+            #{FileName},
+            #{FileExtension},
+            #{FileUrl},
+            #{FileSize},
+            #{RegisterUserId},
+            #{RegisterDate},
+            0,
+            #{LastModifiedDate},
+            #{LastModifiedBy}
+        )
+    </insert>
+    <!-- TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する -->
+    <insert id="insertCaseFileRelations" parameterType="com.web.app.domain.Entity.CaseFileRelations">
+        INSERT INTO case_file_relations (
+            id,
+            PlatformId,
+            RelationType,
+            RelatedId,
+            fileId,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )
+        VALUES (
+            #{id},
+            #{PlatformId},
+            0,
+            #{RelatedId},
+            #{fileId},
+            0,
+            #{LastModifiedDate},
+            #{LastModifiedBy}
+        )
+    </insert>
+    <!-- 既存の拡張項目内容取得 -->
+    <select id="selectScaleItemIdValue" parameterType="com.web.app.domain.Entity.CaseExtensionitemValues" resultType="com.web.app.domain.MosLogin.ScaleItems">
+        SELECT
+            ExtensionitemId,
+            ExtensionitemValue
+        FROM
+            case_extensionitem_values
+        WHERE
+            PlatformId = #{PlatformId}
+            AND case_petitionId = #{case_petitionId}
+            AND DeleteFlag = 0
+            AND ExtensionitemId = #{ExtensionitemId}
+    </select>
+    <!-- 拡張項目内容取得したデータがある場合、TBL「拡張項目設定値（case_extensionitem_values）」を更新 -->
+    <update id="updateCaseExtensionitemValues" parameterType="com.web.app.domain.Entity.CaseExtensionitemValues">
+        UPDATE case_extensionitem_values
+        SET
+            ExtensionitemValue = #{ExtensionitemValue},
+            DeleteFlag = 0,
+            LastModifiedDate = #{LastModifiedDate},
+            LastModifiedBy = #{LastModifiedBy}
+        WHERE
+            PlatformId = #{PlatformId}
+            AND case_petitionId = #{case_petitionId}
+            AND DeleteFlag = 0
+            AND ExtensionitemId = #{ExtensionitemId}
+    </update>
+    <!-- 拡張項目内容取得したデータがない場合、TBL「拡張項目設定値（case_extensionitem_values）」を登録 -->
+    <insert id="insertCaseExtensionitemValues" parameterType="com.web.app.domain.Entity.CaseExtensionitemValues">
+        INSERT INTO case_extensionitem_values (
+            id,
+            PlatformId,
+            CaseId,
+            case_petitionId,
+            ExtensionitemId,
+            ExtensionitemValue,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )
+        VALUES (
+            #{id},
+            #{PlatformId},
+            NULL,
+            #{case_petitionId},
+            #{ExtensionitemId},
+            #{ExtensionitemValue},
+            0,
+            #{LastModifiedDate},
+            #{LastModifiedBy}
+        )
+    </insert>
+</mapper>
