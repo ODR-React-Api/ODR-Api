@@ -1,7 +1,6 @@
-package com.web.app.domain.CouAnswerLogin;
+package com.web.app.domain.constants.CouAnswerLogin;
 
 import io.swagger.annotations.ApiModel;
-import java.io.Serializable;
 import lombok.Data;
 
 /**
@@ -13,19 +12,23 @@ import lombok.Data;
  */
 @ApiModel
 @Data
-public class CaseClaimReplies implements Serializable {
-    // バッファリング
-    private static final long serialVersionUID = 1L;
-    // ID
-    private String id;
+public class InsClaimRepliesDto {
     // プラットフォームID
     private String PlatformId;
-    // 案件ID
+    // ケースID
     private String CaseId;
     // 反訴への回答
     private String replyContext;
     // LastModifiedBy
     private String LastModifiedBy;
+    // ファイル名
+    private String FileName;
+    // 拡張子
+    private String FileExtension;
+    // URL
+    private String FileUrl;
+    // ファイルサイズ
+    private Integer FileSize;
+    // ユーザーID
+    private String RegisterUserId;
 }
-
-

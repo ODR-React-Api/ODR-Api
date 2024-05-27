@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.web.app.domain.CouAnswerLogin.CaseClaimReplies;
-import com.web.app.domain.CouAnswerLogin.CaseFileRelations;
-import com.web.app.domain.CouAnswerLogin.InsClaimRepliesDto;
-import com.web.app.domain.CouAnswerLogin.ReactUseFiles;
-import com.web.app.domain.CouAnswerLogin.RepliesContext;
+import com.web.app.domain.constants.CouAnswerLogin.CaseClaimReplies;
+import com.web.app.domain.constants.CouAnswerLogin.CaseFileRelations;
+import com.web.app.domain.constants.CouAnswerLogin.InsClaimRepliesDto;
+import com.web.app.domain.constants.CouAnswerLogin.ReactUseFiles;
+import com.web.app.domain.constants.CouAnswerLogin.RepliesContext;
 import com.web.app.mapper.GetRepliesContextMapper;
 import com.web.app.mapper.InsClaimRepliesDataMapper;
 import com.web.app.service.CouAnswerLoginService;
@@ -23,36 +23,36 @@ import com.web.app.service.CouAnswerLoginService;
  */
 @Service
 public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
-    
-    //反訴・回答データ取得
+
+    // 反訴・回答データ取得
     @Autowired
     private GetRepliesContextMapper getRepliesContextMapper;
 
-    //反訴・回答データ取得
+    // 反訴・回答データ取得
     @Autowired
     private InsClaimRepliesDataMapper insClaimRepliesDataMapper;
 
     /**
      * 反訴・回答データ取得
      *
-     * @param caseId セッション情報のcaseid
+     * @param caseId     セッション情報のcaseid
      * @param PlatformId セッション情報のプラットフォームID
      * @return getRepliesContextList
      * @throws Exception エラーの説明内容
-     */ 
+     */
     @Override
-    public List<RepliesContext> getRepliesContext(String CaseId,String PlatformId) {
+    public List<RepliesContext> getRepliesContext(String CaseId, String PlatformId) {
         List<RepliesContext> getRepliesContextList = new ArrayList<RepliesContext>();
-        getRepliesContextList = getRepliesContextMapper.getRepliesContext(CaseId,PlatformId);
+        getRepliesContextList = getRepliesContextMapper.getRepliesContext(CaseId, PlatformId);
         return getRepliesContextList;
     }
 
     /**
      * API_反訴への回答データ新規登録
      *
-     * @param insClaimRepliesDto API_反訴への回答データ新規登録の引数 
-     * @throws Exception エラーの説明内容     
-     */ 
+     * @param insClaimRepliesDto API_反訴への回答データ新規登録の引数
+     * @throws Exception エラーの説明内容
+     */
     @Override
     public void insClaimRepliesData(InsClaimRepliesDto insClaimRepliesDto) {
         // 「反訴への回答」新規登録

@@ -2,7 +2,7 @@ package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.CouAnswerLogin.RepliesContext;
+import com.web.app.domain.constants.CouAnswerLogin.RepliesContext;
 
 import java.util.List;
 
@@ -15,6 +15,6 @@ import java.util.List;
  */
 @Mapper
 public interface GetRepliesContextMapper {
-    //反訴・回答データ取得
+    // 反訴・回答データ取得
     List<RepliesContext> getRepliesContext(String caseId, String platformId);
 }

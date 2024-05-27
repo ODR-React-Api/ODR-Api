@@ -2,9 +2,9 @@ package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.CouAnswerLogin.CaseClaimReplies;
-import com.web.app.domain.CouAnswerLogin.CaseFileRelations;
-import com.web.app.domain.CouAnswerLogin.ReactUseFiles;
+import com.web.app.domain.constants.CouAnswerLogin.CaseClaimReplies;
+import com.web.app.domain.constants.CouAnswerLogin.CaseFileRelations;
+import com.web.app.domain.constants.CouAnswerLogin.ReactUseFiles;
 
 /**
  * API_反訴への回答データ新規登録
@@ -17,7 +17,10 @@ import com.web.app.domain.CouAnswerLogin.ReactUseFiles;
 public interface InsClaimRepliesDataMapper {
     // 反訴への回答データ新規登録
     int insClaimReplies(CaseClaimReplies insClaimReplies);
+
     int insClaimRepliesDataFiles(ReactUseFiles files);
+
     int insClaimRepliesDataFilesRelations(CaseFileRelations caseFileRelations);
+
     String getUuid();
 }

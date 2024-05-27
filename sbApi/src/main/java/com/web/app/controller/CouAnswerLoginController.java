@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.web.app.service.CouAnswerLoginService;
 import com.web.app.tool.AjaxResult;
 import com.web.app.domain.Response;
-import com.web.app.domain.CouAnswerLogin.InsClaimRepliesDto;
-import com.web.app.domain.CouAnswerLogin.RepliesContext;
+import com.web.app.domain.constants.CouAnswerLogin.InsClaimRepliesDto;
+import com.web.app.domain.constants.CouAnswerLogin.RepliesContext;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +37,7 @@ public class CouAnswerLoginController {
     /**
      * API_反訴・回答データ取得
      *
-     * @param CaseId セッション情報のCaseId 
+     * @param CaseId     セッション情報のCaseId
      * @param PlatformId セッション情報のプラットフォームID
      * @return getRepliesContextList
      * @throws Exception エラーの説明内容
@@ -76,5 +76,3 @@ public class CouAnswerLoginController {
         }
     }
 }
-
-

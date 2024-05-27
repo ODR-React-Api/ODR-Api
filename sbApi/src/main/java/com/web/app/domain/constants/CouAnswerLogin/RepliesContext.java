@@ -1,4 +1,4 @@
-package com.web.app.domain.CouAnswerLogin;
+package com.web.app.domain.constants.CouAnswerLogin;
 
 import io.swagger.annotations.ApiModel;
 import java.io.Serializable;
@@ -16,10 +16,10 @@ import lombok.Data;
 public class RepliesContext implements Serializable {
     // バッファリング
     private static final long serialVersionUID = 1L;
-    //反訴内容
+    // 反訴内容
     private String CounterClaimContext;
-    //ファイル名
+    // ファイル名
     private String FileName;
-    //URL
+    // URL
     private String FileUrl;
 }

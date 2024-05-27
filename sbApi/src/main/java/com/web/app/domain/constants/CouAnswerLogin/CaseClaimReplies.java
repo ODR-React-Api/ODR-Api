@@ -1,4 +1,4 @@
-package com.web.app.domain.CouAnswerLogin;
+package com.web.app.domain.constants.CouAnswerLogin;
 
 import io.swagger.annotations.ApiModel;
 import java.io.Serializable;
@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @ApiModel
 @Data
-public class ReactUseFiles implements Serializable {
+public class CaseClaimReplies implements Serializable {
     // バッファリング
     private static final long serialVersionUID = 1L;
     // ID
@@ -22,15 +22,8 @@ public class ReactUseFiles implements Serializable {
     private String PlatformId;
     // 案件ID
     private String CaseId;
-    // ファイル名
-    private String FileName;
-    // 拡張子
-    private String FileExtension;
-    // URL
-    private String FileUrl;
-    // ファイルサイズ
-    private Integer FileSize;
-    // ユーザーID
-    private String RegisterUserId;
+    // 反訴への回答
+    private String replyContext;
+    // LastModifiedBy
+    private String LastModifiedBy;
 }
-
