@@ -1,6 +1,7 @@
 package com.web.app.service;
 
 import com.web.app.domain.Entity.CaseNegotiations;
+import com.web.app.domain.NegotiatAgree.CaseEstablish;
 import com.web.app.domain.NegotiatAgree.NegotiatAgree;
 import com.web.app.domain.NegotiatAgree.Negotiation;
 import com.web.app.domain.NegotiatAgree.UpdNegotiatAgree;
@@ -14,7 +15,7 @@ import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
  * 確認書表示画面です。作成した和解案の合意、
  * 拒否および確認を行う。
  * 
- * @author DUC 徐義然 李志文 賈文志 王 エンエン
+ * @author DUC 徐義然 李志文 賈文志 王 エンエン 馮淑慧
  * @since 2024/05/06
  * @version 1.0
  */
@@ -29,4 +30,6 @@ public interface NegotiatAgreeService {
     
     int updateNegotiatData(UpdNegotiatCon updNegotiatCon);
 
+    // API_案件成立更新
+    int updCaseEstablish(CaseEstablish caseEstablish);
 }

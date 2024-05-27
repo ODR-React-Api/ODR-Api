@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.Entity.CaseRelations;
+import com.web.app.domain.Entity.Cases;
+import com.web.app.domain.NegotiatAgree.CaseEstablish;
 import com.web.app.domain.NegotiatAgree.NegotiatAgree;
 import com.web.app.domain.NegotiatAgree.Negotiation;
 import com.web.app.domain.NegotiatAgree.UpdNegotiatAgree;
@@ -19,6 +21,7 @@ import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.constants.Num;
 import com.web.app.domain.util.SendMailRequest;
 import com.web.app.mapper.GetNegotiatConInfoMapper;
+import com.web.app.mapper.UpdCaseEstablishMapper;
 import com.web.app.mapper.UpdNegotiatAgreeMapper;
 import com.web.app.mapper.UpdNegotiatConMapper;
 import com.web.app.mapper.UpdNegotiatDenyMapper;
@@ -26,7 +29,6 @@ import com.web.app.service.CommonService;
 import com.web.app.service.NegotiatAgreeService;
 import com.web.app.service.UtilService;
 import com.web.app.domain.constants.Constants;
-
 
 /**
  * 
@@ -36,7 +38,7 @@ import com.web.app.domain.constants.Constants;
  * 確認書表示画面です。作成した和解案の合意、
  * 拒否および確認を行う。
  * 
- * @author DUC 徐義然 李志文 賈文志 王 エンエン
+ * @author DUC 徐義然 李志文 賈文志 王 エンエン 馮淑慧
  * @since 2024/05/06
  * @version 1.0
  */
@@ -57,6 +59,9 @@ public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
     // マッパーオブジェクト
     @Autowired
     private UpdNegotiatConMapper updNegotiatConMapper;
+
+    @Autowired
+    private UpdCaseEstablishMapper updCaseEstablishMapper;
 
     /**
      * 和解案確認データ取得
@@ -367,4 +372,42 @@ public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
         updNegotiatCon.setLastModifiedDate(sdf.format(System.currentTimeMillis()));
         return updNegotiatConMapper.setNegotiationStatus(updNegotiatCon);
     }
+
+    /**
+     * API_案件成立更新
+     * 和解案テーブルから取得した和解案Statusが6の場合、API_案件成立更新をコールし、案件のステータスを「成立」に更新する
+     *
+     * @param caseEstablish 更新に必要なセッション情報の和解案id、セッション情報の案件Caseとログインユーザ
+     * @return num 案件成立更新成功件数
+     */
+    @Override
+    public int updCaseEstablish(CaseEstablish caseEstablish) {
+
+        // 「和解案確認更新API」をコール後、和解案確認データ（StatusとPayAmount）を取得する
+        CaseNegotiations caseNegotiations = updCaseEstablishMapper
+                .selectCaseNegotiations(caseEstablish.getCaseNegotiationsId());
+        if (caseNegotiations != null && caseNegotiations.getStatus() == 6) {
+
+            // 案件更新用数据初期化
+            Cases cases = new Cases();
+
+            // 金銭の支払い有無の設定
+            // 取得した和解案のPayAmountが０より大きい場合、１で更新する。上記以外場合、０で更新する
+            if (caseNegotiations.getPayAmount() > 0) {
+                cases.setPayFlag(1);
+            } else {
+                cases.setPayFlag(0);
+            }
+            // ID
+            cases.setCid(caseEstablish.getCasesId());
+            // 上次修改者
+            cases.setLastModifiedBy(caseEstablish.getLoginUser());
+
+            // 案件成立更新
+            return updCaseEstablishMapper.updateCases(cases);
+        }
+
+        return 0;
+    }
+
 }
