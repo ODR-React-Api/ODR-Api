@@ -45,9 +45,9 @@ public class MosDetailServiceImpl implements MosDetailService{
         //draftFlgを設定して、画面へ返す。
         int draftFlg;
         if(dataCnt > Constants.CLAIM_REPLIES_CNT_0) {
-            draftFlg = Constants.REPLIES_DRAFT_FLG_0;
-        } else {
             draftFlg = Constants.REPLIES_DRAFT_FLG_1;
+        } else {
+            draftFlg = Constants.REPLIES_DRAFT_FLG_0;
         }      
         
         //回答・反訴の内容の取得
@@ -85,9 +85,9 @@ public class MosDetailServiceImpl implements MosDetailService{
         //claimrepliesDraftFlgを設定して、画面へ返す。
         int claimrepliesDraftFlg;
         if(claimrepliesCnt > Constants.CLAIM_REPLIES_CNT_0) {
-            claimrepliesDraftFlg = Constants.CLAIM_REPLIES_DRAFT_FLG_0;
-        } else {
             claimrepliesDraftFlg = Constants.CLAIM_REPLIES_DRAFT_FLG_1;
+        } else {
+            claimrepliesDraftFlg = Constants.CLAIM_REPLIES_DRAFT_FLG_0;
         }      
 
         //回答・反訴の内容の取得
