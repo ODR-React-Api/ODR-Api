@@ -1,9 +1,8 @@
 package com.web.app.service.impl;
 
 import java.util.ArrayList;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+
 import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.Entity.CaseFileRelations;
 import com.web.app.domain.Entity.CaseNegotiations;
@@ -11,26 +10,33 @@ import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.Entity.File;
 import com.web.app.domain.Entity.OdrUsers;
+import com.web.app.domain.NegotiatPreview.MasterTemplates;
 import com.web.app.domain.NegotiatPreview.NegotiatPreview;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.Num;
 import com.web.app.domain.util.SendMailRequest;
 import com.web.app.mapper.CommonMapper;
+import com.web.app.mapper.GetNegotiationsTemplateMapper;
 import com.web.app.mapper.InsNegotiationDataMapper;
 import com.web.app.mapper.UpdNegotiationsDataMapper;
 import com.web.app.service.CommonService;
 import com.web.app.service.NegotiatPreviewService;
 import com.web.app.service.UtilService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
  * 和解案プレビュー画面
  * 
- * @author DUC 李志文
+ * @author DUC 馬芹 李志文
  * @since 2024/05/10
  * @version 1.0
  */
 @Service
 public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
+
     @Autowired
     private UpdNegotiationsDataMapper updNegotiationsDataMapper;
 
@@ -45,6 +51,9 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
 
     @Autowired
     private CommonService commonService;
+
+    @Autowired
+    private GetNegotiationsTemplateMapper getNegotiationsTemplateMapper;
 
     /**
      * 和解案が存在するかどうかを判断する
@@ -65,7 +74,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
                 return Constants.RESULT_STATE_SUCCESS;
             }
         } else {
-            int insStatus =InsNegotiationData(negotiatPreview);
+            int insStatus = InsNegotiationData(negotiatPreview);
             if (insStatus == Constants.RESULT_STATE_SUCCESS) {
                 return Constants.RESULT_STATE_SUCCESS;
             }
@@ -94,7 +103,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         caseNegotiations.setCaseId(negotiatPreview.getCaseId());
         if (userStance == "1") {
             caseNegotiations.setStatus(15);
-        }else if(userStance == "2"){
+        } else if (userStance == "2") {
             caseNegotiations.setStatus(2);
         }
         caseNegotiations.setExpectResloveTypeValue(negotiatPreview.getExpectResloveTypeValue());
@@ -453,5 +462,22 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         } else {
             return null;
         }
+    }
+
+    /**
+     * 和解案テンプレート取得
+     *
+     * @return List<MasterTemplates>
+     * @throws
+     */
+    @Transactional
+    @Override
+    public List<MasterTemplates> getNegotiationsTemplate() throws Exception {
+
+        MasterTemplates masterTemplates = new MasterTemplates();
+        masterTemplates.setDeleteFlag(Constants.DELETE_FLAG_0);
+        masterTemplates.setLanguageId(Constants.JP);
+        List<MasterTemplates> contextList = getNegotiationsTemplateMapper.selectContext(masterTemplates);
+        return contextList;
     }
 }
