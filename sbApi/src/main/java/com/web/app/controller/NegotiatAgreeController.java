@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.web.app.domain.Response;
-import com.web.app.domain.NegotiatAgree.UpdNegotiatAgree;
+import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;
 import com.web.app.service.NegotiatAgreeService;
 import com.web.app.tool.AjaxResult;
 

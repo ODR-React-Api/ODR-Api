@@ -1,6 +1,6 @@
 package com.web.app.service;
 
-import com.web.app.domain.NegotiatAgree.UpdNegotiatAgree;;
+import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;;
 
 /**
  * 和解案合意更新
