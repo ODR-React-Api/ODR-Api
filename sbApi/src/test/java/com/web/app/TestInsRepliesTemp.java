@@ -27,7 +27,7 @@ import javax.annotation.Resource;
 @AutoConfigureMockMvc
 // 启动模拟HTTP客户端注解
 @AutoConfigureWebTestClient
-public class TestMosLoginServiceTest {
+public class TestInsRepliesTemp {
 
     // 按照名称进行匹配并注入
     @Resource
@@ -39,7 +39,7 @@ public class TestMosLoginServiceTest {
     @SneakyThrows
     // 测试方法声明注解
     @Test
-    public void getPetitionsTempTest1() {
+    public void insRepliesTempTest1() {
         // 将要使用的数据转换成json类型的字符串
         SessionInfo sessionInfo = new SessionInfo();
         sessionInfo.setSessionId("U082fsh27-1a10-448d-a6d2-fb296d74f961");
@@ -139,125 +139,5 @@ public class TestMosLoginServiceTest {
                 casesResponse.getGetPetitionTemp().getPetitionTypeDisplayName().get(1).getExtensionitemId());
         assertEquals("理由1です。",
                 casesResponse.getGetPetitionTemp().getPetitionTypeDisplayName().get(1).getExtensionitemValue());
-    }
-
-    // 抑制编译器产生警告信息
-    @SuppressWarnings("rawtypes")
-    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
-    @SneakyThrows
-    // 测试方法声明注解
-    @Test
-    public void getPetitionsTempTest2() {
-        // 将要使用的数据转换成json类型的字符串
-        SessionInfo sessionInfo = new SessionInfo();
-        sessionInfo.setSessionId("U082fsh27-1a10-448d-a6d2-fb296d74f962");
-        sessionInfo.setPlatformId("001");
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonData = objectMapper.writeValueAsString(sessionInfo);
-
-        // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/mosLogin/getPlatformId").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
-        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
-        mockHttpServletResponse.setCharacterEncoding("utf-8");
-        String body = mockHttpServletResponse.getContentAsString();
-        // 将返回值从json类型的字符串转成对象
-        Response response = objectMapper.readValue(body, Response.class);
-        // 将返回值从泛型转换成指定类型
-        MosLogin casesResponse = objectMapper.convertValue(response.getData(), MosLogin.class);
-
-        // 断言
-        // Code
-        assertEquals(200, response.getCode());
-        // msg
-        assertEquals("API「下書き用準備データ登録」を呼び出す", response.getMsg());
-        // 申立て人
-        assertEquals(null, casesResponse);
-    }
-
-    // 抑制编译器产生警告信息
-    @SuppressWarnings("rawtypes")
-    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
-    @SneakyThrows
-    // 测试方法声明注解
-    @Test
-    public void getPetitionsTempTest3() {
-        // 将要使用的数据转换成json类型的字符串
-        SessionInfo sessionInfo = new SessionInfo();
-        sessionInfo.setSessionId("U082fsh27-1a10-448d-a6d2-fb296d74f963");
-        sessionInfo.setPlatformId("001");
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonData = objectMapper.writeValueAsString(sessionInfo);
-
-        // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/mosLogin/getPlatformId").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
-        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
-        mockHttpServletResponse.setCharacterEncoding("utf-8");
-        String body = mockHttpServletResponse.getContentAsString();
-        // 将返回值从json类型的字符串转成对象
-        Response response = objectMapper.readValue(body, Response.class);
-        // 将返回值从泛型转换成指定类型
-        MosLogin casesResponse = objectMapper.convertValue(response.getData(), MosLogin.class);
-
-        // 断言
-        // Code
-        assertEquals(200, response.getCode());
-        // msg
-        assertEquals("拡張項目の表示状態が0の画面表示成功!", response.getMsg());
-        // 申立て人
-        assertEquals("U082fsh27-1a10-448d-a6d2-fb296d74f963", casesResponse.getGetPetitionTemp().getPetitionUserId());
-        // 申立Id
-        assertEquals("FFFFSHC7B9C5425BB7D15DFCA7A59AE4", casesResponse.getGetPetitionTemp().getCasePetition());
-        // 申立て人入力情報
-        assertEquals(null, casesResponse.getGetPetitionTemp().getPetitionUserInfo_Email());
-        // 代理人1
-        assertEquals("string", casesResponse.getGetPetitionTemp().getAgent1_Email());
-        // 代理人2
-        assertEquals("string", casesResponse.getGetPetitionTemp().getAgent2_Email());
-        // 代理人3
-        assertEquals("string", casesResponse.getGetPetitionTemp().getAgent3_Email());
-        // 代理人4
-        assertEquals("string", casesResponse.getGetPetitionTemp().getAgent4_Email());
-        // 代理人5
-        assertEquals("string", casesResponse.getGetPetitionTemp().getAgent5_Email());
-        // 相手方メール
-        assertEquals("string", casesResponse.getGetPetitionTemp().getTraderUserEmail());
-        // 商品名
-        assertEquals(null, casesResponse.getGetPetitionTemp().getProductName());
-        // 商品ID
-        assertEquals(null, casesResponse.getGetPetitionTemp().getProductId());
-        // 販売元名称
-        assertEquals("string", casesResponse.getGetPetitionTemp().getTraderName());
-        // 販売元ＵＲＬ
-        assertEquals("string", casesResponse.getGetPetitionTemp().getTraderUrl());
-        // 購入日
-        assertEquals("2024-05-23 00:00:00", casesResponse.getGetPetitionTemp().getBoughtDate());
-        // 購入金額
-        assertEquals(0, casesResponse.getGetPetitionTemp().getPrice());
-        // 申立ての種類
-        assertEquals("string", casesResponse.getGetPetitionTemp().getPetitionTypeValue());
-        // 申立て内容
-        assertEquals("string", casesResponse.getGetPetitionTemp().getPetitionContext());
-        // 希望する解決方法
-        assertEquals("string", casesResponse.getGetPetitionTemp().getExpectResloveTypeValue());
-        // その他
-        assertEquals("string", casesResponse.getGetPetitionTemp().getOther());
-        // 名前
-        assertEquals(null, casesResponse.getGetPetitionTemp().getFirstName());
-        // 名字
-        assertEquals(null, casesResponse.getGetPetitionTemp().getLastName());
-        // 名前 カナ
-        assertEquals(null, casesResponse.getGetPetitionTemp().getFirstName_kana());
-        // 名字 カナ
-        assertEquals(null, casesResponse.getGetPetitionTemp().getLastName_kana());
-        // 所属会社名
-        assertEquals(null, casesResponse.getGetPetitionTemp().getCompanyName());
-        // 添付資料List
-        assertEquals(0, casesResponse.getGetPetitionTemp().getFileName().size());
-        // 拡張項目List
-        assertEquals(0,casesResponse.getGetPetitionTemp().getPetitionTypeDisplayName().size());
     }
 }

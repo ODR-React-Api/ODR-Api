@@ -192,33 +192,34 @@ public class MosLoginServiceImpl implements MosLoginService {
             // 申立人情報を取得する
             getPetitionInfo = getPetitionsTempMapper.selectOdrUsers(sessionInfo.getSessionId(),
                     petitionsTemp.getPetitionUserInfo_Email());
-            if (getPetitionInfo != null) {
-                // 画面表示項目.お問い合わせをされる方についての情報の氏名の名
-                petitionInfo.setFirstName(getPetitionInfo.getFirstName());
-                // 画面表示項目.お問い合わせをされる方についての情報の氏名の姓
-                petitionInfo.setLastName(getPetitionInfo.getLastName());
-                // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の名
-                petitionInfo.setFirstName_kana(getPetitionInfo.getFirstName_kana());
-                // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の姓
-                petitionInfo.setLastName_kana(getPetitionInfo.getLastName_kana());
-                // 画面表示項目.お問い合わせをされる方についての情報の所属会社
-                petitionInfo.setCompanyName(getPetitionInfo.getCompanyName());
+            if (getPetitionInfo == null) {
+                return petitionInfo;
             }
-        }
+            // 画面表示項目.お問い合わせをされる方についての情報の氏名の名
+            petitionInfo.setFirstName(getPetitionInfo.getFirstName());
+            // 画面表示項目.お問い合わせをされる方についての情報の氏名の姓
+            petitionInfo.setLastName(getPetitionInfo.getLastName());
+            // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の名
+            petitionInfo.setFirstName_kana(getPetitionInfo.getFirstName_kana());
+            // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の姓
+            petitionInfo.setLastName_kana(getPetitionInfo.getLastName_kana());
+            // 画面表示項目.お問い合わせをされる方についての情報の所属会社
+            petitionInfo.setCompanyName(getPetitionInfo.getCompanyName());
 
-        // 上記画面表示項目（画面上で必須となっている項目）取得有り（Nullでない）場合、下記の下書き案件のファイルIDと拡張項目内容取得を行う。
-        if (petitionsTemp.getProductName() != null && getPetitionInfo.getFirstName() != null) {
-            // TBL「案件-添付ファイルリレーション（case_file_relations）」より関連下書き案件のファイルIDを取得する。
-            List<FileId> getFileId = getPetitionsTempMapper.selectFileId(petitionsTemp.getCasePetition());
-            if (getFileId.size() > 0) {
-                // 画面表示項目.添付資料
-                petitionInfo.setFileName(getFileId);
-            }
-            // 拡張項目内容取得
-            List<ScaleItems> scaleItemsList = getPetitionsTempMapper.scaleItemsSearch(sessionInfo.getPlatformId());
-            if (scaleItemsList.size() > 0) {
-                // 画面表示項目.拡張項目
-                petitionInfo.setPetitionTypeDisplayName(scaleItemsList);
+            // 上記画面表示項目（画面上で必須となっている項目）取得有り（Nullでない）場合、下記の下書き案件のファイルIDと拡張項目内容取得を行う。
+            if (petitionsTemp.getProductName() != null && getPetitionInfo.getFirstName() != null) {
+                // TBL「案件-添付ファイルリレーション（case_file_relations）」より関連下書き案件のファイルIDを取得する。
+                List<FileId> getFileId = getPetitionsTempMapper.selectFileId(petitionsTemp.getCasePetition());
+                if (getFileId.size() > 0) {
+                    // 画面表示項目.添付資料
+                    petitionInfo.setFileName(getFileId);
+                }
+                // 拡張項目内容取得
+                List<ScaleItems> scaleItemsList = getPetitionsTempMapper.scaleItemsSearch(sessionInfo.getPlatformId());
+                if (scaleItemsList.size() > 0) {
+                    // 画面表示項目.拡張項目
+                    petitionInfo.setPetitionTypeDisplayName(scaleItemsList);
+                }
             }
         }
         return petitionInfo;
