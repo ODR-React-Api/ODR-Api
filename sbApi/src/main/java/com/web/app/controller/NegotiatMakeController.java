@@ -47,7 +47,7 @@ public class NegotiatMakeController {
         try {
             SettlementDraftDataResult dataResult = negotiatMakeService.settlementDraftDataInfoSearch(fromSessionLogin);
             if (dataResult != null) {
-                return Response.success(dataResult);
+                return Response.success(Constants.RETCD_OK, dataResult);
             }
             return Response.error(Constants.RETCD_NG);
         } catch (Exception e) {
@@ -70,10 +70,7 @@ public class NegotiatMakeController {
         try {
             SettlementDraftDataResult participatedResult = negotiatMakeService
                     .settlementDraftInfoSearch(fromSessionLogin);
-            if (participatedResult != null) {
-                return Response.success(participatedResult);
-            }
-            return Response.error(Constants.RETCD_NG);
+            return Response.success(Constants.RETCD_OK, participatedResult);
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
             return null;
