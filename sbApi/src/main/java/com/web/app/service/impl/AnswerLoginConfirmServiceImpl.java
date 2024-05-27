@@ -33,15 +33,16 @@ public class AnswerLoginConfirmServiceImpl implements AnswerLoginConfirmService 
      * API_案件別個人情報リレーションデータ更新
      * 下書きデータ存在する場合、条件によって、代理人Email（5個）がS11画面の入力項目に更新する。
      *
+     * @param caserelations S11で入力の画面項目と表示された項目
      * @return int DBへ更新した個数
      */
     @Override
     public int updateCaserelations(UpdCasesRelations caserelations) {
 
         // S11から 入力した代理人メールのList
-        List<String> traderagentuserListAll = new ArrayList<>(caserelations.getTraderagentuserList());
+        List<String> traderagentuserListAll = caserelations.getTraderagentuserList();
         // S11から、五つのメールアドレスが必要 ⇒足りない場合：nullで補足
-        while (traderagentuserListAll.size() < 5) {
+        while (traderagentuserListAll.size() <  Constants.TRADER_USER_EMAIL_LIST_lENGTH) {
             traderagentuserListAll.add(null);
         }
         // 補足後のList serviceに追加
@@ -55,13 +56,14 @@ public class AnswerLoginConfirmServiceImpl implements AnswerLoginConfirmService 
      * 条件によって、案件状態を更新する。
      * 反訴,反訴機能,交渉機能によって、更新する値が変わる
      *
+     * @param casecase S11で入力の画面項目と表示された項目
      * @return int DBへ更新した個数
      */
     @Override
-    public int updateCasecase(UpdCases casecase) {
+    public int updateCases(UpdCases casecase) {
 
         // S11から 入力した代理人メールのList
-        List<String> traderagentuserListAll = new ArrayList<>(casecase.getTraderagentuserList());
+        List<String> traderagentuserListAll = casecase.getTraderagentuserList();
 
         // 五つのメールアドレスが必要 ⇒足りない場合：nullで補足
         while (traderagentuserListAll.size() < Constants.TRADER_USER_EMAIL_LIST_lENGTH) {
@@ -92,6 +94,6 @@ public class AnswerLoginConfirmServiceImpl implements AnswerLoginConfirmService 
 
         // 補足後のList serviceに追加
         casecase.setTraderagentuserListAll(traderagentuserListAll);
-        return updCasesMapper.updateCasecase(casecase);
+        return updCasesMapper.updateCases(casecase);
     }
 }

@@ -37,6 +37,7 @@ public class AnswerLoginConfirmController {
      * API_案件別個人情報リレーションデータ更新
      * S12画面に 登録するボタン押下後、代理人更新処理
      * 
+     * @param caserelations S11で入力の画面項目と表示された項目
      * @return 更新した個数
      */
     @SuppressWarnings("rawtypes")
@@ -63,6 +64,7 @@ public class AnswerLoginConfirmController {
      * API_ 案件更新
      * S12画面に 登録するボタン押下後、案件状態更新処理
      * 
+     * @param casecase S11で入力の画面項目と表示された項目
      * @return 更新した個数
      */
     @SuppressWarnings("rawtypes")
@@ -71,7 +73,7 @@ public class AnswerLoginConfirmController {
     public Response updCases(@RequestBody UpdCases casecase) {
         try {
             //条件によって、案件状態更新した個数
-            int count = answerLoginConfirmService.updateCasecase(casecase);
+            int count = answerLoginConfirmService.updateCases(casecase);
             if (count > 0) {
                 return AjaxResult.success("案件状態更新!", count);
             }

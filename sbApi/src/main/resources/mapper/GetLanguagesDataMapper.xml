@@ -5,8 +5,6 @@
 <mapper namespace="com.web.app.mapper.GetLanguagesDataMapper">
 
     <resultMap id="BaseResultMap" type="com.web.app.domain.Nav.LanguagesData">
-        <id property="id" column="id" jdbcType="VARCHAR"/>
-        <result property="languageName" column="LanguageName" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="selectAllLanguages" resultMap="BaseResultMap">
         SELECT 

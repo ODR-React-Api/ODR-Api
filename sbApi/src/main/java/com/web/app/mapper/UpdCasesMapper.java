@@ -17,5 +17,5 @@ import com.web.app.domain.AnswerLoginConfirm.UpdCases;
 public interface UpdCasesMapper {
 
     //案件状態更新処理
-    int updateCasecase(UpdCases Casecase);
+    int updateCases(UpdCases Casecase);
 }
