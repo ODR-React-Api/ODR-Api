@@ -1,4 +1,4 @@
-package com.web.app.domain.couAnswerLogin;
+package com.web.app.domain.CouAnswerLogin;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;

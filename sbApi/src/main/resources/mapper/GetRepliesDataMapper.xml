@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetRepliesDataMapper">
-    <resultMap id="getGetRepliesResultMap" type="com.web.app.domain.answerLogin.RepliesData">
+    <resultMap id="getGetRepliesResultMap" type="com.web.app.domain.AnswerLogin.RepliesData">
         <result column="replyType" jdbcType="VARCHAR" property="replyType" />
         <result column="replyContext" jdbcType="VARCHAR" property="replyContext" />
         <result column="HaveCounterClaim" jdbcType="VARCHAR" property="HaveCounterClaim" />

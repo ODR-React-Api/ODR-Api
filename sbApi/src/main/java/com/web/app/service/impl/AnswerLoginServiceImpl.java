@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.web.app.domain.answerLogin.RepliesData;
+
+import com.web.app.domain.AnswerLogin.RepliesData;
 import com.web.app.mapper.GetRepliesDataMapper;
 import com.web.app.service.AnswerLoginService;
 

@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.web.app.service.CouAnswerLoginService;
 import com.web.app.tool.AjaxResult;
 import com.web.app.domain.Response;
-import com.web.app.domain.couAnswerLogin.InsClaimRepliesDto;
-import com.web.app.domain.couAnswerLogin.RepliesContext;
+import com.web.app.domain.CouAnswerLogin.InsClaimRepliesDto;
+import com.web.app.domain.CouAnswerLogin.RepliesContext;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.ArrayList;

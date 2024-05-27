@@ -1,7 +1,8 @@
 package com.web.app.service;
 
-import com.web.app.domain.answerLogin.RepliesData;
 import java.util.List;
+
+import com.web.app.domain.AnswerLogin.RepliesData;
 
 /**
  * S11_回答登録画面

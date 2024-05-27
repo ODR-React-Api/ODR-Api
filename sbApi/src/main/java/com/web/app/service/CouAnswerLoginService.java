@@ -1,8 +1,9 @@
 package com.web.app.service;
 
 import java.util.List;
-import com.web.app.domain.couAnswerLogin.RepliesContext;
-import com.web.app.domain.couAnswerLogin.InsClaimRepliesDto;
+
+import com.web.app.domain.CouAnswerLogin.InsClaimRepliesDto;
+import com.web.app.domain.CouAnswerLogin.RepliesContext;
 
 /**
  * S14_反訴回答登録画面

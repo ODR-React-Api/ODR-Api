@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
-import com.web.app.domain.couAnswerLogin.CaseFileRelations;
-import com.web.app.domain.couAnswerLogin.CaseClaimReplies;
-import com.web.app.domain.couAnswerLogin.InsClaimRepliesDto;
-import com.web.app.domain.couAnswerLogin.ReactUseFiles;
-import com.web.app.domain.couAnswerLogin.RepliesContext;
+
+import com.web.app.domain.CouAnswerLogin.CaseClaimReplies;
+import com.web.app.domain.CouAnswerLogin.CaseFileRelations;
+import com.web.app.domain.CouAnswerLogin.InsClaimRepliesDto;
+import com.web.app.domain.CouAnswerLogin.ReactUseFiles;
+import com.web.app.domain.CouAnswerLogin.RepliesContext;
 import com.web.app.mapper.GetRepliesContextMapper;
 import com.web.app.mapper.InsClaimRepliesDataMapper;
 import com.web.app.service.CouAnswerLoginService;

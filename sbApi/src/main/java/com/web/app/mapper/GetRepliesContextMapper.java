@@ -1,7 +1,9 @@
 package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import com.web.app.domain.couAnswerLogin.RepliesContext;
+
+import com.web.app.domain.CouAnswerLogin.RepliesContext;
+
 import java.util.List;
 
 /**

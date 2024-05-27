@@ -15,8 +15,8 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
+import com.web.app.domain.AnswerLogin.RepliesData;
 import com.web.app.domain.Entity.Cases;
-import com.web.app.domain.answerLogin.RepliesData;
 
 import lombok.SneakyThrows;
 
