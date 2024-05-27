@@ -242,6 +242,7 @@ public class Constants {
 
     // 2024/05/16 DUC 楊バイバイ 追加end
 
+
     //2024/05/10 DUC徐義然 追加
     //画面「S22」のエラーメッセージ
     public static final String AGREEMENT_MESSAGE = "合意済みの調停案は、編集を行うことはできません。";
