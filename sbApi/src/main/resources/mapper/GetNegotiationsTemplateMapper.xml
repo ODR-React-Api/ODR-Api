@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetNegotiationsTemplateMapper">
+    <resultMap id="GetNegotiationsTemplateResultMap" type="com.web.app.domain.NegotiatPreview.MasterTemplates">
+        <result property="templateType" column="TemplateType" jdbcType="INTEGER"/>
+        <result property="context" column="Context" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectContext" resultMap="GetNegotiationsTemplateResultMap">
+        SELECT
+            Context,
+            TemplateType
+        FROM
+            master_templates
+        WHERE
+            DeleteFlag = #{deleteFlag}
+            AND LanguageId = #{languageId}
+            AND TemplateType IN (0,3)
+    </select>
+</mapper>
