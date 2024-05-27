@@ -1,41 +1,45 @@
 package com.web.app.service.impl;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.app.domain.Response;
 import com.web.app.domain.Entity.OdrUserUtil;
 import com.web.app.domain.constants.MailConstants;
+import com.web.app.domain.constants.MessageConstants;
 import com.web.app.domain.util.SendMailRequest;
 import com.web.app.mapper.RegisterUserMapper;
 import com.web.app.service.UserInfoConfirmService;
 import com.web.app.service.UtilService;
-import com.web.app.tool.AjaxResult;
 
 @Service
 public class UserInfoConfirmServiceImpl implements UserInfoConfirmService {
-    @Autowired
-    RegisterUserMapper registerUserMapper;
+    private static final Logger log = LogManager.getLogger(UserInfoConfirmServiceImpl.class);
 
     @Autowired
-    UtilService utilService;
+    private RegisterUserMapper registerUserMapper;
 
-     /*
+    @Autowired
+    private UtilService utilService;
+
+  /*
    * 测试事务的使用
    */
   @Transactional(noRollbackFor = { ArithmeticException.class }) // 设置当出现ArithmeticException时，不回滚
   @Override
   @SuppressWarnings("rawtypes")
-  public Response addUser(OdrUserUtil odrUserUtil) {
+  public boolean RegisterUserMapper(OdrUserUtil odrUserUtil) {
 
     odrUserUtil.setUid(utilService.GetGuid());
     odrUserUtil.setPlatformId("0001");
     odrUserUtil.setLanguageId("JP");
-    int result = registerUserMapper.insertUser(odrUserUtil);
+    int result = registerUserMapper.RegisterUserMapper(odrUserUtil);
 
     SendMailRequest sendMailRequest=new SendMailRequest();
     sendMailRequest.setPlatformId(odrUserUtil.getPlatformId());
@@ -53,19 +57,14 @@ public class UserInfoConfirmServiceImpl implements UserInfoConfirmService {
     sendMailRequest.setUserId(odrUserUtil.getUid());
     sendMailRequest.setControlType(2);
     sendMailRequest.setTempId(MailConstants.MailId_M002);
-    System.err.println("邮件发送1");
     boolean bool = utilService.SendMail(sendMailRequest);
+    if(bool){
+      log.error(MessageConstants.C00002I);
+    }
     if (result != 1) {
-      
-      return AjaxResult.error("添加用户失败!");
+      return false;
     }
-    System.err.println(bool);
-    if(bool != true){
-      System.err.println("邮件发送");
-      return AjaxResult.error("邮件发送失败!");
-    }
-    System.err.println("邮件发送2");
-    return AjaxResult.error("邮件发送、添加用户成功!");
+    return true;
   }
     
 }

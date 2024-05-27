@@ -11,6 +11,7 @@ import com.web.app.domain.Entity.OdrUserUtil;
  */
 @Mapper
 public interface RegisterUserMapper {
-    int insertUser(OdrUserUtil odrUserUtil);
 
+    int RegisterUserMapper(OdrUserUtil odrUserUtil);
+    
 }

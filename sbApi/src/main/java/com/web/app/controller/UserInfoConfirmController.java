@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiOperation;
     /**
      *
      * @author lixiaoyue
-     * @since 2024/05/020
+     * @since 2024/05/20
      * @version 1.0
      */
 @CrossOrigin(origins = "*")
@@ -26,11 +26,9 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/odrUser")
 public class UserInfoConfirmController {
-  
-  private static final long serialVersionUID = 1L;
 
   @Autowired
-  UserInfoConfirmService userInfoConfirmService;
+  private UserInfoConfirmService userInfoConfirmService;
 
     /**
      *
@@ -41,9 +39,9 @@ public class UserInfoConfirmController {
   @ApiOperation("注册")
   @PostMapping("/addUser")
   @SuppressWarnings("rawtypes")
-  public Response addUser(OdrUserUtil odrUserUtil) {
+  public Response RegisterUserMapper(OdrUserUtil odrUserUtil) {
     try {
-      userInfoConfirmService.addUser(odrUserUtil);
+      userInfoConfirmService.RegisterUserMapper(odrUserUtil);
       return AjaxResult.success("添加用户成功!");
     } catch (Exception e) {
       AjaxResult.fatal("上传单文件失败!", e);
