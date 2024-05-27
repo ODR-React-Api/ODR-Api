@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.Entity.Cases;
-import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;
+import com.web.app.domain.NegotiatAgree.UpdNegotiatAgree;
 import com.web.app.domain.util.SendMailRequest;
 import com.web.app.mapper.UpdNegotiatAgreeMapper;
 import com.web.app.service.CommonService;
