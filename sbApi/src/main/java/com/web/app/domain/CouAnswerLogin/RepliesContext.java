@@ -1,4 +1,4 @@
-package com.web.app.domain.constants.CouAnswerLogin;
+package com.web.app.domain.CouAnswerLogin;
 
 import io.swagger.annotations.ApiModel;
 import java.io.Serializable;

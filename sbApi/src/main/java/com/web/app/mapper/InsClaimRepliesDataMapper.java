@@ -2,9 +2,9 @@ package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.constants.CouAnswerLogin.CaseClaimReplies;
-import com.web.app.domain.constants.CouAnswerLogin.CaseFileRelations;
-import com.web.app.domain.constants.CouAnswerLogin.ReactUseFiles;
+import com.web.app.domain.CouAnswerLogin.CaseClaimReplies;
+import com.web.app.domain.CouAnswerLogin.CaseFileRelations;
+import com.web.app.domain.CouAnswerLogin.ReactUseFiles;
 
 /**
  * API_反訴への回答データ新規登録

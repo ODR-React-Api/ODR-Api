@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.web.app.domain.constants.CouAnswerLogin.CaseClaimReplies;
-import com.web.app.domain.constants.CouAnswerLogin.CaseFileRelations;
-import com.web.app.domain.constants.CouAnswerLogin.InsClaimRepliesDto;
-import com.web.app.domain.constants.CouAnswerLogin.ReactUseFiles;
-import com.web.app.domain.constants.CouAnswerLogin.RepliesContext;
+import com.web.app.domain.CouAnswerLogin.CaseClaimReplies;
+import com.web.app.domain.CouAnswerLogin.CaseFileRelations;
+import com.web.app.domain.CouAnswerLogin.InsClaimRepliesDto;
+import com.web.app.domain.CouAnswerLogin.ReactUseFiles;
+import com.web.app.domain.CouAnswerLogin.RepliesContext;
 import com.web.app.mapper.GetRepliesContextMapper;
 import com.web.app.mapper.InsClaimRepliesDataMapper;
 import com.web.app.service.CouAnswerLoginService;
