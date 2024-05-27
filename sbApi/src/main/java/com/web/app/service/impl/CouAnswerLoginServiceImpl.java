@@ -51,6 +51,7 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
      * API_反訴への回答データ新規登録
      *
      * @param insClaimRepliesDto API_反訴への回答データ新規登録の引数 
+     * @throws Exception エラーの説明内容     
      */ 
     @Override
     public void insClaimRepliesData(InsClaimRepliesDto insClaimRepliesDto) {

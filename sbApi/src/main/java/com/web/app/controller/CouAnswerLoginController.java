@@ -61,6 +61,7 @@ public class CouAnswerLoginController {
      *
      * @param InsClaimRepliesDto API_反訴への回答データ新規登録の引数
      * @return 反訴への回答データ新規登録の状況
+     * @throws Exception エラーの説明内容
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("反訴への回答データ新規登録")
