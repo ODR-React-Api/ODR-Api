@@ -1,5 +1,6 @@
 package com.web.app.controller;
 
+import com.web.app.domain.Response;
 import com.web.app.domain.MedUserConfirm.MedUserConfirmSession;
 import com.web.app.domain.MedUserConfirm.MediatorInfo;
 import com.web.app.domain.MedUserConfirm.OdrUsers;
@@ -38,17 +39,15 @@ public class MedUserConfirmController {
      * @return OdrUsers 調停人ユーザ情報
      * @throws Exception 異常終了
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("調停人ユーザ情報取得")
     @PostMapping("/getOdrUserInfo")
-    public OdrUsers getOdrUserInfo(@RequestBody MedUserConfirmSession medUserConfirmSession) {
+    public Response getOdrUserInfo(@RequestBody MedUserConfirmSession medUserConfirmSession) {
         try {
             OdrUsers odrUsers = medUserConfirmService.getOdrUserInfo(medUserConfirmSession);
-            return odrUsers;
-
+            return AjaxResult.success(Constants.MSG_SUCCESS, odrUsers);
         } catch (Exception e) {
-            AjaxResult.fatal(Constants.MSG_ERROR, e);
-            return null;
-
+            return AjaxResult.fatal(Constants.MSG_ERROR, e);
         }
     }
 
@@ -59,17 +58,15 @@ public class MedUserConfirmController {
      * @return MediatorInfo 調停人の経験
      * @throws Exception 異常終了
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("調停人の経験取得")
     @PostMapping("/getMediatorInfo")
-    public MediatorInfo getMediatorInfo(@RequestBody MedUserConfirmSession medUserConfirmSession) {
+    public Response getMediatorInfo(@RequestBody MedUserConfirmSession medUserConfirmSession) {
         try {
-            MediatorInfo mediatorInfo  = medUserConfirmService.getMediatorInfo(medUserConfirmSession);
-
-            return mediatorInfo;
-
+            MediatorInfo mediatorInfo = medUserConfirmService.getMediatorInfo(medUserConfirmSession);
+            return AjaxResult.success(Constants.MSG_SUCCESS, mediatorInfo);
         } catch (Exception e) {
-            AjaxResult.fatal(Constants.MSG_ERROR, e);
-            return null;
+            return AjaxResult.fatal(Constants.MSG_ERROR, e);
         }
 
     }
