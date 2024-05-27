@@ -22,7 +22,7 @@ public class CaseNegotiations implements Serializable{
     private Integer Status;
 
     //共同編集完了通知フラグ
-    private String InfoStatus;
+    private Integer InfoStatus;
 
     //希望する解決方法
     private String ExpectResloveTypeValue;
