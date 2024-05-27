@@ -1,8 +1,9 @@
 package com.web.app.service;
 
 import java.util.ArrayList;
-import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
-import com.web.app.domain.medUserConfirm.GetMediatorGen;
+
+import com.web.app.domain.MedUserConfirm.GetMediatorGen;
+import com.web.app.domain.MedUserConfirm.GetUserIDbyMail;
 
 /**
  * 調停案ステータス取得

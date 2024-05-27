@@ -1,4 +1,4 @@
-package com.web.app.domain.medUserConfirm;
+package com.web.app.domain.MedUserConfirm;
 
 import java.io.Serializable;
 import lombok.Data;

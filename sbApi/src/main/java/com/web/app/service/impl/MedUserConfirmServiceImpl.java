@@ -4,8 +4,9 @@ import com.web.app.service.MedUserConfirmService;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
-import com.web.app.domain.medUserConfirm.GetMediatorGen;
+
+import com.web.app.domain.MedUserConfirm.GetMediatorGen;
+import com.web.app.domain.MedUserConfirm.GetUserIDbyMail;
 import com.web.app.mapper.GetMediationStatusMapper;
 import com.web.app.mapper.GetUserIDbyMailMapper;
 import com.web.app.mapper.GetMediatorGenMapper;

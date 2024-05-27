@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import com.web.app.domain.medUserConfirm.GetUserIDbyMail;
+
 import com.web.app.domain.Response;
-import com.web.app.domain.medUserConfirm.GetMediatorGen;
+import com.web.app.domain.MedUserConfirm.GetMediatorGen;
+import com.web.app.domain.MedUserConfirm.GetUserIDbyMail;
 import com.web.app.service.MedUserConfirmService;
 import com.web.app.tool.AjaxResult;
 
