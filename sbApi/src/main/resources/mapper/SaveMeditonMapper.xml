@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.SaveMeditonMapper">
+    
+    <!-- 調停案の存在を判断する -->
+    <select id="isExistMediations" resultType="java.lang.Integer">
+        SELECT
+            count(*)
+        FROM
+            case_mediations
+        WHERE
+            id = #{mediationId}
+    </select>
+
+    <!-- 調停案更新 -->
+    <update id="updateMediations" parameterType="com.web.app.domain.MediationsMake.Mediation">
+        UPDATE
+            case_mediations
+        SET
+            ExpectResloveTypeValue = #{expectResloveTypeValue},
+            OtherContext = #{otherContext},
+            PayAmount = #{payAmount},
+            CounterClaimPayment = #{counterClaimPayment},
+            PaymentEndDate = #{paymentEndDate},
+            ShipmentPayType = #{shipmentPayType},
+            SpecialItem = #{specialItem},
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{userId},
+            UserId = #{userId}
+        WHERE
+            id = #{mediationId} AND
+            PlatformId = #{platformId}
+    </update>
+
+    <!-- 「添付ファイル」論理削除 -->
+    <update id="deleteFiles" parameterType="com.web.app.domain.MediationsMake.Mediation">
+        UPDATE
+            files
+        SET
+            DeleteFlag = 1,
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{userId}
+        WHERE
+            id = #{fileId} AND
+            PlatformId = #{platformId}
+    </update>
+
+    <!-- 「案件-添付ファイルリレーション」論理削除 -->
+    <update id="deleteFileRelations" parameterType="com.web.app.domain.MediationsMake.Mediation">
+        UPDATE
+            case_file_relations
+        SET
+            DeleteFlag = 1,
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{userId}
+        WHERE
+            fileId = #{fileId} AND
+            PlatformId = #{platformId}
+    </update>
+
+    <!-- 「添付ファイル」の新規登録 -->
+    <insert id="addFiles" parameterType="com.web.app.domain.MediationsMake.Mediation">
+        INSERT INTO
+            files(id,
+            PlatformId,
+            CaseId,
+            FileName,
+            FileExtension,
+            FileUrl,
+            FileBlobStorageId,
+            FileSize,
+            RegisterUserId,
+            RegisterDate,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy)
+        VALUES(#{fileId},
+            #{platformId},
+            #{caseId},
+            #{fileName},
+            #{fileExtension},
+            #{fileUrl},
+            null,
+            #{fileSize},
+            #{userId},
+            #{lastModifiedDate},
+            null,
+            null,
+            null,
+            null,
+            null,
+            0,
+            #{lastModifiedDate},
+            #{userId})
+    </insert>
+
+    <!-- 「案件-添付ファイルリレーション」新規登録 -->
+    <insert id="addFileRelations" parameterType="com.web.app.domain.MediationsMake.Mediation">
+        INSERT INTO
+            case_file_relations(id,
+            PlatformId,
+            CaseId,
+            RelationType,
+            RelatedId,
+            fileId,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy)
+        VALUES(#{fileRelationId},
+            #{platformId},
+            #{caseId},
+            5,
+            #{mediationId},
+            #{fileId},
+            null,
+            null,
+            null,
+            null,
+            null,
+            0,
+            #{lastModifiedDate},
+            #{userId})
+    </insert>
+</mapper>
