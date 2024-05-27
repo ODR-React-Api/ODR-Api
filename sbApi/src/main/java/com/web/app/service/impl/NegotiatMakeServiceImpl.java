@@ -274,9 +274,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * システム時間取得
      *
-     * @param param1
      * @return String システム時間
-     * @throws
      */
     private String getSystemtime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.FORMAT);

@@ -45,7 +45,8 @@ public class NegotiatPreviewController {
                     .getNegotiationsTemplate();
             return AjaxResult.success(Constants.MSG_SUCCESS, asterTemplatesList);
         } catch (Exception e) {
-            return AjaxResult.fatal(Constants.MSG_ERROR, e);
+            AjaxResult.fatal(Constants.MSG_ERROR, e);
+            return null;
         }
     }
 }

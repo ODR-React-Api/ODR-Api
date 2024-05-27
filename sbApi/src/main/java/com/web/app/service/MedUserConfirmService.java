@@ -12,7 +12,9 @@ import com.web.app.domain.MedUserConfirm.OdrUsers;
  * @version 1.0
  */
 public interface MedUserConfirmService {
+    // 調停人ユーザ情報取得
     OdrUsers getOdrUserInfo(MedUserConfirmSession medUserConfirmSession)throws Exception;
+    // 調停人の経験取得
     MediatorInfo getMediatorInfo(MedUserConfirmSession medUserConfirmSession)throws Exception;
 
 }

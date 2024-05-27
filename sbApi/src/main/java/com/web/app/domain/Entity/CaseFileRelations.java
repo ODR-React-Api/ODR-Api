@@ -16,7 +16,7 @@ public class CaseFileRelations implements Serializable {
 
     private static final long serialVersionUID = 1L;
     //ID
-    private String Id;
+    private String id;
     //プラットフォームID
     private String PlatformId;
     //ケース

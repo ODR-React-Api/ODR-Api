@@ -51,7 +51,8 @@ public class NegotiatMakeController {
             return AjaxResult.success(Constants.MSG_SUCCESS);
 
         } catch (Exception e) {
-            return AjaxResult.fatal(Constants.MSG_ERROR, e);
+            AjaxResult.fatal(Constants.MSG_ERROR, e);
+            return null;
         }
     }
 
@@ -75,7 +76,8 @@ public class NegotiatMakeController {
             return AjaxResult.success(Constants.MSG_SUCCESS);
 
         } catch (Exception e) {
-            return AjaxResult.fatal(Constants.MSG_ERROR, e);
+            AjaxResult.fatal(Constants.MSG_ERROR, e);
+            return null;
         }
 
     }

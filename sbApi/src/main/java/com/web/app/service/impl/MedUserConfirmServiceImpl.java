@@ -90,12 +90,10 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
     /**
      * システム時間取得：現在の年、月
      *
-     * @param param1
      * @return String システム時間
-     * @throws
      */
     private String getSystemtime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.MENU_FORMAT);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.MONTH_FORMAT);
         Date date = new Date();
         String lastModifiedDate = dateFormat.format(date);
         return lastModifiedDate;

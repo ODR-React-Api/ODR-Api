@@ -47,7 +47,8 @@ public class MedUserConfirmController {
             OdrUsers odrUsers = medUserConfirmService.getOdrUserInfo(medUserConfirmSession);
             return AjaxResult.success(Constants.MSG_SUCCESS, odrUsers);
         } catch (Exception e) {
-            return AjaxResult.fatal(Constants.MSG_ERROR, e);
+            AjaxResult.fatal(Constants.MSG_ERROR, e);
+            return null;
         }
     }
 
@@ -66,7 +67,8 @@ public class MedUserConfirmController {
             MediatorInfo mediatorInfo = medUserConfirmService.getMediatorInfo(medUserConfirmSession);
             return AjaxResult.success(Constants.MSG_SUCCESS, mediatorInfo);
         } catch (Exception e) {
-            return AjaxResult.fatal(Constants.MSG_ERROR, e);
+            AjaxResult.fatal(Constants.MSG_ERROR, e);
+            return null;
         }
 
     }

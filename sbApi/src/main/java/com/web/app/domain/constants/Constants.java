@@ -105,6 +105,7 @@ public class Constants {
     public static final String S3B14 = "14";
     public static final String FORMAT  = "yyyy-MM-dd HH:mm:ss";
     public static final String MENU_FORMAT  = "yyyy年MM月dd日";
+    public static final String MONTH_FORMAT  = "yyyy年MM月";
     //ログインユーザーは申立人の場合
     public static final int POSITIONFLAG_PETITION = 1;
     //ログインユーザーは相手方の場合

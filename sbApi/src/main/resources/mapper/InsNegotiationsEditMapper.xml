@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.InsNegotiationsEditMapper">
     <resultMap id="InsNegotiationsEditResultMap" type="com.web.app.domain.Entity.CaseNegotiations">
-        <id property="id" column="ID" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="VARCHAR"/>
         <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
         <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
         <result property="deleteFlag" column="DeleteFlag" jdbcType="INTEGER"/>
@@ -42,7 +42,7 @@
     </resultMap>
 <insert id="insertCaseNegotiations" parameterType="com.web.app.domain.Entity.CaseNegotiations">
     INSERT INTO case_negotiations (
-        ID	
+        id	
         ,PlatformId	
         ,CaseId	
         ,Status	
