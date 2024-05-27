@@ -2,7 +2,7 @@ package com.web.app.service;
 
 import java.util.List;
 
-import com.web.app.domain.AnswerLogin.RepliesData;
+import com.web.app.config.AnswerLogin.RepliesData;
 
 /**
  * S11_回答登録画面
@@ -14,6 +14,6 @@ import com.web.app.domain.AnswerLogin.RepliesData;
  * @version 1.0
  */
 public interface AnswerLoginService {
-      //API_反訴・回答データ取得
+      // API_反訴・回答データ取得
       List<RepliesData> getRepliesData(String caseId, String platformId);
 }

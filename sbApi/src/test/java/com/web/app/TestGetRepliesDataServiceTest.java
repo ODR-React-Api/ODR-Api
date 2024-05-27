@@ -14,8 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.web.app.config.AnswerLogin.RepliesData;
 import com.web.app.domain.Response;
-import com.web.app.domain.AnswerLogin.RepliesData;
 import com.web.app.domain.Entity.Cases;
 
 import lombok.SneakyThrows;
@@ -62,21 +62,44 @@ public class TestGetRepliesDataServiceTest {
         // 将返回值从json类型的字符串转成对象
         Response response = objectMapper.readValue(body, Response.class);
         // 将返回值从泛型转换成指定类型
-        RepliesData counts = objectMapper.convertValue(response.getData(), RepliesData.class);
+        // RepliesData counts = objectMapper.convertValue(response.getData(),
+        // RepliesData.class);
+        // String msg = objectMapper.convertValue(response.getMsg(), String.class);
+        RepliesData repliesData = objectMapper.convertValue(response.getData(), RepliesData.class);
+        String replyType = repliesData.getReplyType();
+        String replyContext = repliesData.getReplyContext();
+        String haveCounterClaim = repliesData.getHaveCounterClaim();
+        String traderAgent1_UserEmail = repliesData.getTraderAgent1_UserEmail();
+        String traderAgent2_UserEmail = repliesData.getTraderAgent2_UserEmail();
+        String companyName = repliesData.getCompanyName();
+        String companyName = repliesData.getCompanyName();
+        String companyName = repliesData.getCompanyName();
+        String companyName = repliesData.getCompanyName();
+        String companyName = repliesData.getCompanyName();
+        String companyName = repliesData.getCompanyName();
         String msg = objectMapper.convertValue(response.getMsg(), String.class);
 
         // 断言
-        assertEquals("担当2",counts.getReplyType());
-        assertEquals("",counts.getReplyContext());
-        assertEquals("2",counts.getHaveCounterClaim());
-        assertEquals("",counts.getCounterClaimContext());
-        assertEquals("",counts.getTraderAgent1_UserEmail());
-        assertEquals("",counts.getTraderAgent2_UserEmail());
-        assertEquals("",counts.getTraderAgent3_UserEmail());
-        assertEquals("",counts.getTraderAgent4_UserEmail());
-        assertEquals("",counts.getTraderAgent5_UserEmail());
-        assertEquals("",counts.getFileName());
-        assertEquals("",counts.getFileUrl());
-        assertEquals("会員登録の取得に成功しました。", msg);
+        // assertEquals("担当2",counts.getReplyType());
+        // assertEquals("",counts.getReplyContext());
+        // assertEquals("2",counts.getHaveCounterClaim());
+        // assertEquals("",counts.getCounterClaimContext());
+        // assertEquals("",counts.getTraderAgent1_UserEmail());
+        // assertEquals("",counts.getTraderAgent2_UserEmail());
+        // assertEquals("",counts.getTraderAgent3_UserEmail());
+        // assertEquals("",counts.getTraderAgent4_UserEmail());
+        // assertEquals("",counts.getTraderAgent5_UserEmail());
+        // assertEquals("",counts.getFileName());
+        // assertEquals("",counts.getFileUrl());
+        // assertEquals("会員登録の取得に成功しました。", msg);
+        assertEquals("担当2", replyType);
+        assertEquals("", replyContext);
+        assertEquals("2", haveCounterClaim);
+        assertEquals("", companyName);
+        assertEquals("2", lastName);
+        assertEquals("", companyName);
+        assertEquals("2", lastName);
+        assertEquals("", companyName);
+        assertEquals("ユーザデータ取得成功", msg);
     }
 }

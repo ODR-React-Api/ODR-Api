@@ -2,7 +2,7 @@ package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.AnswerLogin.RepliesData;
+import com.web.app.config.AnswerLogin.RepliesData;
 
 import java.util.List;
 
@@ -15,7 +15,6 @@ import java.util.List;
  */
 @Mapper
 public interface GetRepliesDataMapper {
-    //反訴・回答データ取得
+    // 反訴・回答データ取得
     List<RepliesData> getReplies(String caseId, String platformId);
 }
-

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.domain.AnswerLogin.RepliesData;
+import com.web.app.config.AnswerLogin.RepliesData;
 import com.web.app.mapper.GetRepliesDataMapper;
 import com.web.app.service.AnswerLoginService;
 
@@ -17,17 +17,17 @@ import com.web.app.service.AnswerLoginService;
  * @version 1.0
  */
 @Service
-public class AnswerLoginServiceImpl  implements AnswerLoginService {
+public class AnswerLoginServiceImpl implements AnswerLoginService {
     @Autowired
     private GetRepliesDataMapper getRepliesDataMapper;
-    
+
     /**
      * 反訴・回答データ取得
      *
-     * @param caseId セッション情報のcaseid
+     * @param caseId     セッション情報のcaseid
      * @param PlatformId セッション情報のプラットフォームID
      * @return getRepliesList
-     */    
+     */
     @Override
     public List<RepliesData> getRepliesData(String caseId, String platformId) {
         List<RepliesData> getRepliesDataList = new ArrayList<RepliesData>();
