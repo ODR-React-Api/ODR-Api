@@ -63,11 +63,6 @@ public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
             userstatus = "2";
         }
 
-        // 调停人
-        if (userEmail.getEmail().equals(relationsEmail.getMediatorUserEmail())) {
-            userstatus = "3";
-        }
-
         // 更新前Statusが4 or 5の場合、6で更新する
         // 更新前Statusが3の場合、ログインユーザが申立人なら、4で更新する
         // ログインユーザが相手方なら、5で更新する
