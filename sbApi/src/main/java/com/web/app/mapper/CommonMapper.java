@@ -39,12 +39,16 @@ public interface CommonMapper {
     // メールテンプレートの取得
     List<MailTemplates> FindMailTemplatesList(String platformId, String tempId);
 
+    // 案件データ取得
+    String findCasesByCid(String caseId, String platformId);
+
     User GetUserDataFromCaseIdentity(Boolean identity, String languageId, String platformId, String caseId);
 
-    /**
+    /*
      * 「アクション履歴」新規登録
      * 
      * @param actionHistories アクション履歴
+     * 
      * @return 条の数を追加
      */
     int InsHistories(ActionHistories actionHistories);

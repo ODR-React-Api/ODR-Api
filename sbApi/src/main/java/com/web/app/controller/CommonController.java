@@ -15,6 +15,7 @@ import com.web.app.domain.User;
 import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.CommonService;
+import com.web.app.service.UtilService;
 import com.web.app.tool.AjaxResult;
 
 import io.swagger.annotations.Api;
@@ -28,6 +29,9 @@ public class CommonController {
 
     @Autowired
     private CommonService commonService;
+
+    @Autowired
+    private UtilService utilService;
 
     /**
      * 案件別個人情報リレーションデータ取得(申立人/相手方)
@@ -76,6 +80,28 @@ public class CommonController {
         } catch (Exception e) {
             AjaxResult.fatal(Constants.MSG_ERROR, e);
             throw e;
+        }
+    }
+
+    
+    /**
+     * API_案件データ取得
+     *
+     * @param CaseId セッション情報のCaseId 
+     * @param PlatformId セッション情報のプラットフォームID
+     * @return getCasesByCidList
+     * @throws Exception エラーの説明内容
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("案件データ取得")
+    @GetMapping("/findCasesByCid")
+    public Response findCasesByCid(String caseId, String platformId) {
+        try {
+            String caseTitle = utilService.findCasesByCid(caseId, platformId);
+            return AjaxResult.success("案件データ取得に成功しました", caseTitle);
+        } catch (Exception e) {
+            AjaxResult.fatal("案件データ取得に失敗しました!", e);
+            return null;
         }
     }
 }
