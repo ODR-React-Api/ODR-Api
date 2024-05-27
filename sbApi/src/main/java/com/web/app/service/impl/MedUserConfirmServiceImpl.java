@@ -1,34 +1,45 @@
 package com.web.app.service.impl;
 
-import com.web.app.domain.Entity.CaseRelations;
-import com.web.app.domain.MedUserConfirm.MedUserConfirmSession;
-import com.web.app.domain.MedUserConfirm.MediatorInfo;
-import com.web.app.domain.MedUserConfirm.OdrUsers;
-import com.web.app.domain.constants.Constants;
-import com.web.app.mapper.GetMediatorInfoMapper;
-import com.web.app.mapper.GetOdrUserInfoMapper;
-import com.web.app.service.MedUserConfirmService;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.web.app.domain.Entity.CaseRelations;
+import com.web.app.domain.Entity.Cases;
+import com.web.app.domain.MedUserConfirm.MedUserConfirmSession;
+import com.web.app.domain.MedUserConfirm.MediatorInfo;
+import com.web.app.mapper.GetFileNameMapper;
+import com.web.app.mapper.GetMediatorChangeableCountMapper;
+import com.web.app.mapper.GetMediatorInfoMapper;
+import com.web.app.mapper.GetOdrUserInfoMapper;
+import com.web.app.service.MedUserConfirmService;
+import java.util.Date;
+import com.web.app.domain.MedUserConfirm.OdrUsers;
+import com.web.app.domain.constants.Constants;
+
 /**
  * 調停人確認画面
  * 
- * @author DUC 馬芹
+ * @author DUC 李志文 馬芹
  * @since 2024/05/06
  * @version 1.0
  */
 @Service
-public class MedUserConfirmServiceImpl implements MedUserConfirmService {
+public class MedUserConfirmServiceImpl implements MedUserConfirmService{
 
     @Autowired
     private GetOdrUserInfoMapper getOdrUserInfoMapper;
 
     @Autowired
     private GetMediatorInfoMapper getMediatorInfoMapper;
+
+    @Autowired
+    private GetFileNameMapper getFileNameMapper;
+
+    @Autowired
+    private GetMediatorChangeableCountMapper getMediatorChangeableCountMapper;
 
     /**
      * 調停人ユーザ情報取得
@@ -100,4 +111,29 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
         String lastModifiedDate = dateFormat.format(date);
         return lastModifiedDate;
     }
+
+    /**
+     * ファイル名取得
+     *
+     * @param fileId 添付ファイルID
+     * @return ファイル名
+     */
+    @Override
+    public String GetFileName(String fileId) {
+        String fileName = getFileNameMapper.SelFile(fileId);
+        return fileName;
+    }
+
+    /**
+     * 調停変更回数取得
+     *
+     * @param CaseId 案件ID
+     * @return 案件ステージ/調停人変更回数(申立人)/調停人変更回数(相手方)
+     */
+    @Override
+    public Cases SelCases(String caseId) {
+        Cases cases = getMediatorChangeableCountMapper.SelCases(caseId);
+        return cases;
+    }
+    
 }

@@ -15,18 +15,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.web.app.domain.Entity.Cases;
+import com.web.app.domain.MedUserConfirm.MedUserConfirm;
 /**
  * 調停人確認画面
  * 
- * @author DUC 馬芹
- * @since 2024/05/17
+ * @author DUC 李志文 馬芹
+ * @since 2024/05/06
  * @version 1.0
  */
 @CrossOrigin(origins = "*")
 @Api(tags = "調停人確認画面")
 @RestController
-@RequestMapping("/medUserConfirm")
+@RequestMapping("/MedUserConfirm")
 public class MedUserConfirmController {
 
     @Autowired
@@ -69,5 +70,45 @@ public class MedUserConfirmController {
             return AjaxResult.fatal(Constants.MSG_ERROR, e);
         }
 
+    }
+
+    /**
+     * ファイル名取得
+     *
+     * @param NegotiatPreview セッション値
+     * @return Response
+     * @throws Exception 和解案提出失敗
+     */
+    @SuppressWarnings({"rawtypes"})
+    @ApiOperation("ファイル名取得")
+    @PostMapping("GetFileName")
+    public Response GetFileName(@RequestBody MedUserConfirm medUserConfirm) {
+        try {
+            String fileName = medUserConfirmService.GetFileName(medUserConfirm.getFileId());
+            return AjaxResult.success( "成功!",fileName);
+        } catch (Exception e) {
+            AjaxResult.fatal( "失敗!",e);
+            return null;
+        }
+    }
+
+    /**
+     * 調停変更回数取得
+     *
+     * @param NegotiatPreview セッション値
+     * @return Response
+     * @throws Exception 和解案提出失敗
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("調停変更回数取得")
+    @PostMapping("GetMediatorChangeableCount")
+    public Response GetMediatorChangeableCount(@RequestBody MedUserConfirm medUserConfirm) {
+        try {
+            Cases cases = medUserConfirmService.SelCases(medUserConfirm.getCaseId());
+            return AjaxResult.success( "成功!",cases);
+        } catch (Exception e) {
+            AjaxResult.fatal( "失敗!",e);
+            return null;
+        }
     }
 }
