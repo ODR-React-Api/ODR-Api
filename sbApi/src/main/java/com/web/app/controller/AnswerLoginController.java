@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.web.app.service.AnswerLoginService;
-import com.web.app.config.AnswerLogin.RepliesData;
 import com.web.app.domain.Response;
+import com.web.app.domain.AnswerLogin.RepliesData;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

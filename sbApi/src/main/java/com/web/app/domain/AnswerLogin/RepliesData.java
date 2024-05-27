@@ -1,4 +1,4 @@
-package com.web.app.config.AnswerLogin;
+package com.web.app.domain.AnswerLogin;
 
 import io.swagger.annotations.ApiModel;
 import java.io.Serializable;
