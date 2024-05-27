@@ -48,13 +48,10 @@ public class MedDateExtensionController {
     System.out.println(mediationEndDate);
     try {
       if (medDateExtensionService.updCasesForMediationEndDate(mediationEndDate, cid) != 0) {
-        System.out.println("====================successed================================");
         return AjaxResult.success("案件情報が更新されました!", Constants.RESULT_CODE_SUCCESS);
       }
-      System.out.println("====================failed================================");
       return AjaxResult.success("案件情報が更新されませんでした!", Constants.RESULT_CODE_ERROR);
     } catch (Exception e) {
-      System.out.println("=====================throw Exception=====================");
       return AjaxResult.fatal("更新に失敗しました!", e);
     }
   }
