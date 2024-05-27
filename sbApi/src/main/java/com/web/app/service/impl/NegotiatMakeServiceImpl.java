@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,11 +69,10 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // 和解案下書きデータ取得できる場合、対応方法
             settlementResult.setCorrespondence(selectedInfo.getExpectResloveTypeValue());
             // 和解案下書きデータ取得できる場合、そのた
-            String sonota = "その他";
-            Pattern pattern = Pattern.compile(sonota);
-            Matcher matcher = pattern.matcher(selectedInfo.getExpectResloveTypeValue());
-            if (matcher.find()) {
-                settlementResult.setOtherContext(sonota);
+
+            boolean contains = selectedInfo.getExpectResloveTypeValue().contains("その他");
+            if (contains) {
+                settlementResult.setOtherContext(selectedInfo.getOtherContext());
             } else {
                 settlementResult.setOtherContext("");
             }
@@ -130,8 +127,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             updateCaseNegotiations(caseNegotiationsStatus, sessionLogin);
             // 「和解案」のidを取得する
             String caseNegotiationsUpGuid = updNegotiationsTempMapper
-                    .getNegotiationsStatusInfoSearch(sessionLogin.getSessionCaseId(),
-                            sessionLogin.getPlatformId())
+                    .getNegotiationsStatusInfoSearch(sessionLogin.getSessionCaseId(), sessionLogin.getPlatformId())
                     .getId();
 
             // 画目から「添付ファイル」を選択の長さ
@@ -198,9 +194,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         } else {
             // 異常終了（メッセージ例：申立の状態が別ユーザより更新されました。申立一覧画面から確認するようにお願いします。）
             result.setMessage(MessageConstants.MSG_NegotiatMakeERROR);
-
         }
-
         return result;
     }
 

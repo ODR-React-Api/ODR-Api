@@ -41,7 +41,7 @@ public class NegotiatMakeController {
      * @throws Exception エラーの説明内容
      */
     @SuppressWarnings("rawtypes")
-    @ApiOperation("和解案データ取得")
+    @ApiOperation("和解案下書きデータ取得")
     @PostMapping("/getNegotiationsData")
     public Response getNegotiationsData(@RequestBody FromSessionLogin fromSessionLogin) {
         try {
