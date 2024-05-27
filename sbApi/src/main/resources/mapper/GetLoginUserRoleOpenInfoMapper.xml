@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetLoginUserRoleOpenInfoMapper" >
+
+      <!--通过caseid查询信息-->
+
+      <select id="findGetLoginUserRoleOpenInfo" resultType="com.web.app.domain.MosFileList.UserIdentity">
+        SELECT
+            c1.MediatorDisclosureFlag,
+            c2.PetitionUserId,
+            c2.TraderUserEmail,
+            c2.MediatorUserEmail
+        FROM
+            react_use.cases c1,react_use.case_relations c2
+        WHERE
+            c1.cid = #{caseid}
+            AND c1.DeleteFlag = 0
+            AND c2.CaseId =c1.cid
+            AND c2.DeleteFlag = 0
+        
+    </select>
+     
+</mapper>
