@@ -90,6 +90,11 @@ public class MosDetailServiceImpl implements MosDetailService {
             caseInfo.setShowTuritor1(showTuritor1);
             caseInfo.setShowTuritor2(showTuritor2);
             caseInfo.setShowTuritor3(showTuritor3);
+        } else {
+            // 初期値を設定する 99: チュートリアルポップアップを表示しない
+            caseInfo.setShowTuritor1(99);
+            caseInfo.setShowTuritor2(99);
+            caseInfo.setShowTuritor3(99);
         }
 
         return caseInfo;
