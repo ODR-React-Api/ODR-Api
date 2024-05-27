@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetOdrUserInfoMapper">
+    <resultMap id="GetOdrUserInfoMapperResultMap" type="com.web.app.domain.MedUserConfirm.OdrUsers">
+        <result property="mediatorUserEmail" column="MediatorUserEmail" jdbcType="VARCHAR"/> 
+        <result property="caseId" column="CaseId" jdbcType="VARCHAR"/> 
+       <result property="languageId" column="LanguageId" jdbcType="VARCHAR"/> 
+        <result property="resumeFileId" column="ResumeFileId" jdbcType="VARCHAR"/>
+        <result property="selfIntroduce" column="SelfIntroduce" jdbcType="VARCHAR"/>
+        <result property="historyInfo" column="HistoryInfo" jdbcType="VARCHAR"/>
+        <result property="major" column="Major" jdbcType="VARCHAR"/>
+        <result property="position" column="Position" jdbcType="VARCHAR"/>
+        <result property="profilePictureFileId" column="ProfilePictureFileId" jdbcType="VARCHAR"/>
+        <result property="userType" column="UserType" jdbcType="INTEGER"/>
+        <result property="companyName" column="CompanyName" jdbcType="VARCHAR"/>
+        <result property="lastName" column="LastName" jdbcType="VARCHAR"/> 
+        <result property="firstName" column="FirstName" jdbcType="VARCHAR"/>
+        <result property="email" column="Email" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="GetMediatorUserEmailResultMap" type="com.web.app.domain.Entity.CaseRelations">
+        <result property="mediatorUserEmail" column="MediatorUserEmail" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getMediatorUserEmail" resultMap="GetMediatorUserEmailResultMap">
+        SELECT
+            MediatorUserEmail
+        FROM
+            case_relations
+        WHERE
+            CaseId = #{caseId}
+           
+    </select>
+    <select id="getOdrUserInfo" resultMap="GetOdrUserInfoMapperResultMap">
+        SELECT
+            ResumeFileId,
+            SelfIntroduce,
+            HistoryInfo,
+            Major,
+            Position,
+            ProfilePictureFileId,
+            UserType,
+            CompanyName,
+            LastName,
+            FirstName
+        FROM
+            odr_users
+        WHERE
+            Email = #{mediatorUserEmail}
+            AND LanguageId = #{languageId}
+           
+    </select>
+</mapper>

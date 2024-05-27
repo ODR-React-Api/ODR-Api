@@ -1,5 +1,6 @@
 package com.web.app.domain.constants;
 
+
 // import java.util.Map;
 
 public class Constants {
@@ -342,7 +343,9 @@ public class Constants {
     public static final int STR_CASES_CASESTAGE_3 = 3;
     public static final int STR_CASES_CASESTAGE_6 = 6;
     public static final int STR_CASES_CASESTAGE_7 = 7;
+    //ログインユーザーは申立人の場合
     public static final int POSITIONFLAG_PETITION = 1;
+    //ログインユーザーは相手方の場合
     public static final int POSITIONFLAG_TRADER = 2;
     public static final int POSITIONFLAG_MEDIATOR = 3;
     public static final String DEFAULT_CORRESPONDDATE = "99999999";
@@ -378,6 +381,7 @@ public class Constants {
     public static final String AJAXRESULT_SUCCESS = "取得に成功しました。";
 
     // S17 その他人と共有する
+    //DeleteFlag
     public static final int DELETE_FLAG_0 = 0;
     public static final int DELETE_FLAG_1 = 1;
     // public static final String SPACE_STRING = "";
@@ -399,4 +403,21 @@ public class Constants {
     // public static final int RESULT_CODE_SUCCESS = 0;
     // // 手続き中止APIの結果コード 1:失敗
     // public static final int RESULT_CODE_ERROR = 1;
+    //master_templatesテンプレートの種類
+    //0:和解案,
+    public static final int TEMPLATE_TYPE_0 = 0;
+    //1:調停案,
+    public static final int TEMPLATE_TYPE_1 = 1;
+    //2:仲裁案,
+    public static final int TEMPLATE_TYPE_2 = 2;
+    //3:和解案合意書, 
+    public static final int TEMPLATE_TYPE_3 = 3;
+    //4: 調停案合意書
+    public static final int TEMPLATE_TYPE_4 = 4;
+    // 解決率: 調停件数が0の場合→ "-"で表示
+    public static final String STR_YOKO = "-";
+    // 件
+    public static final String STR_KEN = "件";
+    // 現在
+    public static final String STR_GENZAI = "現在";
 }
