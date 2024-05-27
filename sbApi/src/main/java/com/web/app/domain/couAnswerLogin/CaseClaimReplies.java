@@ -14,18 +14,18 @@ import lombok.Data;
 @ApiModel
 @Data
 public class CaseClaimReplies implements Serializable {
-      // バッファリング
-      private static final long serialVersionUID = 1L;
-      // ID
-      private String id;
-      // プラットフォームID
-      private String PlatformId;
-      // 案件ID
-      private String CaseId;
-      // 反訴への回答
-      private String replyContext;
-      // LastModifiedBy
-      private String LastModifiedBy;
+    // バッファリング
+    private static final long serialVersionUID = 1L;
+    // ID
+    private String id;
+    // プラットフォームID
+    private String PlatformId;
+    // 案件ID
+    private String CaseId;
+    // 反訴への回答
+    private String replyContext;
+    // LastModifiedBy
+    private String LastModifiedBy;
 }
 
 
