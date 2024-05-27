@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.NegotiatMake.FromSessionLogin;
+import com.web.app.domain.NegotiatMake.NegotiationsFile;
 import com.web.app.domain.NegotiatMake.SettlementDraftDataResult;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.NegotiatMakeService;
@@ -20,7 +21,7 @@ import io.swagger.annotations.ApiOperation;
 /**
  * 和解案作成画面Controller
  * 
- * @author DUC 朱暁芳
+ * @author DUC 朱暁芳 馬芹
  * @since 2024/04/23
  * @version 1.0
  */
@@ -75,5 +76,55 @@ public class NegotiatMakeController {
             AjaxResult.fatal("失敗しました。", e);
             return null;
         }
+    }
+
+    /**
+     * 和解案編集依頼データ新規登録
+     *
+     * @param param1 フロントからの画面項目
+     * @return Response
+     * @throws Exception 異常終了
+     */
+    @ApiOperation("和解案編集依頼データ新規登録")
+    @PostMapping("/insNegotiationsEdit")
+    @SuppressWarnings("rawtypes")
+    public Response insNegotiationsEdit(@RequestBody NegotiationsFile negotiationsFile) {
+        try {
+    
+            int num = negotiatMakeService.addNegotiationsEdit(negotiationsFile);
+
+            if (num == Constants.RESULT_STATE_ERROR) {
+                return AjaxResult.success(Constants.MSG_ERROR);
+            }
+            return AjaxResult.success(Constants.MSG_SUCCESS);
+
+        } catch (Exception e) {
+            return AjaxResult.fatal(Constants.MSG_ERROR, e);
+        }
+    }
+
+    /**
+     * 和解案編集依頼データ更新
+     *
+     * @param param1 フロントからの画面項目
+     * @return Response
+     * @throws Exception 異常終了
+     */
+    @ApiOperation("和解案編集依頼データ更新")
+    @PostMapping("/updNegotiationsEdit")
+    @SuppressWarnings("rawtypes")
+    public Response updNegotiationsEdit(@RequestBody NegotiationsFile negotiationsFile) {
+        try {
+            int num = negotiatMakeService.updateNegotiationsEdit(negotiationsFile);
+
+            if (num == Constants.RESULT_STATE_ERROR) {
+                return AjaxResult.success(Constants.MSG_ERROR);
+            }
+            return AjaxResult.success(Constants.MSG_SUCCESS);
+
+        } catch (Exception e) {
+            return AjaxResult.fatal(Constants.MSG_ERROR, e);
+        }
+
     }
 }
