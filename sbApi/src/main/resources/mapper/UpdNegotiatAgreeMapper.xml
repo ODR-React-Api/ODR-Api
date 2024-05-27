@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdNegotiatAgreeMapper">
+    <update id="updateCount" parameterType="com.web.app.domain.NegotiatAgree.UpdNegotiatAgree">
+        UPDATE case_negotiations
+        SET
+            AgreementDate = #{AgreementDate},
+            HtmlContext = #{HtmlContext},
+            HtmlContext2 = #{HtmlContext2},
+            Status = 3,
+            LastModifiedDate = #{LastModifiedDate},
+            LastModifiedBy = #{LastModifiedBy}
+        WHERE
+            id = #{id}
+    </update>
+    
+    <select id="UserSearch" resultType="com.web.app.domain.Entity.CaseRelations">
+    SELECT
+        PetitionUserInfo_Email,
+        Agent1_Email,
+        Agent2_Email,
+        Agent3_Email,
+        Agent4_Email,
+        Agent5_Email,
+        TraderUserEmail,
+        TraderAgent1_UserEmail,
+        TraderAgent2_UserEmail,
+        TraderAgent3_UserEmail,
+        TraderAgent4_UserEmail,
+        TraderAgent5_UserEmail,
+        MediatorUserEmail
+    FROM
+        case_relations
+    WHERE
+        CaseId = #{CaseId}
+        AND DeleteFlag = 0
+</select> 
+
+<select id="CaseTitleSearch" resultType="String">
+    SELECT
+        CaseTitle
+    FROM
+        cases
+    WHERE
+        cid = #{Cid}
+</select>
+
+</mapper>

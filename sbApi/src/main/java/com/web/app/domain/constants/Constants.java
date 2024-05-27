@@ -383,5 +383,19 @@ public class Constants {
 
     // S17
     public static final int SESSIONLOGIN_FILES_SIZE_0 = 0;
+    public static final String SENDMAIL_LINK = "https://http://localhost:3000/";
 
+    // 2024/05/10 DUC徐義然 追加
+    // 画面「S22」のエラーメッセージ
+    // public static final String AGREEMENT_MESSAGE = "合意済みの調停案は、編集を行うことはできません。";
+    // // 画面「S22」のエラーメッセージ
+    // public static final String REFUSED_MESSAGE = "拒否済みの調停案は、編集を行うことはできません。";
+    // // 画面「S22」のエラーメッセージ
+    // public static final String CONFIRMED_MESSAGE = "確認済みの調停案は、編集を行うことはできません。";
+    // // 画面「S22」のエラーメッセージ
+    // public static final String FINSHED_MESSAGE = "成立済みの調停案は、編集を行うことはできません。";
+    // // 手続き中止APIの結果コード 0:成功
+    // public static final int RESULT_CODE_SUCCESS = 0;
+    // // 手続き中止APIの結果コード 1:失敗
+    // public static final int RESULT_CODE_ERROR = 1;
 }
