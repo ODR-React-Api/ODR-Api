@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdClaimRepliesDataMapper">
+    <!-- 「反訴への回答」取得 -->
+    <select id="getCaseClaimrepliesCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM case_claimreplies
+        WHERE
+            CaseId = #{caseId}
+        AND PlatformId = #{platformId}
+    </select>
+    <!-- 「反訴への回答.id」取得 -->
+    <select id="getCaseClaimrepliesId" resultType="java.lang.String">
+        SELECT id
+        FROM case_claimreplies
+        WHERE
+            CaseId = #{caseId}
+        AND PlatformId = #{platformId}
+    </select>
+    <!-- 「反訴への回答」更新 -->
+    <update id="updCaseClaimreplies" parameterType="com.web.app.domain.CouAnswerLogin.UpdClaimRepliesDataParameter">
+        UPDATE case_claimreplies
+        SET replyContext = #{replyContext},
+            LastModifiedDate = CURRENT_TIMESTAMP(),
+            LastModifiedBy = #{loginUser}
+        WHERE
+            CaseId = #{caseId}
+        AND PlatformId = #{platformId}
+    </update>
+
+    <!-- 「添付ファイル」論理削除 -->
+    <update id="updFiles" parameterType="com.web.app.domain.CouAnswerLogin.UpdClaimRepliesDataParameter">
+        UPDATE files
+        SET DeleteFlag = 1,
+            LastModifiedDate = CURRENT_TIMESTAMP(),
+            LastModifiedBy = #{loginUser}
+        WHERE
+            id = #{delFileId}
+        AND PlatformId = #{platformId}
+    </update>
+    <!-- 「添付ファイル」取得 -->
+    <select id="getFilesCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM files
+        WHERE
+            CaseId = #{caseId}
+        AND PlatformId = #{platformId}
+        AND FileName = #{fileName}
+        AND FileExtension = #{fileExtension}
+    </select>
+    <!-- 「添付ファイル」の新規登録 -->
+    <insert id="insFiles" parameterType="com.web.app.domain.Entity.Files">
+        INSERT INTO files(
+            id,
+            PlatformId,
+            CaseId,
+            FileName,
+            FileExtension,
+            FileUrl,
+            FileBlobStorageId,
+            FileSize,
+            RegisterUserId,
+            RegisterDate,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )VALUES(
+            #{id},
+            #{PlatformId},
+            #{CaseId},
+            #{FileName},
+            #{FileExtension},
+            #{FileUrl},
+            #{FileBlobStorageId},
+            #{FileSize},
+            #{RegisterUserId},
+            CURRENT_TIMESTAMP(),
+            #{Other01},
+            #{Other02},
+            #{Other03},
+            #{Other04},
+            #{Other05},
+            #{DeleteFlag},
+            CURRENT_TIMESTAMP(),
+            #{LastModifiedBy}
+        )
+    </insert>
+
+    <!-- 「案件-添付ファイルリレーション」論理削除 -->
+    <update id="updCaseFileRelations" parameterType="com.web.app.domain.CouAnswerLogin.UpdClaimRepliesDataParameter">
+        UPDATE case_file_relations
+        SET DeleteFlag = 1,
+            LastModifiedDate = CURRENT_TIMESTAMP(),
+            LastModifiedBy = #{loginUser}
+        WHERE
+            fileId = #{delFileId}
+        AND PlatformId = #{platformId}
+    </update>
+    <!-- 「案件-添付ファイルリレーション」新規登録 -->
+    <insert id="insCaseFileRelations" parameterType="com.web.app.domain.Entity.CaseFileRelations">
+        INSERT INTO case_file_relations(
+            id,
+            PlatformId,
+            CaseId,
+            RelationType,
+            RelatedId,
+            fileId,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )VALUES(
+            #{id},
+            #{PlatformId},
+            #{CaseId},
+            #{RelationType},
+            #{RelatedId},
+            #{fileId},
+            #{Other01},
+            #{Other02},
+            #{Other03},
+            #{Other04},
+            #{Other05},
+            #{DeleteFlag},
+            CURRENT_TIMESTAMP(),
+            #{LastModifiedBy}
+        )
+    </insert>
+</mapper>
