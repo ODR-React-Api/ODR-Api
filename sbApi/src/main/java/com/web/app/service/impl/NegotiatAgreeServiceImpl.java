@@ -305,7 +305,7 @@ public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
     }
 
     /**
-     * 
+     * API_和解案確認更新
      * データを処理してDBを更新する
      * 
      * 
@@ -341,11 +341,6 @@ public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
                 userEmail.getEmail().equals(relationsEmail.getTraderAgent4UserEmail()) ||
                 userEmail.getEmail().equals(relationsEmail.getTraderAgent5UserEmail())) {
             userstatus = "2";
-        }
-
-        // 调停人
-        if (userEmail.getEmail().equals(relationsEmail.getMediatorUserEmail())) {
-            userstatus = "3";
         }
 
         // 更新前Statusが4 or 5の場合、6で更新する
