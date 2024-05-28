@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.Cases;
-import com.web.app.domain.NegotiatAgree.UpdNegotiatAgree;
+import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;
 
 import lombok.SneakyThrows;
 

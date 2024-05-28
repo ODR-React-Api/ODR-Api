@@ -13,7 +13,7 @@ import com.web.app.mapper.UpdNegotiatAgreeMapper;
 import com.web.app.service.CommonService;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.MailConstants;
-import com.web.app.domain.NegotiatAgree.UpdNegotiatAgree;
+import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;
 
 /**
  * 和解案合意更新API
