@@ -347,7 +347,7 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
                         caseFileRelations.setLastModifiedBy(resultMediation.getUserId());
                         // 「案件-添付ファイルリレーション」新規登録
                         int insCaseFileRelations = insMediationsDataMapper.insCaseFileRelations(caseFileRelations);
-                        if (insCaseFileRelations == Constants.NUM_0) {
+                        if (insCaseFileRelations != Constants.NUM_1) {
                             return Constants.NUM_0;
                         }
                     } else {
