@@ -10,11 +10,11 @@
         FROM 
             react_use.user_messagegroups
         WHERE 
-            messageGroupId=#{messageGroupId} AND
+            messageGroupId = #{messageGroupId} AND
             DeleteFlag  = 0 AND 
             PlatformId = #{platformId} AND
             userId != #{uid}
-  </select >
+  </select>
 
   <insert id="messagesInsert">
         INSERT INTO react_use.messages (
