@@ -103,8 +103,7 @@ public class NegotiatAgreeController {
             }
             return AjaxResult.success("和解案が更新されませんでした!");
         } catch (Exception e) {
-            AjaxResult.fatal("更新に失敗しました!", e);
-            return null;
+            return AjaxResult.fatal("更新に失敗しました!", e);
         }
     }
 
