@@ -17,7 +17,7 @@ public class Negotiation implements Serializable {
     //和解案id
     private String negotiationId;
     //和解案ステータス
-    private int status;
+    private Integer status;
     //システム日付
     private String lastModifiedDate;
     //ログインユーザ
