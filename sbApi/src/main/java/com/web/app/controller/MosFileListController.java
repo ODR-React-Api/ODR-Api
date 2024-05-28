@@ -1,100 +1,81 @@
 package com.web.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
-
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.RequestBody;
-
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
-
 import com.web.app.domain.Response;
-
-import com.web.app.domain.MosFileList.UserIdentity;
-
-import com.web.app.domain.MosFileList.UserMessage;
-
+import com.web.app.domain.MosFileList.LoginUserRoleOpenInfo;
+import com.web.app.domain.MosFileList.LoginUserInfo;
 import com.web.app.domain.MosFileList.Files;
-
-import com.web.app.domain.MosFileList.FilesMessage;
-
+import com.web.app.domain.MosFileList.FilesInfo;
 import com.web.app.service.MosFileListService;
-
 import com.web.app.tool.AjaxResult;
-
 import io.swagger.annotations.Api;
-
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "*")
-// 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
-@Api(tags = "申请详细画面文件")
-@RestController
-@RequestMapping("/MosFileList")
-
 /**
- * 工具类Controller
+ * S07_申立て詳細画面・ファイル
+ * Controller層
+ * MosFileListController
  * 
  * @author DUC 祭卉康
  * @since 2024/05/20
  * @version 1.0
  */
-
+@CrossOrigin(origins = "*")
+@Api(tags = "申立て詳細画面・ファイル")
+@RestController
+@RequestMapping("/MosFileList")
 public class MosFileListController {
 
     @Autowired
     private MosFileListService mosFileListService;
 
-    @ApiOperation("登录用户的角色和公开信息获取API")
+    /**
+     * ログインユーザのロールと開示情報取得
+     * 
+     * @param loginUserInfo 情報表示
+     * @return 取得ログインユーザのロールと開示情報
+     */
+    @ApiOperation("ログインユーザのロールと開示情報取得")
     @PostMapping("/GetLoginUserRoleOpenInfo")
     @SuppressWarnings("rawtypes")
-    public Response GetLoginUserRoleOpenInfo(@RequestBody UserMessage userMassage) {
-
+    public Response GetLoginUserRoleOpenInfo(@RequestBody LoginUserInfo loginUserInfo) {
         try {
-
-            UserIdentity userIdentity = mosFileListService.userIdentity(userMassage.getId(), userMassage.getCaseid(),userMassage.getEmail());
-
-            return AjaxResult.success("判定用户成功!", userIdentity);
-
+            //情報取得
+            LoginUserRoleOpenInfo getloginUserRoleOpenInfo = mosFileListService.loginUserRoleOpenInfo(loginUserInfo.getId(), loginUserInfo.getCaseid(), loginUserInfo.getEmail());
+            return AjaxResult.success("情報取得成功!", getloginUserRoleOpenInfo);
         } catch (Exception e) {
-
-            AjaxResult.fatal("判定用户失败!", e);
-
+            AjaxResult.fatal("情報取得失敗!", e);
             return null;
-
         }
 
     }
 
-    @ApiOperation("附件获取API")
+    /**
+     * 案件添付ファイル取得
+     * 
+     * @param filesinfo 情報表示
+     * @return 取得案件添付ファイル
+     */
+    @ApiOperation("案件添付ファイル取得")
     @PostMapping("/GetFilesInfo")
     @SuppressWarnings("rawtypes")
-    public Response GetFilesInfo(@RequestBody FilesMessage filesMessage) {
-
+    public Response GetFilesInfo(@RequestBody FilesInfo filesInfo) {
         try {
-
-            Files file = mosFileListService.files(filesMessage.getId(), filesMessage.getCaseid());
-
-            if (file != null) {
-
-                return AjaxResult.success("文件数据获取成功!", file);
-
+            //情報取得
+            Files getfile = mosFileListService.files(filesInfo.getId(), filesInfo.getCaseid());
+            if (getfile != null) {
+                return AjaxResult.success("添付ファイルデータ取得でき!", getfile);
             } else {
-
-                return AjaxResult.success("文件为空", file);
-
+                return AjaxResult.success("添付ファイルが空です", getfile);
             }
-
         } catch (Exception e) {
-
-            AjaxResult.fatal("文件数据获取失败!", e);
-
+            AjaxResult.fatal("添付ファイルデータ取得できない!", e);
             return null;
-
         }
 
     }

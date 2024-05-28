@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetFileInfoMapper" >
 
-      <!--通过id和caseid查询信息-->
+      <!-- id、caseid、flag、mediatorDisclosureFlag による情報の照会-->
 
       <select id="findGetFileInfo" resultType="com.web.app.domain.MosFileList.Files">
         SELECT

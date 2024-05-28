@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetLoginUserRoleOpenInfoMapper" >
 
-      <!--通过caseid查询信息-->
+      <!-- caseid による情報の照会-->
 
-      <select id="findGetLoginUserRoleOpenInfo" resultType="com.web.app.domain.MosFileList.UserIdentity">
+      <select id="findGetLoginUserRoleOpenInfo" resultType="com.web.app.domain.MosFileList.LoginUserRoleOpenInfo">
         SELECT
             c1.MediatorDisclosureFlag,
             c2.PetitionUserId,

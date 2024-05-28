@@ -1,27 +1,22 @@
 package com.web.app.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
-
 import com.web.app.domain.MosFileList.Files;
-
-import com.web.app.domain.MosFileList.UserIdentity;
-
+import com.web.app.domain.MosFileList.LoginUserRoleOpenInfo;
 import com.web.app.mapper.GetFileInfoMapper;
-
 import com.web.app.mapper.GetLoginUserRoleOpenInfoMapper;
-
 import com.web.app.service.MosFileListService;
 
 /**
- * 工具类ServiceImpl
+ * S07_申立て詳細画面・ファイル
+ * Service層
+ * MosFileListServiceImpl
  * 
  * @author DUC 祭卉康
  * @since 2024/05/20
  * @version 1.0
  */
-
 @Service
 public class MosFileListServiceImpl implements MosFileListService {
 
@@ -30,68 +25,54 @@ public class MosFileListServiceImpl implements MosFileListService {
 
     @Autowired
     private GetFileInfoMapper getFileInfoMapper;
-
-    UserIdentity userIdentity = new UserIdentity();
+    //ユーザ情報取得
+    LoginUserRoleOpenInfo getLoginUserRoleOpenInfo = new LoginUserRoleOpenInfo();
 
      /**
-     * 登录用户的角色和公开信息获取API
+     * API_ログインユーザのロールと開示情報取得
      *
-     * @param id odr_users的Uid
-     * @param email odr_users的Email
-     * @param caseid 会话信息的caseid
-     * @param flag  值为1 用户为申请人，值为2用户为对方，值为3用户为调解人
-     * @return 用户身份的信息
+     * @param id ログインユーザId
+     * @param email ログインユーザemail
+     * @param caseid セッション情報のcaseid
+     * @return 取得API_ログインユーザのロールと開示情報
      */
-
     @Override
-    public UserIdentity userIdentity(String id,  String caseid, String email) {
+    public LoginUserRoleOpenInfo loginUserRoleOpenInfo(String id,  String caseid, String email) {
      
-        userIdentity = getLoginUserRoleOpenInfoMapper.findGetLoginUserRoleOpenInfo(caseid);
-        
-        String petitionUserId = userIdentity.getPetitionUserId();
-
-        String traderUserEmail = userIdentity.getTraderUserEmail();
-
-        String mediatorUserEmail = userIdentity.getMediatorUserEmail();
+        getLoginUserRoleOpenInfo = getLoginUserRoleOpenInfoMapper.findGetLoginUserRoleOpenInfo(caseid);
+        String petitionUserId = getLoginUserRoleOpenInfo.getPetitionUserId();
+        String traderUserEmail = getLoginUserRoleOpenInfo.getTraderUserEmail();
+        String mediatorUserEmail = getLoginUserRoleOpenInfo.getMediatorUserEmail();
         
         if (id.equals(petitionUserId)) {
-
-            userIdentity.setFlag(1);
+            //ログインユーザIdがPetitionUserIdと一致すれば、申立人とする
+            getLoginUserRoleOpenInfo.setFlag(1);
         }
-
         if (email.equals(traderUserEmail)) {
-
-            userIdentity.setFlag(2);
+            //ログインユーザemailがTraderUserEmailと一致すれば、相手方とする
+            getLoginUserRoleOpenInfo.setFlag(2);
         }
-
         if (email.equals(mediatorUserEmail) ) {
-
-            userIdentity.setFlag(3);
+            //ログインユーザemailがMediatorUserEmailと一致すれば、調停人とする
+            getLoginUserRoleOpenInfo.setFlag(3);
         }
-
-        return userIdentity;
+        return getLoginUserRoleOpenInfo;
 
     }
 
      /**
-     * 附件获取API
+     * API_案件添付ファイル取得
      *
-     * @param id odr_users的Uid
-     * @param caseid 会话信息的caseid
-     * @param flag  值为1 用户为申请人，值为2用户为对方，值为3用户为调解人
-     * @param mediatorDisclosureFlag 调解人信息披露标志
-     * @return 用户身份的信息
+     * @param id ログインユーザ
+     * @param caseid セッション情報のcaseid
+     * @return 取得案件添付ファイル
      */
-    
     @Override
     public Files files(String id, String caseid) {
 
-        int flag = userIdentity.getFlag();
-
-        int mediatorDisclosureFlag = userIdentity.getMediatorDisclosureFlag();
-
+        int flag = getLoginUserRoleOpenInfo.getFlag();
+        int mediatorDisclosureFlag = getLoginUserRoleOpenInfo.getMediatorDisclosureFlag();
         Files files = getFileInfoMapper.findGetFileInfo(caseid, id, flag, mediatorDisclosureFlag);
-
         return files;
 
     }

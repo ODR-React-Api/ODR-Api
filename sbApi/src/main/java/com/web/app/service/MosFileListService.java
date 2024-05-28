@@ -1,25 +1,22 @@
 package com.web.app.service;
 
 import com.web.app.domain.MosFileList.Files;
-
-import com.web.app.domain.MosFileList.UserIdentity;
+import com.web.app.domain.MosFileList.LoginUserRoleOpenInfo;
 
 /**
- * 工具类Service
+ * S07_申立て詳細画面・ファイル
+ * Service層
+ * MosFileListService
  * 
  * @author DUC 祭卉康
  * @since 2024/05/20
  * @version 1.0
  */
-
 public interface MosFileListService {
 
-   //用户信息获取
-   UserIdentity userIdentity(String id, String caseid, String email);
-
-   /* UserIdentity userIdentity( UserMessage userMessage); */
-
-   //文件信息获取
+   //ユーザ情報の取得
+   LoginUserRoleOpenInfo loginUserRoleOpenInfo(String id, String caseid, String email);
+   //添付ファイル情報の取得
    Files files(String id, String caseid);
   
 }
