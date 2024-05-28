@@ -3,7 +3,6 @@ package com.web.app.controller;
 import com.web.app.domain.TestUser;
 import com.web.app.domain.Response;
 import com.web.app.domain.User;
-import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.service.TestUserService;
 import com.web.app.service.UserService;
 import com.web.app.tool.AjaxResult;

@@ -9,6 +9,8 @@ public class OdrUserUtil implements Serializable{
 
     private String Email;
 
+    private String password;
+
     private String FirstName;
 
     private String MiddleName;
@@ -33,6 +35,14 @@ public class OdrUserUtil implements Serializable{
 
     public void setUid(String uid) {
         Uid = uid;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getEmail() {

@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiOperation;
 // 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
 @Api(tags = "odr用户模块") 
 @RestController
-@RequestMapping("/odrUser")
+@RequestMapping("/user")
 public class UserInfoConfirmController {
 
   @Autowired
@@ -37,7 +37,7 @@ public class UserInfoConfirmController {
      * @throws 
      */
   @ApiOperation("注册")
-  @PostMapping("/addUser")
+  @PostMapping("/RegisterUser")
   @SuppressWarnings("rawtypes")
   public Response RegisterUserMapper(OdrUserUtil odrUserUtil) {
     try {
