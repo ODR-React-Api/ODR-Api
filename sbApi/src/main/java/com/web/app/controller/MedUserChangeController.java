@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
 import com.web.app.domain.MedUserChange.InsertFileInfo;
 import com.web.app.domain.constants.Constants;
+import com.web.app.domain.constants.MessageConstants;
 import com.web.app.service.MedUserChangeService;
 import com.web.app.tool.AjaxResult;
 
@@ -46,12 +47,14 @@ public class MedUserChangeController {
      */
     public Response delAboutCasesMediations(String caseId) throws Exception {
         try {
-
-            Boolean resultBoolean = medUserChangeService.delAboutCasesMediations(caseId);
+            int resultBoolean = medUserChangeService.delAboutCasesMediations(caseId);
+            if (resultBoolean == 0) {
+                return AjaxResult.success(MessageConstants.S25010E, resultBoolean);
+            }
             return AjaxResult.success(Constants.MSG_SUCCESS, resultBoolean);
+
         } catch (Exception e) {
-            AjaxResult.fatal(caseId, e);
-            throw e;
+            return AjaxResult.error(e.getMessage());
         }
     }
 
