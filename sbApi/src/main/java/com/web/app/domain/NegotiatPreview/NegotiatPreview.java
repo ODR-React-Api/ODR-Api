@@ -99,7 +99,7 @@ public class NegotiatPreview implements Serializable{
     private String Other05;
 
     //DeleteFlag
-    private String DeleteFlag;
+    private Integer DeleteFlag;
 
     //LastModifiedDate
     private String LastModifiedDate;

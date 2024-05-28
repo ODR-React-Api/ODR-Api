@@ -14,7 +14,7 @@
             case_negotiations
         WHERE 
             CaseId = #{CaseId}
-            AND DeleteFlag = #{DeleteFlag}
+            AND DeleteFlag = 0
     </select>
 
 </mapper>
