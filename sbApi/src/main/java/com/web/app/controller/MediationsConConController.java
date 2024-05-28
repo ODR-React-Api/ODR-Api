@@ -1,7 +1,6 @@
 package com.web.app.controller;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -15,6 +14,7 @@ import com.web.app.domain.Response;
 import com.web.app.domain.MediationsConCon.MediationsContent;
 import com.web.app.domain.MediationsConCon.MediationsTemplate;
 import com.web.app.domain.MediationsConCon.MediationsUserData;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.MediationsConConService;
 import com.web.app.tool.AjaxResult;
 
@@ -61,7 +61,10 @@ public class MediationsConConController {
       ArrayList<MediationsTemplate> mediationsTemplateList = new ArrayList<MediationsTemplate>();
       mediationsTemplateList = (ArrayList<MediationsTemplate>) mediationsConConService
           .findMediationsTemplate(platformId, languageId, templateType);
-      return AjaxResult.success("調停案テンプレート取得成功", mediationsTemplateList);
+      if (mediationsTemplateList != null) {
+        return AjaxResult.success("調停案テンプレート取得成功!", mediationsTemplateList);
+      }
+      return AjaxResult.success("調停案テンプレートが取得されていません!", Constants.RESULT_CODE_ERROR);
     } catch (Exception e) {
       return AjaxResult.fatal("取得に失敗しました!", e);
     }
@@ -81,7 +84,10 @@ public class MediationsConConController {
     try {
       MediationsUserData mediationsUserDataList = new MediationsUserData();
       mediationsUserDataList = (MediationsUserData) mediationsConConService.findAllUser(caseId, platformId);
-      return AjaxResult.success("ユーザデータ取得成功", mediationsUserDataList);
+      if (mediationsUserDataList != null) {
+        return AjaxResult.success("ユーザデータ取得成功!", mediationsUserDataList);
+      }
+      return AjaxResult.success("データが取得されていません!", Constants.RESULT_CODE_ERROR);
     } catch (Exception e) {
       return AjaxResult.fatal("取得に失敗しました!", e);
     }
