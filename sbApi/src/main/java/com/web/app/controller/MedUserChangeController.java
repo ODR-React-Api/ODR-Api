@@ -1,7 +1,5 @@
 package com.web.app.controller;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +29,6 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/MedUserChange")
 public class MedUserChangeController {
-    @Autowired
-    DataSource dataSource;
 
     @Autowired
     private MedUserChangeService medUserChangeService;
@@ -51,7 +47,6 @@ public class MedUserChangeController {
     public Response delAboutCasesMediations(String caseId) throws Exception {
         try {
 
-            System.out.println("获取的数据库连接为:" + dataSource.getConnection());
             Boolean resultBoolean = medUserChangeService.delAboutCasesMediations(caseId);
             return AjaxResult.success(Constants.MSG_SUCCESS, resultBoolean);
         } catch (Exception e) {
@@ -74,7 +69,6 @@ public class MedUserChangeController {
      */
     public Response updAboutCasesInfo(String caseId, String userType, Boolean withReason) throws Exception {
         try {
-            System.out.println("获取的数据库连接为:" + dataSource.getConnection());
             Boolean resultBoolean = medUserChangeService.updAboutCasesInfo(caseId, userType, withReason);
             return AjaxResult.success(Constants.MSG_SUCCESS, resultBoolean);
         } catch (Exception e) {
@@ -96,7 +90,7 @@ public class MedUserChangeController {
     public Response insertFileInfo(@RequestBody InsertFileInfo insertFileInfo) {
         try {
             int insertfileInfoNum = medUserChangeService.insertFileInfo(insertFileInfo);
-            if(insertfileInfoNum == 1) {
+            if (insertfileInfoNum == 1) {
                 return Response.success(Constants.RETCD_OK);
             }
             return Response.error(Constants.RETCD_NG);
