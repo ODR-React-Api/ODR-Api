@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
  * @since 2024/04/25
  * @version 1.0
  */
-@Api(tags = "開示情報取得と案件添付ファイル取得")
+@Api(tags = "申立て詳細画面・ファイル")
 @RestController
 @RequestMapping("/MosFileList")
 public class MosFileListController {

@@ -3,43 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.UpdNegotiationsEditMapper">
-    <resultMap id="UpdNegotiationsEditResultMap" type="com.web.app.domain.Entity.CaseNegotiations">
-        <id property="id" column="ID" jdbcType="VARCHAR"/>
-        <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
-        <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
-        <result property="deleteFlag" column="DeleteFlag" jdbcType="INTEGER"/>
-        <result property="status" column="Status" jdbcType="INTEGER"/>
-        <result property="expectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR"/>
-        <result property="otherContext" column="OtherContext" jdbcType="VARCHAR"/>
-        <result property="htmlContext" column="HtmlContext" jdbcType="VARCHAR"/>
-        <result property="htmlContext2" column="HtmlContext2" jdbcType="VARCHAR"/>
-        <result property="payAmount" column="PayAmount" jdbcType="DECIMAL"/>
-        <result property="counterClaimPayment" column="CounterClaimPayment" jdbcType="DECIMAL"/>
-        <result property="paymentEndDate" column="PaymentEndDate" jdbcType="VARCHAR"/>
-        <result property="shipmentPayType" column="ShipmentPayType" jdbcType="INTEGER"/>
-        <result property="specialItem" column="SpecialItem" jdbcType="VARCHAR"/>
-        <result property="userId" column="UserId" jdbcType="VARCHAR"/>
-        <result property="submitDate" column="SubmitDate" jdbcType="VARCHAR"/>
-        <result property="agreementDate" column="AgreementDate" jdbcType="VARCHAR"/>
-        <result property="lastModifiedDate" column="LastModifiedDate" jdbcType="VARCHAR"/>
-        <result property="lastModifiedBy" column="LastModifiedBy" jdbcType="VARCHAR"/>
-        <result property="fileName" column="FileName" jdbcType="VARCHAR"/>
-        <result property="fileExtension" column="FileExtension" jdbcType="VARCHAR"/>
-        <result property="fileUrl" column="FileUrl" jdbcType="VARCHAR"/>
-        <result property="fileBlobStorageId" column="FileBlobStorageId" jdbcType="VARCHAR"/>
-        <result property="fileSize" column="FileSize" jdbcType="INTEGER"/>
-        <result property="registerUserId" column="RegisterUserId" jdbcType="VARCHAR"/>
-        <result property="registerDate" column="RegisterDate" jdbcType="VARCHAR"/>
-        <result property="other01" column="Other01" jdbcType="VARCHAR"/>
-        <result property="other02" column="Other02" jdbcType="VARCHAR"/>
-        <result property="other03" column="Other03" jdbcType="VARCHAR"/>
-        <result property="other04" column="Other04" jdbcType="VARCHAR"/>
-        <result property="other05" column="Other05" jdbcType="VARCHAR"/>
-        <result property="other01" column="Other01" jdbcType="VARCHAR"/>
-        <result property="relationType" column="RelationType" jdbcType="VARCHAR"/>
-        <result property="relatedId" column="RelatedId" jdbcType="VARCHAR"/>
-        <result property="fileId" column="FileId" jdbcType="VARCHAR"/>
-    </resultMap>
   <update id="updateCaseNegotiations" parameterType="com.web.app.domain.Entity.CaseNegotiations">
         UPDATE case_negotiations
         SET

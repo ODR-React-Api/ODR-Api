@@ -468,9 +468,8 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
      * 和解案テンプレート取得
      *
      * @return List<MasterTemplates>
-     * @throws
+     * @throws Exception
      */
-    @Transactional
     @Override
     public List<MasterTemplates> getNegotiationsTemplate() throws Exception {
 
