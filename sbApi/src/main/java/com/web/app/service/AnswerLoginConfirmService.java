@@ -17,6 +17,6 @@ public interface AnswerLoginConfirmService {
     // API_案件別個人情報リレーションデータ更新
     int updateCaserelations(UpdCasesRelations caserelations);
     // API_案件更新
-    int updateCasecase(UpdCases casecase);
+    int updateCases(UpdCases casecase);
 
 }
