@@ -31,7 +31,7 @@ public class ResultMediation implements Serializable {
     //支払金額
     private double payAmount;
     //反訴の支払金額
-    private double counterClaimPayment;
+    private Double counterClaimPayment;
     //支払期日
     private Date paymentEndDate;
     //返送時送料負担区分
@@ -49,3 +49,4 @@ public class ResultMediation implements Serializable {
     //エラーメッセージ
     private String meg;
 }
+
