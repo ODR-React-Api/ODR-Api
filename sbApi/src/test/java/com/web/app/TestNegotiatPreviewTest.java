@@ -16,13 +16,16 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.Cases;
+import com.web.app.domain.Entity.File;
 import com.web.app.domain.MedUserConfirm.MedUserConfirm;
+import com.web.app.domain.NegotiatPreview.NegotiatPreview;
 
 import lombok.SneakyThrows;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
@@ -34,7 +37,7 @@ import javax.annotation.Resource;
 @AutoConfigureMockMvc
 // 启动模拟HTTP客户端注解
 @AutoConfigureWebTestClient
-public class TestUserServiceTest {
+public class TestNegotiatPreviewTest {
 
     // 按照名称进行匹配并注入
     @Resource
@@ -54,6 +57,41 @@ public class TestUserServiceTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(medUserConfirm);
 
+        File file1 = new File();
+        file1.setPlatformId("0001");
+        file1.setCaseId("99999999");
+        file1.setFileName("filetest1111");
+        file1.setFileExtension("jpg");
+        file1.setDeleteFlag(0);
+        file1.setRegisterUserId("testlzw");
+        file1.setRegisterDate("2024/05/28 08:06:50");
+        file1.setLastModifiedBy("testlzw");
+
+        File file2 = new File();
+        file2.setPlatformId("0001");
+        file2.setCaseId("99999999");
+        file2.setFileName("filetest2222");
+        file2.setFileExtension("csv");
+        file2.setDeleteFlag(0);
+        file2.setRegisterUserId("testlzw");
+        file2.setRegisterDate("2024/05/28 08:06:50");
+        file1.setLastModifiedBy("testlzw");
+
+        NegotiatPreview negotiatPreview = new NegotiatPreview();
+        negotiatPreview.setCaseId("99999999");
+        negotiatPreview.setLastModifiedBy("testlzw");
+        negotiatPreview.setPayAmount(500);
+        negotiatPreview.setPaymentEndDate("2024/05/28 08:06:50");
+        negotiatPreview.setShipmentPayType(0);
+        negotiatPreview.setStatus(0);
+        negotiatPreview.setSubmitDate("2024/05/28 08:06:50");
+        negotiatPreview.setUserId("eb83a3c2-2d84-4056-83cd-94dea40bffe9");
+
+        ArrayList<File> arrayList = new ArrayList<>();
+        arrayList.add(file1);
+        arrayList.add(file2);
+        negotiatPreview.setFileList(arrayList);
+
         // 请求并接收返回值
         MvcResult mvcResult = mockMvc.perform(post("/MedUserConfirm/GetFileName").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
@@ -61,10 +99,10 @@ public class TestUserServiceTest {
         // 将返回值从json类型的字符串转成对象
         Response response = objectMapper.readValue(body, Response.class);
         // 将返回值从泛型转换成指定类型
-        String casesResponse = objectMapper.convertValue(response.getData(), String.class);
+        String casesResponse = objectMapper.convertValue(response.getMsg(), String.class);
 
         // 断言
-        assertEquals("tomcat1582_TP_V", casesResponse);
+        assertEquals("和解案提出成功", casesResponse);
         //assertEquals(1, response.getCode());
         // assertEquals("1000000010", casesResponse.getCid());
         // assertEquals("0001", casesResponse.getPlatformId());

@@ -62,26 +62,26 @@ public class NegotiatPreview implements Serializable{
     //ファイルID
     private ArrayList<String> fileId;
 
-    //ファイル名
-    private String FileName;
+    // //ファイル名
+    // private String FileName;
 
-    //拡張子
-    private String FileExtension;
+    // //拡張子
+    // private String FileExtension;
 
-    //URL
-    private String FileUrl;
+    // //URL
+    // private String FileUrl;
 
-    //ストレージID
-    private String FileBlobStorageId;
+    // //ストレージID
+    // private String FileBlobStorageId;
 
-    //ファイルサイズ
-    private Integer FileSize;
+    // //ファイルサイズ
+    // private Integer FileSize;
 
-    //ユーザーID
-    private String RegisterUserId;
+    // //ユーザーID
+    // private String RegisterUserId;
 
-    //登録日
-    private String RegisterDate;
+    // //登録日
+    // private String RegisterDate;
 
     //Other01
     private String Other01;
@@ -99,7 +99,7 @@ public class NegotiatPreview implements Serializable{
     private String Other05;
 
     //DeleteFlag
-    private String DeleteFlag;
+    private Integer DeleteFlag;
 
     //LastModifiedDate
     private String LastModifiedDate;
