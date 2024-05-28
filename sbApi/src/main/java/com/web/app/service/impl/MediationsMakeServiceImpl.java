@@ -185,14 +185,15 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
      */
     @Override
     public ResultMediation getMediationsData(ResultMediation resultMediation) {
-        // DBデータ取得
-        List<Mediation> mediation = getMediationsDataMapper.selectMediationsData(resultMediation.getCaseId(),
-                resultMediation.getPlatformId());
+        //DBデータ取得
+        List<Mediation> mediation = getMediationsDataMapper.selectMediationsData(resultMediation.getCaseId(), resultMediation.getPlatformId());
         if (mediation != null && !mediation.isEmpty()) {
-            // データ取得に成功した場合、取得したデータを処理する
+            //データ取得に成功した場合、取得したデータを処理する
             resultMediation = setResult(mediation, resultMediation);
+            return resultMediation;
+        }else{
+            return null;
         }
-        return resultMediation;
     }
 
     /**

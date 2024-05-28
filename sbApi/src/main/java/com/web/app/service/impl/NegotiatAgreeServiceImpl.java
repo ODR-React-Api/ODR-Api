@@ -289,7 +289,9 @@ public class NegotiatAgreeServiceImpl implements NegotiatAgreeService {
         Integer status = updNegotiatDenyMapper.getNegotiationStatus(negotiation.getNegotiationId());
         //更新前Status=２，１２の場合、７で更新する
         //更新前Status=９、１５の場合、１０で更新する
-        if(status == 2 || status == 12){
+        if (status == null) {
+            negotiation.setStatus(null);  
+        }else if(status == 2 || status == 12){
             negotiation.setStatus(7);
         }else if (status == 9 || status == 15) {
             negotiation.setStatus(10);
