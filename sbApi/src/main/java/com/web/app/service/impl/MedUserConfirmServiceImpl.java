@@ -42,7 +42,7 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService{
      * @return 案件ステージ/調停人変更回数(申立人)/調停人変更回数(相手方)
      */
     @Override
-    public Cases SelCases(String caseId) {
+    public Cases GetMediatorChangeableCount(String caseId) {
         Cases cases = getMediatorChangeableCountMapper.SelCases(caseId);
         return cases;
     }

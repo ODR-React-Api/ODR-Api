@@ -1,7 +1,6 @@
 package com.web.app.service;
 
 import com.web.app.domain.Entity.CaseNegotiations;
-import com.web.app.domain.NegotiatAgree.NegotiatAgree;
 
 /**
  * 和解案合意画面
@@ -12,5 +11,5 @@ import com.web.app.domain.NegotiatAgree.NegotiatAgree;
  */
 public interface NegotiatAgreeService {
     //和解案確認データ取得
-    CaseNegotiations SelCaseNegotiations(NegotiatAgree negotiatAgree);
+    CaseNegotiations SelCaseNegotiations(String CaseID);
 }

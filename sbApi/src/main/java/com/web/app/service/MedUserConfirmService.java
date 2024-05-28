@@ -14,5 +14,5 @@ public interface MedUserConfirmService {
     String GetFileName(String fileId);
 
     //調停変更回数取得
-    Cases SelCases(String caseId);
+    Cases GetMediatorChangeableCount(String caseId);
 }

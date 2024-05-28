@@ -37,7 +37,7 @@ public class CaseFileRelations implements Serializable{
 
     private String Other05;
 
-    private Boolean DeleteFlag;
+    private Integer DeleteFlag;
     
     private String LastModifiedDate;
     

@@ -62,7 +62,7 @@ public class MedUserConfirmController {
     @PostMapping("GetMediatorChangeableCount")
     public Response GetMediatorChangeableCount(@RequestBody MedUserConfirm medUserConfirm) {
         try {
-            Cases cases = medUserConfirmService.SelCases(medUserConfirm.getCaseId());
+            Cases cases = medUserConfirmService.GetMediatorChangeableCount(medUserConfirm.getCaseId());
             return AjaxResult.success( "成功!",cases);
         } catch (Exception e) {
             AjaxResult.fatal( "失敗!",e);
