@@ -21,16 +21,16 @@
 
     <!-- TBL「案件別個人情報リレーション（case_relations）」と「申立（case_petitions）」より用意した下書き保存データを取得する。 -->
     <select id="selectIdPetitionUserId" parameterType="string" resultMap="BaseResultMap">
-        select b.id, 
-            a.petitionUserId
+        select p.id, 
+            r.petitionUserId
         from 
-            case_relations as a
+            case_relations as r
         inner join
-            case_petitions as b
+            case_petitions as p
         where
-            a.petitionUserId = #{uid} and
-            b.status = '0' and
-            a.casePetition = b.id
+            r.petitionUserId = #{uid} and
+            p.status = '0' and
+            r.casePetition = p.id
     </select>
 
     <!-- TBL「案件別個人情報リレーション（case_relations）」の更新 -->
