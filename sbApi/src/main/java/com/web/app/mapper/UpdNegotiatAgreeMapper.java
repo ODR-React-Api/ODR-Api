@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.Entity.CaseRelations;
-import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;
 
 /**

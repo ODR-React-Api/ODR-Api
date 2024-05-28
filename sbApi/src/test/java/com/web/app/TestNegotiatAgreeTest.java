@@ -12,17 +12,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
-import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;
-
 import lombok.SneakyThrows;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
-import java.text.SimpleDateFormat;
 
 import javax.annotation.Resource;
 
@@ -63,7 +58,8 @@ public class TestNegotiatAgreeTest {
         String jsonData = objectMapper.writeValueAsString(updNegotiatAgree);
         // 请求并接收返回值
         MvcResult mvcResult = mockMvc
-                .perform(post("/NegotiatAgree/UpdNegotiatAgree").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .perform(post("/NegotiatAgree/UpdNegotiatAgree").contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonData))
                 .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -71,13 +67,15 @@ public class TestNegotiatAgreeTest {
         // 将返回值从json类型的字符串转成对象..
         Response response = objectMapper.readValue(body, Response.class);
         // 将返回值从泛型转换成指定类型
-        // Cases casesResponse = objectMapper.convertValue(response.getData(), Cases.class);
+        // Cases casesResponse = objectMapper.convertValue(response.getData(),
+        // Cases.class);
         String UpdNegotiatAgreeResponse = objectMapper.convertValue(response.getMsg(), String.class);
 
         // 断言
         assertEquals("和解案合意更新成功", UpdNegotiatAgreeResponse);
         // assertEquals("0001", casesResponse.getPlatformId());
         // SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        // assertEquals("2020-08-12 14:19:14", formatter.format(casesResponse.getNegotiationEndDate()));
+        // assertEquals("2020-08-12 14:19:14",
+        // formatter.format(casesResponse.getNegotiationEndDate()));
     }
 }
