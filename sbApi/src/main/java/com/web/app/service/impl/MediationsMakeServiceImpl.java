@@ -33,7 +33,7 @@ import com.web.app.mapper.SaveMeditonMapper;
  */
 @Service
 public class MediationsMakeServiceImpl implements MediationsMakeService {
-    
+
     // 調停案データ新規登録
     @Autowired
     private InsMediationsDataMapper insMediationsDataMapper;
@@ -287,12 +287,10 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
     @Transactional
     @Override
     public int insMediationsData(ResultMediation resultMediation) {
-        int dataStatus = Constants.NUM_0;
         // 調停案データ新規登録API
         // 「調停案」新規登録に必要なデータを保存する
         CaseMediations caseMediations = new CaseMediations();
-        UUID uuid = UUID.randomUUID();
-        String caseMediationsId = uuid.toString().replaceAll("-", "");
+        String caseMediationsId = utilService.GetGuid();
         caseMediations.setId(caseMediationsId);
         caseMediations.setPlatformId(resultMediation.getPlatformId());
         caseMediations.setCaseId(resultMediation.getCaseId());
@@ -314,50 +312,52 @@ public class MediationsMakeServiceImpl implements MediationsMakeService {
             List<SubsidiaryFile> filesData = resultMediation.getFiles();
             // ファイルデータを巡回して個別にログインする
             for (int i = 0; i < filesData.size(); i++) {
-                //ファイルを添付してアップロードするかどうかを判断する
-                if (filesData.get(i).getFileUrl() !=null) {                         
-                Files insFiles = new Files();
-                UUID filesId = UUID.randomUUID();
-                String filesid = filesId.toString().replaceAll("-", "");
-                insFiles.setId(filesid);
-                insFiles.setPlatformId(resultMediation.getPlatformId());
-                insFiles.setCaseId(resultMediation.getCaseId());
-                insFiles.setFileName(filesData.get(i).getFileName());
-                insFiles.setFileExtension(filesData.get(i).getFileExtension());
-                insFiles.setFileUrl(filesData.get(i).getFileUrl());
-                insFiles.setFileSize(filesData.get(i).getFileSize());
-                // ローグ・ユアサの保存
-                insFiles.setRegisterUserId(resultMediation.getUserId());
-                // システム日払いの保存
-                insFiles.setRegisterDate(getStringDate(null));
-                insFiles.setLastModifiedDate(getStringDate(null));
-                // ローグ・ユアサの保存
-                insFiles.setLastModifiedBy(resultMediation.getUserId());
-                // 「添付ファイル」の新規登録
-                int insertFiles = insMediationsDataMapper.insertFiles(insFiles);
-                // 「添付ファイル」新規登録が成功した場合
-                if (insertFiles == Constants.NUM_1) {
-                    // 「案件-添付ファイル」テーブルのデータを保存する
-                    CaseFileRelations caseFileRelations = new CaseFileRelations();
-                    UUID CaseFileRelationsId = UUID.randomUUID();
-                    String CaseFileRelationsid = CaseFileRelationsId.toString().replaceAll("-", "");
-                    caseFileRelations.setId(CaseFileRelationsid);
-                    caseFileRelations.setPlatformId(resultMediation.getPlatformId());
-                    caseFileRelations.setCaseId(resultMediation.getCaseId());
-                    caseFileRelations.setRelatedId(caseMediationsId);
-                    caseFileRelations.setFileId(filesid);
-                    caseFileRelations.setLastModifiedDate(getStringDate(null));
+                // ファイルを添付してアップロードするかどうかを判断する
+                if (filesData.get(i).getFileUrl() != null) {
+                    Files insFiles = new Files();
+                    String filesid = utilService.GetGuid();
+                    insFiles.setId(filesid);
+                    insFiles.setPlatformId(resultMediation.getPlatformId());
+                    insFiles.setCaseId(resultMediation.getCaseId());
+                    insFiles.setFileName(filesData.get(i).getFileName());
+                    insFiles.setFileExtension(filesData.get(i).getFileExtension());
+                    insFiles.setFileUrl(filesData.get(i).getFileUrl());
+                    insFiles.setFileSize(filesData.get(i).getFileSize());
                     // ローグ・ユアサの保存
-                    caseFileRelations.setLastModifiedBy(resultMediation.getUserId());
-                    // 「案件-添付ファイルリレーション」新規登録
-                    insMediationsDataMapper.insCaseFileRelations(caseFileRelations);
+                    insFiles.setRegisterUserId(resultMediation.getUserId());
+                    // システム日払いの保存
+                    insFiles.setRegisterDate(getStringDate(null));
+                    insFiles.setLastModifiedDate(getStringDate(null));
+                    // ローグ・ユアサの保存
+                    insFiles.setLastModifiedBy(resultMediation.getUserId());
+                    // 「添付ファイル」の新規登録
+                    int insertFiles = insMediationsDataMapper.insertFiles(insFiles);
+                    // 「添付ファイル」新規登録が成功した場合
+                    if (insertFiles == Constants.NUM_1) {
+                        // 「案件-添付ファイル」テーブルのデータを保存する
+                        CaseFileRelations caseFileRelations = new CaseFileRelations();
+                        String CaseFileRelationsid = utilService.GetGuid();
+                        caseFileRelations.setId(CaseFileRelationsid);
+                        caseFileRelations.setPlatformId(resultMediation.getPlatformId());
+                        caseFileRelations.setCaseId(resultMediation.getCaseId());
+                        caseFileRelations.setRelatedId(caseMediationsId);
+                        caseFileRelations.setFileId(filesid);
+                        caseFileRelations.setLastModifiedDate(getStringDate(null));
+                        // ローグ・ユアサの保存
+                        caseFileRelations.setLastModifiedBy(resultMediation.getUserId());
+                        // 「案件-添付ファイルリレーション」新規登録
+                        int insCaseFileRelations = insMediationsDataMapper.insCaseFileRelations(caseFileRelations);
+                        if (insCaseFileRelations == Constants.NUM_0) {
+                            return Constants.NUM_0;
+                        }
+                    } else {
+                        return Constants.NUM_0;
+                    }
                 }
             }
-            }
-            dataStatus =Constants.NUM_1;
-        }else{
-            dataStatus =Constants.NUM_0;
+            return Constants.NUM_1;
+        } else {
+            return Constants.NUM_0;
         }
-        return dataStatus;
     }
 }
