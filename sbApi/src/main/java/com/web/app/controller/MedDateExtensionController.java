@@ -5,7 +5,6 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
@@ -48,16 +47,11 @@ public class MedDateExtensionController {
     System.out.println(mediationEndDate);
     try {
       if (medDateExtensionService.updCasesForMediationEndDate(mediationEndDate, cid) != 0) {
-        System.out.println("====================successed================================");
         return AjaxResult.success("案件情報が更新されました!", Constants.RESULT_CODE_SUCCESS);
       }
-      System.out.println("====================failed================================");
       return AjaxResult.success("案件情報が更新されませんでした!", Constants.RESULT_CODE_ERROR);
     } catch (Exception e) {
-      System.out.println("=====================throw Exception=====================");
-      System.out.println(e.toString());
-      AjaxResult.fatal("更新に失敗しました!", e);
-      return null;
+      return AjaxResult.fatal("更新に失敗しました!", e);
     }
   }
 }
