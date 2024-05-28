@@ -44,12 +44,15 @@ public class MediationsMakeController {
     @SuppressWarnings("unchecked")
     public Response<ResultMediation> returnMediationsDetails(@RequestBody ResultMediation resultMediation) {
         try {
-            // DBデータ取得
+            //DBデータ取得
             resultMediation = mediationsMakeService.getMediationsData(resultMediation);
-            return AjaxResult.success("調停案データ取得しました", resultMediation);
+            if (resultMediation == null) {
+                return AjaxResult.success("調停案データを取得できなかった");
+            }else{
+                return AjaxResult.success(resultMediation.getMeg(), resultMediation);
+            }
         } catch (Exception e) {
-            AjaxResult.fatal("取得に失敗しました!", e);
-            return null;
+            return AjaxResult.fatal("取得に失敗しました!", e);
         }
     }
 
@@ -79,8 +82,7 @@ public class MediationsMakeController {
                 }
             }
         } catch (Exception e) {
-            AjaxResult.fatal("更新に失敗しました!", e);
-            return null;
+            return AjaxResult.fatal("更新に失敗しました!", e);
         }
     }
 }
