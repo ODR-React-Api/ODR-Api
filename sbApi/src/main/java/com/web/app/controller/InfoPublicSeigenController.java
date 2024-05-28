@@ -2,8 +2,6 @@ package com.web.app.controller;
 
 import java.util.Date;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +31,6 @@ import io.swagger.annotations.ApiOperation;
 public class InfoPublicSeigenController {
 
     @Autowired
-    DataSource dataSource;
-
-    @Autowired
     private InfoPublicSeigenService infoPublicSeigenService;
 
     /**
@@ -50,8 +45,6 @@ public class InfoPublicSeigenController {
     @SuppressWarnings({ "rawtypes" })
     public Response updMediatorDisclosureFlag(MediatorDisclosureRequest mediatorDisclosureRequest) throws Exception {
         try {
-
-            System.out.println("获取的数据库连接为:" + dataSource.getConnection());
             Boolean resultBoolean = infoPublicSeigenService.updMediatorDisclosureFlag(mediatorDisclosureRequest);
             return AjaxResult.success(Constants.MSG_SUCCESS, resultBoolean);
         } catch (Exception e) {
@@ -72,8 +65,6 @@ public class InfoPublicSeigenController {
     @SuppressWarnings({ "rawtypes" })
     public Response getMediatorDisclosureDate(String caseId) throws Exception {
         try {
-
-            System.out.println("获取的数据库连接为:" + dataSource.getConnection());
             Date mediatorDisclosureDate = infoPublicSeigenService.getMediatorDisclosureDate(caseId);
             return AjaxResult.success(Constants.MSG_SUCCESS, mediatorDisclosureDate);
         } catch (Exception e) {
