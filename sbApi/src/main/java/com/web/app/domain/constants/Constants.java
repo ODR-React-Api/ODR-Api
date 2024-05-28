@@ -414,4 +414,6 @@ public class Constants {
     public static final String STR_KEN = "件";
     // 現在
     public static final String STR_GENZAI = "現在";
+	// 年、月
+	public static final String MONTH_FORMAT  = "yyyy年MM月";
 }
