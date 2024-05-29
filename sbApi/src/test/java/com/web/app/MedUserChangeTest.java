@@ -41,20 +41,18 @@ public class MedUserChangeTest {
     // 测试方法声明注解
     @Test
     public void test1() {
-        String caseId = "0000000622";
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonData = objectMapper.writeValueAsString(caseId);
-        // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(get("/MedUserChange/delAboutCasesMediations").contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonData))
-                .andReturn();
-        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
-        mockHttpServletResponse.setCharacterEncoding("utf-8");
-        String body = mockHttpServletResponse.getContentAsString();
-        // 将返回值从json类型的字符串转成对象
-        Response response = objectMapper.readValue(body, Response.class);
-        assertEquals(response.getMsg(), "調停案の更新に失敗しました。");
+    String caseId = "0000000622";
+    ObjectMapper objectMapper = new ObjectMapper();
+    String jsonData = objectMapper.writeValueAsString(caseId);
+    // 请求并接收返回值
+    MvcResult mvcResult = mockMvc
+                .perform(get("/MedUserChange/delAboutCasesMediations").param("caseId", caseId)).andReturn();
+    MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+    mockHttpServletResponse.setCharacterEncoding("utf-8");
+    String body = mockHttpServletResponse.getContentAsString();
+    // 将返回值从json类型的字符串转成对象
+    Response response = objectMapper.readValue(body, Response.class);
+    assertEquals("調停案の更新に失敗しました。",response.getMsg() );
     }
 
     @SuppressWarnings("rawtypes")
@@ -67,14 +65,12 @@ public class MedUserChangeTest {
         String jsonData = objectMapper.writeValueAsString(caseId);
         // 请求并接收返回值
         MvcResult mvcResult = mockMvc
-                .perform(get("/MedUserChange/delAboutCasesMediations").contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonData))
-                .andReturn();
+                .perform(get("/MedUserChange/delAboutCasesMediations").param("caseId", caseId)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
         // 将返回值从json类型的字符串转成对象
         Response response = objectMapper.readValue(body, Response.class);
-        assertEquals(response.getMsg(), "Success");
+        assertEquals("Success", response.getMsg());
     }
 }
