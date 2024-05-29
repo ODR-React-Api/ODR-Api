@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.jupiter.api.Test;
@@ -20,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
 import com.web.app.domain.MosList.ReturnResult;
@@ -2181,7 +2185,7 @@ public class MosListControllerTest {
         // ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
 
         assertEquals(409,response.getCode());
-        assertEquals("パラメータに誤りがある。", response.getMsg());
+        assertEquals("error", response.getMsg());
     }
 
     @SuppressWarnings("rawtypes")
@@ -2271,4 +2275,126 @@ public class MosListControllerTest {
         assertEquals(null,returnResult);
     }
 
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryListInfoTest01(){
+    
+        ObjectMapper objectMapper = new ObjectMapper();
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/getFuzzyQueryListInfo").param("userId", "U00250").param("queryString", "Test").contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        List<ReturnResult> returnResults = objectMapper.convertValue(response.getData(), new TypeReference<List<ReturnResult>>(){});
+
+        List<ReturnResult> returnResultsMock = new ArrayList<>();
+
+        ReturnResult returnResultTest01 = new ReturnResult();
+        returnResultTest01.setCaseStatus("0");
+        returnResultTest01.setCaseTitle("Test01");
+        returnResultTest01.setCid("1230000001");
+        returnResultTest01.setCorrespondDate("20240501");
+        returnResultTest01.setCorrespondence("1");
+        returnResultTest01.setMsgCount(3);
+        returnResultTest01.setPetitionDate("20240527");
+        returnResultTest01.setPositionFlg(1);
+
+        ReturnResult returnResultTest02 = new ReturnResult();
+        returnResultTest02.setCaseStatus("2");
+        returnResultTest02.setCaseTitle("Test02");
+        returnResultTest02.setCid("1230000002");
+        returnResultTest02.setCorrespondDate("20240502");
+        returnResultTest02.setCorrespondence("1");
+        returnResultTest02.setMsgCount(0);
+        returnResultTest02.setPetitionDate("20240527");
+        returnResultTest02.setPositionFlg(1);
+
+        ReturnResult returnResultTest03 = new ReturnResult();
+        returnResultTest03.setCaseStatus("3");
+        returnResultTest03.setCaseTitle("Test03");
+        returnResultTest03.setCid("1230000003");
+        returnResultTest03.setCorrespondDate("20240503");
+        returnResultTest03.setCorrespondence("1");
+        returnResultTest03.setMsgCount(0);
+        returnResultTest03.setPetitionDate("20240527");
+        returnResultTest03.setPositionFlg(1);
+
+        ReturnResult returnResultTest04 = new ReturnResult();
+        returnResultTest04.setCaseStatus("6");
+        returnResultTest04.setCaseTitle("Test04");
+        returnResultTest04.setCid("1230000004");
+        returnResultTest04.setCorrespondDate("20240504");
+        returnResultTest04.setCorrespondence("1");
+        returnResultTest04.setMsgCount(0);
+        returnResultTest04.setPetitionDate("20240527");
+        returnResultTest04.setPositionFlg(2);
+
+        ReturnResult returnResultTest05 = new ReturnResult();
+        returnResultTest05.setCaseStatus("7");
+        returnResultTest05.setCaseTitle("Test04");
+        returnResultTest05.setCid("1230000005");
+        returnResultTest05.setCorrespondDate("20240504");
+        returnResultTest05.setCorrespondence("0");
+        returnResultTest05.setMsgCount(0);
+        returnResultTest05.setPetitionDate("20240527");
+        returnResultTest05.setPositionFlg(2);
+
+        ReturnResult returnResultTest06 = new ReturnResult();
+        returnResultTest06.setCaseStatus("1");
+        returnResultTest06.setCaseTitle("Test04");
+        returnResultTest06.setCid("1230000006");
+        returnResultTest06.setCorrespondDate("99999999");
+        returnResultTest06.setCorrespondence("0");
+        returnResultTest06.setMsgCount(0);
+        returnResultTest06.setPetitionDate("20240527");
+        returnResultTest06.setPositionFlg(2);
+
+        ReturnResult returnResultTest07 = new ReturnResult();
+        returnResultTest07.setCaseStatus("6");
+        returnResultTest07.setCaseTitle("Test04");
+        returnResultTest07.setCid("1230000007");
+        returnResultTest07.setCorrespondDate("20240504");
+        returnResultTest07.setCorrespondence("1");
+        returnResultTest07.setMsgCount(0);
+        returnResultTest07.setPetitionDate("20240527");
+        returnResultTest07.setPositionFlg(3);
+
+
+        returnResultsMock.add(returnResultTest01);
+        returnResultsMock.add(returnResultTest02);
+        returnResultsMock.add(returnResultTest03);
+        returnResultsMock.add(returnResultTest04);
+        returnResultsMock.add(returnResultTest05);
+        returnResultsMock.add(returnResultTest06);
+        returnResultsMock.add(returnResultTest07);
+
+        assertEquals(returnResultsMock, returnResults);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryListInfoTest02(){
+    
+        ObjectMapper objectMapper = new ObjectMapper();
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/getFuzzyQueryListInfo").param("userId", "U00250").param("queryString", "123456789").contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        List<ReturnResult> returnResults = objectMapper.convertValue(response.getData(), new TypeReference<List<ReturnResult>>(){});
+
+        List<ReturnResult> returnResultsMock = new ArrayList<>();
+
+        assertEquals(returnResultsMock, returnResults);
+    }
 }

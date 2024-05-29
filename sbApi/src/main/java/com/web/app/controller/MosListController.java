@@ -51,7 +51,7 @@ public class MosListController {
             ReturnResult result = mosListService.searchDetailCase(searchCase);
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,result);
         } catch (Exception e) {
-            return AjaxResult.fatal(Constants.PARAMETER_ERROR,e);
+            return AjaxResult.fatal("error",e);
         }
     }
 

@@ -56,7 +56,7 @@ public class MosListServiceImpl implements MosListService {
      *
      * @param searchCase API「 検索用一覧取得」より渡された引数
      * @return case詳細
-     * @throws Exception 
+     * @throws Exception
      */
     @SuppressWarnings("static-access")
     @Override
@@ -219,7 +219,8 @@ public class MosListServiceImpl implements MosListService {
             if (searchCase.getPositionFlg() == Constants.POSITIONFLAG_MEDIATOR) {
                 // ステジ：6調停者指名中（未受理の場合）以外
                 if (searchDetail.getCaseStage() != 6) {
-                    Integer mediatorDisclosureFlag = searchDetailCaseMapper.getMediatorDisclosureFlag(searchCase.getCaseId());
+                    Integer mediatorDisclosureFlag = searchDetailCaseMapper
+                            .getMediatorDisclosureFlag(searchCase.getCaseId());
                     if (mediatorDisclosureFlag != null && mediatorDisclosureFlag == Constants.NUM_1) {
                         notReadedCnt = searchDetailCaseMapper.getMsgCountByFlag(searchCase.getCaseId(),
                                 searchCase.getPetitionUserId());
@@ -355,7 +356,7 @@ public class MosListServiceImpl implements MosListService {
             }
             returnResult.setCid(queryDetailCase.getCid());
             returnResult.setCaseTitle(queryDetailCase.getCaseTitle());
-            returnResult.setCaseStatus(queryDetailCase.getCaseStatus());
+            returnResult.setCaseStatus(Integer.toString(queryDetailCase.getCaseStage()));
 
             // 対応期日の設定
             returnResult.setCorrespondDate(Constants.DEFAULT_CORRESPONDDATE);
@@ -403,7 +404,8 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTAGE_3:
-                        if (queryDetailCase.getNegotiationEndDateChangeStatus() == Constants.NUM_1
+                        if ((queryDetailCase.getNegotiationEndDateChangeStatus() != null
+                                && queryDetailCase.getNegotiationEndDateChangeStatus() == Constants.NUM_1)
                                 || queryDetailCase.getStatus() == null
                                 || queryDetailCase.getStatus() == Constants.NUM_1
                                 || queryDetailCase.getStatus() == Constants.NUM_2
@@ -421,10 +423,12 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTAGE_7:
-                        if (queryDetailCase.getMediationsStatus() == Constants.NUM_1
-                                || queryDetailCase.getMediationsStatus() == Constants.NUM_3
-                                || queryDetailCase.getMediationsStatus() == Constants.NUM_8
-                                || queryDetailCase.getGroupMessageFlag2() == Constants.NUM_1) {
+                        if ((queryDetailCase.getMediationsStatus() != null
+                                && (queryDetailCase.getMediationsStatus() == Constants.NUM_1
+                                        || queryDetailCase.getMediationsStatus() == Constants.NUM_3
+                                        || queryDetailCase.getMediationsStatus() == Constants.NUM_8))
+                                || (queryDetailCase.getGroupMessageFlag2() != null
+                                        && queryDetailCase.getGroupMessageFlag2() == Constants.NUM_1)) {
                             returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         }
                         break;
@@ -438,7 +442,8 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTAGE_3:
-                        if (queryDetailCase.getNegotiationEndDateChangeStatus() == Constants.NUM_2
+                        if ((queryDetailCase.getNegotiationEndDateChangeStatus() != null
+                                && queryDetailCase.getNegotiationEndDateChangeStatus() == Constants.NUM_2)
                                 || queryDetailCase.getStatus() == null
                                 || queryDetailCase.getStatus() == Constants.NUM_0
                                 || queryDetailCase.getStatus() == Constants.NUM_1
@@ -456,10 +461,12 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTAGE_7:
-                        if (queryDetailCase.getMediationsStatus() == Constants.NUM_1
-                                || queryDetailCase.getMediationsStatus() == Constants.NUM_2
-                                || queryDetailCase.getMediationsStatus() == Constants.NUM_7
-                                || queryDetailCase.getGroupMessageFlag1() == Constants.NUM_1) {
+                        if ((queryDetailCase.getMediationsStatus() != null
+                                && (queryDetailCase.getMediationsStatus() == Constants.NUM_1
+                                        || queryDetailCase.getMediationsStatus() == Constants.NUM_2
+                                        || queryDetailCase.getMediationsStatus() == Constants.NUM_7))
+                                || (queryDetailCase.getGroupMessageFlag1() != null
+                                        && queryDetailCase.getGroupMessageFlag1() == Constants.NUM_1)) {
                             returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         }
                         break;
