@@ -43,6 +43,7 @@
             Other04,
             Other05,
             DeleteFlag,
+            LastModifiedDate,
             LastModifiedBy
         )
         VALUES (
