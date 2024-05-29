@@ -57,7 +57,7 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     int relationType = 0;
 
     // 削除Flag1
-    short deleteFlag1 = 1;
+    short deleteFlag1 = 1; 
 
     // 削除Flag0
     short deleteFlag0 = 0;
