@@ -2,7 +2,7 @@ package com.web.app.controller;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.MosContentConfirm.S09ScreenIntelligence;
-import com.web.app.service.InsPetitionsDataService;
+import com.web.app.service.MosContentConfirmService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class MosContentConfirmController {
 
   @Autowired
-  private InsPetitionsDataService insPetitionsDataService;
+  private MosContentConfirmService insPetitionsDataService;
 
   /**
    * 申立て情報登録
