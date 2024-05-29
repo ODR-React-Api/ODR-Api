@@ -1,4 +1,5 @@
 package com.web.app.mapper;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import com.web.app.domain.MosContentConfirm.ExtensionItem;
@@ -12,12 +13,16 @@ import com.web.app.domain.MosContentConfirm.UpdateOrInsertCaseExtensionitemValue
 import com.web.app.domain.MosContentConfirm.UserLanguageIdPlatformId;
 
 /**
- * API_申立て情報登録
+ * 申立て情報登録
+ * 
+ * @author DUC 姓名
+ * @since 2024/05/01
+ * @version 1.0
  */
 @Mapper
 public interface InsPetitionsDataMapper {
 
-  //TBL「案件別個人情報リレーション（case_relations）」と「申立（case_petitions）」より用意した下書き保存データを取得する
+  // TBL「案件別個人情報リレーション（case_relations）」と「申立（case_petitions）」より用意した下書き保存データを取得する
   IdPetitionUserId selectIdPetitionUserId(String uid);
 
   // TBL「案件別個人情報リレーション（case_relations）」の更新
@@ -51,10 +56,12 @@ public interface InsPetitionsDataMapper {
   int insertFiles(InsertFiles insertFiles);
 
   // 拡張項目設定値情報を取得する
-  ExtensionItem selectExtensionitemIdExtensionitemValue(String platformId, String id, short deleteFlag0, String extensionitemId); 
+  ExtensionItem selectExtensionitemIdExtensionitemValue(String platformId, String id, short deleteFlag0,
+      String extensionitemId);
 
   // case_extensionitem_values更新
-  void updateCaseExtensionitemValues(UpdateOrInsertCaseExtensionitemValues updateOrInsertCaseExtensionitemValues, String platformId, String id, short deleteFlag0, String extensionitemId);
+  void updateCaseExtensionitemValues(UpdateOrInsertCaseExtensionitemValues updateOrInsertCaseExtensionitemValues,
+      String platformId, String id, short deleteFlag0, String extensionitemId);
 
   // case_extensionitem_values登録
   void insertCaseExtensionitemValues(UpdateOrInsertCaseExtensionitemValues updateOrInsertCaseExtensionitemValues);
