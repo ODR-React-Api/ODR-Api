@@ -15,9 +15,6 @@ import com.web.app.domain.NegotiatAgree.Negotiation;
 import com.web.app.domain.NegotiatAgree.UpdNegotiatAgree;
 import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
 import com.web.app.domain.constants.Constants;
-
-import com.web.app.service.NegotiatAgreeService;
-import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 

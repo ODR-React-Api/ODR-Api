@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.app.controller.ElevantPersonnelEmailAddressController;
-import com.web.app.domain.ElevantPersonnelEmailAddressInfo;
 import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.Entity.CaseMediations;
 import com.web.app.domain.Entity.CaseNegotiations;
@@ -83,9 +81,6 @@ public class MosDetailServiceImpl implements MosDetailService {
 
     @Autowired
     private GetRelationsContentMapper getRelationsContentMapper;
-
-    @Autowired
-    private ElevantPersonnelEmailAddressController elevantPersonnelEmailAddressController;
 
     @Autowired
     private UpdCasesStatusMapper updCasesStatusMapper;
@@ -419,8 +414,11 @@ public class MosDetailServiceImpl implements MosDetailService {
                     log.error(MessageConstants.C00018E);
                 }
 
-                // メール送信用関係者メアドの取得 TODO
-                withdrawalReturn.setCaseRelations(new CaseRelations());
+                try {
+                    withdrawalReturn.setCaseRelations(getCaseRelations(uid));
+                } catch (Exception e) {
+                    log.error(e);
+                }
 
                 // 上記APIから返された項目を戻り項目として画面へ返す
                 return withdrawalReturn;
@@ -507,17 +505,16 @@ public class MosDetailServiceImpl implements MosDetailService {
             }
 
             // メール送信用関係者メアドの取得 TODO
-            ElevantPersonnelEmailAddressInfo ElevantPersonnelEmailAddressInfo = elevantPersonnelEmailAddressController
-                    .ElevantPersonnelEmailAddress(caseId);
-            if (ElevantPersonnelEmailAddressInfo != null) {
-                participatedStatusChangeResultInfo
-                        .setElevantPersonnelEmailAddressInfo(ElevantPersonnelEmailAddressInfo);
+            RelationsContent relationsContent = selectRelationsContentData(caseId);
+            if (relationsContent != null) {
+                participatedStatusChangeResultInfo.setRelationsContent(relationsContent);
             }
         } else {
             // テーブル「案件」から取得したCaseStageが0（回答）以外の場合、以下の処理を実行
             // 正常に更新の場合、参照表明更新済Flgに1（更新不可）を設定し、画面へ返す
             participatedStatusChangeResultInfo.setParticipatedFlag(Constants.PARTICIPATED_FLAG_1);
         }
+
         return participatedStatusChangeResultInfo;
     }
 
@@ -557,7 +554,7 @@ public class MosDetailServiceImpl implements MosDetailService {
 
         // 回答・反訴の内容の取得
         if (dataCnt == Constants.CLAIM_REPLIES_CNT_0) {
-            caseRepliesMosDetail = getCaseRepliesMosDetailMapper.getCaserepliesAnswerContent(caseId);    
+            caseRepliesMosDetail = getCaseRepliesMosDetailMapper.getCaserepliesAnswerContent(caseId);
         }
 
         caseRepliesMosDetail.setDraftFlg(draftFlg);

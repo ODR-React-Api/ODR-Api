@@ -191,9 +191,10 @@ public class MosListController {
      * @return    API_一覧取得の取得内容
      * @throws Exception
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("ケース检索")
     @PostMapping("/getListInfo")
-    public Response<List> User(@RequestBody String uid) {
+    public Response User(@RequestBody String uid) {
         // 戻り値初期化
         List<ReturnResult> returnResultList = new ArrayList<>();
         try {

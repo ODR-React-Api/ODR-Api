@@ -2,8 +2,6 @@ package com.web.app.domain.MosDetail;
 
 import java.io.Serializable;
 
-import com.web.app.domain.ElevantPersonnelEmailAddressInfo;
-
 import lombok.Data;
 
 /**
@@ -21,6 +19,6 @@ public class ParticipatedStatusChangeResultInfo implements Serializable {
     private Integer participatedFlag;
 
     // 関係者メアド取得
-    private ElevantPersonnelEmailAddressInfo elevantPersonnelEmailAddressInfo;
+    private RelationsContent relationsContent;
 
 }

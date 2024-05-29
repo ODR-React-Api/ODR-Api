@@ -16,7 +16,7 @@ import com.web.app.domain.MosContentConfirm.UpdateCaseRelations;
 import com.web.app.domain.MosContentConfirm.UpdateOrInsertCaseExtensionitemValues;
 import com.web.app.domain.MosContentConfirm.UserLanguageIdPlatformId;
 import com.web.app.mapper.InsPetitionsDataMapper;
-import com.web.app.service.InsPetitionsDataService;
+import com.web.app.service.MosContentConfirmService;
 import com.web.app.service.UtilService;
 
 /**
@@ -27,13 +27,20 @@ import com.web.app.service.UtilService;
  * @version 1.0
  */
 @Service
-public class InsPetitionsDataServiceImpl implements InsPetitionsDataService {
+public class MosContentConfirmServiceImpl implements MosContentConfirmService {
 
   @Autowired
   private InsPetitionsDataMapper insPetitionsDataMapper;
   @Autowired
   private UtilService utilService;
 
+  /**
+   * 申立て情報登録
+   *
+   * @param s09ScreenIntelligence パラメータの説明内容
+   * @return
+   * @throws Exception
+   */
   @Override
   public Integer LoginIntelligence(S09ScreenIntelligence s09ScreenIntelligence) {
 
