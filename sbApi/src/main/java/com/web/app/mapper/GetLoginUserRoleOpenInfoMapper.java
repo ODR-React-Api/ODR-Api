@@ -16,7 +16,7 @@ import com.web.app.domain.MosFileList.LoginUserRoleOpenInfo;
 @Mapper
 public interface GetLoginUserRoleOpenInfoMapper {
 
-    // caseid による情報の照会
-    LoginUserRoleOpenInfo findGetLoginUserRoleOpenInfo(String caseid);
+    // caseId による情報の照会
+    LoginUserRoleOpenInfo getLoginUserRoleOpenInfo(String caseId);
 
 }

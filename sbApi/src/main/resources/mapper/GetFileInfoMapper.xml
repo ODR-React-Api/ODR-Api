@@ -6,7 +6,7 @@
 
       <!-- id、caseid、flag、mediatorDisclosureFlag による情報の照会-->
 
-      <select id="findGetFileInfo" resultType="com.web.app.domain.MosFileList.Files">
+      <select id="getFileInfo" resultType="com.web.app.domain.MosFileList.Files">
         SELECT
             c3.FileName,
             c3.FileUrl,
@@ -15,7 +15,7 @@
         FROM
             react_use.action_histories c1,react_use.action_file_relations c2,react_use.files c3
         WHERE
-            c1.CaseId = #{caseid}
+            c1.CaseId = #{caseId}
             AND c1.DeleteFlag = 0
             AND c1.UserType in (1,2,3)
             AND c1.HaveFile = 0
@@ -27,7 +27,7 @@
                     react_use.user_messagegroups
                 WHERE
                     user_messagegroups.userId = #{id}
-                    AND user_messagegroups.CaseId = #{caseid}
+                    AND user_messagegroups.CaseId = #{caseId}
             ))
             AND c2.ActionHistoryId = c1.Id
             AND c2.DeleteFlag=0

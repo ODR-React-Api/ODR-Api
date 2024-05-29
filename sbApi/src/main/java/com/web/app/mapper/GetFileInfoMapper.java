@@ -16,7 +16,7 @@ import com.web.app.domain.MosFileList.Files;
 @Mapper
 public interface GetFileInfoMapper {
 
-    // id、caseid、flag、mediatorDisclosureFlag による情報の照会
-    Files findGetFileInfo(String id, String caseid, int flag, int mediatorDisclosureFlag);
+    // id、caseId、flag、mediatorDisclosureFlag による情報の照会
+    Files getFileInfo(String id, String caseId, int flag, int mediatorDisclosureFlag);
 
 }

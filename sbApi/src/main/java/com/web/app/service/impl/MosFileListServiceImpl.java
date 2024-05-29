@@ -10,7 +10,7 @@ import com.web.app.service.MosFileListService;
 
 /**
  * S07_申立て詳細画面・ファイル
- * Service層
+ * Service層実現類
  * MosFileListServiceImpl
  * 
  * @author DUC 祭卉康
@@ -33,13 +33,13 @@ public class MosFileListServiceImpl implements MosFileListService {
      *
      * @param id ログインユーザId
      * @param email ログインユーザemail
-     * @param caseid セッション情報のcaseid
+     * @param caseId セッション情報のcaseid
      * @return 取得API_ログインユーザのロールと開示情報
      */
     @Override
-    public LoginUserRoleOpenInfo loginUserRoleOpenInfo(String id,  String caseid, String email) {
+    public LoginUserRoleOpenInfo loginUserRoleOpenInfo(String id,  String caseId, String email) {
      
-        getLoginUserRoleOpenInfo = getLoginUserRoleOpenInfoMapper.findGetLoginUserRoleOpenInfo(caseid);
+        getLoginUserRoleOpenInfo = getLoginUserRoleOpenInfoMapper.getLoginUserRoleOpenInfo(caseId);
         String petitionUserId = getLoginUserRoleOpenInfo.getPetitionUserId();
         String traderUserEmail = getLoginUserRoleOpenInfo.getTraderUserEmail();
         String mediatorUserEmail = getLoginUserRoleOpenInfo.getMediatorUserEmail();
@@ -64,15 +64,15 @@ public class MosFileListServiceImpl implements MosFileListService {
      * API_案件添付ファイル取得
      *
      * @param id ログインユーザ
-     * @param caseid セッション情報のcaseid
+     * @param caseId セッション情報のcaseid
      * @return 取得案件添付ファイル
      */
     @Override
-    public Files files(String id, String caseid) {
+    public Files files(String id, String caseId) {
 
         int flag = getLoginUserRoleOpenInfo.getFlag();
         int mediatorDisclosureFlag = getLoginUserRoleOpenInfo.getMediatorDisclosureFlag();
-        Files files = getFileInfoMapper.findGetFileInfo(caseid, id, flag, mediatorDisclosureFlag);
+        Files files = getFileInfoMapper.getFileInfo(id, caseId, flag, mediatorDisclosureFlag);
         return files;
 
     }

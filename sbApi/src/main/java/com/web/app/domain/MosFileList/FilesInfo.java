@@ -19,7 +19,7 @@ public class FilesInfo implements Serializable{
     private static final long serialVersionUID = 1L;
     //ログインユーザ
     private String id;
-    //セッション情報のcaseid
-    private String caseid;
+    //セッション情報のcaseId
+    private String caseId;
 
 }

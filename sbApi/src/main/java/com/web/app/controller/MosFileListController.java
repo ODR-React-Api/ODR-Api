@@ -46,7 +46,7 @@ public class MosFileListController {
     public Response GetLoginUserRoleOpenInfo(@RequestBody LoginUserInfo loginUserInfo) {
         try {
             //情報取得
-            LoginUserRoleOpenInfo getloginUserRoleOpenInfo = mosFileListService.loginUserRoleOpenInfo(loginUserInfo.getId(), loginUserInfo.getCaseid(), loginUserInfo.getEmail());
+            LoginUserRoleOpenInfo getloginUserRoleOpenInfo = mosFileListService.loginUserRoleOpenInfo(loginUserInfo.getId(), loginUserInfo.getCaseId(), loginUserInfo.getEmail());
             return AjaxResult.success("情報取得成功!", getloginUserRoleOpenInfo);
         } catch (Exception e) {
             AjaxResult.fatal("情報取得失敗!", e);
@@ -67,7 +67,7 @@ public class MosFileListController {
     public Response GetFilesInfo(@RequestBody FilesInfo filesInfo) {
         try {
             //情報取得
-            Files getfile = mosFileListService.files(filesInfo.getId(), filesInfo.getCaseid());
+            Files getfile = mosFileListService.files(filesInfo.getId(), filesInfo.getCaseId());
             if (getfile != null) {
                 return AjaxResult.success("添付ファイルデータ取得でき!", getfile);
             } else {

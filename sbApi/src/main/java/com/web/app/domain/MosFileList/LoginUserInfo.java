@@ -19,8 +19,8 @@ public class LoginUserInfo implements Serializable{
     private static final long serialVersionUID = 1L;
     //ログインユーザId
     private String id;
-    //セッション情報のcaseid
-    private String caseid;
+    //セッション情報のcaseId
+    private String caseId;
     //ログインユーザemail
     private String email;
 

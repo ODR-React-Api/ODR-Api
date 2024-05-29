@@ -15,8 +15,8 @@ import com.web.app.domain.MosFileList.LoginUserRoleOpenInfo;
 public interface MosFileListService {
 
    //ユーザ情報の取得
-   LoginUserRoleOpenInfo loginUserRoleOpenInfo(String id, String caseid, String email);
+   LoginUserRoleOpenInfo loginUserRoleOpenInfo(String id, String caseId, String email);
    //添付ファイル情報の取得
-   Files files(String id, String caseid);
+   Files files(String id, String caseId);
   
 }
