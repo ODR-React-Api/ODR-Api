@@ -16,7 +16,6 @@ import com.web.app.domain.MosList.CaseIdListInfo;
 import com.web.app.domain.MosList.Position;
 import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.domain.MosList.SelectCondition;
-import com.web.app.domain.MosList.SelectListInfoResult;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.MosListService;
 import com.web.app.tool.AjaxResult;
@@ -172,7 +171,7 @@ public class MosListController {
 
         try {
             // 検索用一覧取得
-            List<SelectListInfoResult> selectListList = mosListService.getSelectListInfo(position);
+            List<ReturnResult> selectListList = mosListService.getSelectListInfo(position);
             if (selectListList.size() > 0) {
                 return AjaxResult.success("検索成功!", selectListList);
             } else {
@@ -188,7 +187,7 @@ public class MosListController {
      * 一覧取得
      *
      * @param uid セッション.ユーザID
-     * @return    API_一覧取得の取得内容
+     * @return API_一覧取得の取得内容
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("ケース检索")

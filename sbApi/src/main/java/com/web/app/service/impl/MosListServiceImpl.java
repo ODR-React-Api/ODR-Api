@@ -17,7 +17,6 @@ import com.web.app.domain.MosList.Position;
 import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.domain.MosList.SearchDetail;
 import com.web.app.domain.MosList.SelectCondition;
-import com.web.app.domain.MosList.SelectListInfoResult;
 import com.web.app.domain.MosList.SelectUserInfoForCase;
 import com.web.app.domain.MosList.TestMos;
 import com.web.app.domain.constants.Constants;
@@ -834,17 +833,17 @@ public class MosListServiceImpl implements MosListService {
      * 検索条件の引数によって、一覧データを取得する。
      *
      * @param position 検索サブ画面で入力の画面項目
-     * @return SelectListInfoResult 一覧画面表示用のデータ
+     * @return ReturnResult 一覧画面表示用のデータ
      */
     @Override
-    public List<SelectListInfoResult> getSelectListInfo(Position position) {
+    public List<ReturnResult> getSelectListInfo(Position position) {
 
         // 共通関数「申立人のケース取得」の戻り内容
-        List<SelectListInfoResult> petitionsResult = new ArrayList<>();
+        List<ReturnResult> petitionsResult = new ArrayList<>();
         // 共通関数「相手方のケース取得」の戻り内容
-        List<SelectListInfoResult> traderFlgResult = new ArrayList<>();
+        List<ReturnResult> traderFlgResult = new ArrayList<>();
         // 共通関数「調停人のケース取得」の戻り内容
-        List<SelectListInfoResult> mediatorResult = new ArrayList<>();
+        List<ReturnResult> mediatorResult = new ArrayList<>();
 
         // 1.TBL「ユーザ情報」を取得する
         String email = getSelectListInfoMapper.testOdrUsersSearch(position.getSessionId());
@@ -886,7 +885,7 @@ public class MosListServiceImpl implements MosListService {
         }
 
         // 申立人２次元配列（もしくはリスト）、相手方２次元配列（もしくはリスト）、調停人２次元配列（もしくはリスト）を結合する。
-        List<SelectListInfoResult> preResult = new ArrayList<>(petitionsResult);
+        List<ReturnResult> preResult = new ArrayList<>(petitionsResult);
         preResult.addAll(traderFlgResult);
         preResult.addAll(mediatorResult);
 
@@ -921,9 +920,9 @@ public class MosListServiceImpl implements MosListService {
 
         // 要対応有無の降順 かつ 対応期日の昇順で結合後の２次元配列（もしくはリスト）をソートする
         if (preResult.size() > 0) {
-            List<SelectListInfoResult> finalResult = preResult.stream()
-                    .sorted(Comparator.comparing(SelectListInfoResult::getCorrespondence)
-                            .reversed().thenComparing(SelectListInfoResult::getCorrespondDate))
+            List<ReturnResult> finalResult = preResult.stream()
+                    .sorted(Comparator.comparing(ReturnResult::getCorrespondence)
+                            .reversed().thenComparing(ReturnResult::getCorrespondDate))
                     .collect(Collectors.toList());
 
             return (finalResult);
@@ -937,14 +936,14 @@ public class MosListServiceImpl implements MosListService {
      *
      * @param email    ユーザ情報.Email
      * @param position 検索サブ画面で入力の画面項目
-     * @return SelectListInfoResult 一覧画面表示用の申立人のデータ
+     * @return ReturnResult 一覧画面表示用の申立人のデータ
      */
-    private List<SelectListInfoResult> getPetitions(String email, Position position) {
+    private List<ReturnResult> getPetitions(String email, Position position) {
 
         // 申立人のケース内容取得List
         List<TestMos> list1 = new ArrayList<>();
         // 申立人のケース詳細内容取得List
-        List<SelectListInfoResult> petitionsResults = new ArrayList<>();
+        List<ReturnResult> petitionsResults = new ArrayList<>();
         // API「検索用ケース詳細取得」の検索条件の引数
         SelectCondition selectCondition1 = new SelectCondition();
 
@@ -972,9 +971,8 @@ public class MosListServiceImpl implements MosListService {
                 // 引数.ステータス
                 selectCondition1.setCaseStatus(position.getCaseStatus());
 
-                // TODO API「検索用ケース詳細取得」
-                // ReturnResult resultList1 = SearchDetailCase(selectCondition);
-                SelectListInfoResult resultList1 = new SelectListInfoResult();
+                // API「検索用ケース詳細取得」
+                ReturnResult resultList1 = searchDetailCase(selectCondition1);
                 // 戻ったデータで申立人２次元配列（もしくはリスト）を設定する。
                 if (resultList1 != null && resultList1.getCid() != null) {
                     petitionsResults.add(resultList1);
@@ -989,14 +987,14 @@ public class MosListServiceImpl implements MosListService {
      *
      * @param email    ユーザ情報.Email
      * @param position 検索サブ画面で入力の画面項目
-     * @return SelectListInfoResult 一覧画面表示用の相手方のデータ
+     * @return ReturnResult 一覧画面表示用の相手方のデータ
      */
-    private List<SelectListInfoResult> getTraderFlg(String email, Position position) {
+    private List<ReturnResult> getTraderFlg(String email, Position position) {
 
         // 相手方のケース内容取得List
         List<TestMos> list2 = new ArrayList<>();
         // 相手方のケース詳細内容取得List
-        List<SelectListInfoResult> traderFlgResults = new ArrayList<>();
+        List<ReturnResult> traderFlgResults = new ArrayList<>();
         // API「検索用ケース詳細取得」の検索条件の引数
         SelectCondition selectCondition2 = new SelectCondition();
 
@@ -1024,9 +1022,8 @@ public class MosListServiceImpl implements MosListService {
                 // 引数.ステータス
                 selectCondition2.setCaseStatus(position.getCaseStatus());
 
-                // TODO API「検索用ケース詳細取得」
-                // ReturnResult resultList2 = SearchDetailCase(selectCondition);
-                SelectListInfoResult resultList2 = new SelectListInfoResult();
+                // API「検索用ケース詳細取得」
+                ReturnResult resultList2 = searchDetailCase(selectCondition2);
                 // 戻ったデータで申立人２次元配列（もしくはリスト）を設定する。
                 if (resultList2 != null && resultList2.getCid() != null) {
                     traderFlgResults.add(resultList2);
@@ -1041,14 +1038,14 @@ public class MosListServiceImpl implements MosListService {
      *
      * @param email    ユーザ情報.Email
      * @param position 検索サブ画面で入力の画面項目
-     * @return SelectListInfoResult 一覧画面表示用の調停人のデータ
+     * @return ReturnResult 一覧画面表示用の調停人のデータ
      */
-    private List<SelectListInfoResult> getMediator(String email, Position position) {
+    private List<ReturnResult> getMediator(String email, Position position) {
 
         // 調停人のケース内容取得List
         List<TestMos> list3 = new ArrayList<>();
         // 調停人のケース詳細内容取得List
-        List<SelectListInfoResult> mediatorResults = new ArrayList<>();
+        List<ReturnResult> mediatorResults = new ArrayList<>();
         // API「検索用ケース詳細取得」の検索条件の引数
         SelectCondition selectCondition3 = new SelectCondition();
 
@@ -1076,9 +1073,8 @@ public class MosListServiceImpl implements MosListService {
                 // 引数.ステータス
                 selectCondition3.setCaseStatus(position.getCaseStatus());
 
-                // TODO API「検索用ケース詳細取得」
-                // ReturnResult resultList3 = SearchDetailCase(selectCondition);
-                SelectListInfoResult resultList3 = new SelectListInfoResult();
+                // API「検索用ケース詳細取得」
+                ReturnResult resultList3 = searchDetailCase(selectCondition3);
                 // 戻ったデータで申立人２次元配列（もしくはリスト）を設定する。
                 if (resultList3 != null && resultList3.getCid() != null) {
                     mediatorResults.add(resultList3);
