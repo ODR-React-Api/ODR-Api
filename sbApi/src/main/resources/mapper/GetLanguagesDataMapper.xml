@@ -11,7 +11,7 @@
               id,
               languageName 
         FROM  react_use.master_languages 
-        WHERE deleteFlag = '0'
+        WHERE deleteFlag = 0
         ORDER BY languageName
     </select>
 
