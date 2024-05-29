@@ -51,12 +51,7 @@ public class TestNegotiatPreviewTest {
     @Test
     public void test1() {
         // 将要使用的数据转换成json类型的字符串
-        MedUserConfirm medUserConfirm = new MedUserConfirm();
-        medUserConfirm.setCaseId("1000000010");
-        medUserConfirm.setFileId("0009A4942C6148E59FB293315B496C09");
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonData = objectMapper.writeValueAsString(medUserConfirm);
-
+        NegotiatPreview negotiatPreview = new NegotiatPreview();
         File file1 = new File();
         file1.setPlatformId("0001");
         file1.setCaseId("99999999");
@@ -77,7 +72,6 @@ public class TestNegotiatPreviewTest {
         file2.setRegisterDate("2024/05/28 08:06:50");
         file1.setLastModifiedBy("testlzw");
 
-        NegotiatPreview negotiatPreview = new NegotiatPreview();
         negotiatPreview.setCaseId("99999999");
         negotiatPreview.setLastModifiedBy("testlzw");
         negotiatPreview.setPayAmount(500);
@@ -86,23 +80,29 @@ public class TestNegotiatPreviewTest {
         negotiatPreview.setStatus(0);
         negotiatPreview.setSubmitDate("2024/05/28 08:06:50");
         negotiatPreview.setUserId("eb83a3c2-2d84-4056-83cd-94dea40bffe9");
+        negotiatPreview.setLastModifiedBy("testlzw");
+        negotiatPreview.setCounterClaimPayment(0);
 
         ArrayList<File> arrayList = new ArrayList<>();
         arrayList.add(file1);
         arrayList.add(file2);
         negotiatPreview.setFileList(arrayList);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonData = objectMapper.writeValueAsString(negotiatPreview);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MedUserConfirm/GetFileName").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/NegotiatPreview/NegotiatPreview").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
         // 将返回值从json类型的字符串转成对象
         Response response = objectMapper.readValue(body, Response.class);
         // 将返回值从泛型转换成指定类型
         String casesResponse = objectMapper.convertValue(response.getMsg(), String.class);
-
         // 断言
-        assertEquals("和解案提出成功", casesResponse);
+        //assertEquals("和解案提出失敗!", casesResponse);
+        assertEquals("和解案提出成功!", casesResponse);
+
         //assertEquals(1, response.getCode());
         // assertEquals("1000000010", casesResponse.getCid());
         // assertEquals("0001", casesResponse.getPlatformId());
