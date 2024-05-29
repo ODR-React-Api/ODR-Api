@@ -31,51 +31,242 @@ import javax.annotation.Resource;
 @AutoConfigureWebTestClient
 public class TestNegotiatAgreeTest {
 
-    // 按照名称进行匹配并注入
-    @Resource
-    protected MockMvc mockMvc;
+        // 按照名称进行匹配并注入
+        @Resource
+        protected MockMvc mockMvc;
 
-    // 抑制编译器产生警告信息
-    @SuppressWarnings("rawtypes")
-    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
-    @SneakyThrows
-    // 测试方法声明注解
-    @Test
-    public void UpdNegotiatAgree() {
-        // 将要使用的数据转换成json类型的字符串
-        UpdNegotiatAgree updNegotiatAgree = new UpdNegotiatAgree();
-        updNegotiatAgree.setAgreementDate("2024/05/28 10:10:15");
-        updNegotiatAgree.setCaseId("0000000044");
-        updNegotiatAgree.setEmail("trnd0001+m13@gmail.com");
-        updNegotiatAgree.setHtmlContext("05");
-        updNegotiatAgree.setHtmlContext2("28");
-        updNegotiatAgree.setId("DC99149C836F43B7B467650F480E914D");
-        updNegotiatAgree.setLastModifiedBy("2222222222");
-        updNegotiatAgree.setLastModifiedDate("2024/05/28 10:11:40");
-        updNegotiatAgree.setPlatformId("0001");
-        updNegotiatAgree.setUid("b082bc27-1a10-448d-a6d2-fb296d74f961");
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonData = objectMapper.writeValueAsString(updNegotiatAgree);
-        // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/NegotiatAgree/UpdNegotiatAgree").contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonData))
-                .andReturn();
-        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
-        mockHttpServletResponse.setCharacterEncoding("utf-8");
-        String body = mockHttpServletResponse.getContentAsString();
-        // 将返回值从json类型的字符串转成对象..
-        Response response = objectMapper.readValue(body, Response.class);
-        // 将返回值从泛型转换成指定类型
-        // Cases casesResponse = objectMapper.convertValue(response.getData(),
-        // Cases.class);
-        String UpdNegotiatAgreeResponse = objectMapper.convertValue(response.getMsg(), String.class);
+        // 抑制编译器产生警告信息
+        @SuppressWarnings("rawtypes")
+        // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+        @SneakyThrows
+        // 测试方法声明注解
+        @Test
+        public void UpdNegotiatAgree() {
+                // 将要使用的数据转换成json类型的字符串
+                UpdNegotiatAgree updNegotiatAgree = new UpdNegotiatAgree();
+                updNegotiatAgree.setAgreementDate("2024/05/29 10:10:15");
+                updNegotiatAgree.setCaseId("0000000044");
+                updNegotiatAgree.setEmail("trnd0001+m13@gmail.com");
+                updNegotiatAgree.setHtmlContext("05");
+                updNegotiatAgree.setHtmlContext2("28");
+                updNegotiatAgree.setId("DC99149C836F43B7B467650F480E914D");
+                updNegotiatAgree.setLastModifiedBy("2222222222");
+                updNegotiatAgree.setLastModifiedDate("2024/05/29 10:11:40");
+                updNegotiatAgree.setPlatformId("0001");
+                updNegotiatAgree.setUid("b082bc27-1a10-448d-a6d2-fb296d74f961");
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonData = objectMapper.writeValueAsString(updNegotiatAgree);
+                // 请求并接收返回值
+                MvcResult mvcResult = mockMvc
+                                .perform(post("/NegotiatAgree/UpdNegotiatAgree").contentType(MediaType.APPLICATION_JSON)
+                                                .content(jsonData))
+                                .andReturn();
+                MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+                mockHttpServletResponse.setCharacterEncoding("utf-8");
+                String body = mockHttpServletResponse.getContentAsString();
+                // 将返回值从json类型的字符串转成对象..
+                Response response = objectMapper.readValue(body, Response.class);
+                // 将返回值从泛型转换成指定类型
+                String UpdNegotiatAgreeResponse = objectMapper.convertValue(response.getMsg(), String.class);
+                // 断言
+                assertEquals("和解案合意更新成功", UpdNegotiatAgreeResponse);
+        }
 
-        // 断言
-        assertEquals("和解案合意更新成功", UpdNegotiatAgreeResponse);
-        // assertEquals("0001", casesResponse.getPlatformId());
-        // SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        // assertEquals("2020-08-12 14:19:14",
-        // formatter.format(casesResponse.getNegotiationEndDate()));
-    }
+        // 抑制编译器产生警告信息
+        @SuppressWarnings("rawtypes")
+        // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+        @SneakyThrows
+        // 测试方法声明注解
+        @Test
+        public void UpdNegotiatAgree1() {
+                // 将要使用的数据转换成json类型的字符串
+                UpdNegotiatAgree updNegotiatAgree = new UpdNegotiatAgree();
+                updNegotiatAgree.setAgreementDate("2024/05/28 10:10:15");
+                updNegotiatAgree.setCaseId("0000000288");
+                updNegotiatAgree.setEmail("trnd0001+m13@gmail.com");
+                updNegotiatAgree.setHtmlContext("05");
+                updNegotiatAgree.setHtmlContext2("28");
+                updNegotiatAgree.setId("DC99149C836F43B7B467650F480E914D");
+                updNegotiatAgree.setLastModifiedBy("2222222222");
+                updNegotiatAgree.setLastModifiedDate("2024/05/28 10:11:40");
+                updNegotiatAgree.setPlatformId("0001");
+                updNegotiatAgree.setUid("b082bc27-1a10-448d-a6d2-fb296d74f961");
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonData = objectMapper.writeValueAsString(updNegotiatAgree);
+                // 请求并接收返回值
+                MvcResult mvcResult = mockMvc
+                                .perform(post("/NegotiatAgree/UpdNegotiatAgree").contentType(MediaType.APPLICATION_JSON)
+                                                .content(jsonData))
+                                .andReturn();
+                MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+                mockHttpServletResponse.setCharacterEncoding("utf-8");
+                String body = mockHttpServletResponse.getContentAsString();
+                // 将返回值从json类型的字符串转成对象..
+                Response response = objectMapper.readValue(body, Response.class);
+                // 将返回值从泛型转换成指定类型
+                String UpdNegotiatAgreeResponse = objectMapper.convertValue(response.getMsg(), String.class);
+                // 断言
+                assertEquals("和解案合意更新失败", UpdNegotiatAgreeResponse);
+        }
+
+        // 抑制编译器产生警告信息
+        @SuppressWarnings("rawtypes")
+        // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+        @SneakyThrows
+        // 测试方法声明注解
+        @Test
+        public void UpdNegotiatAgree2() {
+                // 将要使用的数据转换成json类型的字符串
+                UpdNegotiatAgree updNegotiatAgree = new UpdNegotiatAgree();
+                updNegotiatAgree.setAgreementDate("2024/05/28 10:10:15");
+                updNegotiatAgree.setCaseId("0000000044");
+                updNegotiatAgree.setEmail("aabbcc@gmail.com");
+                updNegotiatAgree.setHtmlContext("05");
+                updNegotiatAgree.setHtmlContext2("28");
+                updNegotiatAgree.setId("DC99149C836F43B7B467650F480E914D");
+                updNegotiatAgree.setLastModifiedBy("2222222222");
+                updNegotiatAgree.setLastModifiedDate("2024/05/28 10:11:40");
+                updNegotiatAgree.setPlatformId("0001");
+                updNegotiatAgree.setUid("b082bc27-1a10-448d-a6d2-fb296d74f961");
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonData = objectMapper.writeValueAsString(updNegotiatAgree);
+                // 请求并接收返回值
+                MvcResult mvcResult = mockMvc
+                                .perform(post("/NegotiatAgree/UpdNegotiatAgree").contentType(MediaType.APPLICATION_JSON)
+                                                .content(jsonData))
+                                .andReturn();
+                MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+                mockHttpServletResponse.setCharacterEncoding("utf-8");
+                String body = mockHttpServletResponse.getContentAsString();
+                // 将返回值从json类型的字符串转成对象..
+                Response response = objectMapper.readValue(body, Response.class);
+                // 将返回值从泛型转换成指定类型
+                String UpdNegotiatAgreeResponse = objectMapper.convertValue(response.getMsg(), String.class);
+                // 断言
+                assertEquals("和解案合意更新失败", UpdNegotiatAgreeResponse);
+        }
+
+        // 抑制编译器产生警告信息
+        @SuppressWarnings("rawtypes")
+        // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+        @SneakyThrows
+        // 测试方法声明注解
+        @Test
+        public void UpdNegotiatAgree3() {
+                // 将要使用的数据转换成json类型的字符串
+                UpdNegotiatAgree updNegotiatAgree = new UpdNegotiatAgree();
+                updNegotiatAgree.setAgreementDate("2024/05/28 10:10:15");
+                updNegotiatAgree.setCaseId("0000000044");
+                updNegotiatAgree.setEmail("trnd0001+pa02@gmail.com");
+                updNegotiatAgree.setHtmlContext("05");
+                updNegotiatAgree.setHtmlContext2("28");
+                updNegotiatAgree.setId("DC99149C836F43B7B467650F480E914D");
+                updNegotiatAgree.setLastModifiedBy("2222222222");
+                updNegotiatAgree.setLastModifiedDate("2024/05/28 10:11:40");
+                updNegotiatAgree.setPlatformId("0001");
+                updNegotiatAgree.setUid("b082bc27-1a10-448d-a6d2-fb296d74f961");
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonData = objectMapper.writeValueAsString(updNegotiatAgree);
+                // 请求并接收返回值
+                MvcResult mvcResult = mockMvc
+                                .perform(post("/NegotiatAgree/UpdNegotiatAgree").contentType(MediaType.APPLICATION_JSON)
+                                                .content(jsonData))
+                                .andReturn();
+                MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+                mockHttpServletResponse.setCharacterEncoding("utf-8");
+                String body = mockHttpServletResponse.getContentAsString();
+                // 将返回值从json类型的字符串转成对象..
+                Response response = objectMapper.readValue(body, Response.class);
+                // 将返回值从泛型转换成指定类型
+                String UpdNegotiatAgreeResponse = objectMapper.convertValue(response.getMsg(), String.class);
+                // 断言
+                assertEquals("和解案合意更新成功", UpdNegotiatAgreeResponse);
+        }
+
+        // 抑制编译器产生警告信息
+        @SuppressWarnings("rawtypes")
+        // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+        @SneakyThrows
+        // 测试方法声明注解
+
+        @Test
+        public void UpdNegotiatAgree4() {
+                // 将要使用的数据转换成json类型的字符串
+                UpdNegotiatAgree updNegotiatAgree = new UpdNegotiatAgree();
+                updNegotiatAgree.setAgreementDate("2024/05/28 10:10:15");
+                updNegotiatAgree.setCaseId("0000000044");
+                updNegotiatAgree.setEmail("trnd0001+pa02@gmail.com");
+                updNegotiatAgree.setHtmlContext("05");
+                updNegotiatAgree.setHtmlContext2("28");
+                updNegotiatAgree.setId("DC99149C836F43B7B467650F480E914D");
+                updNegotiatAgree.setLastModifiedBy("2222222222");
+                updNegotiatAgree.setLastModifiedDate("2024/05/28 10:11:40");
+                updNegotiatAgree.setPlatformId("0001");
+                updNegotiatAgree.setUid("b082bc27-1a10-448d-a6d2-fb296d74f961");
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonData = objectMapper.writeValueAsString(updNegotiatAgree);
+                // 请求并接收返回值
+                MvcResult mvcResult = mockMvc
+                                .perform(post("/NegotiatAgree/UpdNegotiatAgree").contentType(MediaType.APPLICATION_JSON)
+                                                .content(jsonData))
+                                .andReturn();
+                MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+                mockHttpServletResponse.setCharacterEncoding("utf-8");
+                String body = mockHttpServletResponse.getContentAsString();
+                // 将返回值从json类型的字符串转成对象..
+                Response response = objectMapper.readValue(body, Response.class);
+                // 将返回值从泛型转换成指定类型
+                String UpdNegotiatAgreeResponse = objectMapper.convertValue(response.getMsg(), String.class);
+                // 断言
+                assertEquals("和解案合意更新異常", UpdNegotiatAgreeResponse);
+
+        }
+
+
+        // 抑制编译器产生警告信息
+        @SuppressWarnings("rawtypes")
+        // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+        @SneakyThrows
+        // 测试方法声明注解
+
+        @Test
+        public void UpdNegotiatAgree5() {
+                // 将要使用的数据转换成json类型的字符串
+                UpdNegotiatAgree updNegotiatAgree = new UpdNegotiatAgree();
+                updNegotiatAgree.setAgreementDate("2024/05/28 10:10:15");
+                updNegotiatAgree.setCaseId("0000000044");
+                updNegotiatAgree.setEmail("trnd0001+t01@gmail.com");
+                updNegotiatAgree.setHtmlContext("05");
+                updNegotiatAgree.setHtmlContext2("28");
+                updNegotiatAgree.setId("DC99149C836F43B7B467650F480E914D");
+                updNegotiatAgree.setLastModifiedBy("2222222222");
+                updNegotiatAgree.setLastModifiedDate("2024/05/28 10:11:40");
+                updNegotiatAgree.setPlatformId("0001");
+                updNegotiatAgree.setUid("b082bc27-1a10-448d-a6d2-fb296d74f961");
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonData = objectMapper.writeValueAsString(updNegotiatAgree);
+                // 请求并接收返回值
+                MvcResult mvcResult = mockMvc
+                                .perform(post("/NegotiatAgree/UpdNegotiatAgree").contentType(MediaType.APPLICATION_JSON)
+                                                .content(jsonData))
+                                .andReturn();
+                MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+                mockHttpServletResponse.setCharacterEncoding("utf-8");
+                String body = mockHttpServletResponse.getContentAsString();
+                // 将返回值从json类型的字符串转成对象..
+                Response response = objectMapper.readValue(body, Response.class);
+                // 将返回值从泛型转换成指定类型
+                String UpdNegotiatAgreeResponse = objectMapper.convertValue(response.getMsg(), String.class);
+                // 断言
+                assertEquals("和解案合意更新成功", UpdNegotiatAgreeResponse);
+
+        }
+
+
+
+
+
+
+
+
 }

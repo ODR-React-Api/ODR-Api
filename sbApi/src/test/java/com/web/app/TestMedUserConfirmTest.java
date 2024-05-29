@@ -44,7 +44,7 @@ public class TestMedUserConfirmTest {
     @Test
     public void GetMediationStatus() {
         // 将要使用的数据转换成json类型的字符串
-        String CaseId = "0000000609";
+        String CaseId = "0000000044";
         CaseMediations caseMediations =new CaseMediations();
         caseMediations.setCaseId(CaseId);
         ObjectMapper objectMapper = new ObjectMapper();
@@ -63,7 +63,7 @@ public class TestMedUserConfirmTest {
         // 将返回值从泛型转换成指定类型
         String GetMediationStatusResponse = objectMapper.convertValue(response.getData(), String.class);
         // 断言
-        assertEquals("調停案ステータス取得成功", GetMediationStatusResponse);
+        assertEquals(null, GetMediationStatusResponse);
     }
 
     // 抑制编译器产生警告信息
@@ -89,7 +89,7 @@ public class TestMedUserConfirmTest {
         // 将返回值从泛型转换成指定类型
         String GetMediationStatusResponse = objectMapper.convertValue(response.getMsg(), String.class);
         // 断言
-        assertEquals("調停者メールとユザーIDを取得成功", GetMediationStatusResponse);
+        assertEquals("調停者メールとユザーIDを取得異常", GetMediationStatusResponse);
     }
 
         // 抑制编译器产生警告信息

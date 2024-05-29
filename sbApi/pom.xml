@@ -161,7 +161,6 @@
                 <configuration>
                     <excludes>
                         <!-- 特定のクラスまたはパッケージを除外する -->
-                        <exclude>com/web/app/*</exclude>
                         <exclude>com/web/app/domain/**</exclude>
                         <exclude>com/web/app/tool/*</exclude>
                         <exclude>com/web/app/exception/*</exclude>
