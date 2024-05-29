@@ -17,6 +17,13 @@ import com.web.app.mapper.CommonMapper;
 import com.web.app.service.CommonService;
 import com.web.app.service.UtilService;
 
+/**
+ * 共通ServiceImpl
+ * 
+ * @author DUC 李健
+ * @since 2024/05/06
+ * @version 1.0
+ */
 @Service
 public class CommonServiceImpl implements CommonService {
 
