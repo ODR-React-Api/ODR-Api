@@ -31,7 +31,6 @@ public class MosContentConfirmController {
    *
    * @param s09ScreenIntelligence 画面の項目
    * @return
-   * @throws Exception
    */
   @SuppressWarnings("rawtypes")
   @ApiOperation("申立て情報登録")
@@ -47,7 +46,7 @@ public class MosContentConfirmController {
     } catch (Exception e) {
       // 異常を処置した場合
       AjaxResult.fatal("失败!", e);
-      throw e;
+      return null;
     }
   }
 }

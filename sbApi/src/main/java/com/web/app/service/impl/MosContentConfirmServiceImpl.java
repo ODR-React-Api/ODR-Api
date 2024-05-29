@@ -43,7 +43,6 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
    *
    * @param s09ScreenIntelligence パラメータの説明内容
    * @return
-   * @throws Exception
    */
   @Override
   public Integer LoginIntelligence(S09ScreenIntelligence s09ScreenIntelligence) {
