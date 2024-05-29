@@ -29,7 +29,6 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "和解案合意画面")
 @RestController
 @RequestMapping("/negotiatAgree")
-@SuppressWarnings("rawtypes")
 public class NegotiatAgreeController {
 
     // サービスオブジェクト
