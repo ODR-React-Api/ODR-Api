@@ -15,11 +15,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.CaseMediations;
-
 import lombok.SneakyThrows;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
 import javax.annotation.Resource;
 
 // 配置测试类
@@ -45,7 +42,7 @@ public class TestMedUserConfirmTest {
     public void GetMediationStatus() {
         // 将要使用的数据转换成json类型的字符串
         String CaseId = "0000000044";
-        CaseMediations caseMediations =new CaseMediations();
+        CaseMediations caseMediations = new CaseMediations();
         caseMediations.setCaseId(CaseId);
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(caseMediations.getCaseId());
@@ -61,9 +58,9 @@ public class TestMedUserConfirmTest {
         Response response = objectMapper.readValue(body, Response.class);
         System.out.println("response:" + response);
         // 将返回值从泛型转换成指定类型
-        String GetMediationStatusResponse = objectMapper.convertValue(response.getData(), String.class);
+        String GetMediationStatusResponse = objectMapper.convertValue(response.getMsg(), String.class);
         // 断言
-        assertEquals(null, GetMediationStatusResponse);
+        assertEquals("調停案ステータス取得成功", GetMediationStatusResponse);
     }
 
     // 抑制编译器产生警告信息
@@ -77,8 +74,97 @@ public class TestMedUserConfirmTest {
         String CaseId = "0000000044";
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(CaseId);
+
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MedUserConfirm/GetUserIDbyMail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc.perform(
+                post("/MedUserConfirm/GetUserIDbyMail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        System.out.println("mockHttpServletResponse:" + mockHttpServletResponse);
+        String body = mockHttpServletResponse.getContentAsString();
+        // 将返回值从json类型的字符串转成对象..
+        Response response = objectMapper.readValue(body, Response.class);
+        System.out.println("response:" + response);
+        // 将返回值从泛型转换成指定类型
+        String GetMediationStatusResponse = objectMapper.convertValue(response.getMsg(), String.class);
+        // 断言
+        assertEquals("調停者メールとユザーIDを取得成功", GetMediationStatusResponse);
+    }
+
+    // 抑制编译器产生警告信息
+    @SuppressWarnings("rawtypes")
+    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+    @SneakyThrows
+    // 测试方法声明注解
+    @Test
+    public void GetMediatorGen() {
+        // 将要使用的数据转换成json类型的字符串
+        String CaseId = "0000000044";
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonData = objectMapper.writeValueAsString(CaseId);
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(
+                post("/MedUserConfirm/GetMediatorGen").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        System.out.println("mockHttpServletResponse:" + mockHttpServletResponse);
+        String body = mockHttpServletResponse.getContentAsString();
+        // 将返回值从json类型的字符串转成对象..
+        Response response = objectMapper.readValue(body, Response.class);
+        System.out.println("response:" + response);
+        // 将返回值从泛型转换成指定类型
+        String GetMediationStatusResponse = objectMapper.convertValue(response.getMsg(), String.class);
+        // 断言
+        assertEquals("調停人情報取得成功", GetMediationStatusResponse);
+    }
+
+    // 抑制编译器产生警告信息
+    @SuppressWarnings("rawtypes")
+    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+    @SneakyThrows
+    // 测试方法声明注解
+    @Test
+    public void GetMediationStatus1() {
+        // 将要使用的数据转换成json类型的字符串
+        String CaseId = "0000000044";
+        CaseMediations caseMediations = new CaseMediations();
+        caseMediations.setCaseId(CaseId);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonData = objectMapper.writeValueAsString(caseMediations.getCaseId());
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(
+                post("/MedUserConfirm/GetMediationStatus").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        System.out.println("mockHttpServletResponse:" + mockHttpServletResponse);
+        String body = mockHttpServletResponse.getContentAsString();
+        // 将返回值从json类型的字符串转成对象..
+        Response response = objectMapper.readValue(body, Response.class);
+        System.out.println("response:" + response);
+        // 将返回值从泛型转换成指定类型
+        String GetMediationStatusResponse = objectMapper.convertValue(response.getMsg(), String.class);
+        // 断言
+        assertEquals("調停案ステタス取得異常", GetMediationStatusResponse);
+    }
+
+    // 抑制编译器产生警告信息
+    @SuppressWarnings("rawtypes")
+    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+    @SneakyThrows
+    // 测试方法声明注解
+    @Test
+    public void GetUserIDbyMail1() {
+        // 将要使用的数据转换成json类型的字符串
+        String CaseId = "0000000044";
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonData = objectMapper.writeValueAsString(CaseId);
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(
+                post("/MedUserConfirm/GetUserIDbyMail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         System.out.println("mockHttpServletResponse:" + mockHttpServletResponse);
@@ -92,29 +178,32 @@ public class TestMedUserConfirmTest {
         assertEquals("調停者メールとユザーIDを取得異常", GetMediationStatusResponse);
     }
 
-        // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
-        // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
-        @SneakyThrows
-        // 测试方法声明注解
-        @Test
-        public void GetMediatorGen() {
-            // 将要使用的数据转换成json类型的字符串
-            String CaseId = "0000000044";
-            ObjectMapper objectMapper = new ObjectMapper();
-            String jsonData = objectMapper.writeValueAsString(CaseId);
-            // 请求并接收返回值
-            MvcResult mvcResult = mockMvc.perform(post("/MedUserConfirm/GetMediatorGen").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
-            MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
-            mockHttpServletResponse.setCharacterEncoding("utf-8");
-            System.out.println("mockHttpServletResponse:" + mockHttpServletResponse);
-            String body = mockHttpServletResponse.getContentAsString();
-            // 将返回值从json类型的字符串转成对象..
-            Response response = objectMapper.readValue(body, Response.class);
-            System.out.println("response:" + response);
-            // 将返回值从泛型转换成指定类型
-            String GetMediationStatusResponse = objectMapper.convertValue(response.getMsg(), String.class);
-            // 断言
-            assertEquals("調停人情報取得成功", GetMediationStatusResponse);
-        }
+    // 抑制编译器产生警告信息
+    @SuppressWarnings("rawtypes")
+    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+    @SneakyThrows
+    // 测试方法声明注解
+    @Test
+    public void GetMediatorGen1() {
+        // 将要使用的数据转换成json类型的字符串
+        String CaseId = "0000000044";
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonData = objectMapper.writeValueAsString(CaseId);
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(
+                post("/MedUserConfirm/GetMediatorGen").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        System.out.println("mockHttpServletResponse:" + mockHttpServletResponse);
+        String body = mockHttpServletResponse.getContentAsString();
+        // 将返回值从json类型的字符串转成对象..
+        Response response = objectMapper.readValue(body, Response.class);
+        System.out.println("response:" + response);
+        // 将返回值从泛型转换成指定类型
+        String GetMediationStatusResponse = objectMapper.convertValue(response.getMsg(), String.class);
+        // 断言
+        assertEquals("調停人情報取得異常", GetMediationStatusResponse);
+    }
+
 }
