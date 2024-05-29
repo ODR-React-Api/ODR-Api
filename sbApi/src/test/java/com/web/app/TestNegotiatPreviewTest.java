@@ -1,12 +1,15 @@
 package com.web.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doReturn;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -15,10 +18,13 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
+import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.Entity.File;
 import com.web.app.domain.MedUserConfirm.MedUserConfirm;
 import com.web.app.domain.NegotiatPreview.NegotiatPreview;
+import com.web.app.mapper.InsNegotiationDataMapper;
+import com.web.app.service.NegotiatPreviewService;
 
 import lombok.SneakyThrows;
 
@@ -42,6 +48,12 @@ public class TestNegotiatPreviewTest {
     // 按照名称进行匹配并注入
     @Resource
     protected MockMvc mockMvc;
+
+    @Mock
+    NegotiatPreviewService negotiatPreviewService;
+
+    @SpyBean
+    InsNegotiationDataMapper insNegotiationDataMapper;
 
     // 抑制编译器产生警告信息
     @SuppressWarnings("rawtypes")
@@ -79,7 +91,8 @@ public class TestNegotiatPreviewTest {
         negotiatPreview.setShipmentPayType(0);
         negotiatPreview.setStatus(0);
         negotiatPreview.setSubmitDate("2024/05/28 08:06:50");
-        negotiatPreview.setUserId("eb83a3c2-2d84-4056-83cd-94dea40bffe9");
+        negotiatPreview.setUserId("eb83a3c2");
+        negotiatPreview.setPlatformId("0001");
         negotiatPreview.setLastModifiedBy("testlzw");
         negotiatPreview.setCounterClaimPayment(0);
 
@@ -91,7 +104,11 @@ public class TestNegotiatPreviewTest {
         String jsonData = objectMapper.writeValueAsString(negotiatPreview);
 
         // 请求并接收返回值
+        CaseNegotiations a = new CaseNegotiations();
+        
+        doReturn(0).when(insNegotiationDataMapper).AddCaseNegotiations(a);
         MvcResult mvcResult = mockMvc.perform(post("/NegotiatPreview/NegotiatPreview").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -100,8 +117,8 @@ public class TestNegotiatPreviewTest {
         // 将返回值从泛型转换成指定类型
         String casesResponse = objectMapper.convertValue(response.getMsg(), String.class);
         // 断言
-        //assertEquals("和解案提出失敗!", casesResponse);
-        assertEquals("和解案提出成功!", casesResponse);
+        assertEquals("和解案提出失敗!", casesResponse);
+        // assertEquals("和解案提出成功!", casesResponse);
 
         //assertEquals(1, response.getCode());
         // assertEquals("1000000010", casesResponse.getCid());
