@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.MosContentConfirm.ExtensionItem;
 import com.web.app.domain.MosContentConfirm.IdPetitionUserId;
 import com.web.app.domain.MosContentConfirm.InsertCaseFileRelations;
@@ -17,6 +19,7 @@ import com.web.app.domain.MosContentConfirm.UpdateOrInsertCaseExtensionitemValue
 import com.web.app.domain.MosContentConfirm.UserLanguageIdPlatformId;
 import com.web.app.mapper.InsPetitionsDataMapper;
 import com.web.app.service.MosContentConfirmService;
+import com.web.app.service.CommonService;
 import com.web.app.service.UtilService;
 
 /**
@@ -33,6 +36,8 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
   private InsPetitionsDataMapper insPetitionsDataMapper;
   @Autowired
   private UtilService utilService;
+  @Autowired
+  private CommonService commonService;
 
   /**
    * 申立て情報登録
@@ -116,10 +121,12 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
           fileMaxId, s09ScreenIntelligence, s09ScreenIntelligence.getUid(), deleteFlag0);
     }
     // 8.③～⑦の登録処理が正常終了の場合、アクション履歴登録を行う
-    // TODO(メール・アクション一覧_v1.04.xlsx在哪里？)
+    // TODO
     if (returnFlag == 0) {
+      // ActionHistories
+      // ActionHistories actionHistories = new ActionHistories();
       // 共通API调用
-
+      // commonService.InsertActionHistories(actionHistories, null, false, true);
     }
 
     // 9.販売者メールアドレス登録有無の判定

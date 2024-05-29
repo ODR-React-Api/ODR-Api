@@ -5,10 +5,10 @@ import lombok.Data;
 
 /**
  * S14_反訴回答登録画面
- * API_反訴への回答データ更新
+ * API_反訴への回答データ新規登録/更新
  * Dao層
  * UpdClaimRepliesDataParameter
- * API_反訴への回答データ更新の引数
+ * API_反訴への回答データ新規登録/更新の引数
  * 
  * @author DUC 張明慧
  * @since 2024/05/06
