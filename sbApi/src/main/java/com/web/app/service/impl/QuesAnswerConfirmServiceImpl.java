@@ -166,7 +166,7 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
         // 【画面C8】.userEmail →ユーザdisplayName
         OdrUsers odrUser = commonMapper.FindUserByUidOrEmail(null, insQuestionnaireResults.getUserEmail(),
                 insQuestionnaireResults.getPlatformId());
-        if(odrUser != null){
+        if (odrUser != null) {
             String displayName = odrUser.getLastName() + " " + odrUser.getFirstName();
             actionHistories.setParameters(displayName);
         }
