@@ -99,4 +99,26 @@ public class MedUserChangeTest {
         Response response = objectMapper.readValue(body, Response.class);
         assertEquals(403, response.getCode());
     }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    // 测试方法声明注解
+    @Test
+    public void updAboutCasesInfoTest1() {
+        String caseId = "0000000055";
+        ObjectMapper objectMapper = new ObjectMapper();
+        // String jsonData = objectMapper.writeValueAsString(caseId);
+        // doThrow(new RuntimeException()).when(delAboutCasesMediationsMapper).delAboutCasesMediations(anyString());
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc
+                .perform(get("/MedUserChange/updAboutCasesInfo").param("caseId", caseId).param("userType", "1")
+                        .param("withReason", "true"))
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+        assertEquals(403, response.getCode());
+    }
 }

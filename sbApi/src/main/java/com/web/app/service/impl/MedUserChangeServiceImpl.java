@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.MedUserChange.InsertFileInfo;
 import com.web.app.mapper.DelAboutCasesMediationsMapper;
-import com.web.app.mapper.MedUserChangeMapper;
+import com.web.app.mapper.UpdAboutCasesInfoMapper;
 import com.web.app.mapper.InsertFileInfoMapper;
 import com.web.app.service.MedUserChangeService;
 import com.web.app.service.UtilService;
@@ -32,7 +32,7 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
     private DelAboutCasesMediationsMapper delAboutCasesMediationsMapper;
 
     @Autowired
-    private MedUserChangeMapper medUserChangeMapper;
+    private UpdAboutCasesInfoMapper updAboutCasesInfoMapper;
 
     /**
      * ファイル関連情報更新API
@@ -83,18 +83,18 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
     @SuppressWarnings("unlikely-arg-type")
     @Override
     @Transactional(noRollbackFor = { ArithmeticException.class })
-    public Boolean updAboutCasesInfo(String caseId, String userType, Boolean withReason) {
+    public int updAboutCasesInfo(String caseId, String userType, Boolean withReason) {
         try {
             Cases info = new Cases();
             info.setCid(caseId);
-            Cases count = medUserChangeMapper.getMediatorChangeableCount(caseId);
+            Cases count = updAboutCasesInfoMapper.getMediatorChangeableCount(caseId);
             if (userType.equals("1")) {
                 info.setMediatorChangeableCount1(count.getMediatorChangeableCount1() + 1);
             }
             if (userType.equals('2')) {
                 info.setMediatorChangeableCount2(count.getMediatorChangeableCount2() + 1);
             }
-            return medUserChangeMapper.updAboutCasesInfo(info, withReason);
+            return updAboutCasesInfoMapper.updAboutCasesInfo(info, withReason);
         } catch (Exception e) {
             throw e;
         }
