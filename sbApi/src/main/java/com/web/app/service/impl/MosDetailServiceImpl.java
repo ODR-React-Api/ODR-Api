@@ -504,7 +504,7 @@ public class MosDetailServiceImpl implements MosDetailService {
                 log.error(MessageConstants.C00018E);
             }
 
-            // メール送信用関係者メアドの取得 TODO
+            // メール送信用関係者メアドの取得
             RelationsContent relationsContent = selectRelationsContentData(caseId);
             if (relationsContent != null) {
                 participatedStatusChangeResultInfo.setRelationsContent(relationsContent);
@@ -514,7 +514,6 @@ public class MosDetailServiceImpl implements MosDetailService {
             // 正常に更新の場合、参照表明更新済Flgに1（更新不可）を設定し、画面へ返す
             participatedStatusChangeResultInfo.setParticipatedFlag(Constants.PARTICIPATED_FLAG_1);
         }
-
         return participatedStatusChangeResultInfo;
     }
 
