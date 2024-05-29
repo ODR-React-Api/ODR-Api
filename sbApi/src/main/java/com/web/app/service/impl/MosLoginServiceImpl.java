@@ -249,7 +249,7 @@ public class MosLoginServiceImpl implements MosLoginService {
         // TODO API「下書き用準備データ登録」
         // Case case=InsRelationsTemp()
         String case_petitions_id = "FFFF87C7B9C5425BB7D15DFCA7A59AE8";
-        String case_relations_PetitionUserId = "U00250";    
+        String case_relations_PetitionUserId = "U00250";
 
         if (case_petitions_id != null && case_relations_PetitionUserId != null) {
             // ⓶共通関数「TBL「申立（case_petitions）」の更新」
@@ -367,7 +367,7 @@ public class MosLoginServiceImpl implements MosLoginService {
                     }
                 }
             }
-            return 1; 
+            return 1;
         }
         return 0;
     }
@@ -452,7 +452,7 @@ public class MosLoginServiceImpl implements MosLoginService {
         casePetitions.setId(case_petitions_id);
         // プラットフォームID
         if (userInfo != null) {
-            casePetitions.setPlatformId(userInfo.getPlatformId()); 
+            casePetitions.setPlatformId(userInfo.getPlatformId());
         }
         // 商品名
         casePetitions.setProductName(screenInfo.getCommodity());
@@ -505,8 +505,8 @@ public class MosLoginServiceImpl implements MosLoginService {
         caseRelations.setPetitionUserId(case_relations_PetitionUserId);
         // プラットフォームID
         if (userInfo != null) {
-            caseRelations.setPlatformId(userInfo.getPlatformId()); 
-        }       
+            caseRelations.setPlatformId(userInfo.getPlatformId());
+        }
         // 申立て人入力情報
         caseRelations.setPetitionUserInfo_Email(screenInfo.getUseremail());
         // 代理人1
@@ -588,7 +588,7 @@ public class MosLoginServiceImpl implements MosLoginService {
         // プラットフォームID
         if (userInfo != null) {
             caseFileRelations.setPlatformId(userInfo.getPlatformId());
-        }        
+        }
         // 案件種類ID
         caseFileRelations.setRelatedId(case_petitions_id);
         // ファイルID
