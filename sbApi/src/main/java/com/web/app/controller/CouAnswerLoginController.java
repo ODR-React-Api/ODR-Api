@@ -32,13 +32,13 @@ public class CouAnswerLoginController {
     private CouAnswerLoginService couAnswerLoginService;
 
     /**
-     * API_反訴への回答データ更新
-     * 「下書き保存」ボタンを押下で、下書きデータ存在する場合、下記のAPIをコールし、画面入力したデータをDBへ更新を行う
+     * API_反訴への回答データ新規登録/更新
+     *  「下書き保存」ボタンを押下で、画面入力したデータをDBへ登録/更新を行う
      * 
-     * @param updClaimRepliesDataParameter API_反訴への回答データ更新の引数
-     * @return Response 反訴への回答データ更新の状況
+     * @param updClaimRepliesDataParameter API_反訴への回答データ新規登録/更新の引数
+     * @return Response 反訴への回答データ新規登録/更新の状況
      */
-    @ApiOperation("反訴への回答データ更新")
+    @ApiOperation("反訴への回答データ新規登録/更新")
     @PostMapping("/UpdClaimRepliesData")
     @SuppressWarnings("rawtypes")
     public Response updClaimRepliesData(@RequestBody UpdClaimRepliesDataParameter updClaimRepliesDataParameter) {
@@ -48,7 +48,7 @@ public class CouAnswerLoginController {
         String caseId = updClaimRepliesDataParameter.getCaseId();
         if (caseId != null && platformId != null) {
             try {
-                // 反訴への回答データ更新
+                // 反訴への回答データ新規登録/更新
                 int res = couAnswerLoginService.UpdClaimRepliesData(updClaimRepliesDataParameter);
                 if (res == 0) {
                     return AjaxResult.success("更新失败!");

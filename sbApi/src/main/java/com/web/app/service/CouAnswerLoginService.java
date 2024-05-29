@@ -12,6 +12,6 @@ import com.web.app.domain.CouAnswerLogin.UpdClaimRepliesDataParameter;
  * @version 1.0
  */
 public interface CouAnswerLoginService {
-    // API_反訴への回答データ更新
+    // API_反訴への回答データ新規登録/更新
     int UpdClaimRepliesData(UpdClaimRepliesDataParameter updClaimRepliesDataParameter);
 }

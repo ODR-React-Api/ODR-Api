@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.web.app.domain.CouAnswerLogin.UpdClaimRepliesDataParameter;
+import com.web.app.domain.Entity.CaseClaimReplies;
 import com.web.app.domain.Entity.CaseFileRelations;
 import com.web.app.domain.Entity.Files;
 import com.web.app.domain.constants.Constants;
@@ -29,13 +30,17 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
     private UtilService utilService;
 
     /**
-     * API_反訴への回答データ更新
+     * API_反訴への回答データ新規登録/更新
+     * 下書きデータ存在しない場合、下記のAPIをコールし、画面入力したデータをDBへ新規登録を行う
+     * ・「反訴への回答」は、レコード新規登録（insert）で行う
+     * ・「案件-添付ファイルリレーション」は、添付ファイルの数に等しいレコード新規登録(insert)で行う
+     * ・「添付ファイル」は、添付ファイルの数に等しいレコード新規登録(insert)で行う
      * 下書きデータ存在する場合、下記のAPIをコールし、画面入力したデータをDBへ更新を行う
      * ・「反訴への回答」は、レコード更新（update）で行う
      * ・「案件-添付ファイルリレーション」は、添付ファイルの添削によりファイルの増減が発生しますので、レコード物理削除(delete)＋新規登録(insert)で行う
      * ・「添付ファイル」は、添付ファイルの添削によりファイルの増減が発生しますので、レコード物理削除(delete)＋新規登録(insert)で行う
      * 
-     * @param updClaimRepliesDataParameter API_反訴への回答データ更新の引数
+     * @param updClaimRepliesDataParameter API_反訴への回答データ新規登録/更新の引数
      * @return int DBへ更新の状況
      */
     @Transactional
@@ -127,17 +132,67 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
 
             return 1;
         } else {
-            // TODO
             // 下書きデータ存在しない場合、下記のAPIをコールし、画面入力したデータをDBへ新規登録を行う
             // 反訴への回答データ新規登録API
+            // 「反訴への回答」新規登録の項目を設定
+            CaseClaimReplies caseClaimReplies = getCaseClaimReplies(updClaimRepliesDataParameter);
+            // 「反訴への回答」新規登録
+            int insCaseClaimrepliesNum = updClaimRepliesDataMapper.insCaseClaimreplies(caseClaimReplies);
+            if (insCaseClaimrepliesNum == 0) {
+                return 0;
+            }
+
+            // 添付資料ファイル名の判定
+            if (fileName != null) {
+                // 画面の下書きの添付ファイルは新規登録
+                // 「添付ファイル」の新規登録の項目を設定
+                Files files = getFiles(updClaimRepliesDataParameter);
+                // 「添付ファイル」新規登録
+                int insFilesNum = updClaimRepliesDataMapper.insFiles(files);
+                if (insFilesNum == 0) {
+                    return 0;
+                }
+
+                // 「案件-添付ファイルリレーション」新規登録の項目を設定
+                CaseFileRelations caseFileRelations = getCaseFileRelations(updClaimRepliesDataParameter);
+                // 案件種類ID 反訴への回答.id
+                caseFileRelations.setRelatedId(caseClaimReplies.getId());
+                // ファイルID 添付ファイル.id
+                caseFileRelations.setFileId(files.getId());
+                // 「案件-添付ファイルリレーション」新規登録
+                int insCaseFileRelationsNum = updClaimRepliesDataMapper.insCaseFileRelations(caseFileRelations);
+                if (insCaseFileRelationsNum == 0) {
+                    return 0;
+                }
+            }
+
             return 1;
         }
     }
 
     /**
+     * 「反訴への回答」新規登録の項目を設定
+     * 
+     * @param updClaimRepliesDataParameter API_反訴への回答データ新規登録/更新の引数
+     * @return caseClaimReplies 「反訴への回答」新規登録の項目
+     */
+    public CaseClaimReplies getCaseClaimReplies(UpdClaimRepliesDataParameter updClaimRepliesDataParameter) {
+        CaseClaimReplies caseClaimReplies = new CaseClaimReplies();
+        // Guid取得を利用 自動生成GIUD
+        caseClaimReplies.setId(utilService.GetGuid());
+        caseClaimReplies.setPlatformId(updClaimRepliesDataParameter.getPlatformId());
+        caseClaimReplies.setCaseId(updClaimRepliesDataParameter.getCaseId());
+        caseClaimReplies.setStatus(0);
+        caseClaimReplies.setReplyContext(updClaimRepliesDataParameter.getReplyContext());
+        caseClaimReplies.setDeleteFlag(Constants.DELETE_FLAG_0);
+        caseClaimReplies.setLastModifiedBy(updClaimRepliesDataParameter.getLoginUser());
+        return caseClaimReplies;
+    }
+
+    /**
      * 「添付ファイル」の新規登録の項目を設定
      * 
-     * @param updClaimRepliesDataParameter API_反訴への回答データ更新の引数
+     * @param updClaimRepliesDataParameter API_反訴への回答データ新規登録/更新の引数
      * @return files 「添付ファイル」の新規登録の項目
      */
     public Files getFiles(UpdClaimRepliesDataParameter updClaimRepliesDataParameter) {
@@ -163,7 +218,7 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
     /**
      * 「案件-添付ファイルリレーション」新規登録の項目を設定
      * 
-     * @param updClaimRepliesDataParameter API_反訴への回答データ更新の引数
+     * @param updClaimRepliesDataParameter API_反訴への回答データ新規登録/更新の引数
      * @return caseFileRelations 「案件-添付ファイルリレーション」新規登録の項目
      */
     public CaseFileRelations getCaseFileRelations(UpdClaimRepliesDataParameter updClaimRepliesDataParameter) {
