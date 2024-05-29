@@ -41,7 +41,6 @@ public class SendMailController {
         ArrayList<String> recipientEmail = new ArrayList<String>();
 
         recipientEmail.add("li.jian@trans-cosmos.com.cn");
-        recipientEmail.add("geng.haozhe@trans-cosmos.com.cn");
 
         sendMailRequest.setRecipientEmail(recipientEmail);
 

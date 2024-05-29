@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdShowTuritorMapper">
+    <!-- チュートリアル表示制御変更 -->
+    <update id="updShowTuritor" parameterType="com.web.app.domain.MosDetail.UpdShowTuritorParameter">
+        UPDATE odr_users
+        <set>
+            <if test="turitor1Flg == 1">
+            ShowTuritor1 = 1,
+            </if>
+            <if test="turitor2Flg == 1">
+            ShowTuritor2 = 1,
+            </if>
+            <if test="turitor3Flg == 1">
+            ShowTuritor3 = 1,
+            </if>
+        </set>
+        WHERE
+            Uid = #{userId}
+        AND PlatformId = #{platformId}
+        AND DeleteFlag = 0
+    </update>
+</mapper>

@@ -17,7 +17,8 @@
             TraderAgent2_UserEmail,
             TraderAgent3_UserEmail,
             TraderAgent4_UserEmail,
-            TraderAgent5_UserEmail
+            TraderAgent5_UserEmail,
+            MediatorUserEmail
         FROM
             case_relations
         WHERE

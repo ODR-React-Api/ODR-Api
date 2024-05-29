@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetRepliesDataMapper">
+    <resultMap id="getGetRepliesResultMap" type="com.web.app.domain.AnswerLogin.RepliesData">
+        <result column="replyType" jdbcType="VARCHAR" property="replyType" />
+        <result column="replyContext" jdbcType="VARCHAR" property="replyContext" />
+        <result column="HaveCounterClaim" jdbcType="VARCHAR" property="HaveCounterClaim" />
+        <result column="CounterClaimContext" jdbcType="VARCHAR" property="CounterClaimContext" />
+        <result column="TraderAgent1_UserEmail" jdbcType="VARCHAR" property="TraderAgent1_UserEmail" />
+        <result column="TraderAgent2_UserEmail" jdbcType="VARCHAR" property="TraderAgent2_UserEmail" />
+        <result column="TraderAgent3_UserEmail" jdbcType="VARCHAR" property="TraderAgent3_UserEmail" />
+        <result column="TraderAgent4_UserEmail" jdbcType="VARCHAR" property="TraderAgent4_UserEmail" />
+        <result column="TraderAgent5_UserEmail" jdbcType="VARCHAR" property="TraderAgent5_UserEmail" />
+        <result column="FileName" jdbcType="VARCHAR" property="FileName" />
+        <result column="FileUrl" jdbcType="VARCHAR" property="FileUrl" />
+    </resultMap>
+    <select id="getReplies" resultMap="getGetRepliesResultMap">
+        SELECT
+            case_replies.replyType,
+            case_replies.replyContext,
+            case_replies.HaveCounterClaim,
+            case_replies.CounterClaimContext,
+            case_replies.TraderAgent1_UserEmail,
+            case_replies.TraderAgent2_UserEmail,
+            case_replies.TraderAgent3_UserEmail,
+            case_replies.TraderAgent4_UserEmail,
+            case_replies.TraderAgent5_UserEmail,
+            files.FileName,
+            files.FileUrl
+        FROM
+            react_use.case_replies case_replies,react_use.files files,react_use.case_file_relations case_file_relations
+        WHERE
+            case_replies.CaseId = #{CaseId} 
+            and case_replies.PlatformId = #{PlatformId}  
+            and case_replies.Status = 0
+            and case_replies.DeleteFlag = 0
+            and case_file_relations.CaseId = case_replies.CaseId 
+            and case_file_relations.PlatformId = #{PlatformId} 
+            and case_file_relations.RelationType in (1,2)
+            and case_file_relations.RelatedId = case_replies.id 
+            and case_file_relations.DeleteFlag = 0
+            and files.id = case_file_relations.fileId
+            and files.PlatformId = #{PlatformId}  
+    </select>
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.web.app.mapper.GetMediationStatusMapper">
+    <select id="getMediationStatus" resultType="string">
+        SELECT
+            Status
+        FROM
+            case_mediations
+        WHERE
+            CaseId = #{CaseId}
+    </select>
+</mapper>

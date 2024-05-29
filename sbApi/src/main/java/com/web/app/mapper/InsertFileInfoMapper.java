@@ -15,6 +15,7 @@ import com.web.app.domain.MedUserChange.InsertFileInfo;
 public interface InsertFileInfoMapper {
     // 添付ファイルinsert
     int insertFile(InsertFileInfo insertFileInfo);
+
     // 案件-添付ファイルリレーションinsert
     int insertCaseFileRelations(InsertFileInfo insertFileInfo);
 }

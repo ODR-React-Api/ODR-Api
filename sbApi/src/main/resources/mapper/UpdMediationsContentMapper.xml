@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdMediationsContentMapper">
+    <!-- parameterType=数据库对象所在位置 -->
+    <update id="setUpdMediationsContent" parameterType="com.web.app.domain.MediationsConCon.MediationsContentDB">
+        UPDATE case_mediations
+        SET
+            UserId = #{userId},
+            SubmitDate = #{submitDate},
+            Status = 1,
+            HtmlContext = #{htmlContext},
+            HtmlContext2 = #{htmlContext2},
+            PetitionUserAgreeStatus = 0,
+            PetitionUserAgreeDate = null,
+            TraderUserAgreeStatus = 0,
+            TraderUserAgreeDate = null,
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{lastModifiedBy}
+        WHERE
+            CaseId = #{caseId} and
+            PlatformId = #{platformId} and
+            (Status = 0 or Status = 1) and
+            DeleteFlag = 0
+    </update>
+</mapper>

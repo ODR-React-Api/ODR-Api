@@ -24,6 +24,7 @@
             NOW()
         )
     </insert>
+
     <insert id="insertCaseFileRelations" parameterType="com.web.app.domain.MedUserChange.InsertFileInfo">
         INSERT INTO case_file_relations (
             id,
@@ -38,5 +39,5 @@
             #{relatedId},
             #{fileId}
         )
-    </insert>
+    </insert>    
 </mapper>

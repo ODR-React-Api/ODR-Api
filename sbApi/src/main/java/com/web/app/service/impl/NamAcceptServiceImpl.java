@@ -5,13 +5,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.domain.NamAccept.UpdMediatorHistories;
+import com.web.app.mapper.UpdCaseStatusForAcceptMapper;
 import com.web.app.mapper.UpdMediatorHistoriesMapper;
 import com.web.app.service.NamAcceptService;
 
 /**
- * 指名受理画面ServiceImpl
+ * S33_指名受理画面
+ * Service層実現類
+ * NamAcceptServiceImpl
  * 
- * @author DUC 耿浩哲
+ * @author DUC 閆文静 耿浩哲
  * @since 2024/05/08
  * @version 1.0
  */
@@ -19,7 +22,23 @@ import com.web.app.service.NamAcceptService;
 public class NamAcceptServiceImpl implements NamAcceptService {
 
     @Autowired
+    private UpdCaseStatusForAcceptMapper updCaseStatusForAcceptMapper;
+
+    @Autowired
     private UpdMediatorHistoriesMapper updMediatorHistoriesMapper;
+
+    /**
+     * 申立状態を更新
+     * 調停人履歴レコードを更新
+     * 
+     * @param caseId 案件ID
+     */
+    @Override
+    public int updCaseStatusForAccept(String caseId) {
+        updCaseStatusForAcceptMapper.updCase(caseId);
+        int updMediatorHistoriesCount = updCaseStatusForAcceptMapper.updMediatorHistories(caseId);
+        return updMediatorHistoriesCount;
+    }
 
     /**
      * 調停人変更履歴変更API
