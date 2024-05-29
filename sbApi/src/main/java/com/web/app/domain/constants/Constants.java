@@ -155,5 +155,8 @@ public class Constants {
     public static final int MOSDETAIL_UPDATEFLAG_0 = 0;
     public static final int MOSDETAIL_UPDATEFLAG_1 = 1;
     public static final String AJAXRESULT_SUCCESS = "取得に成功しました。";
+    public static final String DATATIME_FORMAT_ERROR = "時間変換エラー";
+    public static final String NULL_ERROR = "日付取得エラー";
+    public static final String PARAMETER_ERROR = "パラメータに誤りがある。";
 
 }

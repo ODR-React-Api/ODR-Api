@@ -1,7 +1,6 @@
 package com.web.app.domain.MosList;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import lombok.Data;
 
@@ -19,9 +18,9 @@ public class SelectCondition implements Serializable {
     // 件名
     private String caseTitle;
     // 登録日付From
-    private Date petitionDateStart;
+    private String petitionDateStart;
     // 登録日付To
-    private Date petitionDateEnd;
+    private String petitionDateEnd;
     // 状態
     private String caseStatus;
 }

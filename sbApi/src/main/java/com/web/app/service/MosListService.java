@@ -19,7 +19,7 @@ public interface MosListService {
      * @param searchCase API「 検索用一覧取得」より渡された引数
      * @return case詳細
      */
-    public ReturnResult searchDetailCase(SelectCondition searchCase);
+    public ReturnResult searchDetailCase(SelectCondition searchCase) throws Exception;
 
     /**
      * 検索Boxに入力した文字列で申立て番号と件名の一部検索条件として、ユーザに関連するすべてのケースをDBから検索する。

@@ -1,7 +1,6 @@
 package com.web.app.domain.MosList;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import lombok.Data;
 
@@ -17,15 +16,15 @@ public class SearchDetail implements Serializable {
 
     private String caseTitle;
 
-    private Date petitonDate;
+    private String petitonDate;
 
-    private Date replyEndDate;
+    private String replyEndDate;
 
-    private Date conuterclaimEndDate;
+    private String conuterclaimEndDate;
 
-    private Date negotiationEndDate;
+    private String negotiationEndDate;
 
-    private Date mediationEndDate;
+    private String mediationEndDate;
 
     private Integer negotiationEndDateChangeStatus;
 

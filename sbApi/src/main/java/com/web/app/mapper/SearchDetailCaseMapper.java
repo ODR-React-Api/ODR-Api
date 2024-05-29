@@ -35,7 +35,7 @@ public interface SearchDetailCaseMapper {
     public Integer getMediatorDisclosureFlag(String caseId);
 
     /**
-     * 未読メッセージ件数取得 （調停人＋受理後＋未開示）
+     * 未読メッセージ取得（申立人・相手方・調停人受理開示後）
      *
      * @param caseId         引数.CaseId
      * @param petitionUserId case申立て人
@@ -45,7 +45,7 @@ public interface SearchDetailCaseMapper {
     public Integer getMsgCountByFlag(String caseId, String petitionUserId);
 
     /**
-     * 未読メッセージ取得（申立人・相手方・調停人受理開示後）
+     * 未読メッセージ件数取得 （調停人＋受理後＋未開示）
      *
      * @param caseId         引数.CaseId
      * @param petitionUserId case申立て人
