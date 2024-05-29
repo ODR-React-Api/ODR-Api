@@ -82,11 +82,11 @@ public class TestNegotiatAgreeTest {
                 // 将要使用的数据转换成json类型的字符串
                 UpdNegotiatAgree updNegotiatAgree = new UpdNegotiatAgree();
                 updNegotiatAgree.setAgreementDate("2024/05/28 10:10:15");
-                updNegotiatAgree.setCaseId("0000000288");
+                updNegotiatAgree.setCaseId("0000000044");
                 updNegotiatAgree.setEmail("trnd0001+m13@gmail.com");
                 updNegotiatAgree.setHtmlContext("05");
                 updNegotiatAgree.setHtmlContext2("28");
-                updNegotiatAgree.setId("DC99149C836F43B7B467650F480E914D");
+                updNegotiatAgree.setId("DC99149C836F43B7B467650F480E9141");
                 updNegotiatAgree.setLastModifiedBy("2222222222");
                 updNegotiatAgree.setLastModifiedDate("2024/05/28 10:11:40");
                 updNegotiatAgree.setPlatformId("0001");
@@ -221,7 +221,6 @@ public class TestNegotiatAgreeTest {
                 assertEquals("和解案合意更新異常", UpdNegotiatAgreeResponse);
 
         }
-
 
         // 抑制编译器产生警告信息
         @SuppressWarnings("rawtypes")
