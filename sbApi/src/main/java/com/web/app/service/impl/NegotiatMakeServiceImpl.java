@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,9 +66,6 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     // API_和解案編集依頼データ新規登録
     @Autowired
     private InsNegotiationsEditMapper insNegotiationsEditMapper;
-
-    @Autowired
-    DataSource dataSource;
 
     @Autowired
     private UtilService utilService;
@@ -530,9 +525,6 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     @Transactional
     @Override
     public int addNegotiationsEdit(NegotiationsFile negotiationsFile) throws Exception {
-        // sessions取得
-        System.out.println("データアクセス：" + dataSource.getConnection());
-
         // 「和解案」新規登録の値設定
         CaseNegotiations caseNegotiations = new CaseNegotiations();
         // ログインユーザが申立人場合、ステータス更新値：14
@@ -587,7 +579,6 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     @Transactional
     @Override
     public int updateNegotiationsEdit(NegotiationsFile negotiationsFile) throws Exception {
-        System.out.println("データアクセス" + dataSource.getConnection());
         // 「和解案」
         CaseNegotiations caseNegotiations = new CaseNegotiations();
         // ログインユーザが申立人場合、ステータス更新値：14

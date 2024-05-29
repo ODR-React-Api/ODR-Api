@@ -1,9 +1,7 @@
 package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-
-import com.web.app.domain.CouAnswerLogin.CaseClaimReplies;
-// import com.web.app.domain.CouAnswerLogin.CaseFileRelations;
+import com.web.app.domain.Entity.CaseClaimReplies;
 import com.web.app.domain.CouAnswerLogin.ReactUseFiles;
 import com.web.app.domain.Entity.CaseFileRelations;
 
