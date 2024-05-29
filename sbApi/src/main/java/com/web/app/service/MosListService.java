@@ -65,6 +65,5 @@ public interface MosListService {
      * @param uid ユーザID
      * @return    API_一覧取得の取得内容
      */
-    // 一覧取得
     public List<ReturnResult> getListInfo(String uid);
 }
