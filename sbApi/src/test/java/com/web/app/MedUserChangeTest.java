@@ -56,4 +56,25 @@ public class MedUserChangeTest {
         Response response = objectMapper.readValue(body, Response.class);
         assertEquals(response.getMsg(), "調停案の更新に失敗しました。");
     }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    // 测试方法声明注解
+    @Test
+    public void test2() {
+        String caseId = "0000000055";
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonData = objectMapper.writeValueAsString(caseId);
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc
+                .perform(get("/MedUserChange/delAboutCasesMediations").contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonData))
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+        assertEquals(response.getMsg(), "Success");
+    }
 }
