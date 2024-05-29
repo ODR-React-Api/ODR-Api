@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.web.app.domain.MosDetail.CaseDetails;
 import com.web.app.domain.MosDetail.UserCase;
 import com.web.app.domain.MosList.CaseDetailCasesSelectInfo;
 import com.web.app.domain.MosList.CaseIdListInfo;

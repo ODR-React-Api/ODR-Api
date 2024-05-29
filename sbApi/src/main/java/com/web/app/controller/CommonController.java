@@ -21,8 +21,15 @@ import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * 共通 Controller
+ * 
+ * @author DUC 李健
+ * @since 2024/05/06
+ * @version 1.0
+ */
 @CrossOrigin(origins = "*")
-@Api(tags = "Common") // 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
+@Api(tags = "Common")
 @RestController
 @RequestMapping("/Common")
 public class CommonController {
@@ -83,11 +90,10 @@ public class CommonController {
         }
     }
 
-    
     /**
      * API_案件データ取得
      *
-     * @param CaseId セッション情報のCaseId 
+     * @param CaseId     セッション情報のCaseId
      * @param PlatformId セッション情報のプラットフォームID
      * @return getCasesByCidList
      * @throws Exception エラーの説明内容

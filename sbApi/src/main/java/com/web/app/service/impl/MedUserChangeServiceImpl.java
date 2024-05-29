@@ -50,12 +50,18 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
         int fileInsertNum = insertFileInfoMapper.insertFile(insertFileInfo);
         int caseFileRelationsInsertNum = insertFileInfoMapper.insertCaseFileRelations(insertFileInfo);
 
-        if(fileInsertNum == 1 && caseFileRelationsInsertNum == 1) {
+        if (fileInsertNum == 1 && caseFileRelationsInsertNum == 1) {
             return 1;
         }
         return 0;
     }
 
+    /**
+     * API_調停案削除
+     * 
+     * @param caseId セッション.案件ID
+     * @return true false
+     */
     @Override
     @Transactional(noRollbackFor = { ArithmeticException.class }) // 设置当出现ArithmeticException时，不回滚
     public int delAboutCasesMediations(String caseId) {
@@ -67,9 +73,17 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
         }
     }
 
+    /**
+     * 案件関連情報更新
+     * 
+     * @param caseId     セッション.案件ID
+     * @param userType   1:申立人 2:相手方
+     * @param withReason true:理由あり false:理由なし
+     * @return
+     */
     @SuppressWarnings("unlikely-arg-type")
     @Override
-    @Transactional(noRollbackFor = { ArithmeticException.class }) // 设置当出现ArithmeticException时，不回滚
+    @Transactional(noRollbackFor = { ArithmeticException.class })
     public Boolean updAboutCasesInfo(String caseId, String userType, Boolean withReason) {
         try {
             Cases info = new Cases();
