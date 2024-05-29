@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.MosContentConfirm.ExtensionItem;
 import com.web.app.domain.MosContentConfirm.IdPetitionUserId;
@@ -124,9 +123,9 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // TODO
     if (returnFlag == 0) {
       // ActionHistories
-      // ActionHistories actionHistories = new ActionHistories();
+      ActionHistories actionHistories = new ActionHistories();
       // 共通API调用
-      // commonService.InsertActionHistories(actionHistories, null, false, true);
+      commonService.InsertActionHistories(actionHistories, null, false, true);
     }
 
     // 9.販売者メールアドレス登録有無の判定

@@ -10,6 +10,6 @@ import com.web.app.domain.MosContentConfirm.S09ScreenIntelligence;
  * @version 1.0
  */
 public interface MosContentConfirmService {
-  // Service
+  // 申立て情報登録のService
   Integer LoginIntelligence(S09ScreenIntelligence s09ScreenIntelligence);
 }

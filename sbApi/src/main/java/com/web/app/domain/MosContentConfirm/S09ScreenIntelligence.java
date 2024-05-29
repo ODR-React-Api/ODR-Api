@@ -4,9 +4,15 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
-
 import lombok.Data;
 
+/**
+ * 画面の項目
+ * 
+ * @author DUC 王魯興
+ * @since 2024/05/29
+ * @version 1.0
+ */
 @Data
 public class S09ScreenIntelligence implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -80,6 +86,6 @@ public class S09ScreenIntelligence implements Serializable {
     // FileSize
     private int fileSize;
 
-    //画面上拡張項目
+    // 画面上拡張項目
     private List<ExtensionItem> extensionItem;
 }
