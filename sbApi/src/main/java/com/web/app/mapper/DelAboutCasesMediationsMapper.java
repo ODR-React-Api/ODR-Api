@@ -9,5 +9,5 @@ public interface DelAboutCasesMediationsMapper {
      * @param caseId
      * @return true false
      */
-    Boolean delAboutCasesMediations(String caseId);
+    int delAboutCasesMediations(String caseId);
 }
