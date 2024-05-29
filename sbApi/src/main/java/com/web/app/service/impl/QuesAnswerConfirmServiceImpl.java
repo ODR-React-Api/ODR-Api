@@ -160,14 +160,16 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
         actionHistories.setCaseId(insQuestionnaireResults.getCaseId());
         actionHistories.setActionType("QuestionaryAnswered");
         // 【画面C8】.caseId対応なCaseStage
-        int caseStage = insQuestionnairesResultsMapper.getCaseStage(insQuestionnaireResults.getCaseId());
+        Integer caseStage = insQuestionnairesResultsMapper.getCaseStage(insQuestionnaireResults.getCaseId());
         actionHistories.setCaseStage(caseStage);
         actionHistories.setUserType(0);
         // 【画面C8】.userEmail →ユーザdisplayName
         OdrUsers odrUser = commonMapper.FindUserByUidOrEmail(null, insQuestionnaireResults.getUserEmail(),
                 insQuestionnaireResults.getPlatformId());
-        String displayName = odrUser.getLastName() + " " + odrUser.getFirstName();
-        actionHistories.setParameters(displayName);
+        if (odrUser != null) {
+            String displayName = odrUser.getLastName() + " " + odrUser.getFirstName();
+            actionHistories.setParameters(displayName);
+        }
         actionHistories.setLastModifiedBy("questionnaire");
 
         return actionHistories;

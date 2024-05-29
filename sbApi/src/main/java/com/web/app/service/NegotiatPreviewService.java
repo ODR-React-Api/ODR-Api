@@ -9,7 +9,7 @@ import com.web.app.domain.NegotiatPreview.NegotiatPreview;
 /**
  * 和解案プレビュー画面
  * 
- * @author DUC 李志文
+ * @author DUC 李志文 馬芹
  * @since 2024/05/10
  * @version 1.0
  */

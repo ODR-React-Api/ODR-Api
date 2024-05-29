@@ -185,10 +185,10 @@ public class MosListController {
     }
 
     /**
-     * メソッドの説明内容
+     * 一覧取得
      *
-     * @param param1 セッション.ユーザID
-     * @return API_一覧取得の取得内容
+     * @param uid セッション.ユーザID
+     * @return    API_一覧取得の取得内容
      * @throws Exception
      */
     @ApiOperation("ケース检索")

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
 import com.web.app.domain.MedUserChange.InsertFileInfo;
 import com.web.app.domain.constants.Constants;
+import com.web.app.domain.constants.MessageConstants;
 import com.web.app.service.MedUserChangeService;
 import com.web.app.tool.AjaxResult;
 
@@ -33,9 +34,6 @@ public class MedUserChangeController {
     @Autowired
     private MedUserChangeService medUserChangeService;
 
-    @ApiOperation("調停案削除")
-    @GetMapping("/delAboutCasesMediations")
-    @SuppressWarnings({ "rawtypes" })
     /**
      * API_調停案削除
      * 
@@ -44,20 +42,22 @@ public class MedUserChangeController {
      * @return true false
      * @throws Exception
      */
+    @ApiOperation("調停案削除")
+    @GetMapping("/delAboutCasesMediations")
+    @SuppressWarnings({ "rawtypes" })
     public Response delAboutCasesMediations(String caseId) throws Exception {
         try {
-
-            Boolean resultBoolean = medUserChangeService.delAboutCasesMediations(caseId);
+            int resultBoolean = medUserChangeService.delAboutCasesMediations(caseId);
+            if (resultBoolean == 0) {
+                return AjaxResult.success(MessageConstants.S25010E, resultBoolean);
+            }
             return AjaxResult.success(Constants.MSG_SUCCESS, resultBoolean);
+
         } catch (Exception e) {
-            AjaxResult.fatal(caseId, e);
-            throw e;
+            return AjaxResult.error(e.getMessage());
         }
     }
 
-    @ApiOperation("案件関連情報更新")
-    @GetMapping("/updAboutCasesInfo")
-    @SuppressWarnings({ "rawtypes" })
     /**
      * 案件関連情報更新
      * 
@@ -67,6 +67,9 @@ public class MedUserChangeController {
      * @return
      * @throws Exception
      */
+    @ApiOperation("案件関連情報更新")
+    @GetMapping("/updAboutCasesInfo")
+    @SuppressWarnings({ "rawtypes" })
     public Response updAboutCasesInfo(String caseId, String userType, Boolean withReason) throws Exception {
         try {
             Boolean resultBoolean = medUserChangeService.updAboutCasesInfo(caseId, userType, withReason);

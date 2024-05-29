@@ -10,13 +10,8 @@ import com.web.app.domain.MedUserChange.InsertFileInfo;
  * @version 1.0
  */
 public interface MedUserChangeService {
-    /**
-     * API_調停案削除
-     * 
-     * @param caseId セッション.案件ID
-     * @return true false
-     */
-    Boolean delAboutCasesMediations(String caseId);
+
+    int delAboutCasesMediations(String caseId);
 
     Boolean updAboutCasesInfo(String caseId, String userType, Boolean withReason);
 

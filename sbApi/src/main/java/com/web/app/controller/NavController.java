@@ -45,7 +45,7 @@ public class NavController {
         try {
             // 検索した取得言語
             List<LanguagesData> languagesList = navService.getLanguagesDataList();
-            return  AjaxResult.success("回答の内容取得成功!", languagesList);
+            return  AjaxResult.success("言語取得成功!", languagesList);
         } catch (Exception e) {
             AjaxResult.fatal("検索失敗!", e);
             return null;

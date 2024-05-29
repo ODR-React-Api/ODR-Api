@@ -61,9 +61,11 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     @Autowired
     private UpdNegotiationsTempMapper updNegotiationsTempMapper;
 
+    // API_和解案編集依頼データ更新
     @Autowired
     private UpdNegotiationsEditMapper updNegotiationsEditMapper;
-
+    
+    // API_和解案編集依頼データ新規登録
     @Autowired
     private InsNegotiationsEditMapper insNegotiationsEditMapper;
 
@@ -752,9 +754,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * システム時間取得
      *
-     * @param param1
      * @return String システム時間
-     * @throws
      */
     private String getSystemtime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.FORMAT);

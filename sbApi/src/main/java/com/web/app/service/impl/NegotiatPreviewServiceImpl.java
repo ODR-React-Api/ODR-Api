@@ -139,7 +139,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
                 file.setFileSize(negotiatPreview.getFileList().get(i).getFileSize());
                 file.setRegisterUserId(negotiatPreview.getFileList().get(i).getRegisterUserId());
                 file.setRegisterDate(negotiatPreview.getFileList().get(i).getRegisterDate());
-                file.setDeleteFlag(false);
+                file.setDeleteFlag(0);
                 file.setLastModifiedDate(negotiatPreview.getFileList().get(i).getLastModifiedDate());
                 file.setLastModifiedBy(negotiatPreview.getFileList().get(i).getLastModifiedBy());
                 fileIdList.add(file.getId());
@@ -249,7 +249,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
                 // 「添付ファイル」論理削除
                 File upFile = new File();
                 upFile.setId(fileId);
-                upFile.setDeleteFlag(true);
+                upFile.setDeleteFlag(1);
                 int upFileStatus = updNegotiationsDataMapper.UpFile(upFile);
                 if (upFileStatus == Constants.RESULT_STATE_ERROR) {
                     return Constants.RESULT_STATE_ERROR;
@@ -278,7 +278,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
                 addFile.setFileSize(negotiatPreview.getFileList().get(i).getFileSize());
                 addFile.setRegisterUserId(negotiatPreview.getFileList().get(i).getRegisterUserId());
                 addFile.setRegisterDate(negotiatPreview.getFileList().get(i).getRegisterDate());
-                addFile.setDeleteFlag(false);
+                addFile.setDeleteFlag(0);
                 addFile.setLastModifiedDate(negotiatPreview.getFileList().get(i).getLastModifiedDate());
                 addFile.setLastModifiedBy(negotiatPreview.getFileList().get(i).getLastModifiedBy());
                 fileIdList.add(addFile.getId());
@@ -468,9 +468,8 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
      * 和解案テンプレート取得
      *
      * @return List<MasterTemplates>
-     * @throws
+     * @throws Exception
      */
-    @Transactional
     @Override
     public List<MasterTemplates> getNegotiationsTemplate() throws Exception {
 
