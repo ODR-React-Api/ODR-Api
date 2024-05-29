@@ -13,7 +13,7 @@ public interface MedUserChangeService {
 
     int delAboutCasesMediations(String caseId);
 
-    Boolean updAboutCasesInfo(String caseId, String userType, Boolean withReason);
+    int updAboutCasesInfo(String caseId, String userType, Boolean withReason);
 
     int insertFileInfo(InsertFileInfo insertFileInfo) throws Exception;
 
