@@ -20,5 +20,5 @@ public interface InsQuestionnairesResultsMapper {
     int insQuestionnairesResults(QuestionnaireResults questionnaireResults);
 
     // 【画面C8】.caseId対応なCaseStage
-    int getCaseStage(String caseId);
+    Integer getCaseStage(String caseId);
 }
