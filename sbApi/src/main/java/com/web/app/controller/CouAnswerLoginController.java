@@ -33,7 +33,7 @@ public class CouAnswerLoginController {
 
     /**
      * API_反訴への回答データ新規登録/更新
-     *  「下書き保存」ボタンを押下で、画面入力したデータをDBへ登録/更新を行う
+     * 「下書き保存」ボタンを押下で、画面入力したデータをDBへ登録/更新を行う
      * 
      * @param updClaimRepliesDataParameter API_反訴への回答データ新規登録/更新の引数
      * @return Response 反訴への回答データ新規登録/更新の状況
