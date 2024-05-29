@@ -1111,11 +1111,11 @@ public class MosListServiceImpl implements MosListService {
         List<UserCase> caseIdPetition1 = getListInfoMapper.selectCaseIdPetition1(email);
 
         // 调用API「ケース詳細取得」参数初始化
-        CaseDetails caseDetails1 = new CaseDetails();
+        CaseIdListInfo caseDetails1 = new CaseIdListInfo();
         // 立場フラグ=1
         caseDetails1.setFlag(Constants.STR_CASE_STAGE_REMOVE);
         // セッション.ユーザID
-        caseDetails1.setUid(uid);
+        caseDetails1.setUserId(uid);
         // ユーザ情報
         if (caseIdPetition1.size() > Constants.STR_CASE_STAGE_REPLY) {
             for (int i = 0; i < caseIdPetition1.size(); i++) {
@@ -1137,11 +1137,11 @@ public class MosListServiceImpl implements MosListService {
         List<UserCase> caseIdPetition2 = getListInfoMapper.selectCaseIdPetition2(email);
 
         // API「ケース詳細取得」パラメータ初期化
-        CaseDetails caseDetails2 = new CaseDetails();
+        CaseIdListInfo caseDetails2 = new CaseIdListInfo();
         // 立場フラグ=2
         caseDetails2.setFlag(Constants.STR_CASE_STAGE_CLAIMREPLY);
         // セッション.ユーザID
-        caseDetails2.setUid(uid);
+        caseDetails2.setUserId(uid);
         // ユーザ情報
         if (caseIdPetition2.size() > Constants.STR_CASE_STAGE_REPLY) {
             for (int i = 0; i < caseIdPetition2.size(); i++) {
@@ -1163,11 +1163,11 @@ public class MosListServiceImpl implements MosListService {
         List<UserCase> caseIdPetition3 = getListInfoMapper.selectCaseIdPetition3(email);
 
         // 调用API「ケース詳細取得」参数初始化
-        CaseDetails caseDetails3 = new CaseDetails();
+        CaseIdListInfo caseDetails3 = new CaseIdListInfo();
         // 立場フラグ=3
         caseDetails3.setFlag(Constants.STR_CASE_STAGE_NEGOTIATION);
         // セッション.ユーザID
-        caseDetails3.setUid(uid);
+        caseDetails3.setUserId(uid);
         // ユーザ情報
         if (caseIdPetition3.size() > Constants.STR_CASE_STAGE_REPLY) {
             for (int i = 0; i < caseIdPetition3.size(); i++) {
