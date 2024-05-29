@@ -3,7 +3,6 @@ package com.web.app.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
@@ -73,7 +72,7 @@ public class MosFileListController {
    */
   @SuppressWarnings("rawtypes")
   @ApiOperation("案件添付ファイル取得")
-  @PostMapping("/getFileInfo")
+  @GetMapping("/getFileInfo")
   public Response getFileInfo(String caseId, String id) {
       // 立場フラグ
       Integer positionFlg = getFileInfo.getPositionFlg();
@@ -83,6 +82,7 @@ public class MosFileListController {
           List<CaseFileInfo> caseFileInfoList = mosFileListService.getCaseFileInfo(caseId, id, positionFlg,
               mediatorDisclosureFlag);
           return AjaxResult.success("案件添付ファイル取得成功!", caseFileInfoList);
+          
       } catch (Exception e) {
           AjaxResult.fatal("案件添付ファイル取得失败!", e);
           return null;
