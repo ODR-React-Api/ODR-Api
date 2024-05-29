@@ -121,6 +121,7 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
           fileMaxId, s09ScreenIntelligence, s09ScreenIntelligence.getUid(), deleteFlag0);
     }
     // 8.③～⑦の登録処理が正常終了の場合、アクション履歴登録を行う
+    // TODO
     if (returnFlag == 0) {
       // ActionHistories
       // ActionHistories actionHistories = new ActionHistories();
