@@ -419,8 +419,11 @@ public class MosDetailServiceImpl implements MosDetailService {
                     log.error(MessageConstants.C00018E);
                 }
 
-                // メール送信用関係者メアドの取得 TODO
-                withdrawalReturn.setCaseRelations(new CaseRelations());
+                try {
+                    withdrawalReturn.setCaseRelations(getCaseRelations(uid));
+                } catch (Exception e) {
+                    log.error(e);
+                }
 
                 // 上記APIから返された項目を戻り項目として画面へ返す
                 return withdrawalReturn;
