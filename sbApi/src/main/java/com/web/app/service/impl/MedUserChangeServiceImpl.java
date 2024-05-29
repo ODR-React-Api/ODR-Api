@@ -63,11 +63,10 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
      * @return true false
      */
     @Override
-    @Transactional(noRollbackFor = { ArithmeticException.class }) // 设置当出现ArithmeticException时，不回滚
+    @Transactional(noRollbackFor = { ArithmeticException.class })
     public int delAboutCasesMediations(String caseId) {
         try {
             return delAboutCasesMediationsMapper.delAboutCasesMediations(caseId);
-
         } catch (Exception e) {
             throw e;
         }

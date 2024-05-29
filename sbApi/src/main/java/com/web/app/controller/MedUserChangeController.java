@@ -49,7 +49,7 @@ public class MedUserChangeController {
         try {
             int resultBoolean = medUserChangeService.delAboutCasesMediations(caseId);
             if (resultBoolean == 0) {
-                return AjaxResult.success(MessageConstants.S25010E, resultBoolean);
+                return AjaxResult.error(MessageConstants.S25010E);
             }
             return AjaxResult.success(Constants.MSG_SUCCESS, resultBoolean);
 
