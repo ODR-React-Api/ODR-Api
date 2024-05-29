@@ -1123,9 +1123,8 @@ public class MosListServiceImpl implements MosListService {
                 caseDetails1.setCaseId(caseIdPetition1.get(i).getCaseId());
                 // ①取得したPetitionUserId
                 caseDetails1.setPetitionUserId(caseIdPetition1.get(i).getPetitionUserId());
-                // API「ケース詳細取得」を呼び出す。
-                // TODO
-                ReturnResult returnResult1 = new ReturnResult();
+                // API「ケース詳細取得」を呼び出す
+                ReturnResult returnResult1 = caseDetailCasesInfoSearch(caseDetails1);
                 // 詳細内容の取得
                 if (returnResult1.getCid() != null) {
                     // 最終戻り値設定
@@ -1150,9 +1149,8 @@ public class MosListServiceImpl implements MosListService {
                 caseDetails2.setCaseId(caseIdPetition2.get(i).getCaseId());
                 // ①取得したPetitionUserId
                 caseDetails2.setPetitionUserId(caseIdPetition2.get(i).getPetitionUserId());
-                // API「ケース詳細取得」を呼び出す。
-                // TODO
-                ReturnResult returnResult2 = new ReturnResult();
+                // API「ケース詳細取得」を呼び出す
+                ReturnResult returnResult2 = caseDetailCasesInfoSearch(caseDetails2);
                 // 詳細内容の取得
                 if (returnResult2.getCid() != null) {
                     // 最終戻り値設定
@@ -1177,9 +1175,8 @@ public class MosListServiceImpl implements MosListService {
                 caseDetails3.setCaseId(caseIdPetition3.get(i).getCaseId());
                 // ①取得したPetitionUserId
                 caseDetails3.setPetitionUserId(caseIdPetition3.get(i).getPetitionUserId());
-                // API「ケース詳細取得」を呼び出す。
-                // TODO
-                ReturnResult returnResult3 = new ReturnResult();
+                // API「ケース詳細取得」を呼び出す
+                ReturnResult returnResult3 = caseDetailCasesInfoSearch(caseDetails3);
                 // 詳細内容の取得
                 if (returnResult3.getCid() != null) {
                     // 最終戻り値設定
