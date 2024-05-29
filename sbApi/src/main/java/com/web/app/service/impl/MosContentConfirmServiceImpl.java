@@ -34,6 +34,13 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
   @Autowired
   private UtilService utilService;
 
+  /**
+   * 申立て情報登録
+   *
+   * @param s09ScreenIntelligence パラメータの説明内容
+   * @return
+   * @throws Exception
+   */
   @Override
   public Integer LoginIntelligence(S09ScreenIntelligence s09ScreenIntelligence) {
 
