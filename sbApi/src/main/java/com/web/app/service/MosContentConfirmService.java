@@ -9,7 +9,7 @@ import com.web.app.domain.MosContentConfirm.S09ScreenIntelligence;
  * @since 2024/05/28
  * @version 1.0
  */
-public interface InsPetitionsDataService {
+public interface MosContentConfirmService {
   // Service
   Integer LoginIntelligence(S09ScreenIntelligence s09ScreenIntelligence);
 }

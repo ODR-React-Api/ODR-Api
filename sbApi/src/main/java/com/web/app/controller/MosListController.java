@@ -189,12 +189,11 @@ public class MosListController {
      *
      * @param uid セッション.ユーザID
      * @return    API_一覧取得の取得内容
-     * @throws Exception
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("ケース检索")
     @PostMapping("/getListInfo")
-    public Response User(@RequestBody String uid) {
+    public Response getUserInfo(@RequestBody String uid) {
         // 戻り値初期化
         List<ReturnResult> returnResultList = new ArrayList<>();
         try {
@@ -204,7 +203,8 @@ public class MosListController {
             // 異常な場合
         } catch (Exception e) {
             // 異常を処置した場合
-            return AjaxResult.fatal("查询失败!", e);
+            AjaxResult.fatal("查询失败!", e);
+            return null;
         }
     }
 }
