@@ -11,12 +11,13 @@ import com.web.app.service.NegotiatAgreeService;
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.NegotiatAgree.CaseEstablish;
-import com.web.app.domain.NegotiatAgree.NegotiatAgree;
 import com.web.app.domain.NegotiatAgree.Negotiation;
 import com.web.app.domain.NegotiatAgree.UpdNegotiatAgree;
 import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
 import com.web.app.domain.constants.Constants;
 
+import com.web.app.service.NegotiatAgreeService;
+import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -48,12 +49,13 @@ public class NegotiatAgreeController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("和解案確認データ取得")
     @PostMapping("GetNegotiatConInfo")
-    public Response GetNegotiatConInfo(@RequestBody NegotiatAgree negotiatAgree) {
+    public Response GetNegotiatConInfo(@RequestBody String CaseID) {
         try {
-            CaseNegotiations caseNegotiations = negotiatAgreeService.SelCaseNegotiations(negotiatAgree);
+            CaseNegotiations caseNegotiations = negotiatAgreeService.SelCaseNegotiations(CaseID);
             return AjaxResult.success("和解案内容取得成功!", caseNegotiations);
         } catch (Exception e) {
-            return AjaxResult.fatal("和解案内容取得失敗!", e);
+            AjaxResult.fatal("和解案内容取得失敗!", e);
+            return null;
         }
     }
 

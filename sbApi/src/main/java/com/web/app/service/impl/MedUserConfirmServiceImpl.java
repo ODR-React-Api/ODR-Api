@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.Entity.Cases;
@@ -62,7 +61,6 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
      * @return OdrUsers ユーザ情報
      * @throws Exception
      */
-    @Transactional
     @Override
     public OdrUsers getOdrUserInfo(MedUserConfirmSession medUserConfirmSession) throws Exception {
         // 調停人(メール)取得
@@ -82,7 +80,6 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
      * @return MediatorInfo 調停人の経験
      * @throws Exception
      */
-    @Transactional
     @Override
     public MediatorInfo getMediatorInfo(MedUserConfirmSession medUserConfirmSession) throws Exception {
 
@@ -120,7 +117,7 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
      * @throws
      */
     private String getSystemtime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.MENU_FORMAT);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.MONTH_FORMAT);
         Date date = new Date();
         String lastModifiedDate = dateFormat.format(date);
         return lastModifiedDate;
@@ -145,7 +142,7 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
      * @return 案件ステージ/調停人変更回数(申立人)/調停人変更回数(相手方)
      */
     @Override
-    public Cases SelCases(String caseId) {
+    public Cases GetMediatorChangeableCount(String caseId) {
         Cases cases = getMediatorChangeableCountMapper.SelCases(caseId);
         return cases;
     }

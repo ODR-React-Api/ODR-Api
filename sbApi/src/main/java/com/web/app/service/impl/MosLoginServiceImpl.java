@@ -212,33 +212,34 @@ public class MosLoginServiceImpl implements MosLoginService {
             // 申立人情報を取得する
             getPetitionInfo = getPetitionsTempMapper.selectOdrUsers(sessionInfo.getSessionId(),
                     petitionsTemp.getPetitionUserInfo_Email());
-            if (getPetitionInfo != null) {
-                // 画面表示項目.お問い合わせをされる方についての情報の氏名の名
-                petitionInfo.setFirstName(getPetitionInfo.getFirstName());
-                // 画面表示項目.お問い合わせをされる方についての情報の氏名の姓
-                petitionInfo.setLastName(getPetitionInfo.getLastName());
-                // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の名
-                petitionInfo.setFirstName_kana(getPetitionInfo.getFirstName_kana());
-                // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の姓
-                petitionInfo.setLastName_kana(getPetitionInfo.getLastName_kana());
-                // 画面表示項目.お問い合わせをされる方についての情報の所属会社
-                petitionInfo.setCompanyName(getPetitionInfo.getCompanyName());
+            if (getPetitionInfo == null) {
+                return petitionInfo;
             }
-        }
+            // 画面表示項目.お問い合わせをされる方についての情報の氏名の名
+            petitionInfo.setFirstName(getPetitionInfo.getFirstName());
+            // 画面表示項目.お問い合わせをされる方についての情報の氏名の姓
+            petitionInfo.setLastName(getPetitionInfo.getLastName());
+            // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の名
+            petitionInfo.setFirstName_kana(getPetitionInfo.getFirstName_kana());
+            // 画面表示項目.お問い合わせをされる方についての情報の氏名（カナ）の姓
+            petitionInfo.setLastName_kana(getPetitionInfo.getLastName_kana());
+            // 画面表示項目.お問い合わせをされる方についての情報の所属会社
+            petitionInfo.setCompanyName(getPetitionInfo.getCompanyName());
 
-        // 上記画面表示項目（画面上で必須となっている項目）取得有り（Nullでない）場合、下記の下書き案件のファイルIDと拡張項目内容取得を行う。
-        if (petitionsTemp.getProductName() != null && getPetitionInfo.getFirstName() != null) {
-            // TBL「案件-添付ファイルリレーション（case_file_relations）」より関連下書き案件のファイルIDを取得する。
-            List<FileId> getFileId = getPetitionsTempMapper.selectFileId(petitionsTemp.getCasePetition());
-            if (getFileId.size() > 0) {
-                // 画面表示項目.添付資料
-                petitionInfo.setFileName(getFileId);
-            }
-            // 拡張項目内容取得
-            List<ScaleItems> scaleItemsList = getPetitionsTempMapper.scaleItemsSearch(sessionInfo.getPlatformId());
-            if (scaleItemsList.size() > 0) {
-                // 画面表示項目.拡張項目
-                petitionInfo.setPetitionTypeDisplayName(scaleItemsList);
+            // 上記画面表示項目（画面上で必須となっている項目）取得有り（Nullでない）場合、下記の下書き案件のファイルIDと拡張項目内容取得を行う。
+            if (petitionsTemp.getProductName() != null && getPetitionInfo.getFirstName() != null) {
+                // TBL「案件-添付ファイルリレーション（case_file_relations）」より関連下書き案件のファイルIDを取得する。
+                List<FileId> getFileId = getPetitionsTempMapper.selectFileId(petitionsTemp.getCasePetition());
+                if (getFileId.size() > 0) {
+                    // 画面表示項目.添付資料
+                    petitionInfo.setFileName(getFileId);
+                }
+                // 拡張項目内容取得
+                List<ScaleItems> scaleItemsList = getPetitionsTempMapper.scaleItemsSearch(sessionInfo.getPlatformId());
+                if (scaleItemsList.size() > 0) {
+                    // 画面表示項目.拡張項目
+                    petitionInfo.setPetitionTypeDisplayName(scaleItemsList);
+                }
             }
         }
         return petitionInfo;
@@ -270,7 +271,7 @@ public class MosLoginServiceImpl implements MosLoginService {
         String case_petitions_id = "FFFF87C7B9C5425BB7D15DFCA7A59AE8";
         String case_relations_PetitionUserId = "U00250";
 
-        if (userInfo.getPlatformId() != null && case_petitions_id != null && case_relations_PetitionUserId != null) {
+        if (case_petitions_id != null && case_relations_PetitionUserId != null) {
             // ⓶共通関数「TBL「申立（case_petitions）」の更新」
             int updateCasePetitionsNum = updateCasePetitions(screenInfo, case_petitions_id, userInfo);
             if (updateCasePetitionsNum == 0) {
@@ -320,7 +321,7 @@ public class MosLoginServiceImpl implements MosLoginService {
                     // 検索条件用数据初期化
                     CaseExtensionitemValues CaseExtensionitemValues1 = new CaseExtensionitemValues();
                     // プラットフォームID
-                    CaseExtensionitemValues1.setPlatformId(userInfo.getPlatformId());
+                    CaseExtensionitemValues1.setPlatformId(screenInfo.getPlatformId());
                     // 申立てID
                     CaseExtensionitemValues1.setCase_petitionId(case_petitions_id);
                     // 拡張項目ID
@@ -335,7 +336,7 @@ public class MosLoginServiceImpl implements MosLoginService {
                         // 更新用数据初期化
                         CaseExtensionitemValues CaseExtensionitemValues2 = new CaseExtensionitemValues();
                         // プラットフォームID
-                        CaseExtensionitemValues2.setPlatformId(userInfo.getPlatformId());
+                        CaseExtensionitemValues2.setPlatformId(screenInfo.getPlatformId());
                         // 申立てID
                         CaseExtensionitemValues2.setCase_petitionId(case_petitions_id);
                         // 拡張項目ID
@@ -364,7 +365,7 @@ public class MosLoginServiceImpl implements MosLoginService {
                         // ID
                         CaseExtensionitemValues3.setId(caseExtensionitemValuesMaxId1);
                         // プラットフォームID
-                        CaseExtensionitemValues3.setPlatformId(userInfo.getPlatformId());
+                        CaseExtensionitemValues3.setPlatformId(screenInfo.getPlatformId());
                         // 申立てID
                         CaseExtensionitemValues3.setCase_petitionId(case_petitions_id);
                         // 拡張項目ID
@@ -386,8 +387,9 @@ public class MosLoginServiceImpl implements MosLoginService {
                     }
                 }
             }
+            return 1;
         }
-        return 1;
+        return 0;
     }
 
     /**
@@ -469,7 +471,9 @@ public class MosLoginServiceImpl implements MosLoginService {
         // ID
         casePetitions.setId(case_petitions_id);
         // プラットフォームID
-        casePetitions.setPlatformId(userInfo.getPlatformId());
+        if (userInfo != null) {
+            casePetitions.setPlatformId(userInfo.getPlatformId());
+        }
         // 商品名
         casePetitions.setProductName(screenInfo.getCommodity());
         // 商品ID
@@ -520,7 +524,9 @@ public class MosLoginServiceImpl implements MosLoginService {
         // 申立て人
         caseRelations.setPetitionUserId(case_relations_PetitionUserId);
         // プラットフォームID
-        caseRelations.setPlatformId(userInfo.getPlatformId());
+        if (userInfo != null) {
+            caseRelations.setPlatformId(userInfo.getPlatformId());
+        }
         // 申立て人入力情報
         caseRelations.setPetitionUserInfo_Email(screenInfo.getUseremail());
         // 代理人1
@@ -556,7 +562,9 @@ public class MosLoginServiceImpl implements MosLoginService {
         // ID
         files.setId(fileMaxId1);
         // プラットフォームID
-        files.setPlatformId(userInfo.getPlatformId());
+        if (userInfo != null) {
+            files.setPlatformId(userInfo.getPlatformId());
+        }
         // ファイル名
         files.setFileName(screenInfo.getFileName());
         // 拡張子
@@ -598,7 +606,9 @@ public class MosLoginServiceImpl implements MosLoginService {
         // ID
         caseFileRelations.setId(caseFileRelationsMaxId1);
         // プラットフォームID
-        caseFileRelations.setPlatformId(userInfo.getPlatformId());
+        if (userInfo != null) {
+            caseFileRelations.setPlatformId(userInfo.getPlatformId());
+        }
         // 案件種類ID
         caseFileRelations.setRelatedId(case_petitions_id);
         // ファイルID

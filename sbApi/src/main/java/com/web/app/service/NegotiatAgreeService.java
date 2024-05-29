@@ -2,7 +2,6 @@ package com.web.app.service;
 
 import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.NegotiatAgree.CaseEstablish;
-import com.web.app.domain.NegotiatAgree.NegotiatAgree;
 import com.web.app.domain.NegotiatAgree.Negotiation;
 import com.web.app.domain.NegotiatAgree.UpdNegotiatAgree;
 import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
@@ -21,7 +20,7 @@ import com.web.app.domain.NegotiatAgree.UpdNegotiatCon;
  */
 public interface NegotiatAgreeService {
     //和解案確認データ取得
-    CaseNegotiations SelCaseNegotiations(NegotiatAgree negotiatAgree);
+    CaseNegotiations SelCaseNegotiations(String CaseID);
 
     // 和解案合意更新
     Boolean updNegotiatAgree(UpdNegotiatAgree updNegotiatAgree);
