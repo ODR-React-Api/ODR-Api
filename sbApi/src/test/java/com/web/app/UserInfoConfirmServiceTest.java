@@ -23,7 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
 import com.web.app.domain.UserInfoConfirm.UserInfoModel;
 import com.web.app.mapper.RegisterUserMapper;
-import com.web.app.service.impl.UserInfoConfirmServiceImpl;
 
 import lombok.SneakyThrows;
 
