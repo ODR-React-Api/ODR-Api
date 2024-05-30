@@ -50,8 +50,7 @@ public class NegotiatAgreeController {
             CaseNegotiations caseNegotiations = negotiatAgreeService.SelCaseNegotiations(CaseID);
             return AjaxResult.success("和解案内容取得成功!", caseNegotiations);
         } catch (Exception e) {
-            AjaxResult.fatal("和解案内容取得失敗!", e);
-            return null;
+            return AjaxResult.fatal("和解案内容取得失敗!", e);
         }
     }
 

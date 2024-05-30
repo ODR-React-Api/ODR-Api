@@ -95,8 +95,7 @@ public class MedUserConfirmController {
             String fileName = medUserConfirmService.GetFileName(medUserConfirm.getFileId());
             return AjaxResult.success( "成功!",fileName);
         } catch (Exception e) {
-            AjaxResult.fatal( "失敗!",e);
-            return null;
+            return AjaxResult.fatal( "失敗!",e);
         }
     }
 
@@ -115,8 +114,7 @@ public class MedUserConfirmController {
             Cases cases = medUserConfirmService.GetMediatorChangeableCount(medUserConfirm.getCaseId());
             return AjaxResult.success( "成功!",cases);
         } catch (Exception e) {
-            AjaxResult.fatal( "失敗!",e);
-            return null;
+            return AjaxResult.fatal( "失敗!",e);
         }
     }
     /**
