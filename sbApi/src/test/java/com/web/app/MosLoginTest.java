@@ -49,7 +49,6 @@ public class MosLoginTest {
     }
     
     // 異常系
-    @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
     public void insRelationsTempTest2() {
