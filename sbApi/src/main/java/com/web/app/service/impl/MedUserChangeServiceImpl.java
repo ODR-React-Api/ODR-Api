@@ -80,7 +80,6 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
      * @param withReason true:理由あり false:理由なし
      * @return
      */
-    @SuppressWarnings("unlikely-arg-type")
     @Override
     @Transactional(noRollbackFor = { ArithmeticException.class })
     public int updAboutCasesInfo(String caseId, String userType, Boolean withReason) {
@@ -88,12 +87,19 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
             Cases info = new Cases();
             info.setCid(caseId);
             Cases count = updAboutCasesInfoMapper.getMediatorChangeableCount(caseId);
-            if (userType.equals("1")) {
-                info.setMediatorChangeableCount1(count.getMediatorChangeableCount1() + 1);
+            if (count == null) {
+                return 0;
+            } else {
+                if (userType.equals("1")) {
+                    info.setMediatorChangeableCount1(count.getMediatorChangeableCount1() + 1);
+                    info.setMediatorChangeableCount2(count.getMediatorChangeableCount2());
+                }
+                if (userType.equals("2")) {
+                    info.setMediatorChangeableCount1(count.getMediatorChangeableCount1());
+                    info.setMediatorChangeableCount2(count.getMediatorChangeableCount2() + 1);
+                }
             }
-            if (userType.equals('2')) {
-                info.setMediatorChangeableCount2(count.getMediatorChangeableCount2() + 1);
-            }
+
             return updAboutCasesInfoMapper.updAboutCasesInfo(info, withReason);
         } catch (Exception e) {
             throw e;
