@@ -41,7 +41,7 @@ public class TestMedUserConfirmTest {
     @Test
     public void GetMediationStatus() {
         // 将要使用的数据转换成json类型的字符串
-        String CaseId = "0000000044";
+        String CaseId = "0000000560";
         CaseMediations caseMediations = new CaseMediations();
         caseMediations.setCaseId(CaseId);
         ObjectMapper objectMapper = new ObjectMapper();
@@ -71,6 +71,7 @@ public class TestMedUserConfirmTest {
     @Test
     public void GetUserIDbyMail() {
         // 将要使用的数据转换成json类型的字符串
+        // Integer CaseId = 0000000044;
         String CaseId = "0000000044";
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(CaseId);
