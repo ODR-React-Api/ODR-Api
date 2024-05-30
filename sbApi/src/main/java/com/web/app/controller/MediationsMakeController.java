@@ -79,8 +79,7 @@ public class MediationsMakeController {
                 }
             }
         } catch (Exception e) {
-            AjaxResult.fatal("更新に失敗しました!", e);
-            return null;
+            return AjaxResult.fatal("更新に失敗しました!", e);
         }
     }
 }

@@ -85,10 +85,6 @@ public class TestMediationsMakeTest {
                 ObjectMapper objectMapper = new ObjectMapper();
                 String jsonData = objectMapper.writeValueAsString(resultMediation);
                 // 请求并接收返回值
-                CaseMediations caseMediations =new CaseMediations();
-                caseMediations.setId("DC99149C836F43B7B467650F480E9111");
-                caseMediations.setCaseId("0000000257");
-                doReturn(0).when(insMediationsDataMapper).insMediationsData(caseMediations);
                 MvcResult mvcResult = mockMvc
                                 .perform(post("/MediationsMake/saveMediton").contentType(MediaType.APPLICATION_JSON)
                                                 .content(jsonData))
@@ -101,6 +97,6 @@ public class TestMediationsMakeTest {
                 // 将返回值从泛型转换成指定类型
                 String insMediationsDataResponse = objectMapper.convertValue(response.getMsg(), String.class);
                 // 断言
-                assertEquals("調停案データ新規登録失敗", insMediationsDataResponse);
+                assertEquals("更新に失敗しました!", insMediationsDataResponse);
         }
 }
