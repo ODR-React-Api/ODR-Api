@@ -19,27 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.SneakyThrows;
 
-// 配置测试类
 @SpringBootTest
-// 链接SpringBoot测试功能和Junit
 @RunWith(SpringRunner.class)
-// 配置MockMvc对象
 @AutoConfigureMockMvc
-// 启动模拟HTTP客户端注解
 @AutoConfigureWebTestClient
-public class MosFileListServiceTest {
-
-    // 按照名称进行匹配并注入
+public class MosFileListTest {
     @Resource
     protected MockMvc mockMvc;
 
-    // 抑制编译器产生警告信息
+    // 正常系
     @SuppressWarnings("rawtypes")
-    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
     @SneakyThrows
-    // 测试方法声明注解
     @Test
-    public void test1() {
+    public void getFileInfoTest1() {
         mockMvc.perform(get("/MosFileList/getLoginUserRoleOpenInfo").param("caseId", "0000000001").param("id", "0002")
                 .param("email", "trnd0001+t01@gmail.com")).andReturn();
         MvcResult mvcResult2 = mockMvc
@@ -57,7 +49,7 @@ public class MosFileListServiceTest {
         for (int i = 0; i < caseFileInfoList.size(); i++) {
             CaseFileInfo caseFileInfo = objectMapper.convertValue(caseFileInfoList.get(i), CaseFileInfo.class);
             if (i == 0) {
-                // 断言
+                // 予想値
                 assertEquals(200, response.getCode());
                 assertEquals("52e4d641495ba414f1dc8460962e33791c3ad6e04e507441722978d69f4ac2_640",
                         caseFileInfo.getFileName());
@@ -66,7 +58,7 @@ public class MosFileListServiceTest {
                 assertEquals("2020-08-11 06:47:11", caseFileInfo.getRegisterDate());
                 assertEquals("b082bc27-1a10-448d-a6d2-fb296d74f961", caseFileInfo.getRegisterUserId());
             } else if (i == 1) {
-                // 断言
+                // 予想値
                 assertEquals(200, response.getCode());
                 assertEquals("57e1d1444353ae14f1dc8460962e33791c3ad6e04e507441722872d79644c7_640",
                         caseFileInfo.getFileName());
@@ -80,20 +72,14 @@ public class MosFileListServiceTest {
         }
     }
 
-    // 按照名称进行匹配并注入
-    @Resource
-    protected MockMvc mockMvc2;
-
-    // 抑制编译器产生警告信息
+    // 異常系
     @SuppressWarnings("rawtypes")
-    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
     @SneakyThrows
-    // 测试方法声明注解
     @Test
-    public void test2() {
+    public void getFileInfoTest2() {
         mockMvc.perform(get("/MosFileList/getLoginUserRoleOpenInfo").param("caseId", "0000000001").param("id", "0002")
                 .param("email", "trnd0001+t01@gmail.com")).andReturn();
-        MvcResult mvcResult2 = mockMvc2
+        MvcResult mvcResult2 = mockMvc
                 .perform(get("/MosFileList/getFileInfo").param("caseId", "0000000001").param("id", "0002"))
                 .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult2.getResponse();

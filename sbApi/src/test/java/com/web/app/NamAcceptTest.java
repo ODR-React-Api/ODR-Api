@@ -16,29 +16,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
 import lombok.SneakyThrows;
 
-// 配置测试类
 @SpringBootTest
-// 链接SpringBoot测试功能和Junit
 @RunWith(SpringRunner.class)
-// 配置MockMvc对象
 @AutoConfigureMockMvc
-// 启动模拟HTTP客户端注解
 @AutoConfigureWebTestClient
 
-public class NamAcceptServiceTest {
+public class NamAcceptTest {
 
-    // 按照名称进行匹配并注入
     @Resource
     protected MockMvc mockMvc;
 
-    // 抑制编译器产生警告信息
+    // 正常系 
     @SuppressWarnings("rawtypes")
-    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
     @SneakyThrows
-    // 测试方法声明注解
-
      @Test
-    public void test1() {
+    public void updCaseStatusForAcceptTest() {
         MvcResult mvcResult = mockMvc.perform(get("/NamAccept/updCaseStatusForAccept").param("caseId", "0000000001")).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -47,7 +39,42 @@ public class NamAcceptServiceTest {
          // 将返回值从json类型的字符串转成对象
          Response response = objectMapper.readValue(body, Response.class);
 
-         // 断言
+         // 予想値
+        assertEquals(200, response.getCode());
+        assertEquals(0, response.getData());
+    }
+
+    // 正常系
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+     @Test
+    public void updCaseStatusForAcceptTest1() {
+        MvcResult mvcResult1 = mockMvc.perform(get("/NamAccept/updCaseStatusForAccept").param("caseId", "0000000001")).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult1.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+        ObjectMapper objectMapper = new ObjectMapper();
+         // 将返回值从json类型的字符串转成对象
+         Response response = objectMapper.readValue(body, Response.class);
+
+         // 予想値
+        assertEquals(200, response.getCode());
+        assertEquals(1, response.getData());
+    }
+
+    // 異常系
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+     @Test
+    public void updCaseStatusForAcceptTest2() {
+        MvcResult mvcResult = mockMvc.perform(get("/NamAccept/updCaseStatusForAccept").param("caseId", "0000000001")).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+        ObjectMapper objectMapper = new ObjectMapper();
+         Response response = objectMapper.readValue(body, Response.class);
+
+         // 予想値
         assertEquals(200, response.getCode());
         assertEquals(1, response.getData());
     }
