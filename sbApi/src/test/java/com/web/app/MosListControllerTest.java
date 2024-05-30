@@ -2,6 +2,7 @@ package com.web.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ import com.web.app.domain.Response;
 import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.domain.MosList.SearchDetail;
 import com.web.app.domain.MosList.SelectCondition;
+import com.web.app.mapper.FuzzyQueryDetailCaseMapper;
+import com.web.app.mapper.GetFuzzyQueryListInfoMapper;
 import com.web.app.mapper.SearchDetailCaseMapper;
 import com.web.app.service.MosListService;
 
@@ -50,6 +53,12 @@ public class MosListControllerTest {
     @SpyBean
     SearchDetailCaseMapper searchDetailCaseMapperMock;
 
+    @SpyBean
+    FuzzyQueryDetailCaseMapper fuzzyQueryDetailCaseMapperMock;
+
+    @SpyBean
+    GetFuzzyQueryListInfoMapper getFuzzyQueryListInfoMapperMock;
+
     // 按照名称进行匹配并注入
     @Resource
     protected MockMvc mockMvc;
@@ -58,7 +67,7 @@ public class MosListControllerTest {
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest01(){
+    public void searchDetailCaseTest01() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000001");
         searchCase.setCaseStatus("0");
@@ -73,7 +82,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -83,7 +94,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("0");
         returnResultTest.setCaseTitle("Test01");
@@ -94,13 +105,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest02(){
+    public void searchDetailCaseTest02() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000002");
         searchCase.setCaseStatus("2");
@@ -115,7 +126,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -125,7 +138,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("2");
         returnResultTest.setCaseTitle("Test02");
@@ -136,13 +149,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest03(){
+    public void searchDetailCaseTest03() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000003");
         searchCase.setCaseStatus("3");
@@ -157,7 +170,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -167,7 +182,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("3");
         returnResultTest.setCaseTitle("Test03");
@@ -178,13 +193,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest04(){
+    public void searchDetailCaseTest04() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000004");
         searchCase.setCaseStatus("6");
@@ -199,7 +214,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -209,7 +226,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -220,13 +237,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest05(){
+    public void searchDetailCaseTest05() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000005");
         searchCase.setCaseStatus("7");
@@ -241,7 +258,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -251,7 +270,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("7");
         returnResultTest.setCaseTitle("Test04");
@@ -262,13 +281,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest06(){
+    public void searchDetailCaseTest06() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000006");
         searchCase.setCaseStatus("1");
@@ -283,7 +302,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -293,7 +314,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("1");
         returnResultTest.setCaseTitle("Test04");
@@ -304,13 +325,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest07(){
+    public void searchDetailCaseTest07() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000007");
         searchCase.setCaseStatus("6");
@@ -325,7 +346,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -335,7 +358,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -346,13 +369,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest08(){
+    public void searchDetailCaseTest08() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000008");
         searchCase.setCaseStatus("6");
@@ -367,7 +390,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -377,7 +402,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -388,13 +413,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest09(){
+    public void searchDetailCaseTest09() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000009");
         searchCase.setCaseStatus("6");
@@ -409,7 +434,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -419,7 +446,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -430,13 +457,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest10(){
+    public void searchDetailCaseTest10() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000010");
         searchCase.setCaseStatus("6");
@@ -451,7 +478,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -461,7 +490,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -472,13 +501,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest11(){
+    public void searchDetailCaseTest11() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000011");
         searchCase.setCaseStatus("6");
@@ -493,7 +522,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -503,7 +534,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -514,13 +545,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest12(){
+    public void searchDetailCaseTest12() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000012");
         searchCase.setCaseStatus("6");
@@ -535,7 +566,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -545,7 +578,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -556,13 +589,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest13(){
+    public void searchDetailCaseTest13() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000013");
         searchCase.setCaseStatus("6");
@@ -577,7 +610,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -587,7 +622,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -598,13 +633,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest14(){
+    public void searchDetailCaseTest14() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000014");
         searchCase.setCaseStatus("6");
@@ -619,7 +654,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -629,7 +666,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -640,13 +677,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest15(){
+    public void searchDetailCaseTest15() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000015");
         searchCase.setCaseStatus("6");
@@ -661,7 +698,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -671,7 +710,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -682,13 +721,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest16(){
+    public void searchDetailCaseTest16() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000016");
         searchCase.setCaseStatus("6");
@@ -703,7 +742,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -713,7 +754,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -724,13 +765,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest17(){
+    public void searchDetailCaseTest17() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000017");
         searchCase.setCaseStatus("6");
@@ -745,7 +786,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -755,7 +798,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -766,13 +809,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest18(){
+    public void searchDetailCaseTest18() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000018");
         searchCase.setCaseStatus("6");
@@ -787,7 +830,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -797,7 +842,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -808,13 +853,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest19(){
+    public void searchDetailCaseTest19() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000019");
         searchCase.setCaseStatus("6");
@@ -829,7 +874,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -839,7 +886,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -850,13 +897,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest20(){
+    public void searchDetailCaseTest20() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000020");
         searchCase.setCaseStatus("6");
@@ -871,7 +918,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -881,7 +930,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -892,13 +941,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest21(){
+    public void searchDetailCaseTest21() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000021");
         searchCase.setCaseStatus("6");
@@ -913,7 +962,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -923,7 +974,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -934,13 +985,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest22(){
+    public void searchDetailCaseTest22() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000022");
         searchCase.setCaseStatus("6");
@@ -955,7 +1006,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -965,7 +1018,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -976,13 +1029,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest23(){
+    public void searchDetailCaseTest23() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000022");
         searchCase.setCaseStatus("6");
@@ -997,7 +1050,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1007,7 +1062,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1018,13 +1073,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest24(){
+    public void searchDetailCaseTest24() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000003");
         searchCase.setCaseStatus("3");
@@ -1039,7 +1094,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1049,7 +1106,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("3");
         returnResultTest.setCaseTitle("Test03");
@@ -1060,13 +1117,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest25(){
+    public void searchDetailCaseTest25() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000023");
         searchCase.setCaseStatus("6");
@@ -1081,7 +1138,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1091,7 +1150,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1102,13 +1161,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest26(){
+    public void searchDetailCaseTest26() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000005");
         searchCase.setCaseStatus("7");
@@ -1123,7 +1182,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1133,7 +1194,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("7");
         returnResultTest.setCaseTitle("Test04");
@@ -1144,13 +1205,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest27(){
+    public void searchDetailCaseTest27() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000024");
         searchCase.setCaseStatus("6");
@@ -1165,7 +1226,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1175,7 +1238,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1186,13 +1249,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest28(){
+    public void searchDetailCaseTest28() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000025");
         searchCase.setCaseStatus("6");
@@ -1207,7 +1270,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1217,7 +1282,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1228,13 +1293,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest29(){
+    public void searchDetailCaseTest29() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000004");
         searchCase.setCaseStatus("6");
@@ -1249,7 +1314,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1259,7 +1326,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1270,13 +1337,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest30(){
+    public void searchDetailCaseTest30() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000006");
         searchCase.setCaseStatus("1");
@@ -1291,7 +1358,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1301,7 +1370,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("1");
         returnResultTest.setCaseTitle("Test04");
@@ -1312,13 +1381,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest31(){
+    public void searchDetailCaseTest31() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000026");
         searchCase.setCaseStatus("6");
@@ -1333,7 +1402,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1343,7 +1414,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1354,13 +1425,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest32(){
+    public void searchDetailCaseTest32() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000027");
         searchCase.setCaseStatus("6");
@@ -1375,7 +1446,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1385,7 +1458,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1396,13 +1469,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest33(){
+    public void searchDetailCaseTest33() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000028");
         searchCase.setCaseStatus("6");
@@ -1417,7 +1490,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1427,7 +1502,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1438,13 +1513,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest34(){
+    public void searchDetailCaseTest34() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000029");
         searchCase.setCaseStatus("6");
@@ -1459,7 +1534,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1469,7 +1546,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1480,13 +1557,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest35(){
+    public void searchDetailCaseTest35() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000030");
         searchCase.setCaseStatus("6");
@@ -1501,7 +1578,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1511,7 +1590,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1522,13 +1601,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest36(){
+    public void searchDetailCaseTest36() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000014");
         searchCase.setCaseStatus("6");
@@ -1543,7 +1622,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1553,7 +1634,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1564,13 +1645,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest37(){
+    public void searchDetailCaseTest37() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000015");
         searchCase.setCaseStatus("6");
@@ -1585,7 +1666,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1595,7 +1678,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1606,13 +1689,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest38(){
+    public void searchDetailCaseTest38() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000019");
         searchCase.setCaseStatus("6");
@@ -1627,7 +1710,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1637,7 +1722,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1648,13 +1733,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest39(){
+    public void searchDetailCaseTest39() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000031");
         searchCase.setCaseStatus("6");
@@ -1669,7 +1754,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1679,7 +1766,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1690,13 +1777,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest40(){
+    public void searchDetailCaseTest40() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000032");
         searchCase.setCaseStatus("6");
@@ -1711,7 +1798,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1721,7 +1810,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1732,13 +1821,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest41(){
+    public void searchDetailCaseTest41() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000021");
         searchCase.setCaseStatus("6");
@@ -1753,7 +1842,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1763,7 +1854,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1774,13 +1865,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest42(){
+    public void searchDetailCaseTest42() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000033");
         searchCase.setCaseStatus("6");
@@ -1795,7 +1886,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1805,7 +1898,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1816,13 +1909,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest43(){
+    public void searchDetailCaseTest43() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000014");
         searchCase.setCaseStatus("6");
@@ -1837,7 +1930,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1847,7 +1942,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("6");
         returnResultTest.setCaseTitle("Test04");
@@ -1858,13 +1953,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(3);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest44(){
+    public void searchDetailCaseTest44() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000034");
         searchCase.setCaseStatus("7");
@@ -1879,7 +1974,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1889,7 +1986,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("7");
         returnResultTest.setCaseTitle("Test04");
@@ -1900,13 +1997,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(3);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest45(){
+    public void searchDetailCaseTest45() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000035");
         searchCase.setCaseStatus("7");
@@ -1921,7 +2018,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1931,7 +2030,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("7");
         returnResultTest.setCaseTitle("Test04");
@@ -1942,13 +2041,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(3);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest46(){
+    public void searchDetailCaseTest46() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000036");
         searchCase.setCaseStatus("7");
@@ -1963,7 +2062,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -1973,7 +2074,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("7");
         returnResultTest.setCaseTitle("Test04");
@@ -1984,13 +2085,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(3);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest47(){
+    public void searchDetailCaseTest47() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000037");
         searchCase.setCaseStatus("7");
@@ -2005,7 +2106,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -2015,7 +2118,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("7");
         returnResultTest.setCaseTitle("Test04");
@@ -2026,13 +2129,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(2);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest48(){
+    public void searchDetailCaseTest48() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000038");
         searchCase.setCaseStatus("0");
@@ -2047,7 +2150,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -2057,7 +2162,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("0");
         returnResultTest.setCaseTitle("Test01");
@@ -2068,13 +2173,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest49(){
+    public void searchDetailCaseTest49() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000038");
         searchCase.setCaseStatus("0");
@@ -2089,7 +2194,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -2099,7 +2206,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("0");
         returnResultTest.setCaseTitle("Test01");
@@ -2110,13 +2217,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(3);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest50(){
+    public void searchDetailCaseTest50() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000037");
         searchCase.setCaseStatus("7");
@@ -2131,7 +2238,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -2141,7 +2250,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("7");
         returnResultTest.setCaseTitle("Test04");
@@ -2152,13 +2261,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("20240527");
         returnResultTest.setPositionFlg(3);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest51(){
+    public void searchDetailCaseTest51() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000037");
         searchCase.setCaseStatus("7");
@@ -2173,7 +2282,9 @@ public class MosListControllerTest {
         String jsonData = objectMapper.writeValueAsString(searchCase);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -2182,16 +2293,16 @@ public class MosListControllerTest {
         Response response = objectMapper.readValue(body, Response.class);
 
         // 将返回值从泛型转换成指定类型
-        // ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(),
+        ReturnResult.class);
 
-        assertEquals(409,response.getCode());
-        assertEquals("error", response.getMsg());
+        assertEquals(null, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest52(){
+    public void searchDetailCaseTest52() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000001");
         searchCase.setCaseStatus("0");
@@ -2213,11 +2324,13 @@ public class MosListControllerTest {
         searchDetail.setPetitonDate("123123123");
         searchDetail.setReplyEndDate("123456789");
         searchDetail.setStatus(0);
-        
+
         doReturn(searchDetail).when(searchDetailCaseMapperMock).searchDetail(Mockito.any(SelectCondition.class));
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -2227,7 +2340,7 @@ public class MosListControllerTest {
 
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
-        
+
         ReturnResult returnResultTest = new ReturnResult();
         returnResultTest.setCaseStatus("0");
         returnResultTest.setCaseTitle("Test01");
@@ -2238,13 +2351,13 @@ public class MosListControllerTest {
         returnResultTest.setPetitionDate("99999999");
         returnResultTest.setPositionFlg(1);
 
-        assertEquals(returnResultTest,returnResult);
+        assertEquals(returnResultTest, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void searchDetailCaseTest53(){
+    public void searchDetailCaseTest53() {
         SelectCondition searchCase = new SelectCondition();
         searchCase.setCaseId("1230000001");
         searchCase.setCaseStatus("0");
@@ -2257,11 +2370,13 @@ public class MosListControllerTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(searchCase);
-        
+
         doReturn(null).when(searchDetailCaseMapperMock).searchDetail(Mockito.any(SelectCondition.class));
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -2272,16 +2387,51 @@ public class MosListControllerTest {
         // 将返回值从泛型转换成指定类型
         ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
 
-        assertEquals(null,returnResult);
+        assertEquals(null, returnResult);
     }
 
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void getFuzzyQueryListInfoTest01(){
-    
+    public void searchDetailCaseTest54() {
+        SelectCondition searchCase = new SelectCondition();
+        searchCase.setCaseId("1230000001");
+        searchCase.setCaseStatus("0");
+        searchCase.setCaseTitle("Test");
+        searchCase.setCid("000");
+        searchCase.setPetitionDateEnd("99990101");
+        searchCase.setPetitionDateStart("20010101");
+        searchCase.setPetitionUserId("U00250");
+        searchCase.setPositionFlg(1);
+
         ObjectMapper objectMapper = new ObjectMapper();
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/getFuzzyQueryListInfo").param("userId", "U00250").param("queryString", "Test").contentType(MediaType.APPLICATION_JSON)).andReturn();
+        String jsonData = objectMapper.writeValueAsString(searchCase);
+
+        doThrow(new RuntimeException()).when(searchDetailCaseMapperMock).searchDetail(Mockito.any(SelectCondition.class));
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc
+                .perform(post("/MosList/searchDetail").contentType(MediaType.APPLICATION_JSON).content(jsonData))
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        assertEquals(409, response.getCode());
+    }
+
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryListInfoTest01() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/getFuzzyQueryListInfo").param("userId", "U00250")
+                .param("queryString", "Test").contentType(MediaType.APPLICATION_JSON)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -2290,7 +2440,9 @@ public class MosListControllerTest {
         Response response = objectMapper.readValue(body, Response.class);
 
         // 将返回值从泛型转换成指定类型
-        List<ReturnResult> returnResults = objectMapper.convertValue(response.getData(), new TypeReference<List<ReturnResult>>(){});
+        List<ReturnResult> returnResults = objectMapper.convertValue(response.getData(),
+                new TypeReference<List<ReturnResult>>() {
+                });
 
         List<ReturnResult> returnResultsMock = new ArrayList<>();
 
@@ -2364,7 +2516,6 @@ public class MosListControllerTest {
         returnResultTest07.setPetitionDate("20240527");
         returnResultTest07.setPositionFlg(3);
 
-
         returnResultsMock.add(returnResultTest01);
         returnResultsMock.add(returnResultTest02);
         returnResultsMock.add(returnResultTest03);
@@ -2379,10 +2530,11 @@ public class MosListControllerTest {
     @SuppressWarnings("rawtypes")
     @SneakyThrows
     @Test
-    public void getFuzzyQueryListInfoTest02(){
-    
+    public void getFuzzyQueryListInfoTest02() {
+
         ObjectMapper objectMapper = new ObjectMapper();
-        MvcResult mvcResult = mockMvc.perform(post("/MosList/getFuzzyQueryListInfo").param("userId", "U00250").param("queryString", "123456789").contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/getFuzzyQueryListInfo").param("userId", "U00250")
+                .param("queryString", "123456789").contentType(MediaType.APPLICATION_JSON)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
@@ -2391,10 +2543,1899 @@ public class MosListControllerTest {
         Response response = objectMapper.readValue(body, Response.class);
 
         // 将返回值从泛型转换成指定类型
-        List<ReturnResult> returnResults = objectMapper.convertValue(response.getData(), new TypeReference<List<ReturnResult>>(){});
+        List<ReturnResult> returnResults = objectMapper.convertValue(response.getData(),
+                new TypeReference<List<ReturnResult>>() {
+                });
 
         List<ReturnResult> returnResultsMock = new ArrayList<>();
 
         assertEquals(returnResultsMock, returnResults);
     }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryListInfoTest03() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        doThrow(new RuntimeException()).when(getFuzzyQueryListInfoMapperMock).getUserInfo("U00299");
+
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/getFuzzyQueryListInfo").param("userId", "U00299")
+                .param("queryString", "Test").contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        assertEquals(409, response.getCode());
+    }
+
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest01() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000001")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("0");
+        returnResultTest.setCaseTitle("Test01");
+        returnResultTest.setCid("1220000001");
+        returnResultTest.setCorrespondDate("20240501");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(3);
+        returnResultTest.setPetitionDate("20240527");
+        returnResultTest.setPositionFlg(null);
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest02() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000002")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("2");
+        returnResultTest.setCaseTitle("Test02");
+        returnResultTest.setCid("1220000002");
+        returnResultTest.setCorrespondDate("20240502");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest03() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000003")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test03");
+        returnResultTest.setCid("1220000003");
+        returnResultTest.setCorrespondDate("20240503");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest04() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000004")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("6");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000004");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest05() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000005")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000005");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest06() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000006")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000006");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest07() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000007")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000007");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest08() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000008")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000008");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest09() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000009")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000009");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest10() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000010")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000010");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest11() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000011")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000011");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest12() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000012")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000012");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest13() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000013")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000013");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest14() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000014")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000014");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest15() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000015")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000015");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest16() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000016")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000016");
+        returnResultTest.setCorrespondDate("99999999");
+        returnResultTest.setCorrespondence("0");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest17() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000017")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("6");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000017");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest18() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000018")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000018");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest19() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000019")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000019");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest20() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000020")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000020");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest21() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000021")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000021");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest22() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000022")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000022");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("0");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest23() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000023")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000023");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("0");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest24() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000001")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("0");
+        returnResultTest.setCaseTitle("Test01");
+        returnResultTest.setCid("1220000001");
+        returnResultTest.setCorrespondDate("20240501");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(3);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest25() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000024")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000024");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest26() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000025")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000025");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest27() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000026")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000026");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest28() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000027")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000027");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest29() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000028")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000028");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest30() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000029")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000029");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest31() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000030")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000030");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest32() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000031")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000031");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest33() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000032")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000032");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest34() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000033")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000033");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest35() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000034")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000034");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(4);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest36() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000035")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000035");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(2);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest37() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000036")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("6");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000036");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(5);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest38() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000037")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000037");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest39() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000038")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000038");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest40() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000039")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000039");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest41() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000040")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000040");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest42() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000041")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "2")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000041");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("0");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest43() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000004")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "3")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("6");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000004");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest44() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000040")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "3")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000040");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest45() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000041")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "3")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000041");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest46() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000039")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "3")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000039");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("0");
+        returnResultTest.setMsgCount(0);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest47() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000035")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "3")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("3");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000035");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(2);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest48() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000035")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "4")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        assertEquals(null, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest49() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000042")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "3")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000042");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(2);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest50() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000043")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "3")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("7");
+        returnResultTest.setCaseTitle("Test04");
+        returnResultTest.setCid("1220000043");
+        returnResultTest.setCorrespondDate("20240504");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(1);
+        returnResultTest.setPetitionDate("20240527");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest51() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        SearchDetail searchDetail = new SearchDetail();
+        searchDetail.setCaseStage(0);
+        searchDetail.setCaseStatus("2");
+        searchDetail.setCaseTitle("Test01");
+        searchDetail.setCid("1220000001");
+        searchDetail.setPetitonDate("123123123");
+        searchDetail.setReplyEndDate("123456789");
+        searchDetail.setStatus(0);
+
+        doReturn(searchDetail).when(fuzzyQueryDetailCaseMapperMock).getQueryDetailCase("1220000001","Test");
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000001")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        // 将返回值从泛型转换成指定类型
+        ReturnResult returnResult = objectMapper.convertValue(response.getData(), ReturnResult.class);
+
+        ReturnResult returnResultTest = new ReturnResult();
+        returnResultTest.setCaseStatus("0");
+        returnResultTest.setCaseTitle("Test01");
+        returnResultTest.setCid("1220000001");
+        returnResultTest.setCorrespondDate("99999999");
+        returnResultTest.setCorrespondence("1");
+        returnResultTest.setMsgCount(3);
+        returnResultTest.setPetitionDate("99999999");
+
+        assertEquals(returnResultTest, returnResult);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @SneakyThrows
+    @Test
+    public void getFuzzyQueryDetailCaseTest53() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        doThrow(new RuntimeException()).when(fuzzyQueryDetailCaseMapperMock).getQueryDetailCase("1220000001","Test");
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc.perform(post("/MosList/fuzzyQueryDetailCase")
+                .param("caseId", "1220000001")
+                .param("petitionUserId", "U00250")
+                .param("positionFlag", "1")
+                .param("queryString", "Test")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+
+        // 将返回值从json类型的字符串转成对象
+        Response response = objectMapper.readValue(body, Response.class);
+
+        assertEquals(409, response.getCode());
+    }
+
 }

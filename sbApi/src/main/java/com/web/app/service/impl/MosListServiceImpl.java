@@ -61,7 +61,7 @@ public class MosListServiceImpl implements MosListService {
     @SuppressWarnings("static-access")
     @Override
     @Transactional
-    public ReturnResult searchDetailCase(SelectCondition searchCase) throws Exception {
+    public ReturnResult searchDetailCase(SelectCondition searchCase) {
         // 戻り値オブジェクトの作成
         ReturnResult returnResult = new ReturnResult();
         // 申立て番号、件名、登録日付、対応期日、状態、要対応有無の取得
@@ -210,7 +210,7 @@ public class MosListServiceImpl implements MosListService {
                 }
             } else {
                 log.error(Constants.PARAMETER_ERROR);
-                throw new Exception(Constants.PARAMETER_ERROR);
+                return null;
             }
 
             // 未読メッセージ件数はデフォルトで0
@@ -335,6 +335,7 @@ public class MosListServiceImpl implements MosListService {
      * @param positionFlag   立場フラグ
      * @param queryString    画面.検索Box入力文字列
      * @return 取得されたケース情報リスト
+     * @throws Exception
      */
     @Override
     @Transactional
@@ -353,6 +354,7 @@ public class MosListServiceImpl implements MosListService {
                         simpleDateFormat.format(originalFormat.parse(queryDetailCase.getPetitonDate())));
             } catch (ParseException e) {
                 log.error(Constants.DATATIME_FORMAT_ERROR);
+                returnResult.setPetitionDate(Constants.DEFAULT_CORRESPONDDATE);
             }
             returnResult.setCid(queryDetailCase.getCid());
             returnResult.setCaseTitle(queryDetailCase.getCaseTitle());
@@ -363,37 +365,31 @@ public class MosListServiceImpl implements MosListService {
             try {
                 switch (queryDetailCase.getCaseStage()) {
                     case Constants.STR_CASES_CASESTAGE_0:
-                        if (queryDetailCase.getReplyEndDate() != null) {
-                            returnResult.setCorrespondDate(
-                                    simpleDateFormat.format(originalFormat.parse(queryDetailCase.getReplyEndDate())));
-                        }
+                        returnResult.setCorrespondDate(
+                                simpleDateFormat.format(originalFormat.parse(queryDetailCase.getReplyEndDate())));
                         break;
                     case Constants.STR_CASES_CASESTAGE_2:
-                        if (queryDetailCase.getConuterclaimEndDate() != null) {
-                            returnResult
-                                    .setCorrespondDate(simpleDateFormat
-                                            .format(originalFormat.parse(queryDetailCase.getConuterclaimEndDate())));
-                        }
+                        returnResult
+                                .setCorrespondDate(simpleDateFormat
+                                        .format(originalFormat.parse(queryDetailCase.getConuterclaimEndDate())));
                         break;
                     case Constants.STR_CASES_CASESTAGE_3:
-                        if (queryDetailCase.getNegotiationEndDate() != null) {
-                            returnResult
-                                    .setCorrespondDate(simpleDateFormat
-                                            .format(originalFormat.parse(queryDetailCase.getNegotiationEndDate())));
-                        }
+                        returnResult
+                                .setCorrespondDate(simpleDateFormat
+                                        .format(originalFormat.parse(queryDetailCase.getNegotiationEndDate())));
                         break;
                     case Constants.STR_CASES_CASESTAGE_6:
                     case Constants.STR_CASES_CASESTAGE_7:
-                        if (queryDetailCase.getMediationEndDate() != null) {
-                            returnResult.setCorrespondDate(simpleDateFormat
-                                    .format(originalFormat.parse(queryDetailCase.getMediationEndDate())));
-                        }
+                        returnResult.setCorrespondDate(simpleDateFormat
+                                .format(originalFormat.parse(queryDetailCase.getMediationEndDate())));
                         break;
                     default:
                         returnResult.setCorrespondDate(Constants.DEFAULT_CORRESPONDDATE);
                 }
             } catch (ParseException e) {
                 log.error(Constants.DATATIME_FORMAT_ERROR);
+            } catch (NullPointerException e) {
+                log.error(Constants.NULL_ERROR);
             }
 
             // 要対応有無の設定
@@ -489,21 +485,30 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_0);
                         break;
                 }
+            } else {
+                log.error(Constants.PARAMETER_ERROR);
+                return null;
             }
 
+            // 未読メッセージ件数はデフォルトで0
             int notReadedCnt = Constants.NUM_0;
             // 未読メッセージ件数の取得
             if (positionFlag == Constants.POSITIONFLAG_MEDIATOR) {
-                // ステージ：6 調停人指名中(未受理の場合)
-                if (Constants.STR_CASES_CASESTATUS_6.equals(queryDetailCase.getCaseStatus())) {
-                    if (fuzzyQueryDetailCaseMapper.getMediatorDisclosureFlag(caseId) == Constants.NUM_1) {
-                        notReadedCnt = fuzzyQueryDetailCaseMapper.getMsgCountByFlag(caseId, petitionUserId);
+                // ステジ：6調停者指名中（未受理の場合）以外
+                if (queryDetailCase.getCaseStage() != Constants.NUM_6) {
+                    Integer mediatorDisclosureFlag = searchDetailCaseMapper
+                            .getMediatorDisclosureFlag(caseId);
+                    if (mediatorDisclosureFlag != null && mediatorDisclosureFlag == Constants.NUM_1) {
+                        notReadedCnt = searchDetailCaseMapper.getMsgCountByFlag(caseId,
+                                petitionUserId);
                     } else {
-                        notReadedCnt = fuzzyQueryDetailCaseMapper.getMsgCountByFlagNo(caseId, petitionUserId);
+                        notReadedCnt = searchDetailCaseMapper.getMsgCountByFlagNo(caseId,
+                                petitionUserId);
                     }
                 }
             } else {
-                notReadedCnt = fuzzyQueryDetailCaseMapper.getMsgCountByFlag(caseId, petitionUserId);
+                notReadedCnt = searchDetailCaseMapper.getMsgCountByFlag(caseId,
+                        petitionUserId);
             }
 
             if (notReadedCnt > Constants.NUM_0) {
@@ -512,6 +517,7 @@ public class MosListServiceImpl implements MosListService {
             } else {
                 returnResult.setMsgCount(Constants.NUM_0);
             }
+
             return returnResult;
         }
 

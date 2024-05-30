@@ -74,8 +74,7 @@ public class MosListController {
             // ページへのデータの戻り
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,returnResults);
         } catch (Exception e) {
-            AjaxResult.fatal("error",e);
-            return null;
+            return AjaxResult.fatal("error",e);
         }
 
     }
@@ -100,8 +99,7 @@ public class MosListController {
                     queryString);
             return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,returnResult);
         } catch (Exception e) {
-            AjaxResult.fatal("error",e);
-            return null;
+            return AjaxResult.fatal("error",e);
         }
     }
 
