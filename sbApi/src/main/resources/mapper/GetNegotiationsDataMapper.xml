@@ -20,7 +20,7 @@
 		<result property="FileName" column="FileName" jdbcType="VARCHAR" />
 		<result property="FileUrl" column="FileUrl" jdbcType="VARCHAR" />
     </resultMap>
-    <select id="settlementDraftDataInfoSearch" resultMap="SettlementDraftInfoResultMap"> 
+    <select id="getNegotiationsDataInfoSearch" resultMap="SettlementDraftInfoResultMap"> 
         SELECT
         caseNegotiations.id AS id,
         caseNegotiations.ExpectResloveTypeValue AS ExpectResloveTypeValue,

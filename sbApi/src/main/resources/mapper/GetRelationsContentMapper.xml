@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetPetitionsContentMapper">
+    <select id="RelationsContentListDataSearch" resultType="com.web.app.domain.Entity.OdrUsers">
+        SELECT 
+            FirstName,
+            LastName,
+            FirstName_kana,
+            LastName_kana,
+            CompanyName
+        FROM 
+            react_use.odr_users
+        WHERE
+            PlatformId ="001" AND
+            Email = #{petitionUserInfoEmail} AND 
+            DeleteFlag = 0
+    </select>
+</mapper>
