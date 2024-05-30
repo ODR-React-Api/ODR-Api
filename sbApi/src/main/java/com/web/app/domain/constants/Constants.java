@@ -319,6 +319,9 @@ public class Constants {
     public static final int NOREADCNT_0 = 0;
     public static final int STR_CASES_MEDIATORDISCLOSUREFLAG_1 = 1;
     public static final String SIMPLE_DATE_FORMAT = "yyyyMMdd";
+    public static final String DATATIME_FORMAT_ERROR = "時間変換エラー";
+    public static final String NULL_ERROR = "日付取得エラー";
+    public static final String PARAMETER_ERROR = "パラメータに誤りがある。";
 
     // S04
     public static final String CASE_STATUS_0 = "0000";

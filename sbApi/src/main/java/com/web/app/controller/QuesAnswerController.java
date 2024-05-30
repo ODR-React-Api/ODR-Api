@@ -3,6 +3,8 @@ package com.web.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
@@ -21,6 +23,7 @@ import io.swagger.annotations.Api;
  */
 @CrossOrigin(origins = "*")
 @Api(tags = "アンケート情報取得")
+@RequestMapping("/QuesAnswer")
 @RestController
 public class QuesAnswerController {
 
@@ -29,7 +32,7 @@ public class QuesAnswerController {
 
     @SuppressWarnings("rawtypes")
     @GetMapping("/getQuestionnaires")
-    public Response getQuestionnaires(String id, String platformId) {
+    public Response getQuestionnaires(@RequestParam("id") String id, @RequestParam("platformId") String platformId) {
         try {
             // 確認画面用データ
             QuestionnaireMails allQuestionnaire = quesAnswerService.getQuestionnaires(id, platformId);

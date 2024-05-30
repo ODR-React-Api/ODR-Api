@@ -52,10 +52,9 @@ public class MosListController {
         try {
             // 詳細caseを呼び出してサービスを取得する
             ReturnResult result = mosListService.searchDetailCase(searchCase);
-            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS, result);
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,result);
         } catch (Exception e) {
-            AjaxResult.fatal("error", e);
-            return null;
+            return AjaxResult.fatal(Constants.MSG_ERROR,e);
         }
     }
 
@@ -76,10 +75,9 @@ public class MosListController {
             // 申立して一覧サービスを呼び出す曖昧検索用一覧取得方法
             List<ReturnResult> returnResults = mosListService.getFuzzyQueryListInfo(uid, queryString);
             // ページへのデータの戻り
-            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS, returnResults);
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,returnResults);
         } catch (Exception e) {
-            AjaxResult.fatal("error", e);
-            return null;
+            return AjaxResult.fatal(Constants.MSG_ERROR,e);
         }
 
     }
@@ -96,17 +94,15 @@ public class MosListController {
     @PostMapping("/fuzzyQueryDetailCase")
     @ApiOperation("曖昧検索用ケース詳細取得")
     @SuppressWarnings("rawtypes")
-    public Response fuzzyQueryDetailCase(@RequestParam("caseId") String caseId,
-            @RequestParam("petitionUserId") String petitionUserId,
-            @RequestParam("positionFlag") int positionFlag, @RequestParam("queryString") String queryString) {
+    public Response fuzzyQueryDetailCase(@RequestParam("caseId") String caseId,@RequestParam("petitionUserId") String petitionUserId,
+    @RequestParam("positionFlag") int positionFlag,@RequestParam("queryString") String queryString) {
         try {
             // サービスの呼び出し
             ReturnResult returnResult = mosListService.getFuzzyQueryDetailCase(caseId, petitionUserId, positionFlag,
                     queryString);
-            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS, returnResult);
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,returnResult);
         } catch (Exception e) {
-            AjaxResult.fatal("error", e);
-            return null;
+            return AjaxResult.fatal(Constants.MSG_ERROR,e);
         }
     }
 

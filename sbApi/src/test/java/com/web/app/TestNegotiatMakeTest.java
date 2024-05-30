@@ -40,7 +40,6 @@ public class TestNegotiatMakeTest {
     // 按照名称进行匹配并注入
     @Resource
     protected MockMvc mockMvc;
-
     // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
     @SneakyThrows
     // 测试方法声明注解
@@ -267,7 +266,6 @@ public class TestNegotiatMakeTest {
     // 按照名称进行匹配并注入
     @Resource
     protected MockMvc mockMvc7;
-
     // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
     @SneakyThrows
     // 测试方法声明注解
@@ -358,27 +356,7 @@ public class TestNegotiatMakeTest {
         return negotiationsFile;
     }
 
-    // // 按照名称进行匹配并注入
-    // @Resource
-    // protected MockMvc mockMvc12;
-
-    // // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
-    // @SneakyThrows
-    // // 测试方法声明注解
-    // @Test
-    // public void testUpdateNegotiationsEdit7() {
-    //     // 将要使用的数据转换成json类型的字符串
-    //     NegotiationsFile negotiationsFile = new NegotiationsFile();
-    //     negotiationsFile.setId("DC043A9FC5A34A10A57A338EAEA9F6B9");
-    //     // ★★★コントローラのcatchテスト
-    //     negotiationsFile.setPaymentEndDate("111111111111111111111111");
-    //     // ログインユーザが申立人場合、ステータス更新値：14
-    //     negotiationsFile.setFlag(1);
-
-    //     juTest(negotiationsFile, updPath, strMsgE);
-
-    // }
-
+    // Junit共通
     private void juTest(NegotiationsFile negotiationsFile, String path, String strMsg) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData2 = objectMapper.writeValueAsString(negotiationsFile);
@@ -399,7 +377,7 @@ public class TestNegotiatMakeTest {
         // 断言
         assertEquals(strMsg, msg);
     }
-
+    // Junit共通
     private void juTest1(NegotiationsFile negotiationsFile, String path, String strMsg) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData2 = objectMapper.writeValueAsString(negotiationsFile);
@@ -410,12 +388,6 @@ public class TestNegotiatMakeTest {
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
-        // System.out.println(body);
-        // 将返回值从json类型的字符串转成对象
-        // @SuppressWarnings("rawtypes")
-        //Response response = objectMapper.readValue(body, Response.class);
-        // 将返回值从泛型转换成指定类型
-        // String msg = objectMapper.convertValue(response.getMsg(), String.class);
         if (body == "") {
             // 断言
             assertEquals(strMsg, null);

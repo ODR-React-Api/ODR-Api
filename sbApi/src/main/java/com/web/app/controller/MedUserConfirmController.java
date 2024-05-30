@@ -135,9 +135,8 @@ public class MedUserConfirmController {
             String getMediationStatus = medUserConfirmService.getMediationStatus(CaseId);
             // 調停案ステータス
             return AjaxResult.success("調停案ステータス取得成功", getMediationStatus);
-        } catch (Exception e) {
-            AjaxResult.fatal("調停案ステタス取得異常", e);
-            return null;
+        } catch (Exception e) {          
+            return AjaxResult.fatal("調停案ステタス取得異常", e);
         }
     }
 
@@ -159,8 +158,7 @@ public class MedUserConfirmController {
             // 調停者メールとユザーID
             return AjaxResult.success("調停者メールとユザーIDを取得成功", getUserIDbyMail);
         } catch (Exception e) {
-            AjaxResult.fatal("調停者メールとユザーIDを取得異常", e);
-            return null;
+            return AjaxResult.fatal("調停者メールとユザーIDを取得異常", e);
         }
     }
 
@@ -181,8 +179,7 @@ public class MedUserConfirmController {
             ArrayList<GetMediatorGen> getMediatorGen = medUserConfirmService.getMediatorGen(CaseId);
             return AjaxResult.success("調停人情報取得成功", getMediatorGen);
         } catch (Exception e) {
-            AjaxResult.fatal("調停人情報取得成功", e);
-            return null;
+            return AjaxResult.fatal("調停人情報取得異常", e);
         }
     }
 }

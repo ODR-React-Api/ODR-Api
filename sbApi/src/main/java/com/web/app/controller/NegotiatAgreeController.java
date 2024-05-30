@@ -74,8 +74,7 @@ public class NegotiatAgreeController {
                 return AjaxResult.success("和解案合意更新失败");
             }
         } catch (Exception e) {
-            AjaxResult.fatal("和解案合意更新異常", e);
-            return null;
+            return AjaxResult.fatal("和解案合意更新異常", e);
         }
     }
 

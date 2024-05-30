@@ -42,7 +42,6 @@ public class TestGetMediatorInfoTest {
     public void testGetMediatorInfoTest1() {
         MedUserConfirmSession medUserConfirmSession = new MedUserConfirmSession();
         medUserConfirmSession.setMediatorUserEmail("trnd0001+am01@gmail.com");
-
         MediatorInfo mediatorInfo = juTest(medUserConfirmSession, addPath);
         // 断言
         assertEquals(getSystemtime() + Constants.STR_GENZAI, mediatorInfo.getNowTime());
@@ -50,25 +49,26 @@ public class TestGetMediatorInfoTest {
         assertEquals(33 + Constants.STR_KEN, mediatorInfo.getMediatorCount());
         assertEquals("3.03%", mediatorInfo.getResolutionRate());
     }
-  // 按照名称进行匹配并注入
-  @Resource
-  protected MockMvc mockMvc2;
-  // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
-  @SneakyThrows
-  // 测试方法声明注解
-  @Test
-  public void testGetMediatorInfoTest2() {
-      MedUserConfirmSession medUserConfirmSession = new MedUserConfirmSession();
-      medUserConfirmSession.setMediatorUserEmail("trnd0001+m06@gmail.com");
 
-      MediatorInfo mediatorInfo = juTest(medUserConfirmSession, addPath);
-      // 断言
-      assertEquals(getSystemtime() + Constants.STR_GENZAI, mediatorInfo.getNowTime());
-      assertEquals(0 + Constants.STR_KEN, mediatorInfo.getSolveMediatorCount());
-      assertEquals(0 + Constants.STR_KEN, mediatorInfo.getMediatorCount());
-      assertEquals(Constants.STR_YOKO, mediatorInfo.getResolutionRate());
-  }
-  
+    // 按照名称进行匹配并注入
+    @Resource
+    protected MockMvc mockMvc2;
+    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+    @SneakyThrows
+    // 测试方法声明注解
+    @Test
+    public void testGetMediatorInfoTest2() {
+        MedUserConfirmSession medUserConfirmSession = new MedUserConfirmSession();
+        medUserConfirmSession.setMediatorUserEmail("trnd0001+m06@gmail.com");
+
+        MediatorInfo mediatorInfo = juTest(medUserConfirmSession, addPath);
+        // 断言
+        assertEquals(getSystemtime() + Constants.STR_GENZAI, mediatorInfo.getNowTime());
+        assertEquals(0 + Constants.STR_KEN, mediatorInfo.getSolveMediatorCount());
+        assertEquals(0 + Constants.STR_KEN, mediatorInfo.getMediatorCount());
+        assertEquals(Constants.STR_YOKO, mediatorInfo.getResolutionRate());
+    }
+    // Junit共通
     private MediatorInfo juTest(MedUserConfirmSession medUserConfirmSession, String path) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData2 = objectMapper.writeValueAsString(medUserConfirmSession);
