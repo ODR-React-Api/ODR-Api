@@ -32,9 +32,9 @@
         AND ca.cid = re.CaseId 
         AND ca.cid = #{cid}
         AND ca.PlatformId = #{platformId}
-        AND ca.CaseStage = '0'
+        AND ca.CaseStage = 0
         AND ca.CaseStatus = '0001'
-        AND ca.DeleteFlag = '0'
+        AND ca.DeleteFlag = 0
         AND
             ( re.TraderUserEmail = #{traderUserEmail}
             OR re.TraderAgent1_UserEmail = #{traderagentuserListAll[0]}
