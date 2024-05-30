@@ -253,14 +253,16 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             files.setId(guid);
             files.setFileName(file.getFileName());
             files.setFileExtension(file.getFileExtension());
-            // 内部ロジック生成ファイルURL 再調査
+            // 内部ロジック生成ファイルURL
             files.setFileUrl(file.getFileUrl() + guid + "." + file.getFileExtension());
-            // 内部ロジック生成ファイルサイ 再調査
+            // 内部ロジック生成ファイルサイ
             files.setFileSize(file.getFileSize());
             // 「添付ファイル」のidを保存した
             fileid.add(guid);
+
             // テーブル「添付ファイル」新規登録
             Integer num = insNegotiationTempMapper.insertFilesInfo(files);
+
             if (num == Constants.RESULT_STATE_ERROR) {
                 throw new RuntimeException();
             }
@@ -305,6 +307,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
 
             // テーブル「案件-添付ファイルリレーション」新規登録
             Integer num = insNegotiationTempMapper.insertCaseFileRelationsInfo(caseFileRelations);
+
             if (num == Constants.RESULT_STATE_ERROR) {
                 throw new RuntimeException();
             }
@@ -351,8 +354,10 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         caseNegotiations.setLastModifiedDate(new Date());
         // ログインユーザ
         caseNegotiations.setLastModifiedBy(sessionLogin.getUserId());
+
         // テーブル「和解案」新規登録
         Integer num = insNegotiationTempMapper.insertCaseNegotiationsInfo(caseNegotiations);
+
         if (num == Constants.RESULT_STATE_ERROR) {
             throw new RuntimeException();
         }
@@ -374,9 +379,11 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         caseFileRelations.setLastModifiedDate(new Date());
         // ログインユーザ
         caseFileRelations.setLastModifiedBy(sessionLogin.getUserId());
+
         // テーブル「案件-添付ファイルリレーション」論理削除
         Integer num = updNegotiationsTempMapper.updateCaseFileRelationsInfo(caseFileRelations,
                 sessionLogin.getSessionObjCaseFileRelationsId());
+
         if (num == Constants.RESULT_STATE_ERROR) {
             throw new RuntimeException();
         }
@@ -403,6 +410,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         // 「添付ファイル」論理削除
         Integer num = updNegotiationsTempMapper.updateFilesInfo(files,
                 sessionLogin.getSessionObjFileId());
+
         if (num == Constants.RESULT_STATE_ERROR) {
             throw new RuntimeException();
         }
@@ -463,9 +471,11 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // 「提出ユーザ」を「ログインユーザ」に設定する
             caseNegotiations.setUserId(sessionLogin.getUserId());
         }
+
         // テーブル「和解案」更新
         Integer num = updNegotiationsTempMapper.updateCaseNegotiationsInfo(caseNegotiations,
                 sessionLogin.getSessionCaseNegCotiationsId());
+
         if (num == Constants.RESULT_STATE_ERROR) {
             throw new RuntimeException();
         }
@@ -529,6 +539,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
 
             // テーブル「添付ファイル」新規登録
             Integer num = updNegotiationsTempMapper.insertFilesInfo(files);
+
             if (num == Constants.RESULT_STATE_ERROR) {
                 throw new RuntimeException();
             }
@@ -573,6 +584,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
 
             // テーブル「案件-添付ファイルリレーション」新規登録
             Integer num = updNegotiationsTempMapper.insertCaseFileRelationsInfo(caseFileRelations);
+
             if (num == Constants.RESULT_STATE_ERROR) {
                 throw new RuntimeException();
             }
