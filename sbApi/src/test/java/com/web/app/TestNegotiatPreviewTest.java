@@ -1,9 +1,6 @@
 package com.web.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -16,25 +13,15 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
-import com.web.app.domain.Entity.CaseNegotiations;
-import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.Entity.File;
-import com.web.app.domain.MedUserConfirm.MedUserConfirm;
 import com.web.app.domain.NegotiatPreview.NegotiatPreview;
 import com.web.app.mapper.InsNegotiationDataMapper;
 import com.web.app.service.NegotiatPreviewService;
-
 import lombok.SneakyThrows;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Resource;
 
 // 配置测试类
@@ -125,13 +112,7 @@ public class TestNegotiatPreviewTest {
         // 将返回值从泛型转换成指定类型
         String casesResponse = objectMapper.convertValue(response.getMsg(), String.class);
         // 断言
-        assertEquals("和解案提出失敗!", casesResponse);
-        //assertEquals("和解案提出成功!", casesResponse);
-
-        //assertEquals(1, response.getCode());
-        // assertEquals("1000000010", casesResponse.getCid());
-        // assertEquals("0001", casesResponse.getPlatformId());
-        //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //assertEquals("2020-08-12 14:19:14", formatter.format(casesResponse.getNegotiationEndDate()));
+        // assertEquals("和解案提出失敗!", casesResponse);
+        assertEquals("和解案提出成功!", casesResponse);
     }
 }
