@@ -270,4 +270,15 @@
             #{lastModifiedBy}
         )
     </insert>
+
+    <!-- プラットフォームデータを取得 -->
+    <select id="selectReplyLimitDays" resultMap="int">
+        select 
+            ReplyLimitDays
+        from 
+            master_platforms
+        where
+            Id = #{platformId} and
+            DeleteFlag = #{deleteFlag} 
+    </select>
 </mapper>
