@@ -1,12 +1,9 @@
 package com.web.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.never;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
-import com.web.app.domain.Entity.CaseMediations;
 import com.web.app.domain.mediationsMake.ResultMediation;
 import com.web.app.domain.mediationsMake.SubsidiaryFile;
 import com.web.app.mapper.InsMediationsDataMapper;
@@ -42,9 +38,7 @@ import javax.annotation.Resource;
 // 启动模拟HTTP客户端注解
 @AutoConfigureWebTestClient
 public class TestMediationsMakeTest {
-        // 調停案データ新規登録
-        @Autowired
-        private InsMediationsDataMapper insMediationsDataMapper;
+
         // 按照名称进行匹配并注入
         @Resource
         protected MockMvc mockMvc;

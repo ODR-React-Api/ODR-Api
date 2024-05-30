@@ -6,7 +6,6 @@ import static org.mockito.Mockito.doReturn;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,8 +18,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.negotiatAgree.UpdNegotiatAgree;
-import com.web.app.mapper.CommonMapper;
-import com.web.app.service.CommonService;
 import com.web.app.service.impl.CommonServiceImpl;
 
 import lombok.SneakyThrows;
@@ -38,10 +35,7 @@ import javax.annotation.Resource;
 // 启动模拟HTTP客户端注解
 @AutoConfigureWebTestClient
 public class TestNegotiatAgreeTest {
-        @Autowired
-        private CommonMapper commonMapper;
-        @Autowired
-        private CommonService commonService;
+
         // 按照名称进行匹配并注入
         @Resource
         protected MockMvc mockMvc;
@@ -296,10 +290,11 @@ public class TestNegotiatAgreeTest {
                 String jsonData = objectMapper.writeValueAsString(updNegotiatAgree);
                 ActionHistories actionHistories = new ActionHistories();
                 // actionHistories.setId("DC99149C836F43B7B467650F480E9111");
-                CommonServiceImpl spy =Mockito.spy(new CommonServiceImpl());
-                doReturn(false).when(spy).InsertActionHistories(actionHistories,null,false,false);
+                CommonServiceImpl spy = Mockito.spy(new CommonServiceImpl());
+                doReturn(false).when(spy).InsertActionHistories(actionHistories, null, false, false);
                 // doReturn(0).when(commonMapper).InsHistories(actionHistories);
-                // doReturn(false).when(commonService).InsertActionHistories(actionHistories, null, false, false);
+                // doReturn(false).when(commonService).InsertActionHistories(actionHistories,
+                // null, false, false);
                 // 请求并接收返回值
                 MvcResult mvcResult = mockMvc
                                 .perform(post("/NegotiatAgree/UpdNegotiatAgree").contentType(MediaType.APPLICATION_JSON)
