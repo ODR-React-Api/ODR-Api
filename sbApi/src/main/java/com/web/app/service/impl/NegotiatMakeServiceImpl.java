@@ -529,10 +529,10 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // 「拡張子」を設定する
             files.setFileExtension(file.getFileExtension());
             // 「URL」を設定する
-            // 内部ロジック生成ファイルURL 再調査
+            // 内部ロジック生成ファイルURL
             files.setFileUrl(file.getFileUrl() + guid + "." + file.getFileExtension());
             // 「ファイルサイズ」を設定する
-            // 内部ロジック生成ファイルサイ 再調査
+            // 内部ロジック生成ファイルサイ
             files.setFileSize(file.getFileSize());
             // 「添付ファイル」のidを保存した
             fileid.add(guid);
