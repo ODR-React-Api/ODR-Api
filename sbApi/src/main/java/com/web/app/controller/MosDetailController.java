@@ -3,11 +3,12 @@ package com.web.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.web.app.domain.Response;
 import com.web.app.domain.MosDetail.PetitionsContent;
 import com.web.app.domain.MosDetail.RelationsContent;
+import com.web.app.domain.constants.MessageConstants;
 import com.web.app.service.MosDetailService;
 import com.web.app.tool.AjaxResult;
 
@@ -23,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @CrossOrigin(origins = "*")
 @Api(tags = "申立て詳細画面_概要")
+@RequestMapping("MosDetail")
 @RestController
 public class MosDetailController {
 
@@ -44,10 +46,10 @@ public class MosDetailController {
             // 申立ての内容取得
             PetitionsContent petitionsContent = mosDetailService.selectPetitionData(caseId);
 
-            return AjaxResult.success("Success",petitionsContent);
+            return AjaxResult.success("Success", petitionsContent);
 
         } catch (Exception e) {
-            return AjaxResult.fatal("Error",e);
+            return AjaxResult.fatal("Error", e);
         }
     }
 
@@ -66,10 +68,10 @@ public class MosDetailController {
             // 関係者内容取得
             RelationsContent relationsContent = mosDetailService.selectRelationsContentData(caseId);
 
-            return AjaxResult.success("Success",relationsContent);
+            return AjaxResult.success("Success", relationsContent);
 
         } catch (Exception e) {
-            return AjaxResult.fatal("Error",e);
+            return AjaxResult.fatal("Error", e);
         }
     }
 
@@ -91,11 +93,16 @@ public class MosDetailController {
             // 調停人退出メッセージ登録
             int num = mosDetailService.AddMessages(caseId, uid, platformId, messageGroupId);
 
-            return AjaxResult.success("Success",num);
+            if (num != 0) {
+
+                return AjaxResult.success(MessageConstants.S05012I);
+            }
 
         } catch (Exception e) {
-            return AjaxResult.fatal("Error",e);
+            return AjaxResult.fatal(MessageConstants.S04023E, e);
         }
 
+        // 追加本数が0の場合
+        return AjaxResult.error(MessageConstants.S04023E);
     }
 }
