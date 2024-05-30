@@ -216,8 +216,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * 新規登録API「添付ファイル」新規登録
      * 
-     * @param selectedStatus ステータス
-     * @param sessionLogin   セッション情報 と ログイン情報渡された
+     * @param sessionLogin セッション情報 と ログイン情報渡された
      * @return 「添付ファイル」のid
      */
     // TODO 内部ロジック生成ファイルURL 再調査
@@ -272,8 +271,9 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * 新規登録API「案件-添付ファイルリレーション」新規登録
      * 
-     * @param selectedStatus ステータス
-     * @param sessionLogin   セッション情報 と ログイン情報渡された
+     * @param sessionLogin         セッション情報 と ログイン情報渡された
+     * @param caseNegotiationsGuid 「和解案」のid
+     * @param filesGuid            「添付ファイル」のid
      * @return 更新ステータス情報
      */
     @Transactional
@@ -317,7 +317,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
      * 
      * @param selectedStatus ステータス
      * @param sessionLogin   セッション情報 と ログイン情報渡された
-     * @return 戻り値は「 和解案作成」
+     * @return 戻り値は「和解案作成」情報
      */
     @Transactional
     private SettlementDraftDataCaseNegotiations insInsertCaseNegotiations(Integer selectedStatus,
@@ -412,7 +412,8 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * 更新登録API「和解案」更新
      * 
-     * @param sessionLogin セッション情報 と ログイン情報渡された
+     * @param caseNegotiationsData 現在の和解案ステータスを抽出
+     * @param sessionLogin         セッション情報 と ログイン情報渡された
      * @return 更新ステータス情報
      */
     @Transactional
@@ -538,7 +539,9 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * 更新登録API「案件-添付ファイルリレーション」新規登録
      * 
-     * @param sessionLogin セッション情報 と ログイン情報渡された
+     * @param sessionLogin         セッション情報 と ログイン情報渡された
+     * @param caseNegotiationsGuid 「和解案」のid
+     * @param filesGuid            「添付ファイル」のid
      * @return 更新ステータス情報
      */
     @Transactional
