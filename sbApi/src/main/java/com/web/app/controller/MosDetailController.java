@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.MosDetail.CaseClaimrepliesMosDetail;
@@ -24,6 +23,7 @@ import com.web.app.domain.MosDetail.RelationsContent;
 import com.web.app.domain.MosDetail.UpdShowTuritorParameter;
 import com.web.app.domain.MosDetail.WithdrawalReturn;
 import com.web.app.domain.constants.Constants;
+import com.web.app.domain.constants.MessageConstants;
 import com.web.app.service.MosDetailService;
 import com.web.app.tool.AjaxResult;
 
@@ -111,12 +111,17 @@ public class MosDetailController {
             // 調停人退出メッセージ登録
             int num = mosDetailService.AddMessages(caseId, uid, platformId, messageGroupId);
 
-            return AjaxResult.success("Success", num);
+            if (num != 0) {
+
+                return AjaxResult.success(MessageConstants.S05012I);
+            }
 
         } catch (Exception e) {
-            return AjaxResult.fatal("Error", e);
+            return AjaxResult.fatal(MessageConstants.S04023E, e);
         }
 
+        // 追加本数が0の場合
+        return AjaxResult.error(MessageConstants.S04023E);
     }
 
     /**

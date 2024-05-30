@@ -19,7 +19,7 @@
         SELECT
             COUNT(*)
         FROM
-            react_use.questionnaire_mails
+            react_use.questionnaire_results
         WHERE
             QuestionId = #{questionId}  and
             CaseId = #{caseId} and
