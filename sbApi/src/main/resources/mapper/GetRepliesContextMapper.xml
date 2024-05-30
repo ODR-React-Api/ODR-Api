@@ -20,7 +20,7 @@
             and case_replies.PlatformId = #{PlatformId} 
             and case_replies.Status = 2
             and case_replies.DeleteFlag = 0
-            and cases.cid = #{PlatformId}            
+            and cases.cid = '0000000001'          
             and cases.PlatformId = 0
             and cases.DeleteFlag = 0
             and case_file_relations.CaseId = case_replies.CaseId

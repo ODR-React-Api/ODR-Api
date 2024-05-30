@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.web.app.domain.CouAnswerLogin.CaseClaimReplies;
 import com.web.app.domain.CouAnswerLogin.CaseFileRelations;
 import com.web.app.domain.CouAnswerLogin.InsClaimRepliesDto;
-import com.web.app.domain.CouAnswerLogin.ReactUseFiles;
 import com.web.app.domain.CouAnswerLogin.RepliesContext;
+import com.web.app.domain.Entity.CaseClaimReplies;
+import com.web.app.domain.Entity.Files;
 import com.web.app.mapper.GetRepliesContextMapper;
 import com.web.app.mapper.InsClaimRepliesDataMapper;
 import com.web.app.service.CouAnswerLoginService;
+import com.web.app.service.UtilService;
 
 /**
  * 反訴回答登録画面
@@ -28,10 +28,11 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
     @Autowired
     private GetRepliesContextMapper getRepliesContextMapper;
 
-    // 反訴・回答データ取得
     @Autowired
     private InsClaimRepliesDataMapper insClaimRepliesDataMapper;
 
+    @Autowired
+    private UtilService utilService;
     /**
      * 反訴・回答データ取得
      *
@@ -54,12 +55,11 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
      * @throws Exception エラーの説明内容
      */
     @Override
-    public void insClaimRepliesData(InsClaimRepliesDto insClaimRepliesDto) {
+    public Integer insClaimRepliesData(InsClaimRepliesDto insClaimRepliesDto) {
         // 「反訴への回答」新規登録
         CaseClaimReplies insClaimReplies = new CaseClaimReplies();
         // 自動生成GIUD
-        String repliesId = insClaimRepliesDataMapper.getUuid();
-        insClaimReplies.setId(repliesId);
+        insClaimReplies.setId(utilService.GetGuid());
         // セッション情報の案件ID
         insClaimReplies.setCaseId(insClaimRepliesDto.getCaseId());
         // セッション情報のプラットフォームID
@@ -68,12 +68,15 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
         insClaimReplies.setReplyContext(insClaimRepliesDto.getReplyContext());
         // ログインユーザ
         insClaimReplies.setLastModifiedBy(insClaimRepliesDto.getLastModifiedBy());
-        insClaimRepliesDataMapper.insClaimReplies(insClaimReplies);
+        int insClaimRepliesNum = insClaimRepliesDataMapper.insClaimReplies(insClaimReplies);
+        if (insClaimRepliesNum == 0) {
+            return 0;
+        }
+
         // 「添付ファイル」の新規登録
-        ReactUseFiles files = new ReactUseFiles();
+        Files files = new Files();
         // 自動生成GIUD
-        String fileId = insClaimRepliesDataMapper.getUuid();
-        files.setId(fileId);
+        files.setId(utilService.GetGuid());   
         // セッションのプラットフォームID
         files.setPlatformId(insClaimRepliesDto.getPlatformId());
         // セッション情報のCaseId
@@ -88,13 +91,17 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
         files.setFileSize(insClaimRepliesDto.getFileSize());
         // ログインユーザ
         files.setRegisterUserId(insClaimRepliesDto.getRegisterUserId());
-        insClaimRepliesDataMapper.insClaimRepliesDataFiles(files);
+        int insClaimRepliesDataFilesNum = insClaimRepliesDataMapper.insClaimRepliesDataFiles(files);
+        if (insClaimRepliesDataFilesNum == 0) {
+            return 0;
+        }
+
         // 「案件-添付ファイルリレーション」新規登録
         CaseFileRelations caseFileRelations = new CaseFileRelations();
         // 反訴への回答.id
-        caseFileRelations.setRelatedId(repliesId);
+        caseFileRelations.setRelatedId(utilService.GetGuid());
         // 添付ファイル.id
-        caseFileRelations.setFileId(fileId);
+        caseFileRelations.setFileId(utilService.GetGuid());
         // セッションのプラットフォームID
         caseFileRelations.setPlatformId(insClaimRepliesDto.getPlatformId());
         // セッション情報のCaseId
@@ -102,5 +109,10 @@ public class CouAnswerLoginServiceImpl implements CouAnswerLoginService {
         // ログインユーザ
         caseFileRelations.setLastModifiedBy(insClaimRepliesDto.getLastModifiedBy());
         insClaimRepliesDataMapper.insClaimRepliesDataFilesRelations(caseFileRelations);
+        int insClaimRepliesDataFilesRelationsNum = insClaimRepliesDataMapper.insClaimRepliesDataFiles(files);
+        if (insClaimRepliesDataFilesRelationsNum == 0) {
+            return 0;
+        }    
+    return 1;
     }
 }

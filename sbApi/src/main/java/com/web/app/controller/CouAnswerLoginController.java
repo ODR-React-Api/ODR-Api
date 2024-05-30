@@ -67,12 +67,23 @@ public class CouAnswerLoginController {
     @ApiOperation("反訴への回答データ新規登録")
     @PostMapping("/insClaimRepliesData")
     public Response insClaimRepliesData(@RequestBody InsClaimRepliesDto insClaimRepliesDto) {
-        try {
-            couAnswerLoginService.insClaimRepliesData(insClaimRepliesDto);
-            return AjaxResult.success("反訴への回答データ新規登録に成功しました!");
-        } catch (Exception e) {
-            AjaxResult.fatal("反訴への回答データ新規登録に失敗しました!", e);
-            return null;
+        // セッションのプラットフォームID
+        String platformId = insClaimRepliesDto.getPlatformId();
+        // セッション情報のCaseId
+        String caseId = insClaimRepliesDto.getCaseId();
+        if (caseId != null && platformId != null) {
+            try {
+                int res = couAnswerLoginService.insClaimRepliesData(insClaimRepliesDto);
+                if(res == 0){
+                    return AjaxResult.success("反訴への回答データ新規登録に失敗しました!");
+                }
+                return  AjaxResult.success("反訴への回答データ新規登録に成功しました!");                
+            } catch (Exception e) {
+                AjaxResult.fatal("反訴への回答データ新規登録に失敗しました!", e);
+                return null;
+            }
+        }else{
+            return AjaxResult.error("セッションを取得しない。");
         }
     }
 }

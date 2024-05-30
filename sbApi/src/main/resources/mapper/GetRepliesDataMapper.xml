@@ -34,7 +34,7 @@
         WHERE
             case_replies.CaseId = #{CaseId} 
             and case_replies.PlatformId = #{PlatformId}  
-            and case_replies.Status = 0
+            and case_replies.Status = 1
             and case_replies.DeleteFlag = 0
             and case_file_relations.CaseId = case_replies.CaseId 
             and case_file_relations.PlatformId = #{PlatformId} 

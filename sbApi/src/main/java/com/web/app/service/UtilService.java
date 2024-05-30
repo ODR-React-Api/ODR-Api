@@ -42,7 +42,4 @@ public interface UtilService {
     // 種類マスタ情報取得
     List<MasterTypes> GetMasterTypeName(String type, String languageId, String platformId);
 
-    // 案件データ取得
-    String findCasesByCid(String caseId, String platformId);
-
 }

@@ -12,7 +12,6 @@ import lombok.Data;
  * @version 1.0
  */
 @ApiModel
-@Data
 public class ReactUseFiles implements Serializable {
     // バッファリング
     private static final long serialVersionUID = 1L;
@@ -32,4 +31,20 @@ public class ReactUseFiles implements Serializable {
     private Integer FileSize;
     // ユーザーID
     private String RegisterUserId;
+    public void setRegisterUserId(String registerUserId2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setRegisterUserId'");
+    }
+    public void setFileSize(Integer fileSize2) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'setFileSize'");
+    }
+    public void setFileUrl(String fileUrl2) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'setFileUrl'");
+    }
+    public void setFileExtension(String fileExtension2) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'setFileExtension'");
+    }
 }

@@ -305,18 +305,4 @@ public class UtilServiceImpl implements UtilService {
     public List<MasterTypes> GetMasterTypeName(String type, String languageId, String platformId) {
         return commonMapper.FindMasterTypeName(type, languageId, platformId);
     }
-
-    /**
-     * 案件データ取得
-     *
-     * @param caseId セッション情報のcaseid
-     * @param PlatformId セッション情報のプラットフォームID
-     * @return casesByCidList
-     * @throws Exception エラーの説明内容
-     */ 
-    @Override
-    public String findCasesByCid(String caseId, String platformId) {
-        String findCasesByCid = commonMapper.findCasesByCid(caseId, platformId);
-        return findCasesByCid;
-    }
 }

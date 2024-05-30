@@ -19,5 +19,5 @@ public interface CouAnswerLoginService {
     List<RepliesContext> getRepliesContext(String caseId, String platformId);
 
     // API_反訴への回答データ新規登録
-    void insClaimRepliesData(InsClaimRepliesDto insClaimRepliesDto);
+    Integer insClaimRepliesData(InsClaimRepliesDto insClaimRepliesDto);
 }
