@@ -62,7 +62,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     // API_和解案編集依頼データ更新
     @Autowired
     private UpdNegotiationsEditMapper updNegotiationsEditMapper;
-    
+
     // API_和解案編集依頼データ新規登録
     @Autowired
     private InsNegotiationsEditMapper insNegotiationsEditMapper;
@@ -113,7 +113,6 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
      * @return 戻り値は「 下書き保存処理」が返された値
      * @throws Exception エラーの説明内容
      */
-    @SuppressWarnings("null")
     @Override
     public SettlementDraftDataResult settlementDraftInfoSearch(
             FromSessionLogin sessionLogin) {

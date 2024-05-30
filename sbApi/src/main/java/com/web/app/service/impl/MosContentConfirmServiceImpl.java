@@ -118,7 +118,6 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
           fileMaxId, s09ScreenIntelligence, s09ScreenIntelligence.getUid(), deleteFlag0);
     }
     // 8.③～⑦の登録処理が正常終了の場合、アクション履歴登録を行う
-    // TODO
     if (returnFlag == 0) {
       // ActionHistories
       ActionHistories actionHistories = new ActionHistories();
@@ -193,7 +192,6 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // 案件ステータス
     insertCases.setCaseStatus("0000");
     // タイトル名
-    // TODO(希望解决方法应该是list，应该判断一下有几个值)
     insertCases
         .setCaseTitle(s09ScreenIntelligence.getProductName() + s09ScreenIntelligence.getExpectResloveTypeValue());
     // 申立て日
@@ -205,7 +203,6 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // 回答開始日
     insertCases.setReplyStartDate(new Date());
     // 回答期限日
-    // TODO(システム日付 + master_platforms.ReplyLimitDays 加到时分秒哪一个上面？)
     insertCases.setReplyEndDate(new Date());
     // TBL「案件（cases）」の新規登録
     returnFlag = insPetitionsDataMapper.insertCases(insertCases);
@@ -294,12 +291,10 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // 購入金額
     updateCasePetitions.setPrice(s09ScreenIntelligence.getPrice());
     // 申立ての種類
-    // TODO(有可能是List)
     updateCasePetitions.setPetitionTypeValue(s09ScreenIntelligence.getPetitionTypeValue());
     // 申立て内容
     updateCasePetitions.setPetitionContext(s09ScreenIntelligence.getPetitionContext());
     // 希望する解決方法
-    // TODO(有可能是List)
     updateCasePetitions.setExpectResloveTypeValue(s09ScreenIntelligence.getExpectResloveTypeValue());
     // その他
     updateCasePetitions.setOther(s09ScreenIntelligence.getOther());
