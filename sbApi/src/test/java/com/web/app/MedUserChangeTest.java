@@ -17,7 +17,6 @@ import com.web.app.mapper.DelAboutCasesMediationsMapper;
 import com.web.app.mapper.UpdAboutCasesInfoMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
-import com.web.app.domain.Entity.Cases;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -154,9 +153,7 @@ public class MedUserChangeTest {
 
         String caseId = "5500000055";
         ObjectMapper objectMapper = new ObjectMapper();
-        // String jsonData = objectMapper.writeValueAsString(caseId);
 
-        doThrow(new RuntimeException()).when(updAboutCasesInfoMapper).updAboutCasesInfo(null, true);
         // 请求并接收返回值
         MvcResult mvcResult = mockMvc
                 .perform(get("/MedUserChange/updAboutCasesInfo").param("caseId",
