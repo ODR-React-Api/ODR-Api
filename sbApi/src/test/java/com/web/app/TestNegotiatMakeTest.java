@@ -1,11 +1,16 @@
 package com.web.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doReturn;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -13,9 +18,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
+import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.NegotiatMake.NegotiationsFile;
 import com.web.app.domain.NegotiatMake.UpdNegotiationsFile;
 import com.web.app.domain.constants.Constants;
+import com.web.app.mapper.InsNegotiationsEditMapper;
+import com.web.app.service.NegotiatMakeService;
 import lombok.SneakyThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import java.util.ArrayList;
@@ -37,9 +45,17 @@ public class TestNegotiatMakeTest {
     public static final String strMsgE = Constants.MSG_ERROR;
     public static final String strMsgS = Constants.MSG_SUCCESS;
     public static final String strMsgN = null;
+
+    @SpyBean
+    InsNegotiationsEditMapper insNegotiationsEditMapperMock;
+
+    @Mock
+    NegotiatMakeService NegotiatMakeService;
+
     // 按照名称进行匹配并注入
     @Resource
     protected MockMvc mockMvc;
+
     // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
     @SneakyThrows
     // 测试方法声明注解
@@ -68,7 +84,7 @@ public class TestNegotiatMakeTest {
         updNegotiationsFiles.add(updNegotiationsFile);
         negotiationsFile.setUpdNegotiationsFile(updNegotiationsFiles);
 
-        juTest(negotiationsFile, addPath, strMsgS);
+        juTest(mockMvc, negotiationsFile, addPath, strMsgS);
 
     }
 
@@ -90,7 +106,7 @@ public class TestNegotiatMakeTest {
         List<UpdNegotiationsFile> updNegotiationsFiles = new ArrayList<>();
         negotiationsFile.setUpdNegotiationsFile(updNegotiationsFiles);
 
-        juTest(negotiationsFile, addPath, strMsgS);
+        juTest(mockMvc2, negotiationsFile, addPath, strMsgS);
     }
 
     // 按照名称进行匹配并注入
@@ -110,7 +126,7 @@ public class TestNegotiatMakeTest {
         List<UpdNegotiationsFile> updNegotiationsFiles = null;
         negotiationsFile.setUpdNegotiationsFile(updNegotiationsFiles);
 
-        juTest(negotiationsFile, addPath, strMsgS);
+        juTest(mockMvc5, negotiationsFile, addPath, strMsgS);
     }
 
     // 共通値設定
@@ -144,7 +160,7 @@ public class TestNegotiatMakeTest {
         negotiationsFile.setFlag(2);
         // ★★★コントローラのcatchテスト
         negotiationsFile.setPaymentEndDate("あ");
-        juTest1(negotiationsFile, addPath, strMsgN);
+        juTest1(mockMvc11, negotiationsFile, addPath, strMsgN);
     }
 
     // 按照名称进行匹配并注入
@@ -157,10 +173,27 @@ public class TestNegotiatMakeTest {
     @Test
     public void testInsNegotiationsEdit5() {
         NegotiationsFile negotiationsFile = new NegotiationsFile();
-        // ログインユーザが申立人、相手方ではない場合、return error
+        // ログインユーザが申立人、相手方ではない場合、return Constants.RESULT_STATE_ERROR
         negotiationsFile.setFlag(3);
 
-        juTest(negotiationsFile, addPath, strMsgE);
+        juTest(mockMvc4, negotiationsFile, addPath, strMsgE);
+    }
+
+    // 按照名称进行匹配并注入
+    @Resource
+    protected MockMvc mockMvc0;
+
+    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+    @SneakyThrows
+    // 测试方法声明注解
+    @Test
+    public void testInsNegotiationsEdit6() {
+        NegotiationsFile negotiationsFile = new NegotiationsFile();
+        // ログインユーザが申立人場合
+        negotiationsFile.setFlag(1);
+        // ★★★ 新規登録失敗の場合
+        doReturn(0).when(insNegotiationsEditMapperMock).insertCaseNegotiations(Mockito.any(CaseNegotiations.class));
+        juTest1(mockMvc0, negotiationsFile, addPath, strMsgN);
     }
 
     // 按照名称进行匹配并注入
@@ -204,7 +237,7 @@ public class TestNegotiatMakeTest {
         updNegotiationsFile3.setId(null);
         updNegotiationsFiles.add(updNegotiationsFile3);
         negotiationsFile.setUpdNegotiationsFile(updNegotiationsFiles);
-        juTest(negotiationsFile, updPath, strMsgS);
+        juTest(mockMvc1, negotiationsFile, updPath, strMsgS);
 
     }
 
@@ -224,7 +257,7 @@ public class TestNegotiatMakeTest {
         // ★★★添付ファイルがnull場合
         List<UpdNegotiationsFile> updNegotiationsFiles = null;
         negotiationsFile.setUpdNegotiationsFile(updNegotiationsFiles);
-        juTest(negotiationsFile, updPath, strMsgS);
+        juTest(mockMvc3, negotiationsFile, updPath, strMsgS);
 
     }
 
@@ -244,7 +277,7 @@ public class TestNegotiatMakeTest {
         // ★★★添付ファイルがない場合listのサイズは0;
         List<UpdNegotiationsFile> updNegotiationsFiles = new ArrayList<>();
         negotiationsFile.setUpdNegotiationsFile(updNegotiationsFiles);
-        juTest(negotiationsFile, updPath, strMsgS);
+        juTest(mockMvc9, negotiationsFile, updPath, strMsgS);
 
     }
 
@@ -260,12 +293,13 @@ public class TestNegotiatMakeTest {
         NegotiationsFile negotiationsFile = new NegotiationsFile();
         // ★★★ログインユーザが申立人、相手方ではない場合、return Constants.RESULT_STATE_ERROR
         negotiationsFile.setFlag(3);
-        juTest(negotiationsFile, updPath, strMsgE);
+        juTest(mockMvc6, negotiationsFile, updPath, strMsgE);
     }
 
     // 按照名称进行匹配并注入
     @Resource
     protected MockMvc mockMvc7;
+
     // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
     @SneakyThrows
     // 测试方法声明注解
@@ -277,7 +311,7 @@ public class TestNegotiatMakeTest {
         // ★★★CaseNegotiationsのidがnullの場合、更新失敗
         negotiationsFile.setId(null);
         String strMsgN = null;
-        juTest1(negotiationsFile, updPath, strMsgN);
+        juTest1(mockMvc7, negotiationsFile, updPath, strMsgN);
 
     }
 
@@ -307,7 +341,7 @@ public class TestNegotiatMakeTest {
         updNegotiationsFiles.add(updNegotiationsFile);
         negotiationsFile.setUpdNegotiationsFile(updNegotiationsFiles);
 
-        juTest1(negotiationsFile, updPath, strMsgN);
+        juTest1(mockMvc8, negotiationsFile, updPath, strMsgN);
 
     }
 
@@ -336,7 +370,7 @@ public class TestNegotiatMakeTest {
         updNegotiationsFiles.add(updNegotiationsFile);
         negotiationsFile.setUpdNegotiationsFile(updNegotiationsFiles);
 
-        juTest1(negotiationsFile, updPath, strMsgN);
+        juTest1(mockMvc13, negotiationsFile, updPath, strMsgN);
 
     }
 
@@ -357,7 +391,8 @@ public class TestNegotiatMakeTest {
     }
 
     // Junit共通
-    private void juTest(NegotiationsFile negotiationsFile, String path, String strMsg) throws Exception {
+    private void juTest(MockMvc mockMvc, NegotiationsFile negotiationsFile, String path, String strMsg)
+            throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData2 = objectMapper.writeValueAsString(negotiationsFile);
 
@@ -377,8 +412,10 @@ public class TestNegotiatMakeTest {
         // 断言
         assertEquals(strMsg, msg);
     }
+
     // Junit共通
-    private void juTest1(NegotiationsFile negotiationsFile, String path, String strMsg) throws Exception {
+    private void juTest1(MockMvc mockMvc, NegotiationsFile negotiationsFile, String path, String strMsg)
+            throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData2 = objectMapper.writeValueAsString(negotiationsFile);
 

@@ -584,8 +584,11 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         caseNegotiations.setLastModifiedDate(getSystemtime());
         caseNegotiations.setLastModifiedBy(negotiationsFile.getUserId());
         // 「和解案」新規登録
-        insNegotiationsEditMapper.insertCaseNegotiations(caseNegotiations);
-
+        int result = insNegotiationsEditMapper.insertCaseNegotiations(caseNegotiations);
+        // 新規登録失敗の場合
+        if (result == Constants.RESULT_STATE_ERROR) {
+            throw new RuntimeException();
+        }
         // 画面からのファイルはnullではない場合、「添付ファイル」と「案件-添付ファイルリレーション」新規登録
         List<UpdNegotiationsFile> updNegotiationsFiles = negotiationsFile.getUpdNegotiationsFile();
         // // 添付ファイルがあるか判定
