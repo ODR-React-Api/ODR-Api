@@ -272,6 +272,9 @@ public class UtilServiceImpl implements UtilService {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             Date date = sdf.parse(time);
+            if(date == null) {
+                return false;
+            }
             return true;
         } catch (Exception e) {
             return false;

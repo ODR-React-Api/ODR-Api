@@ -16,7 +16,7 @@ public interface NegotiatMakeService {
     SettlementDraftDataResult settlementDraftDataInfoSearch(FromSessionLogin fromSessionLogin);
 
     // 下書き保存処理
-    SettlementDraftDataResult settlementDraftInfoSearch(FromSessionLogin sessionLogin);
+        SettlementDraftDataResult updInsNegotiationsTemp(FromSessionLogin sessionLogin) throws Exception;
 
     // 和解案編集依頼データ新規登録
     int addNegotiationsEdit(NegotiationsFile negotiationsFile) throws Exception;

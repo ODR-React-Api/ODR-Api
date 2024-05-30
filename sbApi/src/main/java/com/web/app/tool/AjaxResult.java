@@ -3,12 +3,11 @@ package com.web.app.tool;
 import com.web.app.domain.Response;
 import com.web.app.domain.AppLog;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class AjaxResult {
   public boolean result = true;
-  @SuppressWarnings("rawtypes")
   static Response rs = new Response();
 
-  @SuppressWarnings("rawtypes")
   public static Response success(String msg) {
     rs = new Response();
     rs.code = 200;
@@ -17,7 +16,6 @@ public class AjaxResult {
     return rs;
   }
 
-  @SuppressWarnings("rawtypes")
   public static <T> Response success(String msg, T o) {
     rs = new Response<T>();
     rs.code = 200;
@@ -27,7 +25,6 @@ public class AjaxResult {
     return rs;
   }
 
-  @SuppressWarnings("rawtypes")
   public static Response error(String msg) {
 
     rs = new Response();

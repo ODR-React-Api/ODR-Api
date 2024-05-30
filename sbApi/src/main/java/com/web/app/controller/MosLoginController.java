@@ -1,9 +1,7 @@
 package com.web.app.controller;
 
 import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +17,6 @@ import com.web.app.service.MosLoginService;
 import com.web.app.service.UtilService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -33,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
  * @version 1.0
  */
 
-@Api(tags = "下書き用準備データ登録")
+@Api(tags = "申立登録画面")
 @RestController
 @RequestMapping("/MosLogin")
 public class MosLoginController {
@@ -43,137 +39,107 @@ public class MosLoginController {
     @Autowired
     private UtilService utilService;
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "loginUser", value = "loginUser", dataType = "String", required = true, paramType = ""),
-            @ApiImplicitParam(name = "userId", value = "userId", dataType = "String", required = true, paramType = "")
-    })
-
     /**
-     * 下書き用準備データ登録
+     * 申立て登録画面の初期画面全ての内容を取得する。
+     * API_画面制御表示項目取得
+     * API_申立て下書き保存データ取得
      *
-     * @param uuId      自動採番
-     * @param loginUser ログインユーザ
-     * @param userId    セッション.ユーザID
-     * @return case_petitions.idとcase_relations.PetitionUserId
-     * @throws Exception TBL「申立（case_petitions）、案件別個人情報リレーション（case_relations）」の新規登録失败!
+     * @param sessionInfo セッション.ユーザID セッション.PlatformId
+     * @return PictureDisplay
+     *         申立て登録画面の初期画面全ての内容
+     * @throws Exception 取得失敗時異常
      */
     @SuppressWarnings("rawtypes")
-    @ApiOperation("下書き用準備データ登録")
-    @GetMapping("/insRelationsTemp")
-    public Response insRelationsTemp(String loginUser, String userId) {
+    @ApiOperation("画面表示")
+    @PostMapping("/getPlatformId")
+    public Response pictureDisplay(@RequestBody SessionInfo sessionInfo) {
+        // 初期画面全ての内容
+        MosLogin mospictureResult = new MosLogin();
+
         try {
-            // 自動採番
-            String uuId = utilService.GetGuid();
-            Relations relations = new Relations();
-            relations.setUuId(uuId);
-            relations.setUserId(userId);
-            // TBL「申立（case_petitions）」の新規登録
-            // TBL「案件別個人情報リレーション（case_relations）」の新規登録
-            mosLoginService.insRelationsTemp(uuId, loginUser, userId);
-            return AjaxResult.success("登録成功!", relations);
+
+            // 画面制御表示項目取得
+            GetPlatform platformList = mosLoginService.getPlatform(sessionInfo);
+
+            mospictureResult.setGetPlatform(platformList);
+            if (platformList.getUseOther() == 1) {
+                return AjaxResult.success("拡張項目の表示状態が1の画面表示成功!", mospictureResult);
+            } else if (platformList.getUseOther() == 0) {
+
+                // 申立て下書き保存データ取得
+                GetPetitionTemp petitionsTempList = mosLoginService.getPetitionsTemp(sessionInfo);
+
+                if (petitionsTempList == null) {    
+                    // 自動採番
+                    String uuId = utilService.GetGuid();
+                    // API「下書き用準備データ登録」
+                    Relations relations = mosLoginService.insRelationsTemp(uuId, sessionInfo.getLoginUser(),
+                            sessionInfo.getSessionId());
+                    return AjaxResult.success("登録成功", relations);
+                } else {
+                    mospictureResult.setGetPetitionTemp(petitionsTempList);
+                    return AjaxResult.success("拡張項目の表示状態が0の画面表示成功!", mospictureResult);
+                }
+            } else {
+                return AjaxResult.success("拡張項目の表示状態が0,1以外の画面表示成功!", mospictureResult);
+            }
         } catch (Exception e) {
-            AjaxResult.fatal("TBL「申立（case_petitions）、案件別個人情報リレーション（case_relations）」の新規登録失败!", e);
+            AjaxResult.fatal("取得異常!", e);
             return null;
         }
     }
 
     /**
-   * 申立て登録画面の初期画面全ての内容を取得する。
-   * API_画面制御表示項目取得
-   * API_申立て下書き保存データ取得
-   *
-   * @param sessionInfo セッション.ユーザID セッション.PlatformId
-   * @return PictureDisplay
-   *         申立て登録画面の初期画面全ての内容
-   * @throws Exception 取得失敗時異常
-   */
-  @SuppressWarnings("rawtypes")
-  @ApiOperation("画面表示")
-  @PostMapping("/getPlatformId")
-  public Response pictureDisplay(@RequestBody SessionInfo sessionInfo) {
-    // 初期画面全ての内容
-    MosLogin mospictureResult = new MosLogin();
-
-    try {
-
-      // 画面制御表示項目取得
-      GetPlatform platformList = mosLoginService.getPlatform(sessionInfo);
-
-      mospictureResult.setGetPlatform(platformList);
-      if (platformList.getUseOther() == 1) {
-        return AjaxResult.success("拡張項目の表示状態が1の画面表示成功!", mospictureResult);
-      } else if (platformList.getUseOther() == 0) {
-
-        // 申立て下書き保存データ取得
-        GetPetitionTemp petitionsTempList = mosLoginService.getPetitionsTemp(sessionInfo);
-
-        if (petitionsTempList == null) {
-          // TODO API「下書き用準備データ登録」を呼び出す。
-          return AjaxResult.success("API「下書き用準備データ登録」を呼び出す");
-        } else {
-          mospictureResult.setGetPetitionTemp(petitionsTempList);
-          return AjaxResult.success("拡張項目の表示状態が0の画面表示成功!", mospictureResult);
+     * API_申立て下書きデータ登録
+     * 「下書き保存」ボタンを押下するたびに、画面に入力した内容を下書き保存のデータとしてDBへ反映する。
+     * 「下書き保存」ボタン押下のたびに、テーブルに該当する下書き保存のデータを上書きする。
+     *
+     * @param screenInfo 画面に入力した内容
+     * @return num 申立て下書きデータ登録成功の件数
+     * @throws Exception 登録失敗時異常
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("申立て下書きデータ取得")
+    @PostMapping("/insRepliesTemp")
+    public Response insRepliesTemp(@RequestBody ScreenInfo screenInfo) {
+        try {
+            // 申立て下書きデータ登録
+            int num = mosLoginService.insRepliesTemp(screenInfo);
+            if (num == 0) {
+                return AjaxResult.success("申立て下書きデータ登録成功0件!");
+            }
+            return AjaxResult.success("申立て下書きデータ登録成功有り件!", num);
+        } catch (Exception e) {
+            AjaxResult.fatal("登録異常!", e);
+            return null;
         }
-      } else {
-        return AjaxResult.success("拡張項目の表示状態が0,1以外の画面表示成功!", mospictureResult);
-      }
-    } catch (Exception e) {
-      AjaxResult.fatal("取得異常!", e);
-      return null;
     }
-  }
 
-  /**
-   * API_申立て下書きデータ登録
-   * 「下書き保存」ボタンを押下するたびに、画面に入力した内容を下書き保存のデータとしてDBへ反映する。
-   * 「下書き保存」ボタン押下のたびに、テーブルに該当する下書き保存のデータを上書きする。
-   *
-   * @param screenInfo 画面に入力した内容
-   * @return num 申立て下書きデータ登録成功の件数
-   * @throws Exception 登録失敗時異常
-   */
-  @SuppressWarnings("rawtypes")
-  @ApiOperation("申立て下書きデータ取得")
-  @PostMapping("/insRepliesTemp")
-  public Response insRepliesTemp(@RequestBody ScreenInfo screenInfo) {
-    try {
-      // 申立て下書きデータ登録
-      int num = mosLoginService.insRepliesTemp(screenInfo);
-      if (num == 0) {
-        return AjaxResult.success("申立て下書きデータ登録成功0件!");
-      }
-      return AjaxResult.success("申立て下書きデータ登録成功有り件!", num);
-    } catch (Exception e) {
-      AjaxResult.fatal("登録異常!", e);
-      return null;
+    /**
+     * API_販売者・商品情報仮取得
+     * 画面項目の「商品ＩＤ」に入力した値をキーに、本APIに固定値で設定している購入商品、販売者、販売者メールアドレスを取得する。
+     * 取得無しの場合は空値を返す。
+     *
+     * @param goodsId 画面.商品ID
+     * @return 販売者・商品情報仮取得内容
+     * @throws Exception 取得失敗時異常
+     */
+    @SuppressWarnings({ "rawtypes" })
+    @ApiOperation("販売者・商品情報仮取得")
+    @PostMapping("/getGoodsInfo")
+    public Response getGoodsInfo(@RequestBody String goodsId) {
+        try {
+            // 販売者・商品情報仮取得
+            HashMap<String, String> goodsInfoResult = mosLoginService.getGoodsInfo(goodsId);
+            if (goodsInfoResult.get("goodsName") != null || goodsInfoResult.get("sellerEmail") != null
+                    || goodsInfoResult.get("sellerName") != null) {
+                return AjaxResult.success("販売者・商品情報仮取得成功有り件!", goodsInfoResult);
+            } else {
+                return AjaxResult.success("販売者・商品情報仮取得0件!");
+            }
+        } catch (Exception e) {
+            AjaxResult.fatal("取得異常!", e);
+            return null;
+        }
     }
-  }
-
-  /**
-   * API_販売者・商品情報仮取得
-   * 画面項目の「商品ＩＤ」に入力した値をキーに、本APIに固定値で設定している購入商品、販売者、販売者メールアドレスを取得する。
-   * 取得無しの場合は空値を返す。
-   *
-   * @param goodsId 画面.商品ID
-   * @return 販売者・商品情報仮取得内容
-   * @throws Exception 取得失敗時異常
-   */
-  @SuppressWarnings({ "rawtypes" })
-  @ApiOperation("販売者・商品情報仮取得")
-  @PostMapping("/getGoodsInfo")
-  public Response getGoodsInfo(@RequestBody String goodsId) {
-    try {
-      // 販売者・商品情報仮取得
-      HashMap<String, String> goodsInfoResult = mosLoginService.getGoodsInfo(goodsId);
-      if (goodsInfoResult.get("goodsName") != null || goodsInfoResult.get("sellerEmail") != null
-          || goodsInfoResult.get("sellerName") != null) {
-        return AjaxResult.success("販売者・商品情報仮取得成功有り件!", goodsInfoResult);
-      } else {
-        return AjaxResult.success("販売者・商品情報仮取得0件!");
-      }
-    } catch (Exception e) {
-      AjaxResult.fatal("取得異常!", e);
-      return null;
-    }
-  }
 }
