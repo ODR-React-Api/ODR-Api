@@ -232,7 +232,6 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
 
     // 新規登録API「添付ファイル」新規登録
     // TODO 内部ロジック生成ファイルURL 再調査
-    // TODO 内部ロジック生成ファイルサイ 再調査
     @Transactional
     private List<String> insInsertCaseFiles(FromSessionLogin sessionLogin) {
         SettlementDraftDataFiles files = new SettlementDraftDataFiles();
@@ -449,7 +448,6 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
 
     // 更新登録「添付ファイル」新規登録
     // TODO 内部ロジック生成ファイルURL 再調査
-    // TODO 内部ロジック生成ファイルサイ 再調査
     @Transactional
     private List<String> updInsertCaseFiles(FromSessionLogin sessionLogin) {
         SettlementDraftDataFiles files = new SettlementDraftDataFiles();
@@ -720,11 +718,9 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         files.setCaseId(negotiationsFile.getCaseId());
         files.setFileName(updNegotiationsFile.getFileName());
         files.setFileExtension(updNegotiationsFile.getFileExtension());
-        // TODO
-        // 内部ロジック生成ファイルUR
+        // TODO 内部ロジック生成ファイルUR
         files.setFileUrl(updNegotiationsFile.getFileUrl());
         files.setFileBlobStorageId(null);
-        // TODO
         // 内部ロジック生成ファイルサイ
         files.setFileSize(updNegotiationsFile.getFileSize());
         files.setRegisterUserId(negotiationsFile.getUserId());
