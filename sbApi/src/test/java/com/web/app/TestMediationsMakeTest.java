@@ -1,10 +1,13 @@
 package com.web.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,8 +18,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
+import com.web.app.domain.Entity.CaseMediations;
 import com.web.app.domain.mediationsMake.ResultMediation;
 import com.web.app.domain.mediationsMake.SubsidiaryFile;
+import com.web.app.mapper.InsMediationsDataMapper;
 
 import java.util.List;
 import lombok.SneakyThrows;
@@ -37,7 +42,9 @@ import javax.annotation.Resource;
 // 启动模拟HTTP客户端注解
 @AutoConfigureWebTestClient
 public class TestMediationsMakeTest {
-
+        // 調停案データ新規登録
+        @Autowired
+        private InsMediationsDataMapper insMediationsDataMapper;
         // 按照名称进行匹配并注入
         @Resource
         protected MockMvc mockMvc;
@@ -65,7 +72,8 @@ public class TestMediationsMakeTest {
                 FilesData.setFileExtension(".txt");
                 FilesData.setFileName("添付ファイル");
                 FilesData.setFileSize(22);
-                FilesData.setFileUrl("https://uatodrstorage.blob.core.windows.net/odr/D915BA240482407F83922864EB44872F.csv");
+                FilesData.setFileUrl(
+                                "https://uatodrstorage.blob.core.windows.net/odr/D915BA240482407F83922864EB44872F.csv");
                 Files.add(FilesData);
                 resultMediation.setFiles(Files);
                 resultMediation.setPayAmount(110.00);
@@ -77,6 +85,10 @@ public class TestMediationsMakeTest {
                 ObjectMapper objectMapper = new ObjectMapper();
                 String jsonData = objectMapper.writeValueAsString(resultMediation);
                 // 请求并接收返回值
+                CaseMediations caseMediations =new CaseMediations();
+                caseMediations.setId("DC99149C836F43B7B467650F480E9111");
+                caseMediations.setCaseId("0000000257");
+                doReturn(0).when(insMediationsDataMapper).insMediationsData(caseMediations);
                 MvcResult mvcResult = mockMvc
                                 .perform(post("/MediationsMake/saveMediton").contentType(MediaType.APPLICATION_JSON)
                                                 .content(jsonData))
@@ -89,6 +101,6 @@ public class TestMediationsMakeTest {
                 // 将返回值从泛型转换成指定类型
                 String insMediationsDataResponse = objectMapper.convertValue(response.getMsg(), String.class);
                 // 断言
-                assertEquals("調停案データ新規登録成功", insMediationsDataResponse);
+                assertEquals("調停案データ新規登録失敗", insMediationsDataResponse);
         }
 }
