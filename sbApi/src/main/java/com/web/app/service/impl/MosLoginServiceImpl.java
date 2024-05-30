@@ -25,6 +25,7 @@ import com.web.app.domain.MosLogin.FileId;
 import com.web.app.domain.MosLogin.GetPetitionTemp;
 import com.web.app.domain.MosLogin.GetPlatform;
 import com.web.app.domain.MosLogin.PetitionTemp;
+import com.web.app.domain.MosLogin.Relations;
 import com.web.app.domain.MosLogin.ScaleItems;
 import com.web.app.domain.MosLogin.ScreenInfo;
 import com.web.app.domain.MosLogin.SessionInfo;
@@ -58,6 +59,8 @@ public class MosLoginServiceImpl implements MosLoginService {
 
     @Autowired
     private InsRelationsTempMapper insRelationsTempMapper;
+    // API_下書き用準備データ登録の戻り値設定
+    Relations relations = new Relations();
 
     /**
      * TBL「申立（case_petitions）」の新規登録
@@ -68,12 +71,17 @@ public class MosLoginServiceImpl implements MosLoginService {
      * @param userId    セッション.ユーザID
      */
     @Override
-    public int insRelationsTemp(String uuId, String loginUser, String userId) {
+    public Relations insRelationsTemp(String uuId, String loginUser, String userId) {
         // TBL「申立（case_petitions）」の新規登録
         insRelationsTempMapper.insCasePetitions(uuId, loginUser);
         // TBL「案件別個人情報リレーション（case_relations）」の新規登録
-        int insCaseRelationsCount = insRelationsTempMapper.insCaseRelations(uuId, loginUser, userId);
-        return insCaseRelationsCount;
+        insRelationsTempMapper.insCaseRelations(uuId, loginUser, userId);
+        // 戻り値として設定
+        // case_petitions.id
+        relations.setUuId(uuId);
+        // case_relations.PetitionUserId
+        relations.setUserId(userId);
+        return relations;
     }
 
     /**
@@ -266,10 +274,9 @@ public class MosLoginServiceImpl implements MosLoginService {
         // ⓵ユーザ情報の取得
         OdrUsers userInfo = insRepliesTempMapper.selectOdrUsers(screenInfo.getSessionId());
 
-        // TODO API「下書き用準備データ登録」
-        // Case case=InsRelationsTemp()
-        String case_petitions_id = "FFFF87C7B9C5425BB7D15DFCA7A59AE8";
-        String case_relations_PetitionUserId = "U00250";
+        // API「下書き用準備データ登録」の戻り値
+        String case_petitions_id = relations.getUuId();
+        String case_relations_PetitionUserId = relations.getUserId();
 
         if (case_petitions_id != null && case_relations_PetitionUserId != null) {
             // ⓶共通関数「TBL「申立（case_petitions）」の更新」
