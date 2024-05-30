@@ -49,7 +49,7 @@ public class MedUserChangeController {
         try {
             int resultBoolean = medUserChangeService.delAboutCasesMediations(caseId);
             if (resultBoolean == 0) {
-                return AjaxResult.success(MessageConstants.S25010E, resultBoolean);
+                return AjaxResult.error(MessageConstants.S25010E);
             }
             return AjaxResult.success(Constants.MSG_SUCCESS, resultBoolean);
 
@@ -72,8 +72,11 @@ public class MedUserChangeController {
     @SuppressWarnings({ "rawtypes" })
     public Response updAboutCasesInfo(String caseId, String userType, Boolean withReason) throws Exception {
         try {
-            Boolean resultBoolean = medUserChangeService.updAboutCasesInfo(caseId, userType, withReason);
-            return AjaxResult.success(Constants.MSG_SUCCESS, resultBoolean);
+            int result = medUserChangeService.updAboutCasesInfo(caseId, userType, withReason);
+            if (result == 0) {
+                return AjaxResult.error(Constants.MSG_ERROR);
+            }
+            return AjaxResult.success(Constants.MSG_SUCCESS, result);
         } catch (Exception e) {
             AjaxResult.fatal(caseId, e);
             throw e;

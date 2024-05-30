@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.MosContentConfirm.ExtensionItem;
 import com.web.app.domain.MosContentConfirm.IdPetitionUserId;
@@ -21,6 +20,7 @@ import com.web.app.mapper.InsPetitionsDataMapper;
 import com.web.app.service.MosContentConfirmService;
 import com.web.app.service.CommonService;
 import com.web.app.service.UtilService;
+import com.web.app.domain.constants.Constants;
 
 /**
  * 申立て情報登録
@@ -42,9 +42,8 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
   /**
    * 申立て情報登録
    *
-   * @param s09ScreenIntelligence パラメータの説明内容
+   * @param s09ScreenIntelligence 画面の項目
    * @return
-   * @throws Exception
    */
   @Override
   public Integer LoginIntelligence(S09ScreenIntelligence s09ScreenIntelligence) {
@@ -55,11 +54,8 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // 自動採番のid（Id）
     String id = null;
 
-    // 案件種類
-    int relationType = 0;
-
     // 削除Flag1
-    short deleteFlag1 = 1;
+    short deleteFlag1 = 1; 
 
     // 削除Flag0
     short deleteFlag0 = 0;
@@ -79,6 +75,7 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
 
     // 自動採番のcid（CaseId）
     cid = utilService.GetGuid();
+
     // 3.TBL「案件（cases）」の新規登録
     returnFlag = insertCases(returnFlag, s09ScreenIntelligence, cid, userLanguageIdPlatformId);
 
@@ -94,7 +91,7 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
         userLanguageIdPlatformId);
 
     // 6.a案件-添付ファイルリレーションの取得
-    List<String> fileIdList = insPetitionsDataMapper.selectFileId(relationType, idPetitionUserId.getId());
+    List<String> fileIdList = insPetitionsDataMapper.selectFileId(Constants.CASE_PETITIONS, idPetitionUserId.getId());
 
     // 6.b上記取得(案件-添付ファイルリレーションの取得)有りの場合は関連のデータを初期化する
     if (fileIdList.size() != 0) {
@@ -117,16 +114,16 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
       returnFlag = insertFiles(returnFlag, fileMaxId, userLanguageIdPlatformId, cid, s09ScreenIntelligence,
           s09ScreenIntelligence.getUid(), deleteFlag0);
       // b.TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する
-      returnFlag = insertCaseFileRelations(returnFlag, userLanguageIdPlatformId, relationType, cid, idPetitionUserId,
+      returnFlag = insertCaseFileRelations(returnFlag, userLanguageIdPlatformId, Constants.CASE_PETITIONS, cid, idPetitionUserId,
           fileMaxId, s09ScreenIntelligence, s09ScreenIntelligence.getUid(), deleteFlag0);
     }
     // 8.③～⑦の登録処理が正常終了の場合、アクション履歴登録を行う
     // TODO
     if (returnFlag == 0) {
       // ActionHistories
-      // ActionHistories actionHistories = new ActionHistories();
+      ActionHistories actionHistories = new ActionHistories();
       // 共通API调用
-      // commonService.InsertActionHistories(actionHistories, null, false, true);
+      commonService.InsertActionHistories(actionHistories, null, false, true);
     }
 
     // 9.販売者メールアドレス登録有無の判定

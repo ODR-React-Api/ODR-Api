@@ -1,7 +1,15 @@
 package com.web.app.domain.MosContentConfirm;
+
 import java.io.Serializable;
 import lombok.Data;
 
+/**
+ * case_relationsの更新項目
+ * 
+ * @author DUC 王魯興
+ * @since 2024/05/29
+ * @version 1.0
+ */
 @Data
 public class UpdateCaseRelations implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -37,7 +45,7 @@ public class UpdateCaseRelations implements Serializable {
     private String traderUserEmail;
 
     // 申立Id
-    private  String casePetitions;
+    private String casePetitions;
 
     // 申立て人
     private String petitionUserId;
