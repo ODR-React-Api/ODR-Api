@@ -65,7 +65,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
                 return Constants.RESULT_STATE_SUCCESS;
             }
         } else {
-            int insStatus =InsNegotiationData(negotiatPreview);
+            int insStatus = InsNegotiationData(negotiatPreview);
             if (insStatus == Constants.RESULT_STATE_SUCCESS) {
                 return Constants.RESULT_STATE_SUCCESS;
             }
@@ -94,7 +94,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         caseNegotiations.setCaseId(negotiatPreview.getCaseId());
         if (userStance == "1") {
             caseNegotiations.setStatus(15);
-        }else if(userStance == "2"){
+        } else if (userStance == "2") {
             caseNegotiations.setStatus(2);
         }
         caseNegotiations.setExpectResloveTypeValue(negotiatPreview.getExpectResloveTypeValue());
@@ -360,11 +360,9 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         }
         actionHistories.setCaseStage(3);
         actionHistories.setUserId(negotiatPreview.getUserId());
-        if (Num.NUM15.equals(negotiatPreview.getStatus())) {
-            actionHistories.setUserType(1);
-        } else if (Num.NUM2.equals(negotiatPreview.getStatus())) {
-            actionHistories.setUserType(2);
-        }
+        String userStance = GetUserStance(negotiatPreview.getUserId(), negotiatPreview.getPlatformId(),
+                negotiatPreview.getCaseId());
+        actionHistories.setUserType(Integer.valueOf(userStance));
         actionHistories.setLastModifiedBy(negotiatPreview.getLastModifiedBy());
         return actionHistories;
     }

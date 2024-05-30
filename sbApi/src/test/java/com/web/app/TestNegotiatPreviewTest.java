@@ -2,6 +2,7 @@ package com.web.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -100,13 +102,19 @@ public class TestNegotiatPreviewTest {
         arrayList.add(file1);
         arrayList.add(file2);
         negotiatPreview.setFileList(arrayList);
+
+        ArrayList<String> listFileid = new ArrayList<>();
+        listFileid.add("2488FB3344214BF390EDF1E7E308140D");
+        listFileid.add("69BE1CF656C94C28BB112EBACCF6BF9A");
+        negotiatPreview.setFileId(listFileid);
+        negotiatPreview.setId("A5D0FBD5203A4DEAB2029D9BB33AFBAA");
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(negotiatPreview);
 
         // 请求并接收返回值
-        CaseNegotiations a = new CaseNegotiations();
-        
-        doReturn(0).when(insNegotiationDataMapper).AddCaseNegotiations(a);
+        // CaseNegotiations a = new CaseNegotiations();
+        //doReturn(0).when(insNegotiationDataMapper).AddCaseNegotiations(a);
+
         MvcResult mvcResult = mockMvc.perform(post("/NegotiatPreview/NegotiatPreview").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
 
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
@@ -118,7 +126,7 @@ public class TestNegotiatPreviewTest {
         String casesResponse = objectMapper.convertValue(response.getMsg(), String.class);
         // 断言
         assertEquals("和解案提出失敗!", casesResponse);
-        // assertEquals("和解案提出成功!", casesResponse);
+        //assertEquals("和解案提出成功!", casesResponse);
 
         //assertEquals(1, response.getCode());
         // assertEquals("1000000010", casesResponse.getCid());
