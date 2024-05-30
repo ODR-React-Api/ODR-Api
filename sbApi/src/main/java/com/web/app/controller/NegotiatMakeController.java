@@ -46,13 +46,12 @@ public class NegotiatMakeController {
     public Response getNegotiationsData(@RequestBody FromSessionLogin fromSessionLogin) {
         try {
             SettlementDraftDataResult dataResult = negotiatMakeService.settlementDraftDataInfoSearch(fromSessionLogin);
-            if (dataResult != null) {
+            if (dataResult.getMessage() == Constants.RETCD_OK) {
                 return Response.success(Constants.RETCD_OK, dataResult);
             }
             return Response.error(Constants.RETCD_NG);
         } catch (Exception e) {
-            AjaxResult.fatal("失敗しました。", e);
-            return null;
+            return AjaxResult.fatal("失敗しました。", e);
         }
     }
 
@@ -65,15 +64,14 @@ public class NegotiatMakeController {
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("下書き保存処理")
-    @PostMapping("/getCaseNegotiationsStatus")
-    public Response getCaseNegotiationsStatus(@RequestBody FromSessionLogin fromSessionLogin) {
+    @PostMapping("/updInsNegotiationsTemp")
+    public Response updInsNegotiationsTemp(@RequestBody FromSessionLogin fromSessionLogin) {
         try {
             SettlementDraftDataResult participatedResult = negotiatMakeService
-                    .settlementDraftInfoSearch(fromSessionLogin);
+                    .updInsNegotiationsTemp(fromSessionLogin);
             return Response.success(Constants.RETCD_OK, participatedResult);
         } catch (Exception e) {
-            AjaxResult.fatal("失敗しました。", e);
-            return null;
+            return AjaxResult.fatal("失敗しました。", e);
         }
     }
 }

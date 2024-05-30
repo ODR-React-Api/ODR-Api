@@ -2,12 +2,14 @@ package com.web.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.MosDetail.ParticipatedStatusChangeResultInfo;
+import com.web.app.domain.MosDetail.RelationsContent;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.MosDetailService;
 import com.web.app.tool.AjaxResult;
@@ -51,6 +53,28 @@ public class MosDetailController {
         } catch (Exception e) {
             AjaxResult.fatal("失敗しました。", e);
             return null;
+        }
+    }
+
+    /**
+     * 関係者内容取得
+     *
+     * @param caseId フロントエンド転送
+     * @return 関係者内容取得の取得必要なすべてのデータ
+     * @throws Exception データベース例外
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("関係者内容取得")
+    @GetMapping("/getRelationsContent")
+    public Response getRelationsContent(String caseId) {
+        try {
+            // 関係者内容取得
+            RelationsContent relationsContent = mosDetailService.selectRelationsContentData(caseId);
+
+            return AjaxResult.success("Success", relationsContent);
+
+        } catch (Exception e) {
+            return AjaxResult.fatal("Error", e);
         }
     }
 }
