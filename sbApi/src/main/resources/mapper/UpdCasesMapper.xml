@@ -5,7 +5,7 @@
 <mapper namespace="com.web.app.mapper.UpdCasesMapper">
 
     <!--  API_案件更新 -->
-    <update id="updateCasecase" parameterType="com.web.app.domain.AnswerLoginConfirm.UpdCases">
+    <update id="updateCases" parameterType="com.web.app.domain.AnswerLoginConfirm.UpdCases">
         UPDATE react_use.cases ca,react_use.case_relations re
         <set>
             ca.CaseStage = #{caseStage},
@@ -29,7 +29,7 @@
         </set>
         WHERE
             ca.PlatformId = re.PlatformId
-        AND ca.Cid = re.CaseId 
+        AND ca.cid = re.CaseId 
         AND ca.cid = #{cid}
         AND ca.PlatformId = #{platformId}
         AND ca.CaseStage = '0'
