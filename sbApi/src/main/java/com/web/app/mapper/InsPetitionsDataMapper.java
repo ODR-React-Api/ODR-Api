@@ -66,4 +66,6 @@ public interface InsPetitionsDataMapper {
   // case_extensionitem_values登録
   void insertCaseExtensionitemValues(UpdateOrInsertCaseExtensionitemValues updateOrInsertCaseExtensionitemValues);
 
+  // プラットフォーム(master_platforms)データを取得
+  int selectReplyLimitDays(String platformId, short deleteFlag);
 }

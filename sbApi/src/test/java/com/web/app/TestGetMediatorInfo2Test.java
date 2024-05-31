@@ -30,7 +30,6 @@ public class TestGetMediatorInfo2Test {
     // 按照名称进行匹配并注入
     @Resource
     protected MockMvc mockMvc;
-
     // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
     @SneakyThrows
     // 测试方法声明注解
@@ -47,17 +46,9 @@ public class TestGetMediatorInfo2Test {
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         mockHttpServletResponse.setCharacterEncoding("utf-8");
         String body = mockHttpServletResponse.getContentAsString();
-        // System.out.println(body);
-        // 将返回值从json类型的字符串转成对象
-        // @SuppressWarnings("rawtypes")
-        // Response response = objectMapper.readValue(body, Response.class);
-        // 将返回值从泛型转换成指定类型
-        // String msg = objectMapper.convertValue(response.getMsg(), String.class);
         String strMsgN = null;
-
         // 断言
         if (body == "") {
-            // 断言
             assertEquals(strMsgN, null);
         }
         
