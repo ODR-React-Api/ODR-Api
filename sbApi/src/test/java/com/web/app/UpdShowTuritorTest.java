@@ -50,9 +50,7 @@ public class UpdShowTuritorTest {
         String jsonData = objectMapper.writeValueAsString(updShowTuritorParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/MosDetail/UpdShowTuritor").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/MosDetail/UpdShowTuritor").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -86,9 +84,7 @@ public class UpdShowTuritorTest {
         String jsonData = objectMapper.writeValueAsString(updShowTuritorParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/MosDetail/UpdShowTuritor").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/MosDetail/UpdShowTuritor").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -122,9 +118,7 @@ public class UpdShowTuritorTest {
         String jsonData = objectMapper.writeValueAsString(updShowTuritorParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/MosDetail/UpdShowTuritor").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/MosDetail/UpdShowTuritor").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -156,9 +150,7 @@ public class UpdShowTuritorTest {
         String jsonData = objectMapper.writeValueAsString(updShowTuritorParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/MosDetail/UpdShowTuritor").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/MosDetail/UpdShowTuritor").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
