@@ -1,21 +1,19 @@
-package com.web.app.domain.QuesAnswerConfirm;
+package com.web.app.domain.Entity;
 
 import java.io.Serializable;
 import lombok.Data;
 
 /**
  * C09_アンケート回答確認画面
- * API_アンケート入力結果新規登録
  * Dao層
  * InsQuestionnaireResults
- * アンケート回答登録処理の引数 ---画面アンケート回答内容
  * 
  * @author DUC zzy
  * @since 2024/05/27
  * @version 1.0
  */
 @Data
-public class InsQuestionnaireResults implements Serializable {
+public class InsQuestionnairesResults implements Serializable {
 
     private String platformId;
 

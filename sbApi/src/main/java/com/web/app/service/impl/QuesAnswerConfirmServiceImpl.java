@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.web.app.domain.Entity.ActionHistories;
+import com.web.app.domain.Entity.InsQuestionnairesResults;
 import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.domain.Entity.QuestionnaireResults;
-import com.web.app.domain.QuesAnswerConfirm.InsQuestionnaireResults;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.util.SendMailRequest;
@@ -22,8 +22,8 @@ import com.web.app.service.UtilService;
  * Service層実装クラス
  * QuesAnswerConfirmServiceImpl
  * 
- * @author DUC 張明慧
- * @since 2024/04/14
+ * @author DUC zzy
+ * @since 2024/05/27
  * @version 1.0
  */
 @Service
@@ -42,37 +42,30 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
 
     /**
      * * API_アンケート入力結果新規登録
-     * 「送信する」ボタン押下で、アンケート回答登録処理を行う。
-     * 2.1 メール送信 & アクション履歴記録
-     * 2.2 アンケート回答内容を登録
-     * 2.3 アクション履歴登録
      * 
      * @param insQuestionnaireResults アンケート回答登録処理の引数
      * @return int API_アンケート入力結果新規登録の状況
      */
     @Transactional
     @Override
-    public int InsQuestionnairesResults(InsQuestionnaireResults insQuestionnaireResults) {
+    public int InsQuestionnairesResults(InsQuestionnairesResults insQuestionnaireResults) {
         // 2.1 メール送信 & アクション履歴記録
-        // 送信先：【画面C08】.userEmail
-        // メール送信の項目を設定
+
         SendMailRequest sendMailRequest = getSendMailRequest(insQuestionnaireResults);
-        // メール送信
         boolean bool = utilService.SendMail(sendMailRequest);
         if (!bool) {
             return 0;
         }
+       // 2.2 アンケート回答内容を登録---API_アンケート入力結果新規登録
 
-        // 2.2 アンケート回答内容を登録---API_アンケート入力結果新規登録
-        // 「アンケート入力結果」の新規登録の項目を設定
         QuestionnaireResults questionnaireResults = getQuestionnaireResults(insQuestionnaireResults);
         int insCount = insQuestionnairesResultsMapper.insQuestionnairesResults(questionnaireResults);
         if (insCount == 0) {
             return 0;
         }
-
-        // 2.3 アクション履歴登録
-        // 「アクション履歴」の新規登録の項目を設定
+       // 2.3 アクション履歴登録
+     // 「アクション履歴」の新規登録の項目を設定
+        
         ActionHistories actionHistories = getActionHistories(insQuestionnaireResults);
         Boolean insStatus = commonService.InsertActionHistories(actionHistories, null, false, false);
         if (!insStatus) {
@@ -88,7 +81,7 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
      * @param insQuestionnaireResults アンケート回答登録処理の引数
      * @return sendMailRequest メール送信の項目
      */
-    public SendMailRequest getSendMailRequest(InsQuestionnaireResults insQuestionnaireResults) {
+    public SendMailRequest getSendMailRequest(InsQuestionnairesResults insQuestionnaireResults) {
         SendMailRequest sendMailRequest = new SendMailRequest();
         sendMailRequest.setPlatformId(insQuestionnaireResults.getPlatformId());
         sendMailRequest.setLanguageId(Constants.JP);
@@ -111,9 +104,8 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
      * @param insQuestionnaireResults アンケート回答登録処理の引数
      * @return questionnaireResults 「アンケート入力結果」の新規登録の項目
      */
-    public QuestionnaireResults getQuestionnaireResults(InsQuestionnaireResults insQuestionnaireResults) {
+    public QuestionnaireResults getQuestionnaireResults(InsQuestionnairesResults insQuestionnaireResults) {
         QuestionnaireResults questionnaireResults = new QuestionnaireResults();
-        // ID 自動生成GIUD
         questionnaireResults.setId(utilService.GetGuid());
         questionnaireResults.setPlatformId(insQuestionnaireResults.getPlatformId());
         questionnaireResults.setCaseId(insQuestionnaireResults.getCaseId());
@@ -147,16 +139,15 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
      * @param insQuestionnaireResults アンケート回答登録処理の引数
      * @return actionHistories 「アクション履歴」の新規登録の項目
      */
-    public ActionHistories getActionHistories(InsQuestionnaireResults insQuestionnaireResults) {
+    public ActionHistories getActionHistories(InsQuestionnairesResults insQuestionnaireResults) {
         ActionHistories actionHistories = new ActionHistories();
         actionHistories.setPlatformId(insQuestionnaireResults.getPlatformId());
         actionHistories.setCaseId(insQuestionnaireResults.getCaseId());
         actionHistories.setActionType("QuestionaryAnswered");
-        // 【画面C8】.caseId対応なCaseStage
+        
         int caseStage = insQuestionnairesResultsMapper.getCaseStage(insQuestionnaireResults.getCaseId());
         actionHistories.setCaseStage(caseStage);
         actionHistories.setUserType(0);
-        // 【画面C8】.userEmail →ユーザdisplayName
         OdrUsers odrUser = commonMapper.FindUserByUidOrEmail(null, insQuestionnaireResults.getUserEmail(),
                 insQuestionnaireResults.getPlatformId());
         String displayName = odrUser.getLastName() + " " + odrUser.getFirstName();

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
-import com.web.app.domain.QuesAnswerConfirm.InsQuestionnaireResults;
+import com.web.app.domain.Entity.InsQuestionnairesResults;
 import com.web.app.service.QuesAnswerConfirmService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
@@ -34,7 +34,7 @@ public class QuesAnswerConfirmController {
     @ApiOperation("アンケート入力結果新規登録")
     @PostMapping("/InsQuestionnairesResults")
     @SuppressWarnings("rawtypes")
-    public Response insQuestionnairesResults(@RequestBody InsQuestionnaireResults insQuestionnaireResults) {
+    public Response insQuestionnairesResults(@RequestBody InsQuestionnairesResults insQuestionnaireResults) {
         try {
             int res = quesAnswerConfirmService.InsQuestionnairesResults(insQuestionnaireResults);
             if (res == 0) {

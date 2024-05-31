@@ -1,17 +1,16 @@
 package com.web.app.service;
 
-import com.web.app.domain.QuesAnswerConfirm.InsQuestionnaireResults;
+import com.web.app.domain.Entity.InsQuestionnairesResults;
 
 /**
  * C09_アンケート回答確認画面
  * Service層
  * QuesAnswerConfirmService
  * 
- * @author DUC 張明慧
- * @since 2024/04/14
+ * @author DUC zzy
+ * @since 2024/05/27
  * @version 1.0
  */
 public interface QuesAnswerConfirmService {
-    // API_アンケート入力結果新規登録
-    int InsQuestionnairesResults(InsQuestionnaireResults insQuestionnaireResults);
+    int InsQuestionnairesResults(InsQuestionnairesResults insQuestionnaireResults);
 }
