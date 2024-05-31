@@ -7,26 +7,25 @@
     <!--  API_案件更新 -->
     <update id="updateCases" parameterType="com.web.app.domain.AnswerLoginConfirm.UpdCases">
         UPDATE react_use.cases ca,react_use.case_relations re
-        <set>
-            ca.CaseStage = #{caseStage},
-            ca.CaseStatus = #{caseStatus},
-            ca.CounterclaimFlag = #{counterclaimFlag},
-            <if test="counterclaimFlag = 1 ">
+        set
+            <if test="counterclaimFlag == 1 ">
+                ca.CaseStage = #{caseStage},
+                ca.CaseStatus = #{caseStatus},
+                ca.CounterclaimFlag = #{counterclaimFlag},
                 ca.CounterclaimStartDate = #{counterclaimStartDate},
                 ca.CounterclaimEndDate = #{counterclaimEndDate},            
             </if>
-            <if test="counterclaimFlag = 0 ">
+            <if test="counterclaimFlag == 0 and phaseNegotiation == 1 ">
+                ca.CaseStage = #{caseStage},
+                ca.CaseStatus = #{caseStatus},
                 ca.NegotiationStartDate = #{negotiationStartDate},
-                ca.NegotiationEndDate = #{negotiationEndDate},        
-            </if>
-            <if test="counterclaimFlag = 0 and phaseNegotiation = 1 ">
+                ca.NegotiationEndDate = #{negotiationEndDate},  
                 ca.NegotiationEndDateChangeStatus = 0,
                 ca.NegotiationEndDateChangeCount = 0,         
             </if>
             ca.CancelDate = NULL,
             ca.LastModifiedDate = #{newDate},
             ca.LastModifiedBy = 'ログインユーザ'
-        </set>
         WHERE
             ca.PlatformId = re.PlatformId
         AND ca.cid = re.CaseId 
