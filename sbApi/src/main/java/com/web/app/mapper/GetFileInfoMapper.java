@@ -15,6 +15,4 @@ import com.web.app.domain.MosFileList.CaseFileInfo;
 public interface GetFileInfoMapper {
     // 案件添付ファイル取得
     List<CaseFileInfo> selectCaseFileInfoList(String caseId,String id,Integer positionFlg,Integer mediatorDisclosureFlag);
-
-    
 }

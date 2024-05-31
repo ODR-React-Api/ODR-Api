@@ -14,6 +14,5 @@ public interface InsRelationsTempMapper {
     // TBL「申立（case_petitions）」の新規登録
     int insCasePetitions(String uuId,String loginUser);
     // TBL「案件別個人情報リレーション（case_relations）」の新規登録
-    int insCaseRelations(String uuId,String loginUser,String userId);
-    
+    int insCaseRelations(String uuId,String loginUser,String userId);   
 }

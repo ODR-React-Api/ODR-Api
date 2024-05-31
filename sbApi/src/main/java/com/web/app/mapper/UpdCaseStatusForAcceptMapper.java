@@ -14,6 +14,5 @@ public interface UpdCaseStatusForAcceptMapper {
     // 申立状態を更新
     int updCase(String caseId);
     // 調停人履歴レコードを更新
-    int updMediatorHistories(String caseId);
-    
+    int updMediatorHistories(String caseId);  
 }
