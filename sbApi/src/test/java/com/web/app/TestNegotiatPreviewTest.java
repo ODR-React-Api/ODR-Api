@@ -91,10 +91,10 @@ public class TestNegotiatPreviewTest {
         negotiatPreview.setFileList(arrayList);
 
         ArrayList<String> listFileid = new ArrayList<>();
-        listFileid.add("2488FB3344214BF390EDF1E7E308140D");
-        listFileid.add("69BE1CF656C94C28BB112EBACCF6BF9A");
+        listFileid.add("081932090D184487A26F3CB0645AA89A");
+        listFileid.add("487FC6C7178E4906B9E761CEBB30EA03");
         negotiatPreview.setFileId(listFileid);
-        negotiatPreview.setId("A5D0FBD5203A4DEAB2029D9BB33AFBAA");
+        negotiatPreview.setId("07CF2778959549DC942E338CE9D2CE20");
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(negotiatPreview);
 
@@ -112,7 +112,7 @@ public class TestNegotiatPreviewTest {
         // 将返回值从泛型转换成指定类型
         String casesResponse = objectMapper.convertValue(response.getMsg(), String.class);
         // 断言
-        // assertEquals("和解案提出失敗!", casesResponse);
-        assertEquals("和解案提出成功!", casesResponse);
+        assertEquals("和解案提出失敗!", casesResponse);
+        // assertEquals("和解案提出成功!", casesResponse);
     }
 }

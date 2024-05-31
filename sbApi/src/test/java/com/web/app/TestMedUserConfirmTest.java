@@ -61,7 +61,7 @@ public class TestMedUserConfirmTest {
         String casesResponse = objectMapper.convertValue(response.getMsg(), String.class);
 
         // 断言
-        //assertEquals("成功!", casesResponse);
+        // assertEquals("成功!", casesResponse);
         assertEquals("失敗!", casesResponse);
     }
 
@@ -94,7 +94,7 @@ public class TestMedUserConfirmTest {
             String casesResponse = objectMapper.convertValue(response.getMsg(), String.class);
     
             // 断言
-            //assertEquals("成功!", casesResponse);
+            // assertEquals("成功!", casesResponse);
             assertEquals("失敗!", casesResponse);
         }
 }
