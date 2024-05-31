@@ -86,17 +86,6 @@ public class Constants {
     public static final String STR_ACTION_TYPE_ABORTEDCONFIRM = "CaseAbortedConfirmMailSend";
     public static final String HELP_URL = "http://uat-odr-service.azurewebsites.net/help";
 
-    
-    // 日付フォーマット定数
-    public static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
-    public static final String MENU_FORMAT = "yyyy年MM月dd日";
-
- 
-
-    // DeleteFlag 0:Active, 1:Deleted
-    public static final int DELETE_FLAG_0 = 0;
-    public static final int DELETE_FLAG_1 = 1;
-
     // public static final Map<Object,String> SIFANGJI_SIGNAL_STATE_MAP = new
     // HashMap<Object,String>(){{
 
