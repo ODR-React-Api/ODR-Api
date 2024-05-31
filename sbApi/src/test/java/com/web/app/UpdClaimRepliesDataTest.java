@@ -139,44 +139,44 @@ public class UpdClaimRepliesDataTest {
         assertEquals("更新成功!", response.getMsg());
     }
 
-//     // updCaseClaimrepliesNum == 0  更新条件は「下書きデータ存在の判定」の検索条件と一致する
-//     // 被覆率テストテスト不可  ブレークポイントの追加、デバッグテストOK
-//     // 抑制编译器产生警告信息
-//     @SuppressWarnings("rawtypes")
-//     // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
-//     @SneakyThrows
-//     // 测试方法声明注解
-//     @Test
-//     public void test4() {
-//     // 将要使用的数据转换成json类型的字符串
-//     UpdClaimRepliesDataParameter updClaimRepliesDataParameter = new
-//     UpdClaimRepliesDataParameter();
-//     updClaimRepliesDataParameter.setPlatformId("0001");
-//     updClaimRepliesDataParameter.setCaseId("10000000320");
-//     updClaimRepliesDataParameter.setReplyContext("返金でも商品交換でも構いません。");
-//     updClaimRepliesDataParameter.setFileName("file1");
-//     updClaimRepliesDataParameter.setFileExtension("pdf");
-//     updClaimRepliesDataParameter.setLoginUser("3AD5CC99132F49619E3DA9092E3AC802");
-//     updClaimRepliesDataParameter.setDelFileId(null);
-//     ObjectMapper objectMapper = new ObjectMapper();
-//     String jsonData =
-//     objectMapper.writeValueAsString(updClaimRepliesDataParameter);
+    // // updCaseClaimrepliesNum == 0  更新条件は「下書きデータ存在の判定」の検索条件と一致する
+    // // 被覆率テストテスト不可  ブレークポイントの追加、デバッグテストOK
+    // // 抑制编译器产生警告信息
+    // @SuppressWarnings("rawtypes")
+    // // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+    // @SneakyThrows
+    // // 测试方法声明注解
+    // @Test
+    // public void test4() {
+    // // 将要使用的数据转换成json类型的字符串
+    // UpdClaimRepliesDataParameter updClaimRepliesDataParameter = new
+    // UpdClaimRepliesDataParameter();
+    // updClaimRepliesDataParameter.setPlatformId("0001");
+    // updClaimRepliesDataParameter.setCaseId("10000000320");
+    // updClaimRepliesDataParameter.setReplyContext("返金でも商品交換でも構いません。");
+    // updClaimRepliesDataParameter.setFileName("file1");
+    // updClaimRepliesDataParameter.setFileExtension("pdf");
+    // updClaimRepliesDataParameter.setLoginUser("3AD5CC99132F49619E3DA9092E3AC802");
+    // updClaimRepliesDataParameter.setDelFileId(null);
+    // ObjectMapper objectMapper = new ObjectMapper();
+    // String jsonData =
+    // objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
-//     // 请求并接收返回值
-//     MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
-//     MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
-//     // 设置字符编码
-//     mockHttpServletResponse.setCharacterEncoding("utf-8");
-//     String body = mockHttpServletResponse.getContentAsString();
-//     // 将返回值从json类型的字符串转成对象
-//     Response response = objectMapper.readValue(body, Response.class);
+    // // 请求并接收返回值
+    // MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+    // MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+    // // 设置字符编码
+    // mockHttpServletResponse.setCharacterEncoding("utf-8");
+    // String body = mockHttpServletResponse.getContentAsString();
+    // // 将返回值从json类型的字符串转成对象
+    // Response response = objectMapper.readValue(body, Response.class);
 
-//     // 断言
-//     // Code
-//     assertEquals(200, response.getCode());
-//     // Msg
-//     assertEquals("更新失敗!", response.getMsg());
-//     }
+    // // 断言
+    // // Code
+    // assertEquals(200, response.getCode());
+    // // Msg
+    // assertEquals("更新失敗!", response.getMsg());
+    // }
 
     // 抑制编译器产生警告信息
     @SuppressWarnings("rawtypes")
