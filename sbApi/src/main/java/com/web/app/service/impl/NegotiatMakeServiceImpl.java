@@ -780,7 +780,6 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             if(insCaFilEr == Constants.RESULT_STATE_ERROR){
                 throw new RuntimeException();
             }
-
         }
         return Constants.RESULT_STATE_SUCCESS;
     }

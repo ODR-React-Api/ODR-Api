@@ -59,7 +59,7 @@ public class NegotiatMakeController {
     /**
      * 下書き保存処理
      * 
-     * @param settlementDraftFromSessionLogin セッション情報 と ログイン情報渡された
+     * @param fromSessionLogin セッション情報 と ログイン情報渡された
      * @return 戻り値は「 下書き保存処理」が返された値
      * @throws Exception エラーの説明内容
      */
@@ -80,7 +80,7 @@ public class NegotiatMakeController {
      * 和解案編集依頼データ新規登録
      *
      * @param negotiationsFile フロントからの画面項目
-     * @return Response
+     * @return Response　新規登録ステータス
      * @throws Exception 異常終了
      */
     @ApiOperation("和解案編集依頼データ新規登録")
@@ -106,7 +106,7 @@ public class NegotiatMakeController {
      * 和解案編集依頼データ更新
      *
      * @param negotiationsFile フロントからの画面項目
-     * @return Response
+     * @return Response  更新ステータス
      * @throws Exception 異常終了
      */
     @ApiOperation("和解案編集依頼データ更新")
@@ -125,6 +125,5 @@ public class NegotiatMakeController {
             AjaxResult.fatal(Constants.MSG_ERROR, e);
             return null;
         }
-
     }
 }
