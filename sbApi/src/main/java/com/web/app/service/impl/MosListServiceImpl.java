@@ -76,7 +76,6 @@ public class MosListServiceImpl implements MosListService {
      * @param searchCase API「 検索用一覧取得」より渡された引数
      * @return case詳細
      */
-    @SuppressWarnings("static-access")
     @Override
     @Transactional
     public ReturnResult searchDetailCase(SelectCondition searchCase) {

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.web.app.service.CouAnswerLoginService;
 import com.web.app.tool.AjaxResult;
 import com.web.app.domain.Response;
-import com.web.app.domain.CouAnswerLogin.InsClaimRepliesDto;
 import com.web.app.domain.CouAnswerLogin.RepliesContext;
 import com.web.app.domain.CouAnswerLogin.UpdClaimRepliesDataParameter;
 import io.swagger.annotations.Api;
@@ -55,26 +54,6 @@ public class CouAnswerLoginController {
             return AjaxResult.success("反訴・回答データ取得に成功しました", getRepliesContextList);
         } catch (Exception e) {
             AjaxResult.fatal("反訴・回答データ取得に失敗しました!", e);
-            return null;
-        }
-    }
-
-    /**
-     * API_反訴への回答データ新規登録
-     *
-     * @param InsClaimRepliesDto API_反訴への回答データ新規登録の引数
-     * @return 反訴への回答データ新規登録の状況
-     * @throws Exception エラーの説明内容
-     */
-    @SuppressWarnings("rawtypes")
-    @ApiOperation("反訴への回答データ新規登録")
-    @PostMapping("/insClaimRepliesData")
-    public Response insClaimRepliesData(@RequestBody InsClaimRepliesDto insClaimRepliesDto) {
-        try {
-            couAnswerLoginService.insClaimRepliesData(insClaimRepliesDto);
-            return AjaxResult.success("反訴への回答データ新規登録に成功しました!");
-        } catch (Exception e) {
-            AjaxResult.fatal("反訴への回答データ新規登録に失敗しました!", e);
             return null;
         }
     }
