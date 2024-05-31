@@ -4,11 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.web.app.domain.NegotiatMake.SettlementDraftDataCaseFileRelations;
 import com.web.app.domain.NegotiatMake.SettlementDraftDataCaseNegotiations;
 import com.web.app.domain.NegotiatMake.SettlementDraftDataFiles;
@@ -118,7 +116,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     @Transactional
     @Override
     public SettlementDraftDataResult updInsNegotiationsTemp(FromSessionLogin sessionLogin) throws Exception {
-        
+
         SettlementDraftDataResult result = new SettlementDraftDataResult();
 
         // 現在の和解案状態を抽出
@@ -619,9 +617,9 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * 和解案編集依頼データ新規登録
      *
-     * @param param1 フロントからの画面項目
-     * @return int
-     * @throws Exception
+     * @param negotiationsFile フロントからの画面項目
+     * @return int             更新情報
+     * @throws Exception       エラーの説明内容
      */
     @Transactional
     @Override
@@ -676,9 +674,9 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * 和解案編集依頼データ更新
      *
-     * @param param1 フロントからの画面項目
-     * @return int
-     * @throws Exception
+     * @param negotiationsFile フロントからの画面項目
+     * @return int             更新情報
+     * @throws Exception       エラーの説明内容
      */
     @Transactional
     @Override
@@ -756,10 +754,10 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * ファイル追加
      *
-     * @param param1 フロントからの画面項目
-     * @param param2 和解案Id
-     * @return int
-     * @throws
+     * @param updNegotiationsFile フロントからの添付ファイル
+     * @param negotiationsFile    フロントからの画面項目
+     * @param negotiationsId      和解案id
+     * @return int                更新情報
      */
     private int addFiles(UpdNegotiationsFile updNegotiationsFile, NegotiationsFile negotiationsFile,
             String negotiationsId) {
@@ -783,9 +781,9 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * 「添付ファイル」の画面項目値設定
      *
-     * @param param1 添付ファイル
-     * @return Files 添付ファイル
-     * @throws
+     * @param updNegotiationsFile 添付ファイル
+     * @param negotiationsFile    画面からのファイル項目
+     * @return Files              添付ファイル
      */
     private Files insFiles(UpdNegotiationsFile updNegotiationsFile, NegotiationsFile negotiationsFile) {
         Files files = new Files();
@@ -816,13 +814,12 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * 「案件-添付ファイルリレーション」の画面項目値設定
      *
-     * @param param1 和解案.id
-     * @param param2 添付ファイル.id
-     * @return CaseFileRelations-添付ファイルリレーション
-     * @throws
+     * @param negotiationsFile   フロントからの画面項目
+     * @param caseId             和解案id
+     * @param filesId            添付ファイルid
+     * @return CaseFileRelations 添付ファイルリレーション
      */
     private CaseFileRelations insCaseFileRelations(NegotiationsFile negotiationsFile, String caseId, String filesId) {
-        // session取得
         CaseFileRelations caseFileRelations = new CaseFileRelations();
         // 自動生成GIUD
         caseFileRelations.setId(utilService.GetGuid());
