@@ -52,9 +52,7 @@ public class UpdClaimRepliesDataTest {
         String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -90,9 +88,7 @@ public class UpdClaimRepliesDataTest {
         String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -107,7 +103,7 @@ public class UpdClaimRepliesDataTest {
         assertEquals("更新成功!", response.getMsg());
     }
 
-    // 下書きデータ存在する場合 反訴への回答データ更新  test3~test
+    // 下書きデータ存在する場合 反訴への回答データ更新 test3~test9
     // 抑制编译器产生警告信息
     @SuppressWarnings("rawtypes")
     // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
@@ -123,14 +119,12 @@ public class UpdClaimRepliesDataTest {
         updClaimRepliesDataParameter.setFileName("file1");
         updClaimRepliesDataParameter.setFileExtension("pdf");
         updClaimRepliesDataParameter.setLoginUser("3AD5CC99132F49619E3DA9092E3AC802");
-        updClaimRepliesDataParameter.setDelFileId("51CFB0171C0141ACB79A5C1EC996EF8F");
+        updClaimRepliesDataParameter.setDelFileId("6CA77E2E70864FF7A51EF747B650CFC6");
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -145,42 +139,44 @@ public class UpdClaimRepliesDataTest {
         assertEquals("更新成功!", response.getMsg());
     }
 
-    // // 抑制编译器产生警告信息
-    // @SuppressWarnings("rawtypes")
-    // // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
-    // @SneakyThrows
-    // // 测试方法声明注解
-    // @Test
-    // public void test4() {
-    //     // 将要使用的数据转换成json类型的字符串
-    //     UpdClaimRepliesDataParameter updClaimRepliesDataParameter = new UpdClaimRepliesDataParameter();
-    //     updClaimRepliesDataParameter.setPlatformId("0001");
-    //     updClaimRepliesDataParameter.setCaseId("10000000320");
-    //     updClaimRepliesDataParameter.setReplyContext("返金でも商品交換でも構いません。");
-    //     updClaimRepliesDataParameter.setFileName(null);
-    //     updClaimRepliesDataParameter.setFileExtension(null);
-    //     updClaimRepliesDataParameter.setLoginUser("3AD5CC99132F49619E3DA9092E3AC802");
-    //     updClaimRepliesDataParameter.setDelFileId(null);
-    //     ObjectMapper objectMapper = new ObjectMapper();
-    //     String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
+//     // updCaseClaimrepliesNum == 0  更新条件は「下書きデータ存在の判定」の検索条件と一致する
+//     // 被覆率テストテスト不可  ブレークポイントの追加、デバッグテストOK
+//     // 抑制编译器产生警告信息
+//     @SuppressWarnings("rawtypes")
+//     // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+//     @SneakyThrows
+//     // 测试方法声明注解
+//     @Test
+//     public void test4() {
+//     // 将要使用的数据转换成json类型的字符串
+//     UpdClaimRepliesDataParameter updClaimRepliesDataParameter = new
+//     UpdClaimRepliesDataParameter();
+//     updClaimRepliesDataParameter.setPlatformId("0001");
+//     updClaimRepliesDataParameter.setCaseId("10000000320");
+//     updClaimRepliesDataParameter.setReplyContext("返金でも商品交換でも構いません。");
+//     updClaimRepliesDataParameter.setFileName("file1");
+//     updClaimRepliesDataParameter.setFileExtension("pdf");
+//     updClaimRepliesDataParameter.setLoginUser("3AD5CC99132F49619E3DA9092E3AC802");
+//     updClaimRepliesDataParameter.setDelFileId(null);
+//     ObjectMapper objectMapper = new ObjectMapper();
+//     String jsonData =
+//     objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
-    //     // 请求并接收返回值
-    //     MvcResult mvcResult = mockMvc
-    //             .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-    //             .andReturn();
-    //     MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
-    //     // 设置字符编码
-    //     mockHttpServletResponse.setCharacterEncoding("utf-8");
-    //     String body = mockHttpServletResponse.getContentAsString();
-    //     // 将返回值从json类型的字符串转成对象
-    //     Response response = objectMapper.readValue(body, Response.class);
+//     // 请求并接收返回值
+//     MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
+//     MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+//     // 设置字符编码
+//     mockHttpServletResponse.setCharacterEncoding("utf-8");
+//     String body = mockHttpServletResponse.getContentAsString();
+//     // 将返回值从json类型的字符串转成对象
+//     Response response = objectMapper.readValue(body, Response.class);
 
-    //     // 断言
-    //     // Code
-    //     assertEquals(200, response.getCode());
-    //     // Msg
-    //     assertEquals("更新失敗!", response.getMsg());
-    // }
+//     // 断言
+//     // Code
+//     assertEquals(200, response.getCode());
+//     // Msg
+//     assertEquals("更新失敗!", response.getMsg());
+//     }
 
     // 抑制编译器产生警告信息
     @SuppressWarnings("rawtypes")
@@ -192,19 +188,17 @@ public class UpdClaimRepliesDataTest {
         // 将要使用的数据转换成json类型的字符串
         UpdClaimRepliesDataParameter updClaimRepliesDataParameter = new UpdClaimRepliesDataParameter();
         updClaimRepliesDataParameter.setPlatformId("0001");
-        updClaimRepliesDataParameter.setCaseId("1000000032");
+        updClaimRepliesDataParameter.setCaseId("1000000031");
         updClaimRepliesDataParameter.setReplyContext("返金でも商品交換でも構いません。");
-        updClaimRepliesDataParameter.setFileName(null);
-        updClaimRepliesDataParameter.setFileExtension(null);
+        updClaimRepliesDataParameter.setFileName("file1");
+        updClaimRepliesDataParameter.setFileExtension("pdf");
         updClaimRepliesDataParameter.setLoginUser("3AD5CC99132F49619E3DA9092E3AC802");
-        updClaimRepliesDataParameter.setDelFileId("51CFB0171C0141ACB79A5C1EC996EF8F00");
+        updClaimRepliesDataParameter.setDelFileId("6CA77E2E70864FF7A51EF747B650CFC600");
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -229,19 +223,17 @@ public class UpdClaimRepliesDataTest {
         // 将要使用的数据转换成json类型的字符串
         UpdClaimRepliesDataParameter updClaimRepliesDataParameter = new UpdClaimRepliesDataParameter();
         updClaimRepliesDataParameter.setPlatformId("0001");
-        updClaimRepliesDataParameter.setCaseId("1000000032");
+        updClaimRepliesDataParameter.setCaseId("1000000030");
         updClaimRepliesDataParameter.setReplyContext("返金でも商品交換でも構いません。");
-        updClaimRepliesDataParameter.setFileName(null);
-        updClaimRepliesDataParameter.setFileExtension(null);
+        updClaimRepliesDataParameter.setFileName("file1");
+        updClaimRepliesDataParameter.setFileExtension("pdf");
         updClaimRepliesDataParameter.setLoginUser("3AD5CC99132F49619E3DA9092E3AC802");
-        updClaimRepliesDataParameter.setDelFileId("2AA299C64A1342149A4C9DDA85607D38");
+        updClaimRepliesDataParameter.setDelFileId("92361BE26A6F4151923784942868E240");
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -277,9 +269,7 @@ public class UpdClaimRepliesDataTest {
         String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -315,9 +305,7 @@ public class UpdClaimRepliesDataTest {
         String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -343,7 +331,7 @@ public class UpdClaimRepliesDataTest {
         // 将要使用的数据转换成json类型的字符串
         UpdClaimRepliesDataParameter updClaimRepliesDataParameter = new UpdClaimRepliesDataParameter();
         updClaimRepliesDataParameter.setPlatformId("0001");
-        updClaimRepliesDataParameter.setCaseId("1000000030");
+        updClaimRepliesDataParameter.setCaseId("1000000036");
         updClaimRepliesDataParameter.setReplyContext("返金でも商品交換でも構いません。");
         updClaimRepliesDataParameter.setFileName(null);
         updClaimRepliesDataParameter.setFileExtension(null);
@@ -353,9 +341,7 @@ public class UpdClaimRepliesDataTest {
         String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -370,7 +356,7 @@ public class UpdClaimRepliesDataTest {
         assertEquals("更新成功!", response.getMsg());
     }
 
-    // セッションを取得しない caseId:null  || platformId:null  test10~test12
+    // セッションを取得しない caseId:null || platformId:null test10~test12
     // 抑制编译器产生警告信息
     @SuppressWarnings("rawtypes")
     // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
@@ -391,9 +377,7 @@ public class UpdClaimRepliesDataTest {
         String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -428,9 +412,7 @@ public class UpdClaimRepliesDataTest {
         String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -455,7 +437,7 @@ public class UpdClaimRepliesDataTest {
         // 将要使用的数据转换成json类型的字符串
         UpdClaimRepliesDataParameter updClaimRepliesDataParameter = new UpdClaimRepliesDataParameter();
         updClaimRepliesDataParameter.setPlatformId(null);
-        updClaimRepliesDataParameter.setCaseId("1000000037");
+        updClaimRepliesDataParameter.setCaseId("1000000036");
         updClaimRepliesDataParameter.setReplyContext("反訴への回答の登録用について。");
         updClaimRepliesDataParameter.setFileName("file");
         updClaimRepliesDataParameter.setFileExtension("xlsx");
@@ -465,9 +447,7 @@ public class UpdClaimRepliesDataTest {
         String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
@@ -502,9 +482,7 @@ public class UpdClaimRepliesDataTest {
         String jsonData = objectMapper.writeValueAsString(updClaimRepliesDataParameter);
 
         // 请求并接收返回值
-        MvcResult mvcResult = mockMvc
-                .perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(post("/CouAnswerLogin/UpdClaimRepliesData").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         // 设置字符编码
         mockHttpServletResponse.setCharacterEncoding("utf-8");
