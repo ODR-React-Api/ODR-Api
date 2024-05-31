@@ -86,6 +86,38 @@ public class Constants {
     public static final String STR_ACTION_TYPE_ABORTEDCONFIRM = "CaseAbortedConfirmMailSend";
     public static final String HELP_URL = "http://uat-odr-service.azurewebsites.net/help";
 
+      
+      public static final int TRADER_USER_EMAIL_LIST_lENGTH = 5;
+
+      //反訴の有無 0:No, 1:Yes
+      public static final int COUNTER_CLAIM_FLAG_NO = 0;
+      public static final int COUNTER_CLAIM_FLAG_YES = 1;
+  
+      //案件ステージ 反訴への回答:2,交渉:3
+      public static final int CASE_STAGE_2 = 2;
+      public static final int CASE_STAGE_3 = 3;
+  
+      //案件ステータス 反訴への回答:200,交渉:300,
+      public static final String CASE_STATUS_200 = "200";
+      public static final String CASE_STATUS_300 = "300";
+  
+      //交渉期限日変更ステータス　0:変更なし,1:変更依頼あり（相手先）,2:変更依頼あり(申立人)
+      public static final int NEGOTIATION_ENDDATE_CHANGE_STATUS_0 = 0;
+      
+      //交渉期限日変更回数
+      public static final int NEGOTIATION_ENDDATE_CHANGE_COUNT_0 = 0;
+      
+      //反訴への回答取得
+      public static final int CLAIM_REPLIES_CNT_0 = 0;
+      public static final int CLAIM_REPLIES_DRAFT_FLG_0 = 0;
+      public static final int CLAIM_REPLIES_DRAFT_FLG_1 = 1;
+      
+      //回答の内容取得
+      public static final int REPLIES_DATA_CNT_0 = 0;
+      public static final int REPLIES_DRAFT_FLG_0 = 0;
+      public static final int REPLIES_DRAFT_FLG_1 = 1;
+       
+
     // public static final Map<Object,String> SIFANGJI_SIGNAL_STATE_MAP = new
     // HashMap<Object,String>(){{
 
