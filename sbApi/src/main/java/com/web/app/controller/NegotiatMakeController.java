@@ -79,7 +79,7 @@ public class NegotiatMakeController {
     /**
      * 和解案編集依頼データ新規登録
      *
-     * @param param1 フロントからの画面項目
+     * @param negotiationsFile フロントからの画面項目
      * @return Response
      * @throws Exception 異常終了
      */
@@ -105,7 +105,7 @@ public class NegotiatMakeController {
     /**
      * 和解案編集依頼データ更新
      *
-     * @param param1 フロントからの画面項目
+     * @param negotiationsFile フロントからの画面項目
      * @return Response
      * @throws Exception 異常終了
      */

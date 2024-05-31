@@ -56,9 +56,8 @@ public class NegotiatPreviewController {
     /**
      * 和解案テンプレート取得
      *
-     * @param param1 なし
-     * @return List<MasterTemplates>
-     * @throws Exception 異常終了
+     * @return Response 和解案テンプレート
+     * @throws Exception 和解案テンプレート取得失敗
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("和解案テンプレート取得")

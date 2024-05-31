@@ -42,9 +42,9 @@ public class MedUserConfirmController {
     /**
      * 調停人ユーザ情報取得
      *
-     * @param MedUserConfirmSession セッション情報
-     * @return OdrUsers 調停人ユーザ情報
-     * @throws Exception 異常終了
+     * @param medUserConfirmSession セッション情報
+     * @return Response 調停人ユーザ情報
+     * @throws Exception 異常情報
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停人ユーザ情報取得")
@@ -62,9 +62,9 @@ public class MedUserConfirmController {
     /**
      * 調停人の経験取得
      *
-     * @param MedUserConfirmSession セッション情報
-     * @return MediatorInfo 調停人の経験
-     * @throws Exception 異常終了
+     * @param medUserConfirmSession セッション情報
+     * @return Response 調停人の経験
+     * @throws Exception 異常情報
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停人の経験取得")

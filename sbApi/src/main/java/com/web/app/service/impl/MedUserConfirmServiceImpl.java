@@ -57,9 +57,9 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
     /**
      * 調停人ユーザ情報取得
      *
-     * @param MedUserConfirmSession セッション情報
+     * @param medUserConfirmSession セッション情報
      * @return OdrUsers ユーザ情報
-     * @throws Exception
+     * @throws Exception 異常情報
      */
     @Override
     public OdrUsers getOdrUserInfo(MedUserConfirmSession medUserConfirmSession) throws Exception {
@@ -76,9 +76,9 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
     /**
      * 調停人の経験取得
      *
-     * @param MedUserConfirmSession セッション情報
+     * @param medUserConfirmSession セッション情報
      * @return MediatorInfo 調停人の経験
-     * @throws Exception
+     * @throws Exception 異常情報
      */
     @Override
     public MediatorInfo getMediatorInfo(MedUserConfirmSession medUserConfirmSession) throws Exception {
@@ -112,9 +112,7 @@ public class MedUserConfirmServiceImpl implements MedUserConfirmService {
     /**
      * システム時間取得：現在の年、月
      *
-     * @param param1
      * @return String システム時間
-     * @throws
      */
     private String getSystemtime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.MONTH_FORMAT);
