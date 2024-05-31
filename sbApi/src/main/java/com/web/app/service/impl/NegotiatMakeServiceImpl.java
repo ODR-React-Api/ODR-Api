@@ -766,13 +766,20 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // 「添付ファイル」の値設定
             Files reFiles = insFiles(updNegotiationsFile, negotiationsFile);
             // 「添付ファイル」の新規登録
-            insNegotiationsEditMapper.insertFiles(reFiles);
-
+            int insFiEr = insNegotiationsEditMapper.insertFiles(reFiles);
+            // 新規登録失敗場合
+            if(insFiEr == Constants.RESULT_STATE_ERROR){
+                throw new RuntimeException();
+            }
             // 「案件-添付ファイルリレーション」の値設定
             CaseFileRelations resCaseFileRelations = insCaseFileRelations(negotiationsFile, negotiationsId,
                     reFiles.getId());
             // 「案件-添付ファイルリレーション」の新規登録
-            insNegotiationsEditMapper.insertCaseFileRelations(resCaseFileRelations);
+            int insCaFilEr = insNegotiationsEditMapper.insertCaseFileRelations(resCaseFileRelations);
+            // 新規登録失敗場合
+            if(insCaFilEr == Constants.RESULT_STATE_ERROR){
+                throw new RuntimeException();
+            }
 
         }
         return Constants.RESULT_STATE_SUCCESS;
