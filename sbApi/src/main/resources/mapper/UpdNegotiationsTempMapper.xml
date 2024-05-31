@@ -123,8 +123,8 @@
 			LastModifiedBy = #{caseFileRelations.LastModifiedBy}
         WHERE 
         fileId  in
-		    <foreach collection="sessionObjCaseFileRelationsIdList" item="sessionObjCaseFileRelationsId"  separator="," open="(" close=")">
-                #{sessionObjCaseFileRelationsId}
+		    <foreach collection="sessionObjFileIdList" item="sessionObjFileId"  separator="," open="(" close=")">
+                #{sessionObjFileId}
             </foreach>
     </update>	
 </mapper> 

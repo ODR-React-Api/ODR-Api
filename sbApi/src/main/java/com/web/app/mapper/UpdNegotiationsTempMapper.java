@@ -31,7 +31,7 @@ public interface UpdNegotiationsTempMapper {
 
         // テーブル「案件-添付ファイルリレーション」論理削除
         Integer updateCaseFileRelationsInfo(SettlementDraftDataCaseFileRelations caseFileRelations,
-                        @Param("sessionObjCaseFileRelationsIdList") List<String> sessionObjCaseFileRelationsId);
+                        @Param("sessionObjFileIdList") List<String> sessionObjFileId);
 
         // テーブル「添付ファイル」新規登録
         Integer insertFilesInfo(SettlementDraftDataFiles files);

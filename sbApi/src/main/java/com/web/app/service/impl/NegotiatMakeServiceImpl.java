@@ -400,7 +400,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
 
         // テーブル「案件-添付ファイルリレーション」論理削除
         Integer num = updNegotiationsTempMapper.updateCaseFileRelationsInfo(caseFileRelations,
-                sessionLogin.getSessionObjCaseFileRelationsId());
+                sessionLogin.getSessionObjFileId());
 
         if (num == Constants.RESULT_STATE_ERROR) {
             throw new RuntimeException();
@@ -618,8 +618,8 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
      * 和解案編集依頼データ新規登録
      *
      * @param negotiationsFile フロントからの画面項目
-     * @return int             更新情報
-     * @throws Exception       エラーの説明内容
+     * @return int 更新情報
+     * @throws Exception エラーの説明内容
      */
     @Transactional
     @Override
@@ -675,8 +675,8 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
      * 和解案編集依頼データ更新
      *
      * @param negotiationsFile フロントからの画面項目
-     * @return int             更新情報
-     * @throws Exception       エラーの説明内容
+     * @return int 更新情報
+     * @throws Exception エラーの説明内容
      */
     @Transactional
     @Override
@@ -757,7 +757,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
      * @param updNegotiationsFile フロントからの添付ファイル
      * @param negotiationsFile    フロントからの画面項目
      * @param negotiationsId      和解案id
-     * @return int                更新情報
+     * @return int 更新情報
      */
     private int addFiles(UpdNegotiationsFile updNegotiationsFile, NegotiationsFile negotiationsFile,
             String negotiationsId) {
@@ -768,7 +768,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // 「添付ファイル」の新規登録
             int insFiEr = insNegotiationsEditMapper.insertFiles(reFiles);
             // 新規登録失敗場合
-            if(insFiEr == Constants.RESULT_STATE_ERROR){
+            if (insFiEr == Constants.RESULT_STATE_ERROR) {
                 throw new RuntimeException();
             }
             // 「案件-添付ファイルリレーション」の値設定
@@ -777,7 +777,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // 「案件-添付ファイルリレーション」の新規登録
             int insCaFilEr = insNegotiationsEditMapper.insertCaseFileRelations(resCaseFileRelations);
             // 新規登録失敗場合
-            if(insCaFilEr == Constants.RESULT_STATE_ERROR){
+            if (insCaFilEr == Constants.RESULT_STATE_ERROR) {
                 throw new RuntimeException();
             }
         }
@@ -789,7 +789,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
      *
      * @param updNegotiationsFile 添付ファイル
      * @param negotiationsFile    画面からのファイル項目
-     * @return Files              添付ファイル
+     * @return Files 添付ファイル
      */
     private Files insFiles(UpdNegotiationsFile updNegotiationsFile, NegotiationsFile negotiationsFile) {
         Files files = new Files();
@@ -820,9 +820,9 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * 「案件-添付ファイルリレーション」の画面項目値設定
      *
-     * @param negotiationsFile   フロントからの画面項目
-     * @param caseId             和解案id
-     * @param filesId            添付ファイルid
+     * @param negotiationsFile フロントからの画面項目
+     * @param caseId           和解案id
+     * @param filesId          添付ファイルid
      * @return CaseFileRelations 添付ファイルリレーション
      */
     private CaseFileRelations insCaseFileRelations(NegotiationsFile negotiationsFile, String caseId, String filesId) {
