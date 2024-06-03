@@ -20,7 +20,7 @@
     </resultMap>
 
     <!-- TBL「案件別個人情報リレーション（case_relations）」と「申立（case_petitions）」より用意した下書き保存データを取得する。 -->
-    <select id="selectIdPetitionUserId" parameterType="string" resultMap="BaseResultMap">
+    <select id="selectIdPetitionUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
         select b.id, 
             a.petitionUserId
         from 
@@ -54,7 +54,7 @@
     </update> 
 
     <!-- ユーザ情報の取得-->
-    <select id="selectLanguageIdAndPlatformId" parameterType="string" resultMap="BaseResultMap2">
+    <select id="selectLanguageIdAndPlatformId" parameterType="java.lang.String" resultMap="BaseResultMap2">
         select languageId, 
             platformId
         from 
@@ -141,7 +141,7 @@
     </update> 
 
     <!-- ユーザ情報を取得 -->
-    <select id="selectFileId" resultType="string">
+    <select id="selectFileId" resultType="java.lang.String">
         select 
             a.fileId 
         from 
@@ -272,7 +272,7 @@
     </insert>
 
     <!-- プラットフォームデータを取得 -->
-    <select id="selectReplyLimitDays" resultMap="int">
+    <select id="selectReplyLimitDays">
         select 
             ReplyLimitDays
         from 
