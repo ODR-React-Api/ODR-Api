@@ -14,7 +14,7 @@
             <result property="platformId" column="PlatformId" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap id="BaseResultMap3" type="com.web.app.domain.MosContentConfirm.IdPetitionUserId">
+    <resultMap id="BaseResultMap3" type="com.web.app.domain.MosContentConfirm.ExtensionItem">
             <result property="extensionitemId" column="ExtensionitemId" jdbcType="VARCHAR"/>
             <result property="extensionitemValue" column="ExtensionitemValue" jdbcType="VARCHAR"/>
     </resultMap>
@@ -101,19 +101,19 @@
     </insert>
 
     <!-- 拡張項目内容の更新 -->
-    <update id="updatecaseExtensionitemValues" parameterType="com.web.app.domain.MosContentConfirm.UpdateOrInsertCaseExtensionitemValues">
+    <update id="updateCaseExtensionitemValues" parameterType="com.web.app.domain.MosContentConfirm.UpdateOrInsertCaseExtensionitemValues">
         update  
             case_extensionitem_values
         set 
-            ExtensionitemValue,
-            DeleteFlag,
-            LastModifiedDate,
-            LastModifiedBy,
-            CaseId,
+            ExtensionitemValue = #{extensionitemValue},
+            DeleteFlag = #{deleteFlag},
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{lastModifiedBy},
+            CaseId = #{caseId}
         where
-            PlatformId = #{platformId}
-            Case_petitionId = #{casePetitionId}
-            DeleteFlag = #{deleteFlag0}
+            PlatformId = #{platformId} and
+            Case_petitionId = #{casePetitionId} and
+            DeleteFlag = #{deleteFlag} and
             ExtensionitemId = #{extensionitemId}
     </update> 
 

@@ -201,9 +201,9 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // ID
     insertCases.setCid(cid);
     // プラットフォームID
-    if (userLanguageIdPlatformId != null) {
-      insertCases.setPlatformId(userLanguageIdPlatformId.getPlatformId());
-    }
+
+    insertCases.setPlatformId(userLanguageIdPlatformId.getPlatformId());
+
     // 案件ステージ
     insertCases.setCaseStage("0");
     // 案件ステータス
@@ -214,9 +214,9 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // 申立て日
     insertCases.setPetitionDate(new Date());
     // 利用言語
-    if (userLanguageIdPlatformId != null) {
-      insertCases.setLanguageId(userLanguageIdPlatformId.getLanguageId());
-    }
+
+    insertCases.setLanguageId(userLanguageIdPlatformId.getLanguageId());
+
     // 回答開始日
     insertCases.setReplyStartDate(new Date());
     // 回答期限日
@@ -246,9 +246,9 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // 案件ID
     updateCaseRelations.setCaseId(cid);
     // プラットフォームID
-    if (userLanguageIdPlatformId != null) {
-      updateCaseRelations.setPlatformId(userLanguageIdPlatformId.getPlatformId());
-    }
+
+    updateCaseRelations.setPlatformId(userLanguageIdPlatformId.getPlatformId());
+
     // 申立て人入力情報
     updateCaseRelations.setPetitionUserInfoEmail(s09ScreenIntelligence.getEtitionUserInfoEmail());
     // 代理人1
@@ -432,9 +432,12 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     updateOrInsertCaseExtensionitemValues.setLastModifiedBy(uid);
     // 案件ID
     updateOrInsertCaseExtensionitemValues.setCaseId(cid);
+    updateOrInsertCaseExtensionitemValues.setPlatformId(platformId);
+    updateOrInsertCaseExtensionitemValues.setId(id);
+    updateOrInsertCaseExtensionitemValues.setDeleteFlag(deleteFlag0);
+    updateOrInsertCaseExtensionitemValues.setExtensionitemId(extensionItem.getExtensionitemId());
     // case_extensionitem_valuesの更新
-    insPetitionsDataMapper.updateCaseExtensionitemValues(updateOrInsertCaseExtensionitemValues, platformId, id,
-        deleteFlag0, extensionItem.getExtensionitemId());
+    insPetitionsDataMapper.updateCaseExtensionitemValues(updateOrInsertCaseExtensionitemValues);
   }
 
   /**
