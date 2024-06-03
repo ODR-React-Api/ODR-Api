@@ -111,7 +111,7 @@ public class CommonTest {
         actionHistories.setUserType(1);
         List<String> fileId = new ArrayList<String>();
         Boolean parametersFlag = true;
-        Boolean displayNameFlag = false;
+        Boolean displayNameFlag = true;
 
         Response response = commonController.InsertActionHistories(actionHistories, fileId, parametersFlag,
                 displayNameFlag);
