@@ -717,10 +717,12 @@ public class MosListServiceImpl implements MosListService {
                     // 「case_mediations」から「ステータス」取得した
                     Integer mediationsInfoStatus = caseDetailCasesSelInfo.getMediationsStatus();
                     // 「case_mediations」から「ステータス」を取得したの比較
-                    if (mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_1
-                            || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_3
-                            || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_8
-                            || caseDetailCasesSelInfo.getGroupMessageFlag2() == Constants.STR_CASES_GROUPMESSAGEFLAG) {
+                    if (mediationsInfoStatus != null
+                            && (mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_1
+                                    || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_3
+                                    || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_8)
+                            || (caseDetailCasesSelInfo.getGroupMessageFlag2() != null && caseDetailCasesSelInfo
+                                    .getGroupMessageFlag2() == Constants.STR_CASES_GROUPMESSAGEFLAG)) {
                         // 要対応有無に1（要対応）を設定する
                         caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     }
