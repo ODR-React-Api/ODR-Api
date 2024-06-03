@@ -272,7 +272,7 @@
     </insert>
 
     <!-- プラットフォームデータを取得 -->
-    <select id="selectReplyLimitDays">
+    <select id="selectReplyLimitDays" resultType="int">
         select 
             ReplyLimitDays
         from 
