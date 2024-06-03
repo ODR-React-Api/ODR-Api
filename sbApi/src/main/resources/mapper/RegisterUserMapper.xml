@@ -4,11 +4,50 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.RegisterUserMapper">
 
-    <insert id="RegisterUserMapper">
-        insert into odr_users(Uid,password,Email,FirstName,MiddleName,LastName,FirstName_kana,MiddleName_kana,LastName_kana,CompanyName,
-        PlatformId,LanguageId,Status,MessageFrequency,TermsConfirmed,DeleteFlag,LastLoginDate, RegisterDate,LastModifiedDate) values
-        (#{Uid},#{password},#{Email},#{FirstName},#{MiddleName},#{LastName},#{FirstName_Kana},#{MiddleName_Kana},#{LastName_Kana},#{CompanyName},
-        #{PlatformId},#{LanguageId},0,100,1,0,NOW(),NOW(),NOW())
+    <!-- 向数据库表odr_users中插入数据 -->
+    <insert id="registerUserMapper">
+        insert into odr_users(
+            Uid,
+            password,Email,
+            FirstName,MiddleName,
+            LastName,
+            FirstName_kana,
+            MiddleName_kana,
+            LastName_kana,
+            CompanyName,
+            PlatformId,
+            LanguageId,
+            Status,
+            MessageFrequency,
+            TermsConfirmed,
+            DeleteFlag,
+            LastLoginDate, 
+            RegisterDate,
+            LastModifiedDate,
+            UserType
+            ) 
+        values(
+            #{Uid},
+            #{password},
+            #{Email},
+            #{FirstName},
+            #{MiddleName},
+            #{LastName},
+            #{FirstName_Kana},
+            #{MiddleName_Kana},
+            #{LastName_Kana},
+            #{CompanyName},
+            #{PlatformId},
+            #{LanguageId},
+            0,
+            100,
+            1,
+            0,
+            NOW(),
+            NOW(),
+            NOW(),
+            0
+        )
     </insert>
 
 </mapper>

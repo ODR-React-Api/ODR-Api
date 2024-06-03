@@ -85,6 +85,10 @@ public class Constants {
     public static final String STR_CASE_STATUS_ABORTEDCONFIRM = "1300";
     public static final String STR_ACTION_TYPE_ABORTEDCONFIRM = "CaseAbortedConfirmMailSend";
     public static final String HELP_URL = "http://uat-odr-service.azurewebsites.net/help";
+    public static final String SEND_MESSAGE_URL = "http://localhost:3000/";
+    public static final String PLANTFORM_ID = "0001";
+    public static final int CONTROL_TYPE = 2;
+    
 
     // public static final Map<Object,String> SIFANGJI_SIGNAL_STATE_MAP = new
     // HashMap<Object,String>(){{
