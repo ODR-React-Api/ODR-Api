@@ -122,11 +122,9 @@ public class MosListController {
             if (res != null) {
                 return AjaxResult.success(Constants.AJAXRESULT_SUCCESS, res);
             }
-            AjaxResult.error("res is null");
-            return null;
+            return AjaxResult.error(Constants.RES_NULL);
         } catch (Exception e) {
-            AjaxResult.fatal("error", e);
-            return null;
+            return AjaxResult.fatal(Constants.MSG_ERROR, e);
         }
     }
 
