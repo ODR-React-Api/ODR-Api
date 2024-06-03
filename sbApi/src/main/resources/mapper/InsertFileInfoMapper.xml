@@ -12,7 +12,9 @@
             FileUrl,
             FileSize,
             RegisterUserId,
-            RegisterDate
+            RegisterDate,
+            LastModifiedDate,
+            LastModifiedBy
         ) VALUES (
             #{fileId},
             #{caseId},
@@ -21,7 +23,9 @@
             #{fileUrl},
             #{fileSize},
             #{registerUserId},
-            NOW()
+            NOW(),
+            NOW(),
+            #{lastModifiedBy}
         )
     </insert>
 
@@ -31,13 +35,17 @@
             CaseId,
             RelationType,
             RelatedId,
-            fileId
+            fileId,
+            LastModifiedDate,
+            LastModifiedBy
         ) VALUES (
             #{caseFileRelationsId},
             #{caseId},
             7,
             #{relatedId},
-            #{fileId}
+            #{fileId},
+            NOW(),
+            #{lastModifiedBy}
         )
     </insert>    
 </mapper>

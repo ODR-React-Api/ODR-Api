@@ -9,7 +9,7 @@
         FROM
             cases
         WHERE
-            cid = #{CaseId}
-            AND PlatformId = #{PlatformId}
+            cid = #{caseId}
+            AND PlatformId = #{platformId}
     </select>
 </mapper>

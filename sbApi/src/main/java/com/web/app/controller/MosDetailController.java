@@ -171,16 +171,16 @@ public class MosDetailController {
     /**
      * 関係者メアド取得ControllerAPI
      *
-     * @param CaseId 案件ID
+     * @param caseId 案件ID
      * @return 案件別個人情報リレーション
      * @throws Exception エラーの説明内容
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("関係者メアド取得")
     @PostMapping("/getCaseRelations")
-    public Response getCaseRelations(String CaseId) {
+    public Response getCaseRelations(String caseId) {
         try {
-            CaseRelations caseRelations = mosDetailService.getCaseRelations(CaseId);
+            CaseRelations caseRelations = mosDetailService.getCaseRelations(caseId);
             if (caseRelations != null) {
                 return Response.success(caseRelations);
             }

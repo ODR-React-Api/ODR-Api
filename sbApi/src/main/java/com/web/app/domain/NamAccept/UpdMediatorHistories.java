@@ -1,5 +1,7 @@
 package com.web.app.domain.NamAccept;
 
+import java.util.Date;
+
 import lombok.Data;
 
 /**
@@ -20,4 +22,10 @@ public class UpdMediatorHistories {
 
     // 受理状態
     private String status;
+
+    // システム日付
+    private Date lastModifiedDate;
+
+    // ログインユーザ
+    private String lastModifiedBy;
 }

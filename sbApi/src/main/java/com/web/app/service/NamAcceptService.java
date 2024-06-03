@@ -16,6 +16,7 @@ public interface NamAcceptService {
     // 調停人履歴レコードを更新
     int updCaseStatusForAccept(String caseId);
 
-    int UpdMediatorHistories(UpdMediatorHistories updMediatorHistories);
+    // 調停人変更履歴変更
+    int updMediatorHistories(UpdMediatorHistories updMediatorHistories) throws Exception;
 
 }

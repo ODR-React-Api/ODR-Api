@@ -14,6 +14,7 @@ public interface DateExtensionService {
     //API_ID:交渉期限延長可能日数取得API
     String getNegotiationExtendDays(String platformId);
 
-    Date getToCaseInfo(String CaseId, String PlatformId) throws Exception;
+    // 案件情報取得
+    Date getToCaseInfo(String caseId, String platformId) throws Exception;
 
 }

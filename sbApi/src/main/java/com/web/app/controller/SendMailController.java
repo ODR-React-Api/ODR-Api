@@ -57,9 +57,9 @@ public class SendMailController {
 
         sendMailRequest.setControlType(1);
 
-        boolean returnValue = utilService.SendMail(sendMailRequest);
+        boolean bool = utilService.SendMail(sendMailRequest);
 
-        return returnValue;
+        return bool;
 
     }
 

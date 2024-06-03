@@ -44,7 +44,8 @@ public interface MosDetailService {
     // 参加済状態変更
     ParticipatedStatusChangeResultInfo participatedStatusSearch(String caseId, String uId);
 
-    CaseRelations getCaseRelations(String CaseId) throws Exception;
+    // 関係者メアド取得
+    CaseRelations getCaseRelations(String caseId) throws Exception;
 
     // API_回答の内容取得
     CaseRepliesMosDetail getCaseRepliesMosDetail(String caseId);

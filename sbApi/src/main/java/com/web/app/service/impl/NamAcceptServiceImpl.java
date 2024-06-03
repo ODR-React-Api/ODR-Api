@@ -49,8 +49,8 @@ public class NamAcceptServiceImpl implements NamAcceptService {
      */
     @Transactional
     @Override
-    public int UpdMediatorHistories(UpdMediatorHistories updMediatorHistories) {
-        return updMediatorHistoriesMapper.UpdMediatorHistories(updMediatorHistories);
+    public int updMediatorHistories(UpdMediatorHistories updMediatorHistories) throws Exception {
+        return updMediatorHistoriesMapper.updMediatorHistories(updMediatorHistories);
     }
 
 }

@@ -520,13 +520,13 @@ public class MosDetailServiceImpl implements MosDetailService {
     /**
      * 関係者メアド取得ControllerAPI
      *
-     * @param CaseId 案件ID
+     * @param caseId 案件ID
      * @return 案件別個人情報リレーション
      * @throws Exception エラーの説明内容
      */
     @Override
-    public CaseRelations getCaseRelations(String CaseId) throws Exception {
-        return getCaseRelationsMapper.getCaseRelations(CaseId);
+    public CaseRelations getCaseRelations(String caseId) throws Exception {
+        return getCaseRelationsMapper.getCaseRelations(caseId);
     }
 
     /**

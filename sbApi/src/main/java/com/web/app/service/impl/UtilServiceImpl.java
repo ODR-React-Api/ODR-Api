@@ -1,11 +1,14 @@
 package com.web.app.service.impl;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import javax.mail.internet.MimeMessage;
 
@@ -240,8 +243,9 @@ public class UtilServiceImpl implements UtilService {
      * @param languageId 言語ID
      * @param tempId mailID
      * @return 置換済みのパラメータ
+     * @throws ParseException 
      */
-    private static String ReplaceText(List<String> parameter, String emailBody, String caseTitle, String caseTitledisplayName, String languageId, String tempId) {
+    private static String ReplaceText(List<String> parameter, String emailBody, String caseTitle, String caseTitledisplayName, String languageId, String tempId) throws ParseException {
 
         emailBody = emailBody.replace("{OpenUniqueNumber}", parameter.get(parameter.size() - 1));
         for(int i = 0; i < parameter.size(); i++) {
@@ -251,8 +255,10 @@ public class UtilServiceImpl implements UtilService {
                 if(parameter.get(i) != null && parameter.get(i) != "") {
                     Date date = new Date();
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-                    if(JudgingTime(parameter.get(i))) {
-                        emailBody = emailBody.replace("{" + i + "}", String.format("{0:yyyy\\/MM\\/dd}", dateFormat.format(date)));
+                    if(Pattern.matches("\\d{4}/\\d{2}/\\d{2}", parameter.get(i))) {
+                        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+9"));
+                        date = dateFormat.parse(parameter.get(i));
+                        emailBody = emailBody.replace("{" + i + "}", dateFormat.format(date));
                     } else {
                         emailBody = emailBody.replace("{" + i + "}", parameter.get(i));
                     }
@@ -260,25 +266,6 @@ public class UtilServiceImpl implements UtilService {
             }
         }
         return emailBody;
-    }
-
-    /**
-     * 入力値を時間に変換できるかどうかAPI
-     *
-     * @param time 時間文字列
-     * @return 入力値を時間に変換できるかどうか
-     */
-    private static boolean JudgingTime(String time) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-            Date date = sdf.parse(time);
-            if(date == null) {
-                return false;
-            }
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
     }
 
     /**

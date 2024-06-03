@@ -50,4 +50,10 @@ public class InsertFileInfo implements Serializable {
     // 調停人担当案件履歴ID
     private String relatedId;
 
+    // システム日付
+    private Date lastModifiedDate;
+
+    // ログインユーザ
+    private String lastModifiedBy;
+
 }

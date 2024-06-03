@@ -45,13 +45,13 @@ public class DateExtensionServiceImpl implements DateExtensionService {
     /**
      * 案件情報取得API
      *
-     * @param CaseId 案件ID
-     * @param PlatformId プラットフォームID
+     * @param caseId 案件ID
+     * @param platformId プラットフォームID
      * @return 交渉期限日
      * @throws Exception エラーの説明内容
      */
     @Override
-    public Date getToCaseInfo(String CaseId, String PlatformId) throws Exception {
-        return getToCaseInfoMapper.getToCaseInfo(CaseId, PlatformId);
+    public Date getToCaseInfo(String caseId, String platformId) throws Exception {
+        return getToCaseInfoMapper.getToCaseInfo(caseId, platformId);
     }
 }
