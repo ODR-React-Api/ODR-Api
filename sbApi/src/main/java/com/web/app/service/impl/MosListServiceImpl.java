@@ -1152,8 +1152,8 @@ public class MosListServiceImpl implements MosListService {
 
         // 戻り値初期化
         List<ReturnResult> returnResultList = new ArrayList<>();
-        // ソート後の戻り値の初期化
-        List<ReturnResult> returnResultListSort = new ArrayList<>();
+        // // ソート後の戻り値の初期化
+        // List<ReturnResult> returnResultListSort = new ArrayList<>();
 
         // ユーザ情報を取得する
         String email = getListInfoMapper.selectEmailOdrUsers(uid);
@@ -1177,7 +1177,7 @@ public class MosListServiceImpl implements MosListService {
                 // API「ケース詳細取得」を呼び出す
                 ReturnResult returnResult1 = caseDetailCasesInfoSearch(caseDetails1);
                 // 詳細内容の取得
-                if (returnResult1.getCid() != null) {
+                if (returnResult1 != null) {
                     // 最終戻り値設定
                     returnResultList.add(returnResult1);
                 }
@@ -1203,7 +1203,7 @@ public class MosListServiceImpl implements MosListService {
                 // API「ケース詳細取得」を呼び出す
                 ReturnResult returnResult2 = caseDetailCasesInfoSearch(caseDetails2);
                 // 詳細内容の取得
-                if (returnResult2.getCid() != null) {
+                if (returnResult2 != null) {
                     // 最終戻り値設定
                     returnResultList.add(returnResult2);
                 }
@@ -1229,19 +1229,19 @@ public class MosListServiceImpl implements MosListService {
                 // API「ケース詳細取得」を呼び出す
                 ReturnResult returnResult3 = caseDetailCasesInfoSearch(caseDetails3);
                 // 詳細内容の取得
-                if (returnResult3.getCid() != null) {
+                if (returnResult3 != null) {
                     // 最終戻り値設定
                     returnResultList.add(returnResult3);
                 }
             }
         }
-        // 要対応有無の降順 かつ 対応期日の昇順で結合後の２次元配列（もしくはリスト）をソートする
-        if (returnResultList.size() != 0) {
-            returnResultListSort = returnResultList.stream()
-                    .sorted(Comparator.comparing(ReturnResult::getCorrespondence)
-                            .reversed().thenComparing(ReturnResult::getCorrespondDate))
-                    .collect(Collectors.toList());
-        }
-        return returnResultListSort;
+        // // 要対応有無の降順 かつ 対応期日の昇順で結合後の２次元配列（もしくはリスト）をソートする
+        // if (returnResultList.size() != 0) {
+        //     returnResultListSort = returnResultList.stream()
+        //             .sorted(Comparator.comparing(ReturnResult::getCorrespondence)
+        //                     .reversed().thenComparing(ReturnResult::getCorrespondDate))
+        //             .collect(Collectors.toList());
+        // }
+        return returnResultList;
     }
 }
