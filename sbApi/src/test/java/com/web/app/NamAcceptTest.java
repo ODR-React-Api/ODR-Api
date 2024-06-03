@@ -85,7 +85,7 @@ public class NamAcceptTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(updMediatorHistories);
 
-        doThrow(new RuntimeException()).when(updMediatorHistoriesMapper).UpdMediatorHistories(updMediatorHistories);
+        doThrow(new RuntimeException()).when(updMediatorHistoriesMapper).updMediatorHistories(updMediatorHistories);
         MvcResult mvcResult = mockMvc.perform(post("/NamAccept/updMediatorHistories").contentType(MediaType.APPLICATION_JSON).content(jsonData)).andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         String body = mockHttpServletResponse.getContentAsString();
