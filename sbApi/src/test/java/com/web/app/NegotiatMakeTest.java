@@ -72,7 +72,7 @@ public class NegotiatMakeTest {
 
         // 和解案下書きデータ取得があり場合
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -115,7 +115,7 @@ public class NegotiatMakeTest {
 
         // 和解案下書きデータ取得できる場合、その他
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -158,7 +158,7 @@ public class NegotiatMakeTest {
         // ログインユーザが当案件に対して、立場が申立人の場合：
         // 取得したレコードなし →＜新規登録＞
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -223,7 +223,7 @@ public class NegotiatMakeTest {
         // ログインユーザが当案件に対して、立場が申立人の場合：
         // 上記以外→ 異常終了（メッセージ例：申立の状態が別ユーザより更新されました。申立一覧画面から確認するようにお願いします。）
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -264,7 +264,7 @@ public class NegotiatMakeTest {
         // ログインユーザが当案件に対して、立場が申立人の場合：
         // Status in 7, 8, 13, 14 →＜更新登録＞
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -335,7 +335,7 @@ public class NegotiatMakeTest {
         // ログインユーザが当案件に対して、立場が相手方のの場合：
         // 取得したレコードなし →＜新規登録＞
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -400,7 +400,7 @@ public class NegotiatMakeTest {
         // ログインユーザが当案件に対して、立場が相手方のの場合：
         // Status in 0, 1, 10, 11 →＜更新登録＞
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -472,7 +472,7 @@ public class NegotiatMakeTest {
         // ログインユーザが当案件に対して、立場が相手方のの場合：
         // 上記以外→ 異常終了（メッセージ例：申立の状態が別ユーザより更新されました。申立一覧画面から確認するようにお願いします。）
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -534,7 +534,7 @@ public class NegotiatMakeTest {
 
         // 更新登録時、 「添付ファイル」論理削除に更新異常
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -601,7 +601,7 @@ public class NegotiatMakeTest {
 
         // 更新登録時、 「案件-添付ファイルリレーション」論理削除に更新異常
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -671,7 +671,7 @@ public class NegotiatMakeTest {
 
         // 更新登録時、 「和解案」更新異常
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -732,7 +732,7 @@ public class NegotiatMakeTest {
 
         // 和解案下書きデータ取得がなし場合
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -765,7 +765,7 @@ public class NegotiatMakeTest {
 
         // 和解案下書きデータ取得異常
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -800,7 +800,7 @@ public class NegotiatMakeTest {
         // 「案件-添付ファイルリレーション」新規登録異常
 
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -866,7 +866,7 @@ public class NegotiatMakeTest {
         // 「添付ファイル」新規登録異常
 
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -931,7 +931,7 @@ public class NegotiatMakeTest {
         // 「和解案」新規登録 異常
 
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -997,7 +997,7 @@ public class NegotiatMakeTest {
         // 「案件-添付ファイルリレーション」更新 登録異常
 
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解
@@ -1066,7 +1066,7 @@ public class NegotiatMakeTest {
         // 「添付ファイル」更新 登録異常
 
         // 抑制编译器产生警告信息
-        @SuppressWarnings("rawtypes")
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
         @SneakyThrows
         // 测试方法声明注解

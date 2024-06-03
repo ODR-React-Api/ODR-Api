@@ -660,6 +660,8 @@ public class MosListServiceImpl implements MosListService {
         caseDetailCasesInfoItem.setCorrespondDate(dateString);
 
         // 要対応有無の設定
+        // 要対応有無初期値を設定された
+        caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_0);
         // 立場フラグが1（申立人）の場合
         if (idFlag == Constants.POSITIONFLAG_PETITION) {
             // 戻り値の立場フラグを設定された
@@ -789,10 +791,11 @@ public class MosListServiceImpl implements MosListService {
                     // 「case_mediations」から「ステータス」を取得したの比較
                     if (mediationsInfoStatus != null
                             && (mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_1
-                            || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_2
-                            || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_7)
+                                    || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_2
+                                    || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_7)
                             || (caseDetailCasesSelInfo.getGroupMessageFlag1() != null
-                            &&  caseDetailCasesSelInfo.getGroupMessageFlag1() == Constants.STR_CASES_GROUPMESSAGEFLAG)) {
+                                    && caseDetailCasesSelInfo
+                                            .getGroupMessageFlag1() == Constants.STR_CASES_GROUPMESSAGEFLAG)) {
                         // 要対応有無に1（要対応）を設定する
                         caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     }
@@ -1237,10 +1240,10 @@ public class MosListServiceImpl implements MosListService {
         }
         // // 要対応有無の降順 かつ 対応期日の昇順で結合後の２次元配列（もしくはリスト）をソートする
         // if (returnResultList.size() != 0) {
-        //     returnResultListSort = returnResultList.stream()
-        //             .sorted(Comparator.comparing(ReturnResult::getCorrespondence)
-        //                     .reversed().thenComparing(ReturnResult::getCorrespondDate))
-        //             .collect(Collectors.toList());
+        // returnResultListSort = returnResultList.stream()
+        // .sorted(Comparator.comparing(ReturnResult::getCorrespondence)
+        // .reversed().thenComparing(ReturnResult::getCorrespondDate))
+        // .collect(Collectors.toList());
         // }
         return returnResultList;
     }
