@@ -23,6 +23,8 @@ import com.web.app.service.MosContentConfirmService;
 import com.web.app.service.CommonService;
 import com.web.app.service.UtilService;
 import com.web.app.domain.constants.Constants;
+import com.web.app.domain.constants.MailConstants;
+import com.web.app.domain.util.SendMailRequest;
 
 /**
  * 申立て内容確認画面
@@ -62,9 +64,6 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // 削除Flag0
     short deleteFlag0 = 0;
 
-    // ログイン戻り値
-    int returnFlag = 0;
-
     // 販売者メアド登録有無FLG
     int salesBrokerFlg = 0;
 
@@ -82,17 +81,17 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     int day = insPetitionsDataMapper.selectReplyLimitDays(userLanguageIdPlatformId.getPlatformId(), deleteFlag0);
 
     // 3.TBL「案件（cases）」の新規登録
-    returnFlag = insertCases(returnFlag, s09ScreenIntelligence, cid, userLanguageIdPlatformId, day);
+    insertCases(s09ScreenIntelligence, cid, userLanguageIdPlatformId, day);
 
     // 案件別個人情報リレーション（case_relations）のMAX（id）の取得
     id = utilService.GetGuid();
 
     // 4.TBL「案件別個人情報リレーション（case_relations）」の更新
-    returnFlag = updateCaseRelations(returnFlag, id, cid, userLanguageIdPlatformId, s09ScreenIntelligence,
+    updateCaseRelations(id, cid, userLanguageIdPlatformId, s09ScreenIntelligence,
         idPetitionUserId);
 
     // 5.TBL「申立（case_petitions）」の更新
-    returnFlag = updateCasePetitions(returnFlag, idPetitionUserId, cid, s09ScreenIntelligence,
+    updateCasePetitions(idPetitionUserId, cid, s09ScreenIntelligence,
         userLanguageIdPlatformId);
 
     // 6.a案件-添付ファイルリレーションの取得
@@ -115,20 +114,19 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
       String fileMaxId = utilService.GetGuid();
 
       // a.TBL「添付ファイル（files）」を新規登録する
-      returnFlag = insertFiles(returnFlag, fileMaxId, userLanguageIdPlatformId, cid, s09ScreenIntelligence,
+      insertFiles(fileMaxId, userLanguageIdPlatformId, cid, s09ScreenIntelligence,
           s09ScreenIntelligence.getUid(), deleteFlag0);
       // b.TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する
-      returnFlag = insertCaseFileRelations(returnFlag, userLanguageIdPlatformId, Constants.CASE_PETITIONS, cid,
+      insertCaseFileRelations(userLanguageIdPlatformId, Constants.CASE_PETITIONS, cid,
           idPetitionUserId,
           fileMaxId, s09ScreenIntelligence, s09ScreenIntelligence.getUid(), deleteFlag0);
     }
     // 8.③～⑦の登録処理が正常終了の場合、アクション履歴登録を行う
-    if (returnFlag == 0) {
-      // ActionHistories
-      ActionHistories actionHistories = new ActionHistories();
-      // 共通API调用
-      commonService.InsertActionHistories(actionHistories, null, false, true);
-    }
+
+    // ActionHistories
+    ActionHistories actionHistories = new ActionHistories();
+    // 共通API调用
+    commonService.InsertActionHistories(actionHistories, null, false, true);
 
     // 9.販売者メールアドレス登録有無の判定
     int numberOfPieces = insPetitionsDataMapper.selectCount(s09ScreenIntelligence.getTraderMail(),
@@ -166,19 +164,37 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
             s09ScreenIntelligence.getUid(), cid, s09ScreenIntelligence.getPlatformId(), id);
       }
     }
+
+    // 戻り項目.販売者メアド登録有無FLGが1（登録あり）の場合
+    if (salesBrokerFlg == 1) {
+      // メール送信API;メール一覧：申立て登録;TempId：M004
+      SendMailRequest sendMailRequest = getSendMailRequest(userLanguageIdPlatformId.getPlatformId(), cid,
+          s09ScreenIntelligence, MailConstants.MailId_M004);
+      // メール送信
+      utilService.SendMail(sendMailRequest);
+    } else {
+      // メール送信API;メール一覧：申立て登録 - ODR未登録ユーザへ;TempId：M005
+      SendMailRequest sendMailRequest = getSendMailRequest(userLanguageIdPlatformId.getPlatformId(), cid,
+          s09ScreenIntelligence, MailConstants.MailId_M005);
+      // メール送信
+      utilService.SendMail(sendMailRequest);
+    }
+    // メール送信API;メール一覧：申立て登録;TempId：M004
+    SendMailRequest sendMailRequest = getSendMailRequest(userLanguageIdPlatformId.getPlatformId(), cid,
+        s09ScreenIntelligence, MailConstants.MailId_M004);
+    // メール送信
+    utilService.SendMail(sendMailRequest);
   }
 
   /**
    * TBL「案件（cases）」の新規登録
    *
-   * @param returnFlag               ログイン戻り値
    * @param s09ScreenIntelligence    画面の項目
    * @param cid                      CID
    * @param userLanguageIdPlatformId ユーザ情報
-   * @return ログイン戻り値
    * @throws Exception
    */
-  public int insertCases(int returnFlag, S09ScreenIntelligence s09ScreenIntelligence, String cid,
+  public void insertCases(S09ScreenIntelligence s09ScreenIntelligence, String cid,
       UserLanguageIdPlatformId userLanguageIdPlatformId, int day) {
     // 登录用数据初始化
     InsertCases insertCases = new InsertCases();
@@ -204,25 +220,23 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // 回答開始日
     insertCases.setReplyStartDate(new Date());
     // 回答期限日
-    insertCases.setReplyEndDate(Date.from(LocalDateTime.now().plusDays(day).atZone(ZoneId.systemDefault()).toInstant()));
+    insertCases
+        .setReplyEndDate(Date.from(LocalDateTime.now().plusDays(day).atZone(ZoneId.systemDefault()).toInstant()));
     // TBL「案件（cases）」の新規登録
-    returnFlag = insPetitionsDataMapper.insertCases(insertCases);
-    return returnFlag;
+    insPetitionsDataMapper.insertCases(insertCases);
   }
 
   /**
    * TBL「案件別個人情報リレーション（case_relations）」の更新
    *
-   * @param returnFlag               ログイン戻り値
    * @param id                       自動のID
    * @param cid                      CID
    * @param userLanguageIdPlatformId ユーザ情報
    * @param s09ScreenIntelligence    画面の項目
    * @param idPetitionUserId         case_petitionsのIDとPetitionUserId
-   * @return ログイン戻り値
    * @throws Exception
    */
-  private int updateCaseRelations(int returnFlag, String id, String cid,
+  private void updateCaseRelations(String id, String cid,
       UserLanguageIdPlatformId userLanguageIdPlatformId, S09ScreenIntelligence s09ScreenIntelligence,
       IdPetitionUserId idPetitionUserId) {
     // 「案件別個人情報リレーション（case_relations）」更新用数据初始化
@@ -254,22 +268,19 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // 申立て人
     updateCaseRelations.setPetitionUserId(idPetitionUserId.getPetitionUserId());
     // TBL「案件別個人情報リレーション（case_relations）」の更新
-    returnFlag = insPetitionsDataMapper.updateCaseRelations(updateCaseRelations);
-    return returnFlag;
+    insPetitionsDataMapper.updateCaseRelations(updateCaseRelations);
   }
 
   /**
    * TBL「申立（case_petitions）」の更新
    *
-   * @param returnFlag               ログイン戻り値
    * @param idPetitionUserId         case_petitionsのIDとPetitionUserId
    * @param cid                      CID
    * @param s09ScreenIntelligence    画面の項目
    * @param userLanguageIdPlatformId ユーザ情報
-   * @return ログイン戻り値
    * @throws Exception
    */
-  private int updateCasePetitions(int returnFlag, IdPetitionUserId idPetitionUserId, String cid,
+  private void updateCasePetitions(IdPetitionUserId idPetitionUserId, String cid,
       S09ScreenIntelligence s09ScreenIntelligence, UserLanguageIdPlatformId userLanguageIdPlatformId) {
     // TBL「申立（case_petitions）」更新用数据初始化
     UpdateCasePetitions updateCasePetitions = new UpdateCasePetitions();
@@ -303,24 +314,21 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     updateCasePetitions.setId(idPetitionUserId.getId());
 
     // TBL「申立（case_petitions）」の更新
-    returnFlag = insPetitionsDataMapper.updateCasePetitions(updateCasePetitions);
-    return returnFlag;
+    insPetitionsDataMapper.updateCasePetitions(updateCasePetitions);
   }
 
   /**
    * TBL「添付ファイル（files）」を新規登録する
    *
-   * @param returnFlag               ログイン戻り値
    * @param fileMaxId                自動採番のid
    * @param userLanguageIdPlatformId ユーザ情報
    * @param cid                      CID
    * @param s09ScreenIntelligence    画面の項目
    * @param uid                      UID
    * @param DeleteFlag0              削除Flag0
-   * @return ログイン戻り値
    * @throws Exception
    */
-  private int insertFiles(int returnFlag, String fileMaxId, UserLanguageIdPlatformId userLanguageIdPlatformId,
+  private void insertFiles(String fileMaxId, UserLanguageIdPlatformId userLanguageIdPlatformId,
       String cid, S09ScreenIntelligence s09ScreenIntelligence, String uid, short DeleteFlag0) {
 
     // TBL「添付ファイル（files）」を新規登録用数据初始化
@@ -350,14 +358,12 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // 最終変更者
     insertFiles.setLastModifiedBy(uid);
     // TBL「添付ファイル（files）」を新規登録する
-    returnFlag = insPetitionsDataMapper.insertFiles(insertFiles);
-    return returnFlag;
+    insPetitionsDataMapper.insertFiles(insertFiles);
   }
 
   /**
    * TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する
    *
-   * @param returnFlag               ログイン戻り値
    * @param userLanguageIdPlatformId ユーザ情報
    * @param relationType             案件種類
    * @param cid                      CID
@@ -366,10 +372,9 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
    * @param s09ScreenIntelligence    画面の項目
    * @param uid                      UID
    * @param deleteFlag0              削除Flag0
-   * @return ログイン戻り値
    * @throws Exception
    */
-  private int insertCaseFileRelations(int returnFlag, UserLanguageIdPlatformId userLanguageIdPlatformId,
+  private void insertCaseFileRelations(UserLanguageIdPlatformId userLanguageIdPlatformId,
       int relationType, String cid, IdPetitionUserId idPetitionUserId, String fileMaxId,
       S09ScreenIntelligence s09ScreenIntelligence, String uid, short deleteFlag0) {
 
@@ -397,8 +402,7 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     // 最終変更者
     insertCaseFileRelations.setLastModifiedBy(uid);
     // TBL「案件-添付ファイルリレーション（case_file_relations）」を新規登録する
-    returnFlag = insPetitionsDataMapper.insertCaseFileRelations(insertCaseFileRelations);
-    return returnFlag;
+    insPetitionsDataMapper.insertCaseFileRelations(insertCaseFileRelations);
   }
 
   /**
@@ -472,5 +476,51 @@ public class MosContentConfirmServiceImpl implements MosContentConfirmService {
     updateOrInsertCaseExtensionitemValues.setLastModifiedBy(uid);
     // case_extensionitem_valuesの更新
     insPetitionsDataMapper.insertCaseExtensionitemValues(updateOrInsertCaseExtensionitemValues);
+  }
+
+  /**
+   * メール送信の項目を設定
+   * 
+   * @param platformId            平台Id
+   * @param cid                   CaseId
+   * @param s09ScreenIntelligence 画面の項目
+   * @param tempId                邮件ID
+   * @return sendMailRequest メール送信の項目
+   */
+  public SendMailRequest getSendMailRequest(String platformId, String cid,
+      S09ScreenIntelligence s09ScreenIntelligence, String tempId) {
+    SendMailRequest sendMailRequest = new SendMailRequest();
+    // プラットフォームID
+    sendMailRequest.setPlatformId(platformId);
+    // 利用言語
+    sendMailRequest.setLanguageId(Constants.JP);
+    // テンプレート番号
+    sendMailRequest.setTempId(tempId);
+    // 案件ID
+    sendMailRequest.setCaseId(cid);
+    // 受信者メールアドレスList
+    ArrayList<String> recipientEmail = new ArrayList<String>();
+    // 代理人1メールアドレス
+    recipientEmail.add(s09ScreenIntelligence.getAgent1Email());
+    // 代理人2メールアドレス
+    recipientEmail.add(s09ScreenIntelligence.getAgent2Email());
+    // 代理人3メールアドレス
+    recipientEmail.add(s09ScreenIntelligence.getAgent3Email());
+    // 代理人4メールアドレス
+    recipientEmail.add(s09ScreenIntelligence.getAgent4Email());
+    // 代理人5メールアドレス
+    recipientEmail.add(s09ScreenIntelligence.getAgent5Email());
+    // 販売者メールアドレス
+    recipientEmail.add(s09ScreenIntelligence.getTraderMail());
+    // 代理人1メールアドレス
+    sendMailRequest.setRecipientEmail(recipientEmail);
+    // メールテンプレート対応の引数値
+    ArrayList<String> parameter = new ArrayList<String>();
+    sendMailRequest.setParameter(parameter);
+    // 送信者ID
+    sendMailRequest.setUserId(s09ScreenIntelligence.getUid());
+    sendMailRequest.setControlType(1);
+    // 入力パラメータに戻る
+    return sendMailRequest;
   }
 }
