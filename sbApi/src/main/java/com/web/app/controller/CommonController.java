@@ -83,10 +83,12 @@ public class CommonController {
             Boolean displayNameFlag) throws Exception {
         try {
             Boolean res = commonService.InsertActionHistories(actionHistories, fileId, parametersFlag, displayNameFlag);
+            if (!res) {
+                return AjaxResult.error(Constants.MSG_ERROR);
+            }
             return AjaxResult.success(Constants.MSG_SUCCESS, res);
         } catch (Exception e) {
-            AjaxResult.fatal(Constants.MSG_ERROR, e);
-            throw e;
+            return AjaxResult.fatal(Constants.MSG_ERROR, e);
         }
     }
 

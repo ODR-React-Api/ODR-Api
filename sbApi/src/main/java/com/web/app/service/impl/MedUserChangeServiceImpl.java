@@ -74,7 +74,7 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
 
     /**
      * 案件関連情報更新
-     * 
+     *　　　　　　　　　　
      * @param caseId     セッション.案件ID
      * @param userType   1:申立人 2:相手方
      * @param withReason true:理由あり false:理由なし
