@@ -2,7 +2,6 @@
 package com.web.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -13,17 +12,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.app.domain.Response;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.SneakyThrows;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
 import javax.annotation.Resource;
 
 // 配置测试类
@@ -34,7 +28,7 @@ import javax.annotation.Resource;
 @AutoConfigureMockMvc
 // 启动模拟HTTP客户端注解
 @AutoConfigureWebTestClient
-public class TestListInfoTest {
+public class TestGetListInfoTest {
 
     // 按照名称进行匹配并注入
     @Resource
