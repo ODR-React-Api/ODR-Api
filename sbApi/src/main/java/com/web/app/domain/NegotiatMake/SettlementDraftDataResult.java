@@ -2,6 +2,7 @@ package com.web.app.domain.NegotiatMake;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -41,7 +42,7 @@ public class SettlementDraftDataResult implements Serializable {
     private int status;
 
     // ファイル名
-    private String fileName;
+    private List<String> fileNameList;
 
     // 異常終了利用してのメッセージ
     private String message;
