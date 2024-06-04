@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Entity.Cases;
@@ -129,7 +130,7 @@ public class MedUserConfirmController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停案ステータス取得")
     @PostMapping("/GetMediationStatus")
-    public Response GetMediationStatus(@RequestBody String CaseId) {
+    public Response GetMediationStatus(@RequestParam String CaseId) {
         try {
             // 調停案ステータスを取得
             String getMediationStatus = medUserConfirmService.getMediationStatus(CaseId);
