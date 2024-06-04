@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdNegotiationsEditMapper">
+  <update id="updateCaseNegotiations" parameterType="com.web.app.domain.Entity.CaseNegotiations">
+        UPDATE case_negotiations
+        SET
+            ExpectResloveTypeValue = #{expectResloveTypeValue},
+            OtherContext = #{otherContext},
+            PayAmount = #{payAmount},
+            CounterClaimPayment = #{counterClaimPayment},
+            PaymentEndDate = #{paymentEndDate},
+            ShipmentPayType = #{shipmentPayType},
+            SpecialItem = #{specialItem},
+            Status = #{status},
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{lastModifiedBy}
+        WHERE
+            Id = #{id}
+    </update>
+
+    <update id="deleteFiles" parameterType="com.web.app.domain.Entity.Files">
+        UPDATE files
+        SET
+            DeleteFlag = #{deleteFlag},
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{lastModifiedBy}
+        WHERE
+            Id = #{id}
+    </update>
+    <update id="deleteCaseFileRelations" parameterType="com.web.app.domain.Entity.CaseFileRelations">
+        UPDATE case_file_relations
+        SET
+            DeleteFlag = #{deleteFlag},
+            LastModifiedDate = #{lastModifiedDate},
+            LastModifiedBy = #{lastModifiedBy}
+        WHERE
+            FileId = #{fileId}
+</update>
+</mapper>

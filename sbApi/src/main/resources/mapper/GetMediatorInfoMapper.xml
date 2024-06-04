@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetMediatorInfoMapper">
+    <select id="getSolveMediatorCount" resultType="java.lang.Integer">
+        SELECT
+            Count(cid) as solveMediatorCount
+        FROM
+            cases,
+            odr_users,
+            mediator_histories,
+            case_relations
+        WHERE
+            odr_users.Email = #{mediatorUserEmail}
+            AND mediator_histories.userId = odr_users.Uid
+            AND cases.cid = mediator_histories.CaseId
+            AND cases.CaseStage = #{caseStage}
+            AND case_relations.MediatorUserEmail = #{mediatorUserEmail}
+            AND case_relations.CaseId= mediator_histories.CaseId
+                
+    </select>
+    <select id="getMediatorCount" resultType="java.lang.Integer">
+        SELECT
+            Count(caseId) as mediatorCount
+        FROM
+            odr_users,
+            mediator_histories
+        WHERE
+            odr_users.Email = #{mediatorUserEmail}
+            AND mediator_histories.userId = odr_users.Uid
+    </select>
+</mapper>

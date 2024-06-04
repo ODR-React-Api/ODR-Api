@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetSaveDataInfoMapper">
+    <resultMap id="DraftSavingDataMap" type="com.web.app.domain.MosList.DraftSavingDate">
+        <result property="petitionUserId" column="PetitionUserId" jdbcType="VARCHAR"/>
+        <result property="casePetition" column="CasePetition" jdbcType="VARCHAR"/>
+        <result property="petitionUserInfoEmail" column="PetitionUserInfo_Email" jdbcType="VARCHAR"/>
+        <result property="agent1Email" column="Agent1_Email" jdbcType="VARCHAR"/>
+        <result property="agent2Email" column="Agent2_Email" jdbcType="VARCHAR"/>
+        <result property="agent3Email" column="Agent3_Email" jdbcType="VARCHAR"/>
+        <result property="agent4Email" column="Agent4_Email" jdbcType="VARCHAR"/>
+        <result property="agent5Email" column="Agent5_Email" jdbcType="VARCHAR"/>
+        <result property="traderUserEmail" column="TraderUserEmail" jdbcType="VARCHAR"/>
+        <result property="productName" column="productName" jdbcType="VARCHAR"/>
+        <result property="productId" column="ProductId" jdbcType="VARCHAR"/>
+        <result property="traderName" column="TraderName" jdbcType="VARCHAR"/>
+        <result property="traderUrl" column="TraderUrl" jdbcType="VARCHAR"/>
+        <result property="BoughtDate" column="BoughtDate" jdbcType="DATE"/>
+        <result property="Price" column="Price" jdbcType="DECIMAL"/>
+        <result property="petitionTypeValue" column="petitionTypeValue" jdbcType="VARCHAR"/>
+        <result property="petitionContext" column="petitionContext" jdbcType="VARCHAR"/>
+        <result property="expectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR"/>
+        <result property="other" column="Other" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getSaveDataInfo" resultMap="DraftSavingDataMap">
+        SELECT
+            relations.PetitionUserId,
+            relations.CasePetition,
+            relations.PetitionUserInfo_Email,
+            relations.Agent1_Email,
+            relations.Agent2_Email,
+            relations.Agent3_Email,
+            relations.Agent4_Email,
+            relations.Agent5_Email,
+            relations.TraderUserEmail,
+            petitions.productName,
+            petitions.ProductId,
+            petitions.TraderName,
+            petitions.TraderUrl,
+            petitions.BoughtDate,
+            petitions.Price,
+            petitions.petitionTypeValue,
+            petitions.petitionContext,
+            petitions.ExpectResloveTypeValue,
+            petitions.Other
+        FROM
+            react_use.case_relations relations,
+            react_use.case_petitions petitions
+        WHERE
+            relations.CasePetition = petitions.id
+        AND relations.PetitionUserId = #{uid}
+        AND petitions.Status = '0'
+    </select>
+</mapper>

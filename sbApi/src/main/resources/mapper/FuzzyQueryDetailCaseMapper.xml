@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.FuzzyQueryDetailCaseMapper">
+    <resultMap id="SearchDetailCase" type="com.web.app.domain.MosList.SearchDetail">
+        <id property="cid" column="cid" jdbcType="VARCHAR"/>
+        <result property="caseStage" column="CaseStage" jdbcType="INTEGER"/>
+        <result property="caseStatus" column="CaseStatus" jdbcType="VARCHAR"/>
+        <result property="caseTitle" column="CaseTitle" jdbcType="VARCHAR"/>
+        <result property="petitonDate" column="PetitionDate" jdbcType="DATE"/>
+        <result property="replyEndDate" column="ReplyEndDate" jdbcType="DATE"/>
+        <result property="conuterclaimEndDate" column="CounterclaimEndDate" jdbcType="DATE"/>
+        <result property="negotiationEndDate" column="NegotiationEndDate" jdbcType="DATE"/>
+        <result property="mediationEndDate" column="MediationEndDate" jdbcType="DATE"/>
+        <result property="negotiationEndDateChangeStatus" column="NegotiationEndDateChangeStatus" jdbcType="INTEGER"/>
+        <result property="status" column="Status" jdbcType="INTEGER"/>
+        <result property="mediationsStatus" column="mediations_status" jdbcType="INTEGER"/>
+        <result property="groupMessageFlag1" column="GroupMessageFlag1" jdbcType="INTEGER"/>
+        <result property="groupMessageFlag2" column="GroupMessageFlag2" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getQueryDetailCase" resultMap="SearchDetailCase">
+        SELECT 
+            cases.cid,
+            cases.CaseStage,
+            cases.CaseStatus,
+            cases.CaseTitle,
+            cases.PetitionDate,
+            cases.ReplyEndDate,
+            cases.CounterclaimEndDate,
+            cases.NegotiationEndDate,
+            cases.MediationEndDate,
+            cases.NegotiationEndDateChangeStatus,
+            case_negotiations.Status,
+            case_mediations.Status as mediations_status,
+            cases.GroupMessageFlag1,
+            cases.GroupMessageFlag2
+        From
+            react_use.cases cases 
+        LEFT JOIN
+            react_use.case_negotiations case_negotiations
+        ON
+            cases.cid = case_negotiations.CaseId
+        LEFT JOIN
+            react_use.case_mediations case_mediations
+        ON
+            case_mediations.CaseId = cases.Cid
+            AND case_mediations.PlatformId = cases.PlatformId
+        WHERE cases.cid = #{caseId}
+        AND (cases.cid LIKE concat('%',#{queryString},'%')
+        OR cases.CaseTitle LIKE concat('%',#{queryString},'%'))
+        AND cases.DeleteFlag = '0'
+        AND case_negotiations.DeleteFlag = '0'
+    </select>
+
+    <select id="getMediatorDisclosureFlag" resultType="Integer">
+        SELECT
+            MediatorDisclosureFlag
+        FROM
+            react_use.cases
+        WHERE
+            cid = #{caseId}
+    </select>
+
+    <select id="getMsgCountByFlag" resultType="Integer">
+        SELECT
+            COUNT(*) as notReadedCnt
+        FROM
+            react_use.user_messages
+        WHERE
+            CaseId = #{caseId}
+        AND userId = #{petitionUserId}
+        AND ReadFlag = '0'
+        AND DeleteFlag = '0'
+    </select>
+
+    <select id="getMsgCountByFlagNo" resultType="Integer">
+        SELECT
+            COUNT(*) as notReadedCnt
+        FROM
+            react_use.user_messages user_messages,
+            react_use.messages messages
+        WHERE
+            user_messages.CaseId = messages.CaseId
+        AND messages.Id = user_messages.MessageId
+        AND user_messages.CaseId = #{caseId}
+        AND user_messages.userId = #{petitionUserId}
+        AND user_messages.ReadFlag = '0'
+        AND user_messages.DeleteFlag = '0'
+        AND messages.DeleteFlag = '0'
+        AND messages.CaseStage > '3'
+    </select>
+</mapper>

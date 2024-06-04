@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdCasesRelationsMapper">
+     <!--  API_案件別個人情報リレーションデータ更新 -->
+    <update id="updateCaserelations" parameterType="com.web.app.domain.AnswerLoginConfirm.UpdCasesRelations">
+        UPDATE react_use.case_relations
+        SET
+            TraderAgent1_UserEmail = #{traderagentuserListAll[0]},
+            TraderAgent2_UserEmail = #{traderagentuserListAll[1]},
+            TraderAgent3_UserEmail = #{traderagentuserListAll[2]},
+            TraderAgent4_UserEmail = #{traderagentuserListAll[3]},
+            TraderAgent5_UserEmail = #{traderagentuserListAll[4]}
+        WHERE
+            CaseId = #{caseId}
+        AND PlatformId = #{platformId}
+    </update>
+
+</mapper>

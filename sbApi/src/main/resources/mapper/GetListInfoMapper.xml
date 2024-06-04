@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetListInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.web.app.domain.MosDetail.UserCase">
+            <result property="caseId" column="CaseId" jdbcType="VARCHAR"/>
+            <result property="petitionUserId" column="PetitionUserId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- ユーザ情報を取得 -->
+    <select id="selectEmailOdrUsers" resultType="string">
+        select
+            email
+        from
+            odr_users
+        where
+            Uid = #{uid} and
+            DeleteFlag = 0
+    </select>
+
+    <!-- ユーザが申立人となるケースの取得-->
+    <select id="selectCaseIdPetition1" resultMap="BaseResultMap">
+        select caseId, 
+            petitionUserId
+        from 
+            case_relations
+        where
+            (PetitionUserInfo_Email = #{email} or
+            Agent1_Email = #{email} or
+            Agent2_Email = #{email} or
+            Agent3_Email = #{email} or
+            Agent4_Email = #{email} or
+            Agent5_Email = #{email}) and
+            DeleteFlag = 0
+        order by
+            caseId
+    </select>
+
+    <!-- ユーザが相手方とするケースの取得-->
+    <select id="selectCaseIdPetition2" resultMap="BaseResultMap">
+        select caseId, 
+            petitionUserId
+        from 
+            case_relations
+        where
+            (TraderUserEmail = #{email} or
+            TraderAgent1_UserEmail = #{email} or
+            TraderAgent2_UserEmail = #{email} or
+            TraderAgent3_UserEmail = #{email} or
+            TraderAgent4_UserEmail = #{email} or
+            TraderAgent5_UserEmail = #{email}) and
+            DeleteFlag = 0
+        order by
+            caseId
+    </select>
+
+    <!-- ユーザが調停人とするケースの取得-->
+    <select id="selectCaseIdPetition3" resultMap="BaseResultMap">
+        select caseId, 
+            petitionUserId
+        from 
+            case_relations
+        where
+            MediatorUserEmail = #{email} and
+            DeleteFlag = 0
+        order by
+            caseId
+    </select>
+</mapper>

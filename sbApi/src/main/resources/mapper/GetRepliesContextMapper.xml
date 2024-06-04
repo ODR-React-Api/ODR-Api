@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetRepliesContextMapper">
+    <resultMap id="getRepliesContextResultMap" type="com.web.app.domain.CouAnswerLogin.RepliesContext">
+        <result column="CounterClaimContext" jdbcType="VARCHAR" property="CounterClaimContext" />
+        <result column="FileName" jdbcType="VARCHAR" property="FileName" />
+        <result column="FileUrl" jdbcType="VARCHAR" property="FileUrl" />
+    </resultMap>
+    <select id="getRepliesContext" resultMap="getRepliesContextResultMap">
+        SELECT
+            case_replies.CounterClaimContext,
+            files.FileName,
+            files.FileUrl
+        FROM
+            react_use.case_replies case_replies,react_use.cases cases,react_use.case_file_relations case_file_relations,react_use.files files
+        WHERE
+            case_replies.CaseId = #{CaseId}
+            and case_replies.PlatformId = #{PlatformId} 
+            and case_replies.Status = 2
+            and case_replies.DeleteFlag = 0
+            and cases.cid = #{PlatformId}            
+            and cases.PlatformId = 0
+            and cases.DeleteFlag = 0
+            and case_file_relations.CaseId = case_replies.CaseId
+            and case_file_relations.RelationType = 1
+            and case_file_relations.PlatformId = #{PlatformId} 
+            and case_file_relations.RelatedId = case_replies.id
+            and case_file_relations.DeleteFlag = 0
+            and files.id = case_file_relations.fileId
+            and files.PlatformId = #{PlatformId} 
+            order by files.LastModifiedDate asc;
+    </select>
+</mapper>
+
+
+
+    
+
+

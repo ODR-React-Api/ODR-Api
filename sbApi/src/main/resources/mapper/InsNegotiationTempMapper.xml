@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.InsNegotiationTempMapper">
+    <select id="getNegotiationsStatusInfoSearch" resultType="com.web.app.domain.NegotiatMake.SettlementDraftDataCaseNegotiations">
+        SELECT
+        Status,
+        UserId,
+			id
+        FROM case_negotiations
+        WHERE   
+            CaseId = #{sessionCaseId}  
+            AND PlatformId = #{platformId}
+            AND DeleteFlag =0
+    </select>
+    <insert id="insertCaseNegotiationsInfo" parameterType="com.web.app.domain.NegotiatMake.SettlementDraftDataCaseNegotiations">
+        INSERT INTO case_negotiations (
+            id,
+			PlatformId,
+			CaseId,
+			Status,
+			ExpectResloveTypeValue,
+			OtherContext,
+			HtmlContext,
+			HtmlContext2,
+			PayAmount,
+			CounterClaimPayment,
+			PaymentEndDate,
+			ShipmentPayType,
+			SpecialItem,
+			UserId,
+			SubmitDate,
+			AgreementDate,
+			DeleteFlag,
+			LastModifiedDate,
+			LastModifiedBy
+        )
+        VALUES (
+			#{id},
+			#{PlatformId},
+			#{CaseId},
+			#{Status},
+			#{ExpectResloveTypeValue},
+			#{OtherContext},
+			#{HtmlContext},
+			#{HtmlContext2},
+			#{PayAmount},
+			#{CounterClaimPayment},
+			#{PaymentEndDate},
+			#{ShipmentPayType},
+			#{SpecialItem},
+			#{UserId},
+			#{SubmitDate},
+			#{AgreementDate},
+			#{DeleteFlag},
+			#{LastModifiedDate},
+			#{LastModifiedBy}
+        )
+    </insert>    
+    <insert id="insertFilesInfo" parameterType="com.web.app.domain.NegotiatMake.SettlementDraftDataFiles">
+        INSERT INTO files (
+            id,
+			PlatformId,
+			CaseId,
+			FileName,
+			FileExtension,
+			FileUrl,
+			FileBlobStorageId,
+			FileSize,
+			RegisterUserId,
+			RegisterDate,
+			Other01,
+			Other02,
+			Other03,
+			Other04,
+			Other05,
+			DeleteFlag,
+			LastModifiedDate,
+			LastModifiedBy
+        )
+        VALUES (#{id},
+				#{PlatformId},
+				#{CaseId},
+				#{FileName},
+				#{FileExtension},
+				#{FileUrl},
+				#{FileBlobStorageId},
+				#{FileSize},
+				#{RegisterUserId},
+				#{RegisterDate},
+				#{Other01},
+				#{Other02},
+				#{Other03},
+				#{Other04},
+				#{Other05},
+				#{DeleteFlag},
+				#{LastModifiedDate},
+				#{LastModifiedBy}
+        )
+    </insert>
+    <insert id="insertCaseFileRelationsInfo" parameterType="com.web.app.domain.NegotiatMake.SettlementDraftDataCaseFileRelations">
+        INSERT INTO case_file_relations (
+            id,
+			PlatformId,
+			CaseId,
+			RelationType,
+			RelatedId,
+			fileId,
+			Other01,
+			Other02,
+			Other03,
+			Other04,
+			Other05,
+			DeleteFlag,
+			LastModifiedDate,
+			LastModifiedBy
+        )
+        VALUES (#{id},
+				#{PlatformId},
+				#{CaseId},
+				4,
+				#{RelatedId},
+				#{fileId},
+				#{Other01},
+				#{Other02},
+				#{Other03},
+				#{Other04},
+				#{Other05},
+				#{DeleteFlag},
+				#{LastModifiedDate},
+				#{LastModifiedBy}
+        )
+    </insert>
+</mapper> 

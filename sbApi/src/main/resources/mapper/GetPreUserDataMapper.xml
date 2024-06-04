@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetPreUserDataMapper">
+    <select id="getPreUserData" resultType="java.lang.String">
+        SELECT
+            email   
+        FROM
+            react_use.odr_users_pre
+        WHERE
+            guid = #{guid} 
+            AND registerDate &lt;= DATE_SUB(NOW(), INTERVAL 3 DAY ); 
+    </select>
+</mapper>

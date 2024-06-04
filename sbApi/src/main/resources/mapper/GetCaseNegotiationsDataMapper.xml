@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetCaseNegotiationsDataMapper">
+    <!-- API_和解内容取得 -->
+    <!-- 和解内容の取得 -->
+    <select id="getCaseNegotiations" resultType="com.web.app.domain.Entity.CaseNegotiations">
+        SELECT
+            CaseId,
+            Status,
+            ExpectResloveTypeValue,
+            OtherContext,
+            PayAmount,
+            CounterClaimPayment,
+            PaymentEndDate,
+            ShipmentPayType,
+            SpecialItem,
+            LastModifiedDate
+        FROM case_negotiations
+        WHERE
+            CaseId = #{caseId}
+        AND Status != 0
+        AND DeleteFlag = 0
+    </select>
+
+    <!-- 添付資料の取得 -->
+    <select id="getFiles" resultType="com.web.app.domain.Entity.Files">
+        SELECT
+            files.FileName,
+            files.FileUrl
+        FROM case_file_relations, files
+        WHERE
+            case_file_relations.CaseId = #{caseId}
+        AND case_file_relations.RelationType = 4
+        AND case_file_relations.DeleteFlag = 0
+        AND files.id = case_file_relations.fileId
+        AND files.DeleteFlag = 0
+        ORDER BY files.LastModifiedDate
+    </select>
+</mapper>

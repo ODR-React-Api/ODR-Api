@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.GetNegotiationsDataMapper">
+    <resultMap id="SettlementDraftInfoResultMap"
+        type="com.web.app.domain.NegotiatMake.SettlementDraftDataSelectedInfo">
+        <id property="caseId" column="caseId" jdbcType="VARCHAR" />
+        <result property="cId" column="cid" jdbcType="VARCHAR" />
+        <result property="caseStage" column="CaseStage" jdbcType="INTEGER" />
+        <result property="caseStatus" column="CaseStatus" jdbcType="VARCHAR" />
+        <result property="id" column="id" jdbcType="VARCHAR" />
+		<result property="ExpectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR" />
+		<result property="OtherContext" column="OtherContext" jdbcType="VARCHAR" />
+		<result property="PayAmount" column="PayAmount" jdbcType="DOUBLE" />
+		<result property="CounterClaimPayment" column="CounterClaimPayment" jdbcType="DOUBLE" />
+		<result property="PaymentEndDate" column="PaymentEndDate" jdbcType="DATE" />
+		<result property="ShipmentPayType" column="ShipmentPayType" jdbcType="INTEGER" />
+		<result property="SpecialItem" column="caseId" jdbcType="VARCHAR" />
+		<result property="Status" column="Status" jdbcType="INTEGER" />
+		<result property="UserId" column="UserIdUserId" jdbcType="VARCHAR" />
+		<result property="FileName" column="FileName" jdbcType="VARCHAR" />
+		<result property="FileUrl" column="FileUrl" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="settlementDraftDataInfoSearch" resultMap="SettlementDraftInfoResultMap"> 
+        SELECT
+        caseNegotiations.id AS id,
+        caseNegotiations.ExpectResloveTypeValue AS ExpectResloveTypeValue,
+        caseNegotiations.OtherContext AS OtherContext,
+        caseNegotiations.PayAmount AS PayAmount,
+        caseNegotiations.CounterClaimPayment AS CounterClaimPayment,
+        caseNegotiations.PaymentEndDate AS PaymentEndDate,
+        caseNegotiations.ShipmentPayType AS ShipmentPayType,
+        caseNegotiations.SpecialItem AS SpecialItem,
+        caseNegotiations.Status AS Status,
+        caseNegotiations.UserId AS UserId,
+        files.FileName AS FileName,
+        files.FileUrl AS FileUrl
+        FROM case_negotiations caseNegotiations
+        LEFT JOIN case_file_relations caseFileRelations
+                    ON  caseFileRelations.CaseId = caseNegotiations.CaseId
+                    AND caseFileRelations.RelatedId =  caseNegotiations.id
+        LEFT JOIN files  files
+                    ON files.id = caseFileRelations.fileId
+        WHERE
+            caseNegotiations.CaseId = #{sessionCaseId}
+            AND caseNegotiations.Status in (0,1,2,7,8,9,10,11,12,13,14,15)
+            AND caseNegotiations.DeleteFlag = 0
+            AND caseFileRelations.RelationType = 4
+            AND caseFileRelations.DeleteFlag = 0
+        ORDER BY files.LastModifiedDate asc    
+    </select>
+</mapper> 

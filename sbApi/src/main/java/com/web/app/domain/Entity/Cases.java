@@ -1,129 +1,178 @@
 package com.web.app.domain.Entity;
 
-import java.sql.Date;
-
 import lombok.Data;
 
+/**
+ * 案件
+ * 
+ * @author DUC 耿浩哲
+ * @since 2024/05/10
+ * @version 1.0
+ */
 @Data
 public class Cases {
 
-    public String Cid;
+    // ID
+    private String cid;
 
-    public String PlatformId;
+    // プラットフォームID
+    private String PlatformId;
 
-    public int CaseStage;
+    // 案件ステージ
+    private int CaseStage;
 
-    public String CaseStatus;
+    // 案件ステータス
+    private String CaseStatus;
 
-    public String CaseTitle;
+    // タイトル名
+    private String CaseTitle;
 
-    public Date PetitionDate;
+    // 申立て日
+    private String PetitionDate;
 
-    public Date WithDrawDate;
+    // 取り下げ日
+    private String WithDrawDate;
 
-    public Date ReplyStartDate;
+    // 回答開始日
+    private String ReplyStartDate;
 
-    public Date ReplyEndDate;
+    // 回答期限日
+    private String ReplyEndDate;
 
-    public boolean CounterclaimFlag;
+    // 反訴の有無
+    private Integer CounterclaimFlag;
 
-    public Date CounterclaimStartDate;
+    // 反訴の回答開始日
+    private String CounterclaimStartDate;
 
-    public Date CounterclaimEndDate;
+    // 反訴の回答期限日
+    private String CounterclaimEndDate;
 
-    public Date NegotiationStartDate;
+    // 交渉開始日
+    private String NegotiationStartDate;
 
-    public Date NegotiationEndDate;
+    // 交渉期限日
+    private String NegotiationEndDate;
 
-    public int NegotiationEndDateChangeStatus;
+    // 交渉期限日変更ステータス
+    private int NegotiationEndDateChangeStatus;
 
-    public int NegotiationEndDateChangeCount;
+    // 交渉期限日変更回数
+    private int NegotiationEndDateChangeCount;
 
-    public Date CancelDate;
+    // 手続き中止日
+    private String CancelDate;
 
-    public Date MediatorReuqestDate;
+    // 調停人指名依頼日
+    private String MediatorReuqestDate;
 
-    public Date MediationStartDate;
+    // 調停開始日
+    private String MediationStartDate;
 
-    public Date MediationEndDate;
+    // 調停期限日
+    private String MediationEndDate;
 
-    public int MediationEndDateChangeCount;
+    // 調停期限変更回数
+    private int MediationEndDateChangeCount;
 
-    public Date MediatorNoReasonChangeDate;
+    // 調停人無理由変更可能期限日
+    private String MediatorNoReasonChangeDate;
 
-    public Date MediatorDisclosureDate;
+    // 調停人情報開示変更可能期限日
+    private String MediatorDisclosureDate;
 
-    public int MediatorChangeableCount1;
+    // 調停人変更回数(申立人)
+    private int MediatorChangeableCount1;
 
-    public int MediatorChangeableCount2;
+    // 調停人変更回数(相手方)
+    private int MediatorChangeableCount2;
 
-    public int MediatorDisclosureFlag;
+    // 調停人情報開示フラグ
+    private int MediatorDisclosureFlag;
 
-    public int GroupMessageFlag1;
+    // 個別やりとりステータス（申立人↔調停人）
+    private int GroupMessageFlag1;
 
-    public int GroupMessageFlag2;
+    // 個別やりとりステータス（相手方↔調停人）
+    private int GroupMessageFlag2;
 
-    public String GroupMessageComment1;
+    // 個別やりとり依頼コメント（申立人↔調停人）
+    private String GroupMessageComment1;
 
-    public String GroupMessageComment2;
+    // 個別やりとり依頼コメント（相手方↔調停人）
+    private String GroupMessageComment2;
 
-    public Date ArbitrationStartDate;
+    // 仲裁開始日時
+    private String ArbitrationStartDate;
 
-    public Date ArbitrationEndDate;
+    // 仲裁期限日
+    private String ArbitrationEndDate;
 
-    public Date ArbitrationEditDate;
+    // 裁定修正期日
+    private String ArbitrationEditDate;
 
-    public Date ResolutionDate;
+    // 解決日時
+    private String ResolutionDate;
 
-    public boolean ResolutionFlag;
+    // 解決有無
+    private Integer ResolutionFlag;
 
-    public boolean PayFlag;
+    // 金銭の支払い有無
+    private Integer PayFlag;
 
-    public boolean CounterclaimPayFlag;
+    // 反訴の金銭の支払い有無
+    private Integer CounterclaimPayFlag;
 
-    public String LanguageId;
+    // 利用言語
+    private String LanguageId;
 
-    public Date OtherDate01;
+    // アンケート送信フラグ
+    private Integer QuestionnaireSendFlag;
 
-    public Date OtherDate02;
+    // 手続き中止担当側
+    private int CancelBy;
 
-    public Date OtherDate03;
+    // 手続き中止実地日
+    private String CancelActionDate;
 
-    public Date OtherDate04;
+    // 手続き中止確認側（申立人）
+    private Integer CancelReuqestBy1;
 
-    public Date OtherDate05;
+    // 手続き中止確認側（相手方）
+    private Integer CancelReuqestBy2;
 
-    public boolean QuestionnaireSendFlag;
+    // 手続き中止確認側（調停人）
+    private Integer CancelReuqestBy3;
 
-    public String Other01;
+    private String OtherDate01;
 
-    public String Other02;
+    private String OtherDate02;
 
-    public String Other03;
+    private String OtherDate03;
 
-    public String Other04;
+    private String OtherDate04;
 
-    public String Other05;
+    private String OtherDate05;
 
-    public boolean DeleteFlag;
+    private String Other01;
 
-    public Date LastModifiedDate;
+    private String Other02;
 
-    public String LastModifiedBy;
+    private String Other03;
 
-    public int CancelBy;
+    private String Other04;
 
-    public Date CancelActionDate;
+    private String Other05;
 
-    public boolean CancelReuqestBy1;
+    private Integer DeleteFlag;
 
-    public boolean CancelReuqestBy2;
+    private String LastModifiedDate;
 
-    public boolean CancelReuqestBy3;
+    private String LastModifiedBy;
 
-    public int MediationChangeableCountSet;
+    private int MediationChangeableCountSet;
 
-    public int MediationNoReasonChangeableCountSet;
+    private int MediationNoReasonChangeableCountSet;
 
-    public boolean JoinedFlag;
+    private Integer JoinedFlag;
 }

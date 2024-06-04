@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.web.app.mapper.GetPetitionsDataMapper">
+
+        <resultMap id="ResultMap" type="com.web.app.domain.AnswerLogin.PetitionsData">
+                <result property="productName" column="productName" jdbcType="VARCHAR"/>
+                <result property="productId" column="ProductId" jdbcType="VARCHAR"/>
+                <result property="traderName" column="TraderName" jdbcType="VARCHAR"/>
+                <result property="traderUrl" column="TraderUrl" jdbcType="VARCHAR"/>
+                <result property="other" column="Other" jdbcType="VARCHAR"/>
+                <result property="boughtDate" column="BoughtDate" jdbcType="TIMESTAMP"/>
+                <result property="price" column="Price" jdbcType="DECIMAL"/>
+                <result property="petitionTypeValue" column="petitionTypeValue" jdbcType="VARCHAR"/>
+                <result property="petitionContext" column="petitionContext" jdbcType="INTEGER"/>
+                <result property="expectResloveTypeValue" column="ExpectResloveTypeValue" jdbcType="VARCHAR"/>
+                <result property="fileName" column="FileName" jdbcType="VARCHAR"/>
+                <result property="fileUrl" column="FileUrl" jdbcType="VARCHAR"/>
+        </resultMap>
+
+        <sql id = "selectItems">
+            cp.productName,cp.ProductId,cp.TraderName,cp.TraderUrl,
+            cp.Other,cp.BoughtDate,cp.Price,cp.petitionTypeValue,
+            cp.petitionContext,cp.ExpectResloveTypeValue,fi.FileName,fi.FileUrl
+        </sql>
+        <sql id = "selectCondition">
+            cp.CaseId = #{caseId} and cp.PlatformId = #{plateFormId} and cp.Status = 1 
+            and cp.DeleteFlag = 0 and cases.cid = cp.CaseId and cases.PlatformId = #{plateFormId} 
+            and cases.DeleteFlag = 0 and cfr.CaseId = cp.CaseId and cfr.PlatformId = #{plateFormId} 
+            and cfr.RelationType = 0 and cfr.RelatedId = cp.id and cfr.DeleteFlag = 0
+            and fi.id = cfr.fileId order by cfr.LastModifiedDate
+        </sql>
+        <select id = "getPetitionsData" resultMap="ResultMap">
+            select <include refid="selectItems"/> from react_use.case_petitions cp,
+            react_use.files fi,react_use.case_file_relations cfr,react_use.cases
+            where <include refid="selectCondition"/>
+        </select>
+    </mapper>
