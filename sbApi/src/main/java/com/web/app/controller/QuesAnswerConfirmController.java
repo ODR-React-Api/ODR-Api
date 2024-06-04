@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
-import com.web.app.domain.Entity.InsQuestionnairesResults;
+import com.web.app.domain.Question.InsQuestionnairesResults;
 import com.web.app.service.QuesAnswerConfirmService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;

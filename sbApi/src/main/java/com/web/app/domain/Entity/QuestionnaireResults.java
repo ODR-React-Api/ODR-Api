@@ -16,39 +16,28 @@ public class QuestionnaireResults implements Serializable {
     // ID
     public String id;
     // プラットフォームID
-
     public String PlatformId;
     // 案件ID
-
     public String CaseId;
     // 調停人ID
-
     public String MediratorUserId;
     // アンケートID
-
     public String QuestionId;
     // ユーザー立場
-
     public Integer UserType;
     // 回答日
-
     public String AnswerDate;
     // 回答1
     public String result_Q1;
     // 回答2
-
     public String result_Q2;
     // 回答3
-
     public String result_Q3;
     // 回答4
-
     public String result_Q4;
     // 回答5
-
     public String result_Q5;
     // 回答6
-
     public String result_Q6;
     // 回答7
     public String result_Q7;
