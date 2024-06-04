@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.domain.Entity.QuestionnaireResults;
-import com.web.app.domain.Question.InsQuestionnairesResults;
+import com.web.app.domain.QuesAnswerConfirm.InsQuestionnairesResults;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.util.SendMailRequest;
