@@ -1,6 +1,6 @@
 package com.web.app.service;
 
-import com.web.app.domain.Question.InsQuestionnairesResults;
+import com.web.app.domain.QuesAnswerConfirm.InsQuestionnairesResults;
 
 /**
  * C09_アンケート回答確認画面
