@@ -16,5 +16,6 @@ import com.web.app.domain.Entity.QuestionnaireResults;
 @Mapper
 public interface InsQuestionnairesResultsMapper {
     int insQuestionnairesResults(QuestionnaireResults questionnaireResults);
-    int getCaseStage(String caseId);
+    // 【画面C8】.caseId対応なCaseStage
+    Integer getCaseStage(String caseId);
 }

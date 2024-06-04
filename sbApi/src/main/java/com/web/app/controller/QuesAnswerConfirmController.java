@@ -30,7 +30,13 @@ import io.swagger.annotations.ApiOperation;
 public class QuesAnswerConfirmController {
     @Autowired
     private QuesAnswerConfirmService quesAnswerConfirmService;
-
+ /**
+     * API_アンケート入力結果新規登録
+     * 「送信する」ボタン押下で、アンケート回答登録処理を行う。
+     * 
+     * @param insQuestionnaireResults アンケート回答登録処理の引数
+     * @return Response アンケート回答登録処理の状況
+     */
     @ApiOperation("アンケート入力結果新規登録")
     @PostMapping("/InsQuestionnairesResults")
     @SuppressWarnings("rawtypes")
