@@ -60,8 +60,7 @@ public interface InsPetitionsDataMapper {
       String extensionitemId);
 
   // case_extensionitem_values更新
-  void updateCaseExtensionitemValues(UpdateOrInsertCaseExtensionitemValues updateOrInsertCaseExtensionitemValues,
-      String platformId, String id, short deleteFlag0, String extensionitemId);
+  void updateCaseExtensionitemValues(UpdateOrInsertCaseExtensionitemValues updateOrInsertCaseExtensionitemValues);
 
   // case_extensionitem_values登録
   void insertCaseExtensionitemValues(UpdateOrInsertCaseExtensionitemValues updateOrInsertCaseExtensionitemValues);

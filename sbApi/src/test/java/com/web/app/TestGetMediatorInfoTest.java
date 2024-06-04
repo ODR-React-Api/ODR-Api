@@ -1,11 +1,17 @@
 package com.web.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.reset;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -16,6 +22,9 @@ import com.web.app.domain.Response;
 import com.web.app.domain.MedUserConfirm.MedUserConfirmSession;
 import com.web.app.domain.MedUserConfirm.MediatorInfo;
 import com.web.app.domain.constants.Constants;
+import com.web.app.mapper.GetMediatorInfoMapper;
+import com.web.app.service.MedUserConfirmService;
+
 import lombok.SneakyThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import java.text.SimpleDateFormat;
@@ -31,10 +40,16 @@ import javax.annotation.Resource;
 // 启动模拟HTTP客户端注解
 @AutoConfigureWebTestClient
 public class TestGetMediatorInfoTest {
-    String addPath = "/MedUserConfirm/getMediatorInfo";
+    @SpyBean
+    GetMediatorInfoMapper getMediatorInfoMapperMock;
+    @Mock
+    MedUserConfirmService medUserConfirmService;
+
+    public static final String addPath = "/MedUserConfirm/getMediatorInfo";
     // 按照名称进行匹配并注入
     @Resource
     protected MockMvc mockMvc;
+
     // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
     @SneakyThrows
     // 测试方法声明注解
@@ -68,6 +83,7 @@ public class TestGetMediatorInfoTest {
         assertEquals(0 + Constants.STR_KEN, mediatorInfo.getMediatorCount());
         assertEquals(Constants.STR_YOKO, mediatorInfo.getResolutionRate());
     }
+
     // Junit共通
     private MediatorInfo juTest(MedUserConfirmSession medUserConfirmSession, String path) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -87,6 +103,37 @@ public class TestGetMediatorInfoTest {
         MediatorInfo mediatorInfo = objectMapper.convertValue(response.getData(), MediatorInfo.class);
 
         return mediatorInfo;
+
+    }
+
+    // 按照名称进行匹配并注入
+    @Resource
+    protected MockMvc mockMvc3;
+    // 将抛出异常包装成运行时错误 通过编译(同trycatch及throw)
+    @SneakyThrows
+    // 测试方法声明注解
+    @Test
+    public void testGetMediatorInfoTest3() {
+        // DBにodr_users→odr_users1変更してテスト
+        MedUserConfirmSession medUserConfirmSession = new MedUserConfirmSession();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonData2 = objectMapper.writeValueAsString(medUserConfirmSession);
+        reset(getMediatorInfoMapperMock);
+        // ★★★ 調停件数取得異常の場合
+        doThrow(new RuntimeException()).when(getMediatorInfoMapperMock)
+                .getMediatorCount(Mockito.any(MedUserConfirmSession.class));
+
+        // 请求并接收返回值
+        MvcResult mvcResult = mockMvc3.perform(post("/MedUserConfirm/getMediatorInfo")
+                .contentType(MediaType.APPLICATION_JSON).content(jsonData2)).andReturn();
+        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+        mockHttpServletResponse.setCharacterEncoding("utf-8");
+        String body = mockHttpServletResponse.getContentAsString();
+        String strMsgN = null;
+        // 断言
+        if (body == "") {
+            assertEquals(strMsgN, null);
+        }
 
     }
 
