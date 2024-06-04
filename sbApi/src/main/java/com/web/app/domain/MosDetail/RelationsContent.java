@@ -152,4 +152,16 @@ public class RelationsContent implements Serializable {
 
   // 代理人5Flag
   private int trader5Flag;
+
+  // 所属会社名
+  private String mediatorUsercompanyName;
+
+  // 申立人氏名
+  private String mediatorUserName;
+
+  // 申立人氏名（カナ）
+  private String mediatorUserkana;
+
+  // 申立人Email
+  private String mediatorUserEmail;
 }
