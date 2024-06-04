@@ -59,7 +59,7 @@ public class SendMailController {
 
         boolean bool = utilService.SendMail(sendMailRequest);
 
-        return true;
+        return bool;
 
     }
 

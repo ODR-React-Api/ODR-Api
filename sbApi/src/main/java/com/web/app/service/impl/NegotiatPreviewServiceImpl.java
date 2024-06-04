@@ -369,11 +369,9 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         }
         actionHistories.setCaseStage(3);
         actionHistories.setUserId(negotiatPreview.getUserId());
-        if (Num.NUM15.equals(negotiatPreview.getStatus())) {
-            actionHistories.setUserType(1);
-        } else if (Num.NUM2.equals(negotiatPreview.getStatus())) {
-            actionHistories.setUserType(2);
-        }
+        String userStance = GetUserStance(negotiatPreview.getUserId(), negotiatPreview.getPlatformId(),
+                negotiatPreview.getCaseId());
+        actionHistories.setUserType(Integer.valueOf(userStance));
         actionHistories.setLastModifiedBy(negotiatPreview.getLastModifiedBy());
         return actionHistories;
     }
@@ -467,8 +465,8 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
     /**
      * 和解案テンプレート取得
      *
-     * @return List<MasterTemplates>
-     * @throws Exception
+     * @return List<MasterTemplates>　和解案テンプレート
+     * @throws Exception　異常情報
      */
     @Override
     public List<MasterTemplates> getNegotiationsTemplate() throws Exception {

@@ -11,5 +11,6 @@ import com.web.app.domain.ReplyTrsg.ReplyWithdraw;
  */
 public interface ReplyTrsgService {
 
+    // 反訴取り下げ
     int replyWithdraw(ReplyWithdraw ReplyWithdraw) throws Exception;
 }

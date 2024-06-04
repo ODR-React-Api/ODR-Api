@@ -11,7 +11,6 @@ import com.web.app.domain.QuesAnswerConfirm.InsQuestionnaireResults;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.util.SendMailRequest;
-import com.web.app.mapper.CommonMapper;
 import com.web.app.mapper.InsQuestionnairesResultsMapper;
 import com.web.app.service.CommonService;
 import com.web.app.service.QuesAnswerConfirmService;
@@ -30,9 +29,6 @@ import com.web.app.service.UtilService;
 public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
     @Autowired
     private InsQuestionnairesResultsMapper insQuestionnairesResultsMapper;
-
-    @Autowired
-    private CommonMapper commonMapper;
 
     @Autowired
     private UtilService utilService;
@@ -164,7 +160,7 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
         actionHistories.setCaseStage(caseStage);
         actionHistories.setUserType(0);
         // 【画面C8】.userEmail →ユーザdisplayName
-        OdrUsers odrUser = commonMapper.FindUserByUidOrEmail(null, insQuestionnaireResults.getUserEmail(),
+        OdrUsers odrUser = utilService.GetOdrUsersByUidOrEmail(null, insQuestionnaireResults.getUserEmail(),
                 insQuestionnaireResults.getPlatformId());
         if (odrUser != null) {
             String displayName = odrUser.getLastName() + " " + odrUser.getFirstName();

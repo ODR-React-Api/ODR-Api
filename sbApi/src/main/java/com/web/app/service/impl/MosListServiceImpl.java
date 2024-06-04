@@ -1,14 +1,18 @@
 package com.web.app.service.impl;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.web.app.domain.MosDetail.UserCase;
 import com.web.app.domain.MosList.CaseDetailCasesSelectInfo;
 import com.web.app.domain.MosList.CaseIdListInfo;
@@ -17,7 +21,6 @@ import com.web.app.domain.MosList.Position;
 import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.domain.MosList.SearchDetail;
 import com.web.app.domain.MosList.SelectCondition;
-import com.web.app.domain.MosList.SelectListInfoResult;
 import com.web.app.domain.MosList.SelectUserInfoForCase;
 import com.web.app.domain.MosList.TestMos;
 import com.web.app.domain.constants.Constants;
@@ -39,6 +42,8 @@ import com.web.app.service.MosListService;
  */
 @Service
 public class MosListServiceImpl implements MosListService {
+
+    private static final Logger log = LogManager.getLogger(MosListServiceImpl.class);
 
     // API_検索用ケース詳細取得
     @Autowired
@@ -83,32 +88,35 @@ public class MosListServiceImpl implements MosListService {
             // 対応期日の設定
             // Format設定
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             returnResult.setCorrespondDate(Constants.DEFAULT_CORRESPONDDATE);
             // 取得したCaseStageの値を判定して
-            switch (searchDetail.getCaseStage()) {
-                case Constants.STR_CASES_CASESTAGE_0:
-                    if (searchDetail.getReplyEndDate() != null) {
-                        returnResult.setCorrespondDate(simpleDateFormat.format(searchDetail.getReplyEndDate()));
-                    }
-                    break;
-                case Constants.STR_CASES_CASESTAGE_2:
-                    if (searchDetail.getConuterclaimEndDate() != null) {
-                        returnResult.setCorrespondDate(simpleDateFormat.format(searchDetail.getConuterclaimEndDate()));
-                    }
-                    break;
-                case Constants.STR_CASES_CASESTAGE_3:
-                    if (searchDetail.getNegotiationEndDate() != null) {
-                        returnResult.setCorrespondDate(simpleDateFormat.format(searchDetail.getNegotiationEndDate()));
-                    }
-                    break;
-                case Constants.STR_CASES_CASESTAGE_6:
-                case Constants.STR_CASES_CASESTAGE_7:
-                    if (searchDetail.getMediationEndDate() != null) {
-                        returnResult.setCorrespondDate(simpleDateFormat.format(searchDetail.getMediationEndDate()));
-                    }
-                    break;
-                default:
-                    returnResult.setCorrespondDate(Constants.DEFAULT_CORRESPONDDATE);
+            try {
+                switch (searchDetail.getCaseStage()) {
+                    case Constants.STR_CASES_CASESTAGE_0:
+                        returnResult.setCorrespondDate(
+                                simpleDateFormat.format(originalFormat.parse(searchDetail.getReplyEndDate())));
+                        break;
+                    case Constants.STR_CASES_CASESTAGE_2:
+                        returnResult.setCorrespondDate(
+                                simpleDateFormat.format(originalFormat.parse(searchDetail.getConuterclaimEndDate())));
+                        break;
+                    case Constants.STR_CASES_CASESTAGE_3:
+                        returnResult.setCorrespondDate(
+                                simpleDateFormat.format(originalFormat.parse(searchDetail.getNegotiationEndDate())));
+                        break;
+                    case Constants.STR_CASES_CASESTAGE_6:
+                    case Constants.STR_CASES_CASESTAGE_7:
+                        returnResult.setCorrespondDate(
+                                simpleDateFormat.format(originalFormat.parse(searchDetail.getMediationEndDate())));
+                        break;
+                    default:
+                        returnResult.setCorrespondDate(Constants.DEFAULT_CORRESPONDDATE);
+                }
+            } catch (ParseException e) {
+                log.error(Constants.DATATIME_FORMAT_ERROR);
+            } catch (NullPointerException e) {
+                log.error(Constants.NULL_ERROR);
             }
 
             // 要対応有無の設定
@@ -120,7 +128,8 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTATUS_3:
-                        if (searchDetail.getNegotiationEndDateChangeStatus() == Constants.NUM_1
+                        if ((searchDetail.getNegotiationEndDateChangeStatus() != null
+                                && searchDetail.getNegotiationEndDateChangeStatus() == Constants.NUM_1)
                                 || searchDetail.getStatus() == null
                                 || searchDetail.getStatus() == Constants.NUM_1
                                 || searchDetail.getStatus() == Constants.NUM_2
@@ -140,10 +149,12 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTATUS_7:
-                        if (searchDetail.getMediationsStatus() == Constants.NUM_1
-                                || searchDetail.getMediationsStatus() == Constants.NUM_3
-                                || searchDetail.getMediationsStatus() == Constants.NUM_8
-                                || searchDetail.getGroupMessageFlag2() == Constants.NUM_1) {
+                        if ((searchDetail.getMediationsStatus() != null
+                                && (searchDetail.getMediationsStatus() == Constants.NUM_1
+                                        || searchDetail.getMediationsStatus() == Constants.NUM_3
+                                        || searchDetail.getMediationsStatus() == Constants.NUM_8))
+                                || (searchDetail.getGroupMessageFlag2() != null
+                                        && searchDetail.getGroupMessageFlag2() == Constants.NUM_1)) {
                             // 要対応有り
                             returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         }
@@ -160,7 +171,8 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTATUS_3:
-                        if (searchDetail.getNegotiationEndDateChangeStatus() == Constants.NUM_2
+                        if ((searchDetail.getNegotiationEndDateChangeStatus() != null
+                                && searchDetail.getNegotiationEndDateChangeStatus() == Constants.NUM_2)
                                 || searchDetail.getStatus() == null
                                 || searchDetail.getStatus() == Constants.NUM_0
                                 || searchDetail.getStatus() == Constants.NUM_1
@@ -180,10 +192,12 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTATUS_7:
-                        if (searchDetail.getMediationsStatus() == Constants.NUM_1
-                                || searchDetail.getMediationsStatus() == Constants.NUM_2
-                                || searchDetail.getMediationsStatus() == Constants.NUM_7
-                                || searchDetail.getGroupMessageFlag1() == Constants.NUM_1) {
+                        if ((searchDetail.getMediationsStatus() != null
+                                && (searchDetail.getMediationsStatus() == Constants.NUM_1
+                                        || searchDetail.getMediationsStatus() == Constants.NUM_2
+                                        || searchDetail.getMediationsStatus() == Constants.NUM_7))
+                                || (searchDetail.getGroupMessageFlag1() != null
+                                        && searchDetail.getGroupMessageFlag1() == Constants.NUM_1)) {
                             // 要対応有り
                             returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         }
@@ -200,8 +214,8 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTATUS_7:
-                        if (searchDetail.getMediationsStatus() == Constants.NUM_0
-                                || searchDetail.getMediationsStatus() == null) {
+                        if (searchDetail.getMediationsStatus() == null
+                                || searchDetail.getMediationsStatus() == Constants.NUM_0) {
                             // 要対応有り
                             returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         }
@@ -211,15 +225,20 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_0);
                         break;
                 }
+            } else {
+                log.error(Constants.PARAMETER_ERROR);
+                return null;
             }
 
             // 未読メッセージ件数はデフォルトで0
             int notReadedCnt = Constants.NUM_0;
             // 未読メッセージ件数の取得
             if (searchCase.getPositionFlg() == Constants.POSITIONFLAG_MEDIATOR) {
-                // ステージ：6 調停人指名中（未受理の場合
-                if (Constants.STR_CASES_CASESTATUS_6.equals(searchDetail.getCaseStatus())) {
-                    if (searchDetailCaseMapper.getMediatorDisclosureFlag(searchCase.getCaseId()) == Constants.NUM_1) {
+                // ステジ：6調停者指名中（未受理の場合）以外
+                if (searchDetail.getCaseStage() != 6) {
+                    Integer mediatorDisclosureFlag = searchDetailCaseMapper
+                            .getMediatorDisclosureFlag(searchCase.getCaseId());
+                    if (mediatorDisclosureFlag != null && mediatorDisclosureFlag == Constants.NUM_1) {
                         notReadedCnt = searchDetailCaseMapper.getMsgCountByFlag(searchCase.getCaseId(),
                                 searchCase.getPetitionUserId());
                     } else {
@@ -240,10 +259,17 @@ public class MosListServiceImpl implements MosListService {
             }
 
             // 戻りオブジェクトへのデータの移入
-            returnResult.setPetitionDate(searchDetail.getPetitonDate());
+            try {
+                returnResult
+                        .setPetitionDate(simpleDateFormat.format(originalFormat.parse(searchDetail.getPetitonDate())));
+            } catch (ParseException e) {
+                returnResult
+                        .setPetitionDate(Constants.DEFAULT_CORRESPONDDATE);
+                log.error(Constants.DATATIME_FORMAT_ERROR);
+            }
             returnResult.setCid(searchDetail.getCid());
             returnResult.setCaseTitle(searchDetail.getCaseTitle());
-            returnResult.setCaseStatus(searchDetail.getCaseStatus());
+            returnResult.setCaseStatus(Integer.toString(searchDetail.getCaseStage()));
             returnResult.setPositionFlg(searchCase.getPositionFlg());
 
             return returnResult;
@@ -336,41 +362,50 @@ public class MosListServiceImpl implements MosListService {
         // 申立て番号、件名、登録日付、対応期日、状態、要対応有無の取得
         SearchDetail queryDetailCase = fuzzyQueryDetailCaseMapper.getQueryDetailCase(caseId, queryString);
         if (queryDetailCase != null) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             // データアセンブリ
-            returnResult.setPetitionDate(queryDetailCase.getPetitonDate());
+            try {
+                returnResult.setPetitionDate(
+                        simpleDateFormat.format(originalFormat.parse(queryDetailCase.getPetitonDate())));
+            } catch (ParseException e) {
+                log.error(Constants.DATATIME_FORMAT_ERROR);
+                returnResult.setPetitionDate(Constants.DEFAULT_CORRESPONDDATE);
+            }
             returnResult.setCid(queryDetailCase.getCid());
             returnResult.setCaseTitle(queryDetailCase.getCaseTitle());
-            returnResult.setCaseStatus(queryDetailCase.getCaseStatus());
+            returnResult.setCaseStatus(Integer.toString(queryDetailCase.getCaseStage()));
 
             // 対応期日の設定
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
             returnResult.setCorrespondDate(Constants.DEFAULT_CORRESPONDDATE);
-            switch (queryDetailCase.getCaseStage()) {
-                case Constants.STR_CASES_CASESTAGE_0:
-                    if (queryDetailCase.getReplyEndDate() != null) {
-                        returnResult.setCorrespondDate(simpleDateFormat.format(queryDetailCase.getReplyEndDate()));
-                    }
-                    break;
-                case Constants.STR_CASES_CASESTAGE_2:
-                    if (queryDetailCase.getConuterclaimEndDate() != null) {
+            try {
+                switch (queryDetailCase.getCaseStage()) {
+                    case Constants.STR_CASES_CASESTAGE_0:
+                        returnResult.setCorrespondDate(
+                                simpleDateFormat.format(originalFormat.parse(queryDetailCase.getReplyEndDate())));
+                        break;
+                    case Constants.STR_CASES_CASESTAGE_2:
                         returnResult
-                                .setCorrespondDate(simpleDateFormat.format(queryDetailCase.getConuterclaimEndDate()));
-                    }
-                    break;
-                case Constants.STR_CASES_CASESTAGE_3:
-                    if (queryDetailCase.getNegotiationEndDate() != null) {
+                                .setCorrespondDate(simpleDateFormat
+                                        .format(originalFormat.parse(queryDetailCase.getConuterclaimEndDate())));
+                        break;
+                    case Constants.STR_CASES_CASESTAGE_3:
                         returnResult
-                                .setCorrespondDate(simpleDateFormat.format(queryDetailCase.getNegotiationEndDate()));
-                    }
-                    break;
-                case Constants.STR_CASES_CASESTAGE_6:
-                case Constants.STR_CASES_CASESTAGE_7:
-                    if (queryDetailCase.getMediationEndDate() != null) {
-                        returnResult.setCorrespondDate(simpleDateFormat.format(queryDetailCase.getMediationEndDate()));
-                    }
-                    break;
-                default:
-                    returnResult.setCorrespondDate(Constants.DEFAULT_CORRESPONDDATE);
+                                .setCorrespondDate(simpleDateFormat
+                                        .format(originalFormat.parse(queryDetailCase.getNegotiationEndDate())));
+                        break;
+                    case Constants.STR_CASES_CASESTAGE_6:
+                    case Constants.STR_CASES_CASESTAGE_7:
+                        returnResult.setCorrespondDate(simpleDateFormat
+                                .format(originalFormat.parse(queryDetailCase.getMediationEndDate())));
+                        break;
+                    default:
+                        returnResult.setCorrespondDate(Constants.DEFAULT_CORRESPONDDATE);
+                }
+            } catch (ParseException e) {
+                log.error(Constants.DATATIME_FORMAT_ERROR);
+            } catch (NullPointerException e) {
+                log.error(Constants.NULL_ERROR);
             }
 
             // 要対応有無の設定
@@ -381,7 +416,8 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTAGE_3:
-                        if (queryDetailCase.getNegotiationEndDateChangeStatus() == Constants.NUM_1
+                        if ((queryDetailCase.getNegotiationEndDateChangeStatus() != null
+                                && queryDetailCase.getNegotiationEndDateChangeStatus() == Constants.NUM_1)
                                 || queryDetailCase.getStatus() == null
                                 || queryDetailCase.getStatus() == Constants.NUM_1
                                 || queryDetailCase.getStatus() == Constants.NUM_2
@@ -399,10 +435,12 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTAGE_7:
-                        if (queryDetailCase.getMediationsStatus() == Constants.NUM_1
-                                || queryDetailCase.getMediationsStatus() == Constants.NUM_3
-                                || queryDetailCase.getMediationsStatus() == Constants.NUM_8
-                                || queryDetailCase.getGroupMessageFlag2() == Constants.NUM_1) {
+                        if ((queryDetailCase.getMediationsStatus() != null
+                                && (queryDetailCase.getMediationsStatus() == Constants.NUM_1
+                                        || queryDetailCase.getMediationsStatus() == Constants.NUM_3
+                                        || queryDetailCase.getMediationsStatus() == Constants.NUM_8))
+                                || (queryDetailCase.getGroupMessageFlag2() != null
+                                        && queryDetailCase.getGroupMessageFlag2() == Constants.NUM_1)) {
                             returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         }
                         break;
@@ -416,7 +454,8 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTAGE_3:
-                        if (queryDetailCase.getNegotiationEndDateChangeStatus() == Constants.NUM_2
+                        if ((queryDetailCase.getNegotiationEndDateChangeStatus() != null
+                                && queryDetailCase.getNegotiationEndDateChangeStatus() == Constants.NUM_2)
                                 || queryDetailCase.getStatus() == null
                                 || queryDetailCase.getStatus() == Constants.NUM_0
                                 || queryDetailCase.getStatus() == Constants.NUM_1
@@ -434,10 +473,12 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         break;
                     case Constants.STR_CASES_CASESTAGE_7:
-                        if (queryDetailCase.getMediationsStatus() == Constants.NUM_1
-                                || queryDetailCase.getMediationsStatus() == Constants.NUM_2
-                                || queryDetailCase.getMediationsStatus() == Constants.NUM_7
-                                || queryDetailCase.getGroupMessageFlag1() == Constants.NUM_1) {
+                        if ((queryDetailCase.getMediationsStatus() != null
+                                && (queryDetailCase.getMediationsStatus() == Constants.NUM_1
+                                        || queryDetailCase.getMediationsStatus() == Constants.NUM_2
+                                        || queryDetailCase.getMediationsStatus() == Constants.NUM_7))
+                                || (queryDetailCase.getGroupMessageFlag1() != null
+                                        && queryDetailCase.getGroupMessageFlag1() == Constants.NUM_1)) {
                             returnResult.setCorrespondence(Constants.CORRESPONDENCE_1);
                         }
                         break;
@@ -460,21 +501,30 @@ public class MosListServiceImpl implements MosListService {
                         returnResult.setCorrespondence(Constants.CORRESPONDENCE_0);
                         break;
                 }
+            } else {
+                log.error(Constants.PARAMETER_ERROR);
+                return null;
             }
 
+            // 未読メッセージ件数はデフォルトで0
             int notReadedCnt = Constants.NUM_0;
             // 未読メッセージ件数の取得
             if (positionFlag == Constants.POSITIONFLAG_MEDIATOR) {
-                // ステージ：6 調停人指名中(未受理の場合)
-                if (Constants.STR_CASES_CASESTATUS_6.equals(queryDetailCase.getCaseStatus())) {
-                    if (fuzzyQueryDetailCaseMapper.getMediatorDisclosureFlag(caseId) == Constants.NUM_1) {
-                        notReadedCnt = fuzzyQueryDetailCaseMapper.getMsgCountByFlag(caseId, petitionUserId);
+                // ステジ：6調停者指名中（未受理の場合）以外
+                if (queryDetailCase.getCaseStage() != Constants.NUM_6) {
+                    Integer mediatorDisclosureFlag = searchDetailCaseMapper
+                            .getMediatorDisclosureFlag(caseId);
+                    if (mediatorDisclosureFlag != null && mediatorDisclosureFlag == Constants.NUM_1) {
+                        notReadedCnt = searchDetailCaseMapper.getMsgCountByFlag(caseId,
+                                petitionUserId);
                     } else {
-                        notReadedCnt = fuzzyQueryDetailCaseMapper.getMsgCountByFlagNo(caseId, petitionUserId);
+                        notReadedCnt = searchDetailCaseMapper.getMsgCountByFlagNo(caseId,
+                                petitionUserId);
                     }
                 }
             } else {
-                notReadedCnt = fuzzyQueryDetailCaseMapper.getMsgCountByFlag(caseId, petitionUserId);
+                notReadedCnt = searchDetailCaseMapper.getMsgCountByFlag(caseId,
+                        petitionUserId);
             }
 
             if (notReadedCnt > Constants.NUM_0) {
@@ -483,6 +533,7 @@ public class MosListServiceImpl implements MosListService {
             } else {
                 returnResult.setMsgCount(Constants.NUM_0);
             }
+
             return returnResult;
         }
 
@@ -568,6 +619,7 @@ public class MosListServiceImpl implements MosListService {
      */
     private ReturnResult caseDetailMediationsInfoSearch(CaseDetailCasesSelectInfo caseDetailCasesSelInfo,
             String caseId, Integer idFlag, String userId) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         // 戻り値
         ReturnResult caseDetailCasesInfoItem = new ReturnResult();
         // 戻り値の申立て番号に「cases」から「ID」を取得したを設定された
@@ -577,7 +629,7 @@ public class MosListServiceImpl implements MosListService {
         // 戻り値の件名に「cases」から「タイトル名」を取得したを設定された
         caseDetailCasesInfoItem.setCaseTitle(caseDetailCasesSelInfo.getCaseTitle());
         // 戻り値の登録日付に「cases」から「申立て日」を取得したを設定された
-        caseDetailCasesInfoItem.setPetitionDate(caseDetailCasesSelInfo.getPetitionDate());
+        caseDetailCasesInfoItem.setPetitionDate(sdf.format(caseDetailCasesSelInfo.getPetitionDate()));
 
         // 戻り値の対応期日を設定された
         // オブジェクトを作成する
@@ -608,6 +660,8 @@ public class MosListServiceImpl implements MosListService {
         caseDetailCasesInfoItem.setCorrespondDate(dateString);
 
         // 要対応有無の設定
+        // 要対応有無初期値を設定された
+        caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_0);
         // 立場フラグが1（申立人）の場合
         if (idFlag == Constants.POSITIONFLAG_PETITION) {
             // 戻り値の立場フラグを設定された
@@ -665,10 +719,12 @@ public class MosListServiceImpl implements MosListService {
                     // 「case_mediations」から「ステータス」取得した
                     Integer mediationsInfoStatus = caseDetailCasesSelInfo.getMediationsStatus();
                     // 「case_mediations」から「ステータス」を取得したの比較
-                    if (mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_1
-                            || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_3
-                            || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_8
-                            || caseDetailCasesSelInfo.getGroupMessageFlag2() == Constants.STR_CASES_GROUPMESSAGEFLAG) {
+                    if (mediationsInfoStatus != null
+                            && (mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_1
+                                    || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_3
+                                    || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_8)
+                            || (caseDetailCasesSelInfo.getGroupMessageFlag2() != null && caseDetailCasesSelInfo
+                                    .getGroupMessageFlag2() == Constants.STR_CASES_GROUPMESSAGEFLAG)) {
                         // 要対応有無に1（要対応）を設定する
                         caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     }
@@ -733,10 +789,13 @@ public class MosListServiceImpl implements MosListService {
                     // 「case_mediations」から「ステータス」を取得した
                     Integer mediationsInfoStatus = caseDetailCasesSelInfo.getMediationsStatus();
                     // 「case_mediations」から「ステータス」を取得したの比較
-                    if (mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_1
-                            || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_2
-                            || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_7
-                            || caseDetailCasesSelInfo.getGroupMessageFlag1() == Constants.STR_CASES_GROUPMESSAGEFLAG) {
+                    if (mediationsInfoStatus != null
+                            && (mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_1
+                                    || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_2
+                                    || mediationsInfoStatus == Constants.STR_CASE_MEDIATIONS_STATUS_7)
+                            || (caseDetailCasesSelInfo.getGroupMessageFlag1() != null
+                                    && caseDetailCasesSelInfo
+                                            .getGroupMessageFlag1() == Constants.STR_CASES_GROUPMESSAGEFLAG)) {
                         // 要対応有無に1（要対応）を設定する
                         caseDetailCasesInfoItem.setCorrespondence(Constants.CORRESPOND_FLAG_1);
                     }
@@ -834,17 +893,17 @@ public class MosListServiceImpl implements MosListService {
      * 検索条件の引数によって、一覧データを取得する。
      *
      * @param position 検索サブ画面で入力の画面項目
-     * @return SelectListInfoResult 一覧画面表示用のデータ
+     * @return ReturnResult 一覧画面表示用のデータ
      */
     @Override
-    public List<SelectListInfoResult> getSelectListInfo(Position position) {
+    public List<ReturnResult> getSelectListInfo(Position position) {
 
         // 共通関数「申立人のケース取得」の戻り内容
-        List<SelectListInfoResult> petitionsResult = new ArrayList<>();
+        List<ReturnResult> petitionsResult = new ArrayList<>();
         // 共通関数「相手方のケース取得」の戻り内容
-        List<SelectListInfoResult> traderFlgResult = new ArrayList<>();
+        List<ReturnResult> traderFlgResult = new ArrayList<>();
         // 共通関数「調停人のケース取得」の戻り内容
-        List<SelectListInfoResult> mediatorResult = new ArrayList<>();
+        List<ReturnResult> mediatorResult = new ArrayList<>();
 
         // 1.TBL「ユーザ情報」を取得する
         String email = getSelectListInfoMapper.testOdrUsersSearch(position.getSessionId());
@@ -886,7 +945,7 @@ public class MosListServiceImpl implements MosListService {
         }
 
         // 申立人２次元配列（もしくはリスト）、相手方２次元配列（もしくはリスト）、調停人２次元配列（もしくはリスト）を結合する。
-        List<SelectListInfoResult> preResult = new ArrayList<>(petitionsResult);
+        List<ReturnResult> preResult = new ArrayList<>(petitionsResult);
         preResult.addAll(traderFlgResult);
         preResult.addAll(mediatorResult);
 
@@ -921,9 +980,9 @@ public class MosListServiceImpl implements MosListService {
 
         // 要対応有無の降順 かつ 対応期日の昇順で結合後の２次元配列（もしくはリスト）をソートする
         if (preResult.size() > 0) {
-            List<SelectListInfoResult> finalResult = preResult.stream()
-                    .sorted(Comparator.comparing(SelectListInfoResult::getCorrespondence)
-                            .reversed().thenComparing(SelectListInfoResult::getCorrespondDate))
+            List<ReturnResult> finalResult = preResult.stream()
+                    .sorted(Comparator.comparing(ReturnResult::getCorrespondence)
+                            .reversed().thenComparing(ReturnResult::getCorrespondDate))
                     .collect(Collectors.toList());
 
             return (finalResult);
@@ -937,14 +996,14 @@ public class MosListServiceImpl implements MosListService {
      *
      * @param email    ユーザ情報.Email
      * @param position 検索サブ画面で入力の画面項目
-     * @return SelectListInfoResult 一覧画面表示用の申立人のデータ
+     * @return ReturnResult 一覧画面表示用の申立人のデータ
      */
-    private List<SelectListInfoResult> getPetitions(String email, Position position) {
+    private List<ReturnResult> getPetitions(String email, Position position) {
 
         // 申立人のケース内容取得List
         List<TestMos> list1 = new ArrayList<>();
         // 申立人のケース詳細内容取得List
-        List<SelectListInfoResult> petitionsResults = new ArrayList<>();
+        List<ReturnResult> petitionsResults = new ArrayList<>();
         // API「検索用ケース詳細取得」の検索条件の引数
         SelectCondition selectCondition1 = new SelectCondition();
 
@@ -972,9 +1031,8 @@ public class MosListServiceImpl implements MosListService {
                 // 引数.ステータス
                 selectCondition1.setCaseStatus(position.getCaseStatus());
 
-                // TODO API「検索用ケース詳細取得」
-                // ReturnResult resultList1 = SearchDetailCase(selectCondition);
-                SelectListInfoResult resultList1 = new SelectListInfoResult();
+                // API「検索用ケース詳細取得」
+                ReturnResult resultList1 = searchDetailCase(selectCondition1);
                 // 戻ったデータで申立人２次元配列（もしくはリスト）を設定する。
                 if (resultList1 != null && resultList1.getCid() != null) {
                     petitionsResults.add(resultList1);
@@ -989,14 +1047,14 @@ public class MosListServiceImpl implements MosListService {
      *
      * @param email    ユーザ情報.Email
      * @param position 検索サブ画面で入力の画面項目
-     * @return SelectListInfoResult 一覧画面表示用の相手方のデータ
+     * @return ReturnResult 一覧画面表示用の相手方のデータ
      */
-    private List<SelectListInfoResult> getTraderFlg(String email, Position position) {
+    private List<ReturnResult> getTraderFlg(String email, Position position) {
 
         // 相手方のケース内容取得List
         List<TestMos> list2 = new ArrayList<>();
         // 相手方のケース詳細内容取得List
-        List<SelectListInfoResult> traderFlgResults = new ArrayList<>();
+        List<ReturnResult> traderFlgResults = new ArrayList<>();
         // API「検索用ケース詳細取得」の検索条件の引数
         SelectCondition selectCondition2 = new SelectCondition();
 
@@ -1024,9 +1082,8 @@ public class MosListServiceImpl implements MosListService {
                 // 引数.ステータス
                 selectCondition2.setCaseStatus(position.getCaseStatus());
 
-                // TODO API「検索用ケース詳細取得」
-                // ReturnResult resultList2 = SearchDetailCase(selectCondition);
-                SelectListInfoResult resultList2 = new SelectListInfoResult();
+                // API「検索用ケース詳細取得」
+                ReturnResult resultList2 = searchDetailCase(selectCondition2);
                 // 戻ったデータで申立人２次元配列（もしくはリスト）を設定する。
                 if (resultList2 != null && resultList2.getCid() != null) {
                     traderFlgResults.add(resultList2);
@@ -1041,14 +1098,14 @@ public class MosListServiceImpl implements MosListService {
      *
      * @param email    ユーザ情報.Email
      * @param position 検索サブ画面で入力の画面項目
-     * @return SelectListInfoResult 一覧画面表示用の調停人のデータ
+     * @return ReturnResult 一覧画面表示用の調停人のデータ
      */
-    private List<SelectListInfoResult> getMediator(String email, Position position) {
+    private List<ReturnResult> getMediator(String email, Position position) {
 
         // 調停人のケース内容取得List
         List<TestMos> list3 = new ArrayList<>();
         // 調停人のケース詳細内容取得List
-        List<SelectListInfoResult> mediatorResults = new ArrayList<>();
+        List<ReturnResult> mediatorResults = new ArrayList<>();
         // API「検索用ケース詳細取得」の検索条件の引数
         SelectCondition selectCondition3 = new SelectCondition();
 
@@ -1076,9 +1133,8 @@ public class MosListServiceImpl implements MosListService {
                 // 引数.ステータス
                 selectCondition3.setCaseStatus(position.getCaseStatus());
 
-                // TODO API「検索用ケース詳細取得」
-                // ReturnResult resultList3 = SearchDetailCase(selectCondition);
-                SelectListInfoResult resultList3 = new SelectListInfoResult();
+                // API「検索用ケース詳細取得」
+                ReturnResult resultList3 = searchDetailCase(selectCondition3);
                 // 戻ったデータで申立人２次元配列（もしくはリスト）を設定する。
                 if (resultList3 != null && resultList3.getCid() != null) {
                     mediatorResults.add(resultList3);
@@ -1099,8 +1155,8 @@ public class MosListServiceImpl implements MosListService {
 
         // 戻り値初期化
         List<ReturnResult> returnResultList = new ArrayList<>();
-        // ソート後の戻り値の初期化
-        List<ReturnResult> returnResultListSort = new ArrayList<>();
+        // // ソート後の戻り値の初期化
+        // List<ReturnResult> returnResultListSort = new ArrayList<>();
 
         // ユーザ情報を取得する
         String email = getListInfoMapper.selectEmailOdrUsers(uid);
@@ -1124,7 +1180,7 @@ public class MosListServiceImpl implements MosListService {
                 // API「ケース詳細取得」を呼び出す
                 ReturnResult returnResult1 = caseDetailCasesInfoSearch(caseDetails1);
                 // 詳細内容の取得
-                if (returnResult1.getCid() != null) {
+                if (returnResult1 != null) {
                     // 最終戻り値設定
                     returnResultList.add(returnResult1);
                 }
@@ -1150,7 +1206,7 @@ public class MosListServiceImpl implements MosListService {
                 // API「ケース詳細取得」を呼び出す
                 ReturnResult returnResult2 = caseDetailCasesInfoSearch(caseDetails2);
                 // 詳細内容の取得
-                if (returnResult2.getCid() != null) {
+                if (returnResult2 != null) {
                     // 最終戻り値設定
                     returnResultList.add(returnResult2);
                 }
@@ -1176,19 +1232,19 @@ public class MosListServiceImpl implements MosListService {
                 // API「ケース詳細取得」を呼び出す
                 ReturnResult returnResult3 = caseDetailCasesInfoSearch(caseDetails3);
                 // 詳細内容の取得
-                if (returnResult3.getCid() != null) {
+                if (returnResult3 != null) {
                     // 最終戻り値設定
                     returnResultList.add(returnResult3);
                 }
             }
         }
-        // 要対応有無の降順 かつ 対応期日の昇順で結合後の２次元配列（もしくはリスト）をソートする
-        if (returnResultList.size() != 0) {
-            returnResultListSort = returnResultList.stream()
-                    .sorted(Comparator.comparing(ReturnResult::getCorrespondence)
-                            .reversed().thenComparing(ReturnResult::getCorrespondDate))
-                    .collect(Collectors.toList());
-        }
-        return returnResultListSort;
+        // // 要対応有無の降順 かつ 対応期日の昇順で結合後の２次元配列（もしくはリスト）をソートする
+        // if (returnResultList.size() != 0) {
+        // returnResultListSort = returnResultList.stream()
+        // .sorted(Comparator.comparing(ReturnResult::getCorrespondence)
+        // .reversed().thenComparing(ReturnResult::getCorrespondDate))
+        // .collect(Collectors.toList());
+        // }
+        return returnResultList;
     }
 }

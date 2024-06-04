@@ -4,14 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.web.app.domain.NegotiatMake.SettlementDraftDataCaseFileRelations;
 import com.web.app.domain.NegotiatMake.SettlementDraftDataCaseNegotiations;
 import com.web.app.domain.NegotiatMake.SettlementDraftDataFiles;
@@ -64,13 +59,10 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     // API_和解案編集依頼データ更新
     @Autowired
     private UpdNegotiationsEditMapper updNegotiationsEditMapper;
-    
+
     // API_和解案編集依頼データ新規登録
     @Autowired
     private InsNegotiationsEditMapper insNegotiationsEditMapper;
-
-    @Autowired
-    DataSource dataSource;
 
     @Autowired
     private UtilService utilService;
@@ -81,11 +73,12 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
      * @param sessionLogin セッション情報 と ログイン情報渡された
      * @return 戻り値は「 和解案作成 和解案下書きデータ取得」に返される
      */
+    @Transactional
     @Override
     public SettlementDraftDataResult settlementDraftDataInfoSearch(FromSessionLogin sessionLogin) {
         // 初期画面表示処理時、和解案下書きデータ取得
         SettlementDraftDataSelectedInfo selectedInfo = getNegotiationsDataMapper
-                .settlementDraftDataInfoSearch(sessionLogin.getSessionCaseId());
+                .getNegotiationsDataInfoSearch(sessionLogin.getSessionCaseId());
 
         SettlementDraftDataResult settlementResult = new SettlementDraftDataResult();
         // 和解案下書きデータ取得があり場合
@@ -102,11 +95,13 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             } else {
                 settlementResult.setOtherContext("");
             }
+            settlementResult.setMessage(Constants.RETCD_OK);
         } else {
             // 和解案下書きデータ取得がなし場合
             settlementResult.setStatus(0);
             settlementResult.setCorrespondence("");
             settlementResult.setOtherContext("");
+            settlementResult.setMessage(Constants.RETCD_NG);
         }
         return settlementResult;
     }
@@ -118,10 +113,10 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
      * @return 戻り値は「 下書き保存処理」が返された値
      * @throws Exception エラーの説明内容
      */
-    @SuppressWarnings("null")
+    @Transactional
     @Override
-    public SettlementDraftDataResult settlementDraftInfoSearch(
-            FromSessionLogin sessionLogin) {
+    public SettlementDraftDataResult updInsNegotiationsTemp(FromSessionLogin sessionLogin) throws Exception {
+
         SettlementDraftDataResult result = new SettlementDraftDataResult();
 
         // 現在の和解案状態を抽出
@@ -129,105 +124,121 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
                 .getNegotiationsStatusInfoSearch(sessionLogin.getSessionCaseId(), sessionLogin.getPlatformId());
 
         // ログインユーザが当案件に対して、立場が申立人の場合
-        if (sessionLogin.getFlag() == Constants.POSITIONFLAG_PETITION && caseNegotiationsStatus == null) {
-            // 取得したレコードなし場合、＜新規登録＞
-            // 「和解案」,「添付ファイル」と 「案件-添付ファイルリレーション」新規登録
-            Integer selectedStatus = Constants.STR_CASE_NEGOTIATIONS_STATUS_13;
-            // 「和解案」の新規登録
-            String caseNegotiationsGuid = insInsertCaseNegotiations(selectedStatus, sessionLogin).getId();
+        if (sessionLogin.getFlag() == Constants.POSITIONFLAG_PETITION) {
+            if (caseNegotiationsStatus == null) {
+                // 取得したレコードなし場合、＜新規登録＞
+                // 「和解案」,「添付ファイル」と 「案件-添付ファイルリレーション」新規登録
+                Integer selectedStatus = Constants.STR_CASE_NEGOTIATIONS_STATUS_13;
+                // 「和解案」の新規登録
+                String caseNegotiationsGuid = insInsertCaseNegotiations(selectedStatus, sessionLogin).getId();
 
-            // 「添付ファイル」の新規登録
-            List<String> filesGuid = new ArrayList<>();
-            filesGuid = insInsertCaseFiles(sessionLogin);
-            // 「案件-添付ファイルリレーション」の新規登録
-            insInsertCaseFileRelations(sessionLogin, caseNegotiationsGuid, filesGuid);
-
-            result.setMessage(Constants.RETCD_OK);
-        } else if (sessionLogin.getFlag() == Constants.POSITIONFLAG_PETITION
-                && (caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_7
-                        || caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_8
-                        || caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_13
-                        || caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_14)) {
-            // Status in 7, 8, 13, 14場合、＜更新登録＞
-            // 「和解案」更新
-            updateCaseNegotiations(caseNegotiationsStatus, sessionLogin);
-            // 「和解案」のidを取得する
-            String caseNegotiationsUpGuid = updNegotiationsTempMapper
-                    .getNegotiationsStatusInfoSearch(sessionLogin.getSessionCaseId(), sessionLogin.getPlatformId())
-                    .getId();
-
-            // 画目から「添付ファイル」を選択の長さ
-            if (sessionLogin.getSettlementDraftFromWeb().getFiles().size() != Constants.SESSIONLOGIN_FILES_SIZE_0) {
-                // 「添付ファイル」論理削除
-                updateCaseFiles(sessionLogin);
-                // 「案件-添付ファイルリレーション」論理削除
-                updateCaseFileRelations(sessionLogin);
                 // 「添付ファイル」の新規登録
-                List<String> filesUpGuid = new ArrayList<>();
-                filesUpGuid = updInsertCaseFiles(sessionLogin);
-                // 「案件-添付ファイルリレーション」の新規登録
-                updInsertCaseFileRelations(sessionLogin, caseNegotiationsUpGuid, filesUpGuid);
-            }
+                List<String> fileGuidList = new ArrayList<>();
+                fileGuidList = insInsertCaseFiles(sessionLogin);
 
-            result.setMessage(Constants.RETCD_OK);
-        } else {
-            // 異常終了（メッセージ例：申立の状態が別ユーザより更新されました。申立一覧画面から確認するようにお願いします。）
-            result.setMessage(MessageConstants.MSG_NegotiatMakeERROR);
+                // 「案件-添付ファイルリレーション」の新規登録
+                insInsertCaseFileRelations(sessionLogin, caseNegotiationsGuid, fileGuidList);
+
+                result.setMessage(Constants.RETCD_OK);
+            } else if (caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_7
+                    || caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_8
+                    || caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_13
+                    || caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_14) {
+                // Status in 7, 8, 13, 14場合、＜更新登録＞
+                // 「和解案」更新
+                updateCaseNegotiations(caseNegotiationsStatus, sessionLogin);
+
+                // 「和解案」のidを取得する
+                String caseNegotiationsUpGuid = updNegotiationsTempMapper
+                        .getNegotiationsStatusInfoSearch(sessionLogin.getSessionCaseId(), sessionLogin.getPlatformId())
+                        .getId();
+
+                // 画目から「添付ファイル」を選択の長さ
+                if (sessionLogin.getSettlementDraftFromWeb().getFiles().size() != Constants.SESSIONLOGIN_FILES_SIZE_0) {
+                    // 「添付ファイル」論理削除
+                    updateCaseFiles(sessionLogin);
+
+                    // 「案件-添付ファイルリレーション」論理削除
+                    updateCaseFileRelations(sessionLogin);
+
+                    // 「添付ファイル」の新規登録
+                    List<String> fileUpGuidList = new ArrayList<>();
+                    fileUpGuidList = updInsertCaseFiles(sessionLogin);
+
+                    // 「案件-添付ファイルリレーション」の新規登録
+                    updInsertCaseFileRelations(sessionLogin, caseNegotiationsUpGuid, fileUpGuidList);
+                }
+                result.setMessage(Constants.RETCD_OK);
+            } else {
+                // 異常終了（メッセージ例：申立の状態が別ユーザより更新されました。申立一覧画面から確認するようにお願いします。）
+                result.setMessage(MessageConstants.MSG_NegotiatMakeERROR);
+            }
         }
 
         // ログインユーザが当案件に対して、立場が相手方のの場合
-        if (sessionLogin.getFlag() == Constants.POSITIONFLAG_TRADER && caseNegotiationsStatus == null) {
-            // 取得したレコードなし場合、＜新規登録＞
-            // 「和解案」,「添付ファイル」と 「案件-添付ファイルリレーション」新規登録
-            Integer selectedStatus = Constants.STR_CASE_NEGOTIATIONS_STATUS_0;
-            // 「和解案」の新規登録
-            String caseNegotiationsGuid = insInsertCaseNegotiations(selectedStatus, sessionLogin).getId();
+        if (sessionLogin.getFlag() == Constants.POSITIONFLAG_TRADER) {
+            if (caseNegotiationsStatus == null) {
+                // 取得したレコードなし場合、＜新規登録＞
+                // 「和解案」,「添付ファイル」と 「案件-添付ファイルリレーション」新規登録
+                Integer selectedStatus = Constants.STR_CASE_NEGOTIATIONS_STATUS_0;
+                // 「和解案」の新規登録
+                String caseNegotiationsGuid = insInsertCaseNegotiations(selectedStatus, sessionLogin).getId();
 
-            // 「添付ファイル」の新規登録
-            List<String> filesGuid = new ArrayList<>();
-            filesGuid = insInsertCaseFiles(sessionLogin);
-            // 「案件-添付ファイルリレーション」の新規登録
-            insInsertCaseFileRelations(sessionLogin, caseNegotiationsGuid, filesGuid);
-
-            result.setMessage(Constants.RETCD_OK);
-        } else if (sessionLogin.getFlag() == Constants.POSITIONFLAG_TRADER
-                && (caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_0
-                        || caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_1
-                        || caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_10
-                        || caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_11)) {
-            // Status in 0, 1, 10, 11 場合、＜更新登録＞
-            // 「和解案」更新
-            updateCaseNegotiations(caseNegotiationsStatus, sessionLogin);
-            // 「和解案」のidを取得する
-            String caseNegotiationsUpGuid = updNegotiationsTempMapper
-                    .getNegotiationsStatusInfoSearch(sessionLogin.getSessionCaseId(), sessionLogin.getPlatformId())
-                    .getId();
-
-            // 画目から「添付ファイル」を選択の長さ
-            if (sessionLogin.getSettlementDraftFromWeb().getFiles().size() != Constants.SESSIONLOGIN_FILES_SIZE_0) {
-                // 「添付ファイル」論理削除
-                updateCaseFiles(sessionLogin);
-                // 「案件-添付ファイルリレーション」論理削除
-                updateCaseFileRelations(sessionLogin);
                 // 「添付ファイル」の新規登録
-                List<String> filesUpGuid = new ArrayList<>();
-                filesUpGuid = updInsertCaseFiles(sessionLogin);
-                // 「案件-添付ファイルリレーション」の新規登録
-                updInsertCaseFileRelations(sessionLogin, caseNegotiationsUpGuid, filesUpGuid);
-            }
+                List<String> fileGuidList = new ArrayList<>();
+                fileGuidList = insInsertCaseFiles(sessionLogin);
 
-            result.setMessage(Constants.RETCD_OK);
-        } else {
-            // 異常終了（メッセージ例：申立の状態が別ユーザより更新されました。申立一覧画面から確認するようにお願いします。）
-            result.setMessage(MessageConstants.MSG_NegotiatMakeERROR);
+                // 「案件-添付ファイルリレーション」の新規登録
+                insInsertCaseFileRelations(sessionLogin, caseNegotiationsGuid, fileGuidList);
+
+                result.setMessage(Constants.RETCD_OK);
+            } else if (caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_0
+                    || caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_1
+                    || caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_10
+                    || caseNegotiationsStatus.getStatus() == Constants.STR_CASE_NEGOTIATIONS_STATUS_11) {
+                // Status in 0, 1, 10, 11 場合、＜更新登録＞
+                // 「和解案」更新
+                updateCaseNegotiations(caseNegotiationsStatus, sessionLogin);
+                // 「和解案」のidを取得する
+                String caseNegotiationsUpGuid = updNegotiationsTempMapper
+                        .getNegotiationsStatusInfoSearch(sessionLogin.getSessionCaseId(), sessionLogin.getPlatformId())
+                        .getId();
+
+                // 画目から「添付ファイル」を選択の長さ
+                if (sessionLogin.getSettlementDraftFromWeb().getFiles().size() != Constants.SESSIONLOGIN_FILES_SIZE_0) {
+                    // 「添付ファイル」論理削除
+                    updateCaseFiles(sessionLogin);
+
+                    // 「案件-添付ファイルリレーション」論理削除
+                    updateCaseFileRelations(sessionLogin);
+
+                    // 「添付ファイル」の新規登録
+                    List<String> fileUpGuidList = new ArrayList<>();
+                    fileUpGuidList = updInsertCaseFiles(sessionLogin);
+
+                    // 「案件-添付ファイルリレーション」の新規登録
+                    updInsertCaseFileRelations(sessionLogin, caseNegotiationsUpGuid, fileUpGuidList);
+                }
+                result.setMessage(Constants.RETCD_OK);
+            } else {
+                // 異常終了（メッセージ例：申立の状態が別ユーザより更新されました。申立一覧画面から確認するようにお願いします。）
+                result.setMessage(MessageConstants.MSG_NegotiatMakeERROR);
+            }
         }
+
         return result;
     }
 
-    // 新規登録API「添付ファイル」新規登録
-    // TODO 内部ロジック生成ファイルURL 再調査
-    // TODO 内部ロジック生成ファイルサイ 再調査
-    private List<String> insInsertCaseFiles(FromSessionLogin sessionLogin) {
+    /**
+     * 新規登録API「添付ファイル」新規登録
+     * 
+     * TODO 内部ロジック生成ファイルURL 再調査
+     * 
+     * @param sessionLogin セッション情報 と ログイン情報渡された
+     * @return 「添付ファイル」のid
+     */
+    @Transactional
+    private List<String> insInsertCaseFiles(FromSessionLogin sessionLogin) throws Exception {
         SettlementDraftDataFiles files = new SettlementDraftDataFiles();
 
         files.setPlatformId(sessionLogin.getPlatformId());
@@ -251,29 +262,42 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         // フロントに添付ファイル
         List<AddFile> addfiles = sessionLogin.getSettlementDraftFromWeb().getFiles();
         // 「添付ファイル」のidを保存し
-        List<String> fileid = new ArrayList<>();
+        List<String> fileidList = new ArrayList<>();
         // フロントから添付ファイルを取得しが順番トラバース
         for (AddFile file : addfiles) {
             // 自動生成GIUD
-            String giud = GetGuid();
-            files.setId(giud);
+            String guid = utilService.GetGuid();
+            files.setId(guid);
             files.setFileName(file.getFileName());
             files.setFileExtension(file.getFileExtension());
             // 内部ロジック生成ファイルURL
-            files.setFileUrl(file.getFileUrl() + giud + "." + file.getFileExtension());
+            files.setFileUrl(file.getFileUrl() + guid + "." + file.getFileExtension());
             // 内部ロジック生成ファイルサイ
             files.setFileSize(file.getFileSize());
             // 「添付ファイル」のidを保存した
-            fileid.add(giud);
+            fileidList.add(guid);
+
             // テーブル「添付ファイル」新規登録
-            insNegotiationTempMapper.insertFilesInfo(files);
+            Integer num = insNegotiationTempMapper.insertFilesInfo(files);
+
+            if (num == Constants.RESULT_STATE_ERROR) {
+                throw new RuntimeException();
+            }
         }
-        return fileid;
+        return fileidList;
     }
 
-    // 新規登録API「案件-添付ファイルリレーション」新規登録
-    private void insInsertCaseFileRelations(FromSessionLogin sessionLogin, String caseNegotiationsGuid,
-            List<String> filesGuid) {
+    /**
+     * 新規登録API「案件-添付ファイルリレーション」新規登録
+     * 
+     * @param sessionLogin         セッション情報 と ログイン情報渡された
+     * @param caseNegotiationsGuid 「和解案」のid
+     * @param fileGuidList         「添付ファイル」のid
+     * @return 更新ステータス情報
+     */
+    @Transactional
+    private String insInsertCaseFileRelations(FromSessionLogin sessionLogin, String caseNegotiationsGuid,
+            List<String> fileGuidList) throws Exception {
         SettlementDraftDataCaseFileRelations caseFileRelations = new SettlementDraftDataCaseFileRelations();
 
         caseFileRelations.setPlatformId(sessionLogin.getPlatformId());
@@ -290,30 +314,41 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         // ログインユーザ
         caseFileRelations.setLastModifiedBy(sessionLogin.getUserId());
         // 「添付ファイル」のidを取得しが順番トラバース
-        for (String gui : filesGuid) {
+        for (String fileGuid : fileGuidList) {
             // 自動生成GIUD
-            String giud = GetGuid();
+            String guid = utilService.GetGuid();
             // ID
-            caseFileRelations.setId(giud);
+            caseFileRelations.setId(guid);
             // ファイルID
-            caseFileRelations.setFileId(gui);
+            caseFileRelations.setFileId(fileGuid);
 
             // テーブル「案件-添付ファイルリレーション」新規登録
-            insNegotiationTempMapper.insertCaseFileRelationsInfo(caseFileRelations);
+            Integer num = insNegotiationTempMapper.insertCaseFileRelationsInfo(caseFileRelations);
+
+            if (num == Constants.RESULT_STATE_ERROR) {
+                throw new RuntimeException();
+            }
         }
-        return;
+        return Constants.RETCD_OK;
     }
 
-    // 新規登録API「和解案」新規登録
+    /**
+     * 新規登録API「和解案」新規登録
+     * 
+     * @param selectedStatus ステータス
+     * @param sessionLogin   セッション情報 と ログイン情報渡された
+     * @return 戻り値は「和解案作成」情報
+     */
+    @Transactional
     private SettlementDraftDataCaseNegotiations insInsertCaseNegotiations(Integer selectedStatus,
-            FromSessionLogin sessionLogin) {
+            FromSessionLogin sessionLogin) throws Exception {
 
         // 「和解案」の新規登録
         SettlementDraftDataCaseNegotiations caseNegotiations = new SettlementDraftDataCaseNegotiations();
 
         // 自動生成GIUD
-        String giud = GetGuid();
-        caseNegotiations.setId(giud);
+        String guid = utilService.GetGuid();
+        caseNegotiations.setId(guid);
         caseNegotiations.setPlatformId(sessionLogin.getPlatformId());
         caseNegotiations.setCaseId(sessionLogin.getSessionCaseId());
         caseNegotiations.setStatus(selectedStatus);
@@ -336,13 +371,25 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         caseNegotiations.setLastModifiedDate(new Date());
         // ログインユーザ
         caseNegotiations.setLastModifiedBy(sessionLogin.getUserId());
+
         // テーブル「和解案」新規登録
-        insNegotiationTempMapper.insertCaseNegotiationsInfo(caseNegotiations);
+        Integer num = insNegotiationTempMapper.insertCaseNegotiationsInfo(caseNegotiations);
+
+        if (num == Constants.RESULT_STATE_ERROR) {
+            throw new RuntimeException();
+        }
+
         return caseNegotiations;
     }
 
-    // 更新登録API「案件-添付ファイルリレーション」論理削除
-    private void updateCaseFileRelations(FromSessionLogin sessionLogin) {
+    /**
+     * 更新登録API「案件-添付ファイルリレーション」論理削除
+     * 
+     * @param sessionLogin セッション情報 と ログイン情報渡された
+     * @return 更新ステータス情報
+     */
+    @Transactional
+    private String updateCaseFileRelations(FromSessionLogin sessionLogin) throws Exception {
         SettlementDraftDataCaseFileRelations caseFileRelations = new SettlementDraftDataCaseFileRelations();
 
         caseFileRelations.setDeleteFlag(Constants.DELETE_FLAG_1);
@@ -350,16 +397,28 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         caseFileRelations.setLastModifiedDate(new Date());
         // ログインユーザ
         caseFileRelations.setLastModifiedBy(sessionLogin.getUserId());
+
         // テーブル「案件-添付ファイルリレーション」論理削除
-        updNegotiationsTempMapper.updateCaseFileRelationsInfo(caseFileRelations,
-                sessionLogin.getSessionObjCaseFileRelationsId());
-        return;
+        Integer num = updNegotiationsTempMapper.updateCaseFileRelationsInfo(caseFileRelations,
+                sessionLogin.getSessionObjFileId());
+
+        if (num == Constants.RESULT_STATE_ERROR) {
+            throw new RuntimeException();
+        }
+
+        return Constants.RETCD_OK;
     }
 
-    // 更新登録API「添付ファイル」論理削除
-    private void updateCaseFiles(FromSessionLogin sessionLogin) {
+    /**
+     * 更新登録API「添付ファイル」論理削除
+     * 
+     * @param sessionLogin セッション情報 と ログイン情報渡された
+     * @return 更新ステータス情報
+     */
+    private String updateCaseFiles(FromSessionLogin sessionLogin) throws Exception {
 
         SettlementDraftDataFiles files = new SettlementDraftDataFiles();
+
         // 「添付ファイル」更新
         files.setDeleteFlag(Constants.DELETE_FLAG_1);
         // システム日付
@@ -368,13 +427,27 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         files.setLastModifiedBy(sessionLogin.getUserId());
 
         // 「添付ファイル」論理削除
-        updNegotiationsTempMapper.updateFilesInfo(files, sessionLogin.getSessionObjFileId());
+        Integer num = updNegotiationsTempMapper.updateFilesInfo(files,
+                sessionLogin.getSessionObjFileId());
+
+        if (num == Constants.RESULT_STATE_ERROR) {
+            throw new RuntimeException();
+        }
+
+        return Constants.RETCD_OK;
     }
 
-    // 更新登録API「和解案」更新
-    private SettlementDraftDataCaseNegotiations updateCaseNegotiations(
+    /**
+     * 更新登録API「和解案」更新
+     * 
+     * @param caseNegotiationsData 現在の和解案ステータスを抽出
+     * @param sessionLogin         セッション情報 と ログイン情報渡された
+     * @return 更新ステータス情報
+     */
+    @Transactional
+    private String updateCaseNegotiations(
             SettlementDraftDataCaseNegotiations caseNegotiationsData,
-            FromSessionLogin sessionLogin) {
+            FromSessionLogin sessionLogin) throws Exception {
 
         Integer selectedStatus = caseNegotiationsData.getStatus();
         // 「和解案」
@@ -418,16 +491,28 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // 「提出ユーザ」を「ログインユーザ」に設定する
             caseNegotiations.setUserId(sessionLogin.getUserId());
         }
+
         // テーブル「和解案」更新
-        updNegotiationsTempMapper.updateCaseNegotiationsInfo(caseNegotiations,
+        Integer num = updNegotiationsTempMapper.updateCaseNegotiationsInfo(caseNegotiations,
                 sessionLogin.getSessionCaseNegCotiationsId());
-        return caseNegotiations;
+
+        if (num == Constants.RESULT_STATE_ERROR) {
+            throw new RuntimeException();
+        }
+
+        return Constants.RETCD_OK;
     }
 
-    // 更新登録「添付ファイル」新規登録
-    // TODO 内部ロジック生成ファイルURL 再調査
-    // TODO 内部ロジック生成ファイルサイ 再調査
-    private List<String> updInsertCaseFiles(FromSessionLogin sessionLogin) {
+    /**
+     * 更新登録「添付ファイル」新規登録
+     * 
+     * TODO 内部ロジック生成ファイルURL 再調査
+     * 
+     * @param sessionLogin セッション情報 と ログイン情報渡された
+     * @return 「添付ファイル」のid
+     */
+    @Transactional
+    private List<String> updInsertCaseFiles(FromSessionLogin sessionLogin) throws Exception {
         SettlementDraftDataFiles files = new SettlementDraftDataFiles();
 
         // プラットフォームID
@@ -454,35 +539,47 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         // フロントに添付ファイル
         List<AddFile> addfiles = sessionLogin.getSettlementDraftFromWeb().getFiles();
         // 「添付ファイル」のidを保存し
-        List<String> fileid = new ArrayList<>();
+        List<String> fileidList = new ArrayList<>();
         // フロントから添付ファイルを取得しが順番トラバース
         for (AddFile file : addfiles) {
             // 自動生成GIUD
-            String giud = GetGuid();
+            String guid = utilService.GetGuid();
             // 「ID」を設定する
-            files.setId(giud);
+            files.setId(guid);
             // 「ファイル名」を設定する
             files.setFileName(file.getFileName());
             // 「拡張子」を設定する
             files.setFileExtension(file.getFileExtension());
             // 「URL」を設定する
             // 内部ロジック生成ファイルURL
-            files.setFileUrl(file.getFileUrl() + giud + "." + file.getFileExtension());
+            files.setFileUrl(file.getFileUrl() + guid + "." + file.getFileExtension());
             // 「ファイルサイズ」を設定する
             // 内部ロジック生成ファイルサイ
             files.setFileSize(file.getFileSize());
             // 「添付ファイル」のidを保存した
-            fileid.add(giud);
+            fileidList.add(guid);
 
             // テーブル「添付ファイル」新規登録
-            updNegotiationsTempMapper.insertFilesInfo(files);
+            Integer num = updNegotiationsTempMapper.insertFilesInfo(files);
+
+            if (num == Constants.RESULT_STATE_ERROR) {
+                throw new RuntimeException();
+            }
         }
-        return fileid;
+        return fileidList;
     }
 
-    // 更新登録API「案件-添付ファイルリレーション」新規登録
-    private void updInsertCaseFileRelations(FromSessionLogin sessionLogin, String caseNegotiationsGuid,
-            List<String> filesGuid) {
+    /**
+     * 更新登録API「案件-添付ファイルリレーション」新規登録
+     * 
+     * @param sessionLogin         セッション情報 と ログイン情報渡された
+     * @param caseNegotiationsGuid 「和解案」のid
+     * @param filesGuid            「添付ファイル」のid
+     * @return 更新ステータス情報
+     */
+    @Transactional
+    private String updInsertCaseFileRelations(FromSessionLogin sessionLogin, String caseNegotiationsGuid,
+            List<String> filesGuid) throws Exception {
         SettlementDraftDataCaseFileRelations caseFileRelations = new SettlementDraftDataCaseFileRelations();
 
         caseFileRelations.setPlatformId(sessionLogin.getPlatformId());
@@ -498,41 +595,35 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         caseFileRelations.setLastModifiedDate(new Date());
         // ログインユーザ
         caseFileRelations.setLastModifiedBy(sessionLogin.getUserId());
-        // を取得しが順番トラバース
-        for (String gui : filesGuid) {
+        // 「添付ファイル」のidを取得しが順番トラバース
+        for (String fileGuid : filesGuid) {
             // 自動生成GIUD
-            String giud = GetGuid();
+            String guid = utilService.GetGuid();
             // ID
-            caseFileRelations.setId(giud);
+            caseFileRelations.setId(guid);
             // ファイルID
-            caseFileRelations.setFileId(gui);
+            caseFileRelations.setFileId(fileGuid);
 
             // テーブル「案件-添付ファイルリレーション」新規登録
-            updNegotiationsTempMapper.insertCaseFileRelationsInfo(caseFileRelations);
-        }
-        return;
-    }
+            Integer num = updNegotiationsTempMapper.insertCaseFileRelationsInfo(caseFileRelations);
 
-    // 自動生成GIUD
-    public String GetGuid() {
-        String strGuid = UUID.randomUUID().toString();
-        strGuid = strGuid.replace("-", "").toUpperCase();
-        return strGuid;
+            if (num == Constants.RESULT_STATE_ERROR) {
+                throw new RuntimeException();
+            }
+        }
+        return Constants.RETCD_OK;
     }
 
     /**
      * 和解案編集依頼データ新規登録
      *
-     * @param param1 フロントからの画面項目
-     * @return int
-     * @throws Exception
+     * @param negotiationsFile フロントからの画面項目
+     * @return int 更新情報
+     * @throws Exception エラーの説明内容
      */
     @Transactional
     @Override
     public int addNegotiationsEdit(NegotiationsFile negotiationsFile) throws Exception {
-        // sessions取得
-        System.out.println("データアクセス：" + dataSource.getConnection());
-
         // 「和解案」新規登録の値設定
         CaseNegotiations caseNegotiations = new CaseNegotiations();
         // ログインユーザが申立人場合、ステータス更新値：14
@@ -564,8 +655,11 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         caseNegotiations.setLastModifiedDate(getSystemtime());
         caseNegotiations.setLastModifiedBy(negotiationsFile.getUserId());
         // 「和解案」新規登録
-        insNegotiationsEditMapper.insertCaseNegotiations(caseNegotiations);
-
+        int result = insNegotiationsEditMapper.insertCaseNegotiations(caseNegotiations);
+        // 新規登録失敗の場合
+        if (result == Constants.RESULT_STATE_ERROR) {
+            throw new RuntimeException();
+        }
         // 画面からのファイルはnullではない場合、「添付ファイル」と「案件-添付ファイルリレーション」新規登録
         List<UpdNegotiationsFile> updNegotiationsFiles = negotiationsFile.getUpdNegotiationsFile();
         // // 添付ファイルがあるか判定
@@ -580,14 +674,13 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * 和解案編集依頼データ更新
      *
-     * @param param1 フロントからの画面項目
-     * @return int
-     * @throws Exception
+     * @param negotiationsFile フロントからの画面項目
+     * @return int 更新情報
+     * @throws Exception エラーの説明内容
      */
     @Transactional
     @Override
     public int updateNegotiationsEdit(NegotiationsFile negotiationsFile) throws Exception {
-        System.out.println("データアクセス" + dataSource.getConnection());
         // 「和解案」
         CaseNegotiations caseNegotiations = new CaseNegotiations();
         // ログインユーザが申立人場合、ステータス更新値：14
@@ -661,10 +754,10 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * ファイル追加
      *
-     * @param param1 フロントからの画面項目
-     * @param param2 和解案Id
-     * @return int
-     * @throws
+     * @param updNegotiationsFile フロントからの添付ファイル
+     * @param negotiationsFile    フロントからの画面項目
+     * @param negotiationsId      和解案id
+     * @return int 更新情報
      */
     private int addFiles(UpdNegotiationsFile updNegotiationsFile, NegotiationsFile negotiationsFile,
             String negotiationsId) {
@@ -673,14 +766,20 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // 「添付ファイル」の値設定
             Files reFiles = insFiles(updNegotiationsFile, negotiationsFile);
             // 「添付ファイル」の新規登録
-            insNegotiationsEditMapper.insertFiles(reFiles);
-
+            int insFiEr = insNegotiationsEditMapper.insertFiles(reFiles);
+            // 新規登録失敗場合
+            if (insFiEr == Constants.RESULT_STATE_ERROR) {
+                throw new RuntimeException();
+            }
             // 「案件-添付ファイルリレーション」の値設定
             CaseFileRelations resCaseFileRelations = insCaseFileRelations(negotiationsFile, negotiationsId,
                     reFiles.getId());
             // 「案件-添付ファイルリレーション」の新規登録
-            insNegotiationsEditMapper.insertCaseFileRelations(resCaseFileRelations);
-
+            int insCaFilEr = insNegotiationsEditMapper.insertCaseFileRelations(resCaseFileRelations);
+            // 新規登録失敗場合
+            if (insCaFilEr == Constants.RESULT_STATE_ERROR) {
+                throw new RuntimeException();
+            }
         }
         return Constants.RESULT_STATE_SUCCESS;
     }
@@ -688,9 +787,9 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * 「添付ファイル」の画面項目値設定
      *
-     * @param param1 添付ファイル
+     * @param updNegotiationsFile 添付ファイル
+     * @param negotiationsFile    画面からのファイル項目
      * @return Files 添付ファイル
-     * @throws
      */
     private Files insFiles(UpdNegotiationsFile updNegotiationsFile, NegotiationsFile negotiationsFile) {
         Files files = new Files();
@@ -699,11 +798,9 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         files.setCaseId(negotiationsFile.getCaseId());
         files.setFileName(updNegotiationsFile.getFileName());
         files.setFileExtension(updNegotiationsFile.getFileExtension());
-        // TODO
-        // 内部ロジック生成ファイルUR
+        // TODO 内部ロジック生成ファイルUR
         files.setFileUrl(updNegotiationsFile.getFileUrl());
         files.setFileBlobStorageId(null);
-        // TODO
         // 内部ロジック生成ファイルサイ
         files.setFileSize(updNegotiationsFile.getFileSize());
         files.setRegisterUserId(negotiationsFile.getUserId());
@@ -723,13 +820,12 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     /**
      * 「案件-添付ファイルリレーション」の画面項目値設定
      *
-     * @param param1 和解案.id
-     * @param param2 添付ファイル.id
-     * @return CaseFileRelations-添付ファイルリレーション
-     * @throws
+     * @param negotiationsFile フロントからの画面項目
+     * @param caseId           和解案id
+     * @param filesId          添付ファイルid
+     * @return CaseFileRelations 添付ファイルリレーション
      */
     private CaseFileRelations insCaseFileRelations(NegotiationsFile negotiationsFile, String caseId, String filesId) {
-        // session取得
         CaseFileRelations caseFileRelations = new CaseFileRelations();
         // 自動生成GIUD
         caseFileRelations.setId(utilService.GetGuid());

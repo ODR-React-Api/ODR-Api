@@ -11,10 +11,13 @@ import com.web.app.domain.MedUserChange.InsertFileInfo;
  */
 public interface MedUserChangeService {
 
+    // 調停案削除
     int delAboutCasesMediations(String caseId);
 
-    Boolean updAboutCasesInfo(String caseId, String userType, Boolean withReason);
+    // 案件関連情報更新
+    int updAboutCasesInfo(String caseId, String userType, Boolean withReason);
 
+    // ファイル関連情報更新
     int insertFileInfo(InsertFileInfo insertFileInfo) throws Exception;
 
 }

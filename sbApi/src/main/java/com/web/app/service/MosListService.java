@@ -6,7 +6,6 @@ import com.web.app.domain.MosList.CaseIdListInfo;
 import com.web.app.domain.MosList.Position;
 import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.domain.MosList.SelectCondition;
-import com.web.app.domain.MosList.SelectListInfoResult;
 
 /**
  * 申立て一覧画面
@@ -57,13 +56,8 @@ public interface MosListService {
     ReturnResult caseDetailCasesInfoSearch(CaseIdListInfo caseIdListInfo);
 
     // 検索用一覧取得
-    List<SelectListInfoResult> getSelectListInfo(Position position);
+    List<ReturnResult> getSelectListInfo(Position position);
 
-    /**
-     * 一覧取得
-     *
-     * @param uid ユーザID
-     * @return    API_一覧取得の取得内容
-     */
+    // 一覧取得
     public List<ReturnResult> getListInfo(String uid);
 }

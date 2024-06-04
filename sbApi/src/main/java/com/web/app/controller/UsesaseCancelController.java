@@ -53,7 +53,7 @@ public class UsesaseCancelController {
             }
         } catch (Exception e) {
             //更新失敗
-            return AjaxResult.fatal("中止手続き失敗", e);
+            return AjaxResult.fatal("手続き中止異常", e);
         }
     }
 }

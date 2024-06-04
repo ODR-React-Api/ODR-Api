@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2024/04/19
  * @version 1.0
  */
-@Api(tags = "情报取得")
+@Api(tags = "利用規約確認画面")
 @RestController
 @RequestMapping("/PoliciesConfirm")
 public class PoliciesConfirmController {

@@ -1,9 +1,7 @@
 package com.web.app.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +15,6 @@ import com.web.app.domain.MosFileList.GetFileInfo;
 import com.web.app.service.MosFileListService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -39,12 +35,6 @@ public class MosFileListController {
     private MosFileListService mosFileListService;
 
     GetFileInfo getFileInfo = new GetFileInfo();
-
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "caseId", value = "caseId", dataType = "String", required = true, paramType = ""),
-            @ApiImplicitParam(name = "id", value = "id", dataType = "String", required = true),
-            @ApiImplicitParam(name = "email", value = "email", dataType = "String", required = true)
-    })
 
     /**
      * ログインユーザのロールと開示情報取得

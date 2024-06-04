@@ -14,6 +14,7 @@ import com.web.app.domain.NamAccept.UpdMediatorHistories;
 @Mapper
 public interface UpdMediatorHistoriesMapper {
 
-    int UpdMediatorHistories(UpdMediatorHistories updMediatorHistories);
+    // 調停人変更履歴変更
+    int updMediatorHistories(UpdMediatorHistories updMediatorHistories);
 
 }

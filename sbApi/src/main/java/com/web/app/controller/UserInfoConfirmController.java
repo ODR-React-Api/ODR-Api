@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
 public class UserInfoConfirmController {
 
     @Autowired
-    private UserInfoConfirmService registerUserService;
+    private UserInfoConfirmService userInfoConfirmService;
 
     /**
      * ユーザ新規登録API
@@ -48,19 +48,17 @@ public class UserInfoConfirmController {
     public Response registerUser(@RequestBody UserInfoModel userInfo) {
         try {
             // 新規ユーザーサービスの呼び出し
-            int userInsertRep = registerUserService.registerUser(userInfo);
+            int userInsertRep = userInfoConfirmService.registerUser(userInfo);
             // 追加された状態の判断
             if (userInsertRep != Constants.STR_ODR_USERS_INSERTFLAG) {
                 return AjaxResult.success(MessageConstants.C12003I);
             }
         } catch (Exception e) {
             // DB異常
-            AjaxResult.fatal(MessageConstants.C12004E, e);
-            return null;
+            return AjaxResult.fatal(MessageConstants.C12004E, e);
         }
         // 追加本数が0の場合
-        AjaxResult.error(MessageConstants.C12004E);
-        return null;
+        return AjaxResult.error(MessageConstants.C12004E);
     }
 
 }

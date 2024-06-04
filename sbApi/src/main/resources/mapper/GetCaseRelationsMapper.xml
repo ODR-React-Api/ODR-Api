@@ -22,7 +22,7 @@
         FROM
             case_relations
         WHERE
-            CaseId = #{CaseId}
+            CaseId = #{caseId}
             AND DeleteFlag = 0
     </select>
 </mapper>

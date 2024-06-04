@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdAboutCasesInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.web.app.domain.Entity.Cases">
+        <id property="cid" column="cid" jdbcType="VARCHAR"/>
+        <result property="MediatorChangeableCount1" column="MediatorChangeableCount1" jdbcType="VARCHAR"/>
+        <result property="MediatorChangeableCount2" column="MediatorChangeableCount2" jdbcType="VARCHAR"/>
+        <result property="MediatorNoReasonChangeDate" column="MediatorNoReasonChangeDate" jdbcType="DATE"/>
+    </resultMap>
+
+    <parameterMap id="ParameterMap" type="com.web.app.domain.Entity.Cases">
+        <parameter property="cid" jdbcType="VARCHAR"/>
+        <parameter property="MediatorChangeableCount1" jdbcType="INTEGER"/>
+        <parameter property="MediatorChangeableCount2" jdbcType="INTEGER"/>
+        <parameter property="MediatorNoReasonChangeDate" jdbcType="DATE"/>
+    </parameterMap>
+
+    <!-- 案件関連情報更新 -->
+    <update id="updAboutCasesInfo" >
+        UPDATE cases
+        SET
+        <if test="!withReason">
+            CaseStage = 6 ,
+            MediatorDisclosureFlag = 0,
+            MediatorNoReasonChangeDate = null,
+            MediatorDisclosureDate = null,
+            GroupMessageFlag1 = 0,
+            GroupMessageFlag2 = 0,
+        </if>
+            MediatorChangeableCount1 = #{cases.MediatorChangeableCount1},
+            MediatorChangeableCount2 = #{cases.MediatorChangeableCount2}
+        WHERE
+            cid = #{cases.cid}
+    </update>
+
+    <select id="getMediatorChangeableCount" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+            cid,
+            MediatorChangeableCount1,	
+            MediatorChangeableCount2,	
+            MediatorNoReasonChangeDate
+            from cases
+        WHERE
+            cid = #{cid}
+    </select>
+</mapper>

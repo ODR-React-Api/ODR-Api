@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/registrationInformationRegistration")
 
 /**
- * 申立て情報登録
+ * 申立て内容確認画面
  * 
  * @author DUC 王魯興
  * @since 2024/05/28
@@ -31,23 +31,19 @@ public class MosContentConfirmController {
    *
    * @param s09ScreenIntelligence 画面の項目
    * @return
-   * @throws Exception
    */
   @SuppressWarnings("rawtypes")
   @ApiOperation("申立て情報登録")
-  @PostMapping("/registrationInformationRegistration")
+  @PostMapping("/InsPetitionsData")
   public Response RegistrationInformationRegistration(@RequestBody S09ScreenIntelligence s09ScreenIntelligence) {
     try {
-      Integer num = insPetitionsDataService.LoginIntelligence(s09ScreenIntelligence);
-      if (num == 0) {
-        return AjaxResult.success("失败");
-      }
+      insPetitionsDataService.InsPetitionsData(s09ScreenIntelligence);
       return AjaxResult.success("成功");
       // 異常な場合
     } catch (Exception e) {
       // 異常を処置した場合
       AjaxResult.fatal("失败!", e);
-      throw e;
+      return null;
     }
   }
 }

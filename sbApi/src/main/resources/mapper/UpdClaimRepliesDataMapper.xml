@@ -29,6 +29,39 @@
             CaseId = #{caseId}
         AND PlatformId = #{platformId}
     </update>
+    <!-- 「反訴への回答」新規登録 -->
+    <insert id="insCaseClaimreplies" parameterType="com.web.app.domain.Entity.CaseClaimReplies">
+        INSERT INTO case_claimreplies (
+            id,
+            PlatformId,
+            CaseId,
+            Status,
+            replyContext,
+            Other01,
+            Other02,
+            Other03,
+            Other04,
+            Other05,
+            DeleteFlag,
+            LastModifiedDate,
+            LastModifiedBy
+        )
+        VALUES (
+            #{id},
+            #{PlatformId},
+            #{CaseId},
+            #{Status},
+            #{replyContext},
+            #{Other01},
+            #{Other02},
+            #{Other03},
+            #{Other04},
+            #{Other05},
+            #{DeleteFlag},
+            CURRENT_TIMESTAMP(),
+            #{LastModifiedBy}
+        )
+    </insert>
 
     <!-- 「添付ファイル」論理削除 -->
     <update id="updFiles" parameterType="com.web.app.domain.CouAnswerLogin.UpdClaimRepliesDataParameter">

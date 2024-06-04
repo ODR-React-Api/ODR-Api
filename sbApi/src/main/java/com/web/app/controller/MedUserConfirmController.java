@@ -42,9 +42,9 @@ public class MedUserConfirmController {
     /**
      * 調停人ユーザ情報取得
      *
-     * @param MedUserConfirmSession セッション情報
-     * @return OdrUsers 調停人ユーザ情報
-     * @throws Exception 異常終了
+     * @param medUserConfirmSession セッション情報
+     * @return Response 調停人ユーザ情報
+     * @throws Exception 異常情報
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停人ユーザ情報取得")
@@ -62,9 +62,9 @@ public class MedUserConfirmController {
     /**
      * 調停人の経験取得
      *
-     * @param MedUserConfirmSession セッション情報
-     * @return MediatorInfo 調停人の経験
-     * @throws Exception 異常終了
+     * @param medUserConfirmSession セッション情報
+     * @return Response 調停人の経験
+     * @throws Exception 異常情報
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停人の経験取得")
@@ -95,8 +95,7 @@ public class MedUserConfirmController {
             String fileName = medUserConfirmService.GetFileName(medUserConfirm.getFileId());
             return AjaxResult.success( "成功!",fileName);
         } catch (Exception e) {
-            AjaxResult.fatal( "失敗!",e);
-            return null;
+            return AjaxResult.fatal( "失敗!",e);
         }
     }
 
@@ -115,8 +114,7 @@ public class MedUserConfirmController {
             Cases cases = medUserConfirmService.GetMediatorChangeableCount(medUserConfirm.getCaseId());
             return AjaxResult.success( "成功!",cases);
         } catch (Exception e) {
-            AjaxResult.fatal( "失敗!",e);
-            return null;
+            return AjaxResult.fatal( "失敗!",e);
         }
     }
     /**
@@ -137,9 +135,8 @@ public class MedUserConfirmController {
             String getMediationStatus = medUserConfirmService.getMediationStatus(CaseId);
             // 調停案ステータス
             return AjaxResult.success("調停案ステータス取得成功", getMediationStatus);
-        } catch (Exception e) {
-            AjaxResult.fatal("調停案ステタス取得異常", e);
-            return null;
+        } catch (Exception e) {          
+            return AjaxResult.fatal("調停案ステタス取得異常", e);
         }
     }
 
@@ -161,8 +158,7 @@ public class MedUserConfirmController {
             // 調停者メールとユザーID
             return AjaxResult.success("調停者メールとユザーIDを取得成功", getUserIDbyMail);
         } catch (Exception e) {
-            AjaxResult.fatal("調停者メールとユザーIDを取得異常", e);
-            return null;
+            return AjaxResult.fatal("調停者メールとユザーIDを取得異常", e);
         }
     }
 
@@ -183,8 +179,7 @@ public class MedUserConfirmController {
             ArrayList<GetMediatorGen> getMediatorGen = medUserConfirmService.getMediatorGen(CaseId);
             return AjaxResult.success("調停人情報取得成功", getMediatorGen);
         } catch (Exception e) {
-            AjaxResult.fatal("調停人情報取得成功", e);
-            return null;
+            return AjaxResult.fatal("調停人情報取得異常", e);
         }
     }
 }

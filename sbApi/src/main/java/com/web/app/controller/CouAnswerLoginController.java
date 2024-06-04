@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.web.app.service.CouAnswerLoginService;
 import com.web.app.tool.AjaxResult;
 import com.web.app.domain.Response;
-import com.web.app.domain.CouAnswerLogin.InsClaimRepliesDto;
 import com.web.app.domain.CouAnswerLogin.RepliesContext;
 import com.web.app.domain.CouAnswerLogin.UpdClaimRepliesDataParameter;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.ArrayList;
@@ -61,33 +59,13 @@ public class CouAnswerLoginController {
     }
 
     /**
-     * API_反訴への回答データ新規登録
-     *
-     * @param InsClaimRepliesDto API_反訴への回答データ新規登録の引数
-     * @return 反訴への回答データ新規登録の状況
-     * @throws Exception エラーの説明内容
-     */
-    @SuppressWarnings("rawtypes")
-    @ApiOperation("反訴への回答データ新規登録")
-    @PostMapping("/insClaimRepliesData")
-    public Response insClaimRepliesData(@RequestBody InsClaimRepliesDto insClaimRepliesDto) {
-        try {
-            couAnswerLoginService.insClaimRepliesData(insClaimRepliesDto);
-            return AjaxResult.success("反訴への回答データ新規登録に成功しました!");
-        } catch (Exception e) {
-            AjaxResult.fatal("反訴への回答データ新規登録に失敗しました!", e);
-            return null;
-        }
-    }
-
-    /**
-     * API_反訴への回答データ更新
-     * 「下書き保存」ボタンを押下で、下書きデータ存在する場合、下記のAPIをコールし、画面入力したデータをDBへ更新を行う
+     * API_反訴への回答データ新規登録/更新
+     * 「下書き保存」ボタンを押下で、画面入力したデータをDBへ登録/更新を行う
      * 
-     * @param updClaimRepliesDataParameter API_反訴への回答データ更新の引数
-     * @return Response 反訴への回答データ更新の状況
+     * @param updClaimRepliesDataParameter API_反訴への回答データ新規登録/更新の引数
+     * @return Response 反訴への回答データ新規登録/更新の状況
      */
-    @ApiOperation("反訴への回答データ更新")
+    @ApiOperation("反訴への回答データ新規登録/更新")
     @PostMapping("/UpdClaimRepliesData")
     @SuppressWarnings("rawtypes")
     public Response updClaimRepliesData(@RequestBody UpdClaimRepliesDataParameter updClaimRepliesDataParameter) {
@@ -97,14 +75,14 @@ public class CouAnswerLoginController {
         String caseId = updClaimRepliesDataParameter.getCaseId();
         if (caseId != null && platformId != null) {
             try {
-                // 反訴への回答データ更新
+                // 反訴への回答データ新規登録/更新
                 int res = couAnswerLoginService.UpdClaimRepliesData(updClaimRepliesDataParameter);
                 if (res == 0) {
-                    return AjaxResult.success("更新失败!");
+                    return AjaxResult.success("更新失敗!");
                 }
                 return AjaxResult.success("更新成功!");
             } catch (Exception e) {
-                AjaxResult.fatal("更新失败!", e);
+                AjaxResult.fatal("更新失敗!", e);
                 return null;
             }
         } else {

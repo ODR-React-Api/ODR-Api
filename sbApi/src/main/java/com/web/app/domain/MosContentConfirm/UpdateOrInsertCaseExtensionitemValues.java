@@ -4,6 +4,13 @@ import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
 
+/**
+ * case_extensionitem_values更新用
+ * 
+ * @author DUC 王魯興
+ * @since 2024/05/29
+ * @version 1.0
+ */
 @Data
 public class UpdateOrInsertCaseExtensionitemValues implements Serializable {
     private static final long serialVersionUID = 1L;

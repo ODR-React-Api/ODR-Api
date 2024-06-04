@@ -72,7 +72,7 @@ public class NamAcceptController {
     @PostMapping("/updMediatorHistories")
     public Response updMediatorHistories(@RequestBody UpdMediatorHistories updMediatorHistories) {
         try {
-            int updMediatorHistoriesNum = namAcceptService.UpdMediatorHistories(updMediatorHistories);
+            int updMediatorHistoriesNum = namAcceptService.updMediatorHistories(updMediatorHistories);
     
             if(updMediatorHistoriesNum == 1) {
                 return Response.success(Constants.RETCD_OK);

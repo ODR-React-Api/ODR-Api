@@ -16,7 +16,6 @@ import com.web.app.domain.MosList.CaseIdListInfo;
 import com.web.app.domain.MosList.Position;
 import com.web.app.domain.MosList.ReturnResult;
 import com.web.app.domain.MosList.SelectCondition;
-import com.web.app.domain.MosList.SelectListInfoResult;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.MosListService;
 import com.web.app.tool.AjaxResult;
@@ -53,10 +52,9 @@ public class MosListController {
         try {
             // 詳細caseを呼び出してサービスを取得する
             ReturnResult result = mosListService.searchDetailCase(searchCase);
-            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS, result);
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,result);
         } catch (Exception e) {
-            AjaxResult.fatal("error", e);
-            return null;
+            return AjaxResult.fatal(Constants.MSG_ERROR,e);
         }
     }
 
@@ -77,10 +75,9 @@ public class MosListController {
             // 申立して一覧サービスを呼び出す曖昧検索用一覧取得方法
             List<ReturnResult> returnResults = mosListService.getFuzzyQueryListInfo(uid, queryString);
             // ページへのデータの戻り
-            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS, returnResults);
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,returnResults);
         } catch (Exception e) {
-            AjaxResult.fatal("error", e);
-            return null;
+            return AjaxResult.fatal(Constants.MSG_ERROR,e);
         }
 
     }
@@ -97,17 +94,15 @@ public class MosListController {
     @PostMapping("/fuzzyQueryDetailCase")
     @ApiOperation("曖昧検索用ケース詳細取得")
     @SuppressWarnings("rawtypes")
-    public Response fuzzyQueryDetailCase(@RequestParam("caseId") String caseId,
-            @RequestParam("petitionUserId") String petitionUserId,
-            @RequestParam("positionFlag") int positionFlag, @RequestParam("queryString") String queryString) {
+    public Response fuzzyQueryDetailCase(@RequestParam("caseId") String caseId,@RequestParam("petitionUserId") String petitionUserId,
+    @RequestParam("positionFlag") int positionFlag,@RequestParam("queryString") String queryString) {
         try {
             // サービスの呼び出し
             ReturnResult returnResult = mosListService.getFuzzyQueryDetailCase(caseId, petitionUserId, positionFlag,
                     queryString);
-            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS, returnResult);
+            return AjaxResult.success(Constants.AJAXRESULT_SUCCESS,returnResult);
         } catch (Exception e) {
-            AjaxResult.fatal("error", e);
-            return null;
+            return AjaxResult.fatal(Constants.MSG_ERROR,e);
         }
     }
 
@@ -127,11 +122,9 @@ public class MosListController {
             if (res != null) {
                 return AjaxResult.success(Constants.AJAXRESULT_SUCCESS, res);
             }
-            AjaxResult.error("res is null");
-            return null;
+            return AjaxResult.error(Constants.RES_NULL);
         } catch (Exception e) {
-            AjaxResult.fatal("error", e);
-            return null;
+            return AjaxResult.fatal(Constants.MSG_ERROR, e);
         }
     }
 
@@ -172,7 +165,7 @@ public class MosListController {
 
         try {
             // 検索用一覧取得
-            List<SelectListInfoResult> selectListList = mosListService.getSelectListInfo(position);
+            List<ReturnResult> selectListList = mosListService.getSelectListInfo(position);
             if (selectListList.size() > 0) {
                 return AjaxResult.success("検索成功!", selectListList);
             } else {
@@ -188,13 +181,12 @@ public class MosListController {
      * 一覧取得
      *
      * @param uid セッション.ユーザID
-     * @return    API_一覧取得の取得内容
-     * @throws Exception
+     * @return API_一覧取得の取得内容
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("ケース检索")
     @PostMapping("/getListInfo")
-    public Response User(@RequestBody String uid) {
+    public Response getUserInfo(@RequestBody String uid) {
         // 戻り値初期化
         List<ReturnResult> returnResultList = new ArrayList<>();
         try {
@@ -204,7 +196,8 @@ public class MosListController {
             // 異常な場合
         } catch (Exception e) {
             // 異常を処置した場合
-            return AjaxResult.fatal("查询失败!", e);
+            AjaxResult.fatal("查询失败!", e);
+            return null;
         }
     }
 }

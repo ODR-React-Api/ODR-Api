@@ -14,5 +14,5 @@ import com.web.app.domain.NegotiatMake.SettlementDraftDataSelectedInfo;
 @Mapper
 public interface GetNegotiationsDataMapper {
     // 和解案下書きデータ取得
-    SettlementDraftDataSelectedInfo settlementDraftDataInfoSearch(String sessionCaseId);
+    SettlementDraftDataSelectedInfo getNegotiationsDataInfoSearch(String sessionCaseId);
 }

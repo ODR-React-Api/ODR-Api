@@ -52,7 +52,7 @@
             MediatorNoReasonChangeDate
             from cases
         WHERE
-            cid = #{Cid}
+            cid = #{cid}
     </select>
 
     <insert id="insertFile" parameterType="com.web.app.domain.MedUserChange.InsertFileInfo">

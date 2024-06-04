@@ -19,4 +19,7 @@ public class SessionInfo implements Serializable {
 
     // セッション.PlatformId
     private String platformId;
+
+    // セッション.ログインユーザ
+    private String loginUser;
 }

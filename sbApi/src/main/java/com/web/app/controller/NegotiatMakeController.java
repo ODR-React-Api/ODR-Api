@@ -47,42 +47,40 @@ public class NegotiatMakeController {
     public Response getNegotiationsData(@RequestBody FromSessionLogin fromSessionLogin) {
         try {
             SettlementDraftDataResult dataResult = negotiatMakeService.settlementDraftDataInfoSearch(fromSessionLogin);
-            if (dataResult != null) {
+            if (dataResult.getMessage() == Constants.RETCD_OK) {
                 return Response.success(Constants.RETCD_OK, dataResult);
             }
             return Response.error(Constants.RETCD_NG);
         } catch (Exception e) {
-            AjaxResult.fatal("失敗しました。", e);
-            return null;
+            return AjaxResult.fatal("失敗しました。", e);
         }
     }
 
     /**
      * 下書き保存処理
      * 
-     * @param settlementDraftFromSessionLogin セッション情報 と ログイン情報渡された
+     * @param fromSessionLogin セッション情報 と ログイン情報渡された
      * @return 戻り値は「 下書き保存処理」が返された値
      * @throws Exception エラーの説明内容
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("下書き保存処理")
-    @PostMapping("/getCaseNegotiationsStatus")
-    public Response getCaseNegotiationsStatus(@RequestBody FromSessionLogin fromSessionLogin) {
+    @PostMapping("/updInsNegotiationsTemp")
+    public Response updInsNegotiationsTemp(@RequestBody FromSessionLogin fromSessionLogin) {
         try {
             SettlementDraftDataResult participatedResult = negotiatMakeService
-                    .settlementDraftInfoSearch(fromSessionLogin);
+                    .updInsNegotiationsTemp(fromSessionLogin);
             return Response.success(Constants.RETCD_OK, participatedResult);
         } catch (Exception e) {
-            AjaxResult.fatal("失敗しました。", e);
-            return null;
+            return AjaxResult.fatal("失敗しました。", e);
         }
     }
 
     /**
      * 和解案編集依頼データ新規登録
      *
-     * @param param1 フロントからの画面項目
-     * @return Response
+     * @param negotiationsFile フロントからの画面項目
+     * @return Response　新規登録ステータス
      * @throws Exception 異常終了
      */
     @ApiOperation("和解案編集依頼データ新規登録")
@@ -107,8 +105,8 @@ public class NegotiatMakeController {
     /**
      * 和解案編集依頼データ更新
      *
-     * @param param1 フロントからの画面項目
-     * @return Response
+     * @param negotiationsFile フロントからの画面項目
+     * @return Response  更新ステータス
      * @throws Exception 異常終了
      */
     @ApiOperation("和解案編集依頼データ更新")
@@ -127,6 +125,5 @@ public class NegotiatMakeController {
             AjaxResult.fatal(Constants.MSG_ERROR, e);
             return null;
         }
-
     }
 }

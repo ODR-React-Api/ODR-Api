@@ -25,11 +25,11 @@ import io.swagger.annotations.ApiOperation;
  * @since 2024/05/06
  * @version 1.0
  */
+@SuppressWarnings("rawtypes")
 @CrossOrigin(origins = "*")
 @Api(tags = "和解案合意画面")
 @RestController
 @RequestMapping("/negotiatAgree")
-@SuppressWarnings("rawtypes")
 public class NegotiatAgreeController {
 
     // サービスオブジェクト
@@ -43,7 +43,6 @@ public class NegotiatAgreeController {
      * @return Response
      * @throws Exception 和解案提出失敗
      */
-    @SuppressWarnings("rawtypes")
     @ApiOperation("和解案確認データ取得")
     @PostMapping("GetNegotiatConInfo")
     public Response GetNegotiatConInfo(@RequestBody String CaseID) {
@@ -51,8 +50,7 @@ public class NegotiatAgreeController {
             CaseNegotiations caseNegotiations = negotiatAgreeService.SelCaseNegotiations(CaseID);
             return AjaxResult.success("和解案内容取得成功!", caseNegotiations);
         } catch (Exception e) {
-            AjaxResult.fatal("和解案内容取得失敗!", e);
-            return null;
+            return AjaxResult.fatal("和解案内容取得失敗!", e);
         }
     }
 
@@ -64,7 +62,6 @@ public class NegotiatAgreeController {
      * @return 和解案合意更新状態
      * @throws Exception 和解案合意更新失敗
      */
-    @SuppressWarnings("rawtypes")
     @ApiOperation("和解案合意更新")
     @PostMapping("/UpdNegotiatAgree")
     public Response UpdNegotiatAgree(@RequestBody UpdNegotiatAgree updNegotiatAgree) {
@@ -77,8 +74,7 @@ public class NegotiatAgreeController {
                 return AjaxResult.success("和解案合意更新失败");
             }
         } catch (Exception e) {
-            AjaxResult.fatal("和解案合意更新異常", e);
-            return null;
+            return AjaxResult.fatal("和解案合意更新異常", e);
         }
     }
 
@@ -136,7 +132,6 @@ public class NegotiatAgreeController {
      * @return num 案件成立更新成功件数
      * @throws Exception 更新失敗時異常
      */
-    @SuppressWarnings("rawtypes")
     @ApiOperation("案件成立更新")
     @PostMapping("/updCaseEstablish")
     public Response caseEstablish(@RequestBody CaseEstablish caseEstablish) {

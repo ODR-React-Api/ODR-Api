@@ -69,22 +69,21 @@ public class AnswerLoginConfirmServiceImpl implements AnswerLoginConfirmService 
             traderagentuserListAll.add(null);
         }
 
-        // 反訴:あり ⇒値を設定
+        // 反訴(counterclaimFlag):あり ⇒値を設定
         if (casecase.getCounterclaimFlag() == Constants.COUNTER_CLAIM_FLAG_1) {
             casecase.setCaseStage(Constants.CASE_STAGE_2);
             casecase.setCaseStatus(Constants.CASE_STATUS_200);
             casecase.setCounterclaimFlag(Constants.COUNTER_CLAIM_FLAG_1);
             casecase.setCounterclaimStartDate(casecase.getNewDate());
             casecase.setCounterclaimEndDate(casecase.getOldDate());
-            // 反訴(counterclaimFlag):なし 交渉機能(phaseNegotiation)：あり ⇒値を設定
-        } else if (casecase.getCounterclaimFlag() == Constants.COUNTER_CLAIM_FLAG_0 && casecase.getPhaseNegotiation() == true) {
-            casecase.setCaseStage(Constants.CASE_STAGE_3);
-            casecase.setCaseStatus(Constants.CASE_STATUS_300);
-            // 反訴(counterclaimFlag):なし 反訴機能(phaseReply)：あり/なし 交渉機能(phaseNegotiation)：あり
-            // ⇒値を設定
+             
+        // 反訴(counterclaimFlag):なし 反訴機能(phaseReply)：あり/なし 交渉機能(phaseNegotiation)：あり
+        // ⇒値を設定
         } else if (casecase.getCounterclaimFlag() == Constants.COUNTER_CLAIM_FLAG_0
                 && (casecase.getPhaseReply() == true || casecase.getPhaseReply() == false)
                 && casecase.getPhaseNegotiation() == true) {
+            casecase.setCaseStage(Constants.CASE_STAGE_3);
+            casecase.setCaseStatus(Constants.CASE_STATUS_300);
             casecase.setNegotiationStartDate(casecase.getNewDate());
             casecase.setNegotiationEndDate(casecase.getOldDate());
             casecase.setNegotiationEndDateChangeStatus(Constants.NEGOTIATION_ENDDATE_CHANGE_STATUS_0);

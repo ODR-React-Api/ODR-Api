@@ -1,7 +1,6 @@
 package com.web.app.domain.MosList;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import lombok.Data;
 
@@ -26,7 +25,7 @@ public class ReturnResult implements Serializable {
     private String caseTitle;
 
     // 登録日付
-    private Date petitionDate;
+    private String petitionDate;
 
     // 状態
     private String caseStatus;
