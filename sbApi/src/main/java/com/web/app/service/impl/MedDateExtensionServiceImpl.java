@@ -1,8 +1,5 @@
 package com.web.app.service.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,10 +32,8 @@ public class MedDateExtensionServiceImpl implements MedDateExtensionService {
      */
     @Override
     @Transactional
-    public int updCasesForMediationEndDate(Date mediationEndDate, String cid) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        String date = sdf.format(mediationEndDate);
+    public int updCasesForMediationEndDate(String mediationEndDate, String cid) {
 
-        return updCasesForMediationEndDateMapper.setUpdCasesForMediationEndDate(date, cid);
+        return updCasesForMediationEndDateMapper.setUpdCasesForMediationEndDate(mediationEndDate, cid);
     }
 }
