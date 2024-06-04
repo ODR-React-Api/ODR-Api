@@ -1,4 +1,4 @@
-package com.web.app.domain;
+package com.web.app.domain.UserInfoConfirm;
 
 import java.io.Serializable;
 

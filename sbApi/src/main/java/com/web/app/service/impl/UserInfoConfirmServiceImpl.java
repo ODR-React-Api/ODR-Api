@@ -7,7 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.web.app.domain.OdrUserUtil;
+
+import com.web.app.domain.UserInfoConfirm.OdrUserUtil;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.constants.MessageConstants;
@@ -35,7 +36,7 @@ public class UserInfoConfirmServiceImpl implements UserInfoConfirmService {
 
     /**
      * @description 用户注册
-     * @param OdrUserUtil类包含OdrUser中的部分参数
+     * @param OdrUserUtil 包含OdrUser中的部分参数
      * @return 返回是否成功信息
      * @throws
      */

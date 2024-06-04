@@ -2,7 +2,7 @@ package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.OdrUserUtil;
+import com.web.app.domain.UserInfoConfirm.OdrUserUtil;
 
 /**
  * @author lixiaoyue

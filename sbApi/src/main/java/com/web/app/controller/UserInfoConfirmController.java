@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.web.app.domain.OdrUserUtil;
+
 import com.web.app.domain.Response;
+import com.web.app.domain.UserInfoConfirm.OdrUserUtil;
 import com.web.app.domain.constants.MessageConstants;
 import com.web.app.service.UserInfoConfirmService;
 import com.web.app.tool.AjaxResult;
@@ -39,7 +40,7 @@ public class UserInfoConfirmController {
     @ApiOperation("ユーザ新規登録API")
     @PostMapping("/RegisterUser")
     @SuppressWarnings("rawtypes")
-    public Response RegisterUser(OdrUserUtil odrUserUtil) {
+    public Response registerUser(OdrUserUtil odrUserUtil) {
         try {
             boolean bool = userInfoConfirmService.registerUser(odrUserUtil);
             // 注册失败
