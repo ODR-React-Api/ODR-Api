@@ -91,9 +91,9 @@ public class MedUserConfirmController {
     @SuppressWarnings({"rawtypes"})
     @ApiOperation("ファイル名取得")
     @PostMapping("GetFileName")
-    public Response GetFileName(@RequestBody MedUserConfirm medUserConfirm) {
+    public Response GetFileName(@RequestParam String FileId) {
         try {
-            String fileName = medUserConfirmService.GetFileName(medUserConfirm.getFileId());
+            String fileName = medUserConfirmService.GetFileName(FileId);
             return AjaxResult.success( "成功!",fileName);
         } catch (Exception e) {
             return AjaxResult.fatal( "失敗!",e);
@@ -110,9 +110,9 @@ public class MedUserConfirmController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停変更回数取得")
     @PostMapping("GetMediatorChangeableCount")
-    public Response GetMediatorChangeableCount(@RequestBody MedUserConfirm medUserConfirm) {
+    public Response GetMediatorChangeableCount(@RequestParam String CaseId) {
         try {
-            Cases cases = medUserConfirmService.GetMediatorChangeableCount(medUserConfirm.getCaseId());
+            Cases cases = medUserConfirmService.GetMediatorChangeableCount(CaseId);
             return AjaxResult.success( "成功!",cases);
         } catch (Exception e) {
             return AjaxResult.fatal( "失敗!",e);
