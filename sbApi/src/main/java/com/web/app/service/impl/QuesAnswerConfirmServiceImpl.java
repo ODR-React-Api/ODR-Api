@@ -11,7 +11,6 @@ import com.web.app.domain.QuesAnswerConfirm.InsQuestionnairesResults;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.MailConstants;
 import com.web.app.domain.util.SendMailRequest;
-import com.web.app.mapper.CommonMapper;
 import com.web.app.mapper.InsQuestionnairesResultsMapper;
 import com.web.app.service.CommonService;
 import com.web.app.service.QuesAnswerConfirmService;
@@ -32,9 +31,6 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
     private InsQuestionnairesResultsMapper insQuestionnairesResultsMapper;
 
     @Autowired
-    private CommonMapper commonMapper;
-
-    @Autowired
     private UtilService utilService;
 
     @Autowired
@@ -49,7 +45,17 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
     @Transactional
     @Override
     public int InsQuestionnairesResults(InsQuestionnairesResults insQuestionnairesResultss) {
-
+        // ID
+        String uid = null;
+        // ユーザdisplayName
+        String displayName = null;
+        // ユーザ情報取得API
+        OdrUsers odrUser = utilService.GetOdrUsersByUidOrEmail(null, insQuestionnairesResultss.getUserEmail(),
+                insQuestionnairesResultss.getPlatformId());
+        if (odrUser != null) {
+            uid = odrUser.getUid();
+            displayName = odrUser.getLastName() + " " + odrUser.getFirstName();
+        }
         // 2.1 メール送信 & アクション履歴記録
         // メール送信の項目を設定
         SendMailRequest sendMailRequest = new SendMailRequest();
@@ -68,7 +74,8 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
         ArrayList<String> parameter = new ArrayList<String>();
         sendMailRequest.setParameter(parameter);
         // 送信人
-        sendMailRequest.setUserId("001");
+        // sendMailRequest.setUserId("001");
+        sendMailRequest.setUserId(uid);
         sendMailRequest.setControlType(1);
         boolean bool = utilService.SendMail(sendMailRequest);
         if (!bool) {
@@ -115,12 +122,7 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
         Integer caseStage = insQuestionnairesResultsMapper.getCaseStage(insQuestionnairesResultss.getCaseId());
         actionHistories.setCaseStage(caseStage);
         actionHistories.setUserType(0);
-        OdrUsers odrUser = commonMapper.FindUserByUidOrEmail(null, insQuestionnairesResultss.getUserEmail(),
-                insQuestionnairesResultss.getPlatformId());
-        if (odrUser != null) {
-            String displayName = odrUser.getLastName() + " " + odrUser.getFirstName();
-            actionHistories.setParameters(displayName);
-        }
+        actionHistories.setParameters(displayName);
         actionHistories.setLastModifiedBy("questionnaire");
         Boolean insStatus = commonService.InsertActionHistories(actionHistories, null, false, false);
         if (!insStatus) {
