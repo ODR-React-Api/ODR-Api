@@ -151,7 +151,7 @@ public class MedUserConfirmController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停人メール取得")
     @PostMapping("/GetUserIDbyMail")
-    public Response GetUserIDbyMail(@RequestBody String CaseId) {
+    public Response GetUserIDbyMail(@RequestParam String CaseId) {
         try {
             // 調停者メールとユザーIDを取得
             GetUserIDbyMail getUserIDbyMail = medUserConfirmService.getUserIDbyMail(CaseId);
