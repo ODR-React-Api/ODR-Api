@@ -12,8 +12,10 @@ import com.web.app.service.MosListService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
 /**
  * S3_申立て一覧画面
+ * 
  * @author DUC 郝建润
  * @since 2024/06/04
  * @version 1.0
@@ -22,20 +24,21 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/mosList")
 
- /**
-     * 検索用一覧取得
-     * @author DUC 郝建润
-     * @since 2024/06/04
-     * @version 1.0
-     */
-public class MosListController{
+/**
+ * 検索用一覧取得
+ * 
+ * @author DUC 郝建润
+ * @since 2024/06/04
+ * @version 1.0
+ */
+public class MosListController {
     @Autowired
     private MosListService mosListService;
+
     @ApiOperation("検索用一覧取得")
     @GetMapping("/getSelectListInfo")
-    public List<ReturnData> getSelectListInfo(MosList mosList){
+    public List<ReturnData> getSelectListInfo(MosList mosList) {
         return mosListService.findCasePetitionUserId(mosList);
     }
 
 }
-

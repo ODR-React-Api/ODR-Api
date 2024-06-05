@@ -5,16 +5,17 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
- /**
-     *入力パラメータ
-     * @author DUC 郝建润
-     * @since 2024/06/04
-     * @version 1.0
-     */
+/**
+ * 入力パラメータ
+ * 
+ * @author DUC 郝建润
+ * @since 2024/06/04
+ * @version 1.0
+ */
 @ApiModel
 @Data
-public class MosList implements Serializable{
-    //セッション.ユーザID
+public class MosList implements Serializable {
+    // セッション.ユーザID
     private String sessionId;
     // 立場申立人Flg
     private int applicantFlg;
