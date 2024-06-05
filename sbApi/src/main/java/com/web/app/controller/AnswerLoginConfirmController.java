@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 /**
- * S12 回答内容确认画面
+ * S12 回答内容確認画面
  * Controller层
  * AnswerLoginConfirmController
  * 
@@ -24,63 +24,61 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
  * @version 1.0
  */
 @CrossOrigin(origins = "*")
-// 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
 @Api(tags = "答复内容确认模块") 
 @RestController
 @RequestMapping("/answerLoginConfirm")
 public class AnswerLoginConfirmController {
 
     @Autowired
-    private AnswerLoginConfirmService answerConfirmService;
+    private AnswerLoginConfirmService answerLoginConfirmService;
 
     /**
-     * 邮箱更新
-     * API_案件邮箱更新
-     * S12画面
-     * 
+     * 代理人更新処理
+     * API_案件別個人情報リレーションデータ更新
      * 修改邮箱，不填写默认为null
-     * @param caseRelations
+     * 
+     * @param updCasesRelations 案件对象
      * @return 更新行数
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("案件邮箱修改")
     @PostMapping("/updCasesRelations")
     public Response updCasesRelations(@RequestBody UpdCasesRelations updCasesRelations){
-      try {
-        //更新行数
-        int result=answerConfirmService.updCasesRelations(updCasesRelations);
-        if (result>0) {
-          return AjaxResult.success("邮箱修改成功!",result);
+        try {
+            //更新行数
+            int result=answerLoginConfirmService.updCasesRelations(updCasesRelations);
+            if (result>0) {
+                return AjaxResult.success("邮箱修改成功!",result);
+            }
+                return  AjaxResult.success("邮箱修改成功！",null);
+        }catch (Exception e) {
+            AjaxResult.fatal("邮箱修改失败!",e);
+            return null;
         }
-          return  AjaxResult.success("邮箱修改成功！",null);
-      }catch (Exception e) {
-        AjaxResult.fatal("邮箱修改失败!",e);
-        return null;
-      }
     }
 
     /**
-     * 案件信息更新
+     * 案件状態更新処理
      * API_ 案件更新
-     * S12 回答内容确认画面
+     * 案件信息更新
      * 
-     * @param casecase 
+     * @param updCases 案件对象
      * @return 更新行数
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("案件更新")
     @PostMapping("/updCases")
     public Response updCases(@RequestBody UpdCases updCases){  
-      try{
-        //更新行数
-        int result=answerConfirmService.updCases(updCases);
-        if (result>0) {
-          return AjaxResult.success("修改成功",result);
+        try{
+            //更新行数
+            int result=answerLoginConfirmService.updCases(updCases);
+            if (result>0) {
+                return AjaxResult.success("修改成功",result);
+            }
+            return AjaxResult.success("修改成功",null);
+        }catch(Exception e){
+            AjaxResult.fatal("修改失败！", e);
+            return null;
         }
-          return AjaxResult.success("修改成功",null);
-      }catch(Exception e){
-        AjaxResult.fatal("修改失败！", e);
-        return null;
-      }
     }
 }

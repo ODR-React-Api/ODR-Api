@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.web.app.domain.AnswerLoginConfirm.UpdCases;
 
 /**
- * S12 回答内容确认画面
+ * S12 回答内容確認画面
  * API_案件更新
  * Mapper层
  * UpdCasesMapper
@@ -16,11 +16,8 @@ import com.web.app.domain.AnswerLoginConfirm.UpdCases;
  */
 @Mapper
 public interface UpdCasesMapper {
+    
+    // 修改案件   
+    int updCases(UpdCases updCases);
 
-    /**
-      * 修改案件
-      * @param UpdCases
-      * @return 更新行数
-      */
-     int updCases(UpdCases updCases);
 }

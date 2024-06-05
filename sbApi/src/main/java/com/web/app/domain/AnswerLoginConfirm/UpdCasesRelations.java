@@ -6,6 +6,9 @@ import java.util.List;
 import lombok.Data;
 
 /**
+ * S12 回答内容確認画面
+ * API_案件別個人情報リレーションデータ更新
+ * Dao層
  * UpdCasesRelations
  * 
  * @author 李文涛
@@ -14,13 +17,13 @@ import lombok.Data;
  */
 @Data
 public class UpdCasesRelations implements Serializable{
-
+    
     @SuppressWarnings("unused")
     private static final long SerialVersionUID=1L;
-
+    //frontからmailaddressのlist
     private List<String> traderagentuserList;  
-    
+    // 案件ID
     private String caseId;
-    
+    // プラットフォームID
     private String platformId;
 }

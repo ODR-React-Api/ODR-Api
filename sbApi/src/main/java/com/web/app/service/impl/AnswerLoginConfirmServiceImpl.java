@@ -1,6 +1,5 @@
 package com.web.app.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,7 @@ import com.web.app.service.AnswerLoginConfirmService;
 import com.web.app.domain.constants.Constants;
 
 /**
- * S12 回答内容确认画面
+ * S12 回答内容確認画面
  * Service层实现类
  * AnswerLoginConfirmServiceImpl
  * 
@@ -30,16 +29,16 @@ public class AnswerLoginConfirmServiceImpl implements AnswerLoginConfirmService{
     
     /**
      * 代理人邮箱更新
-     * API_案件邮箱更新
+     * API_案件別個人情報リレーションデータ更新
      * 如果存在邮箱数据，则根据条件，将代理人Email(5个)更新到数据库。
      *
-     * @param caserelations 
+     * @param updCasesRelations 前端传入信息的封装对象
      * @return int 更新行数
      */
     @Override
     public int updCasesRelations(UpdCasesRelations updCasesRelations) {
-        List<String> traderagentuserList = new ArrayList<>(updCasesRelations.getTraderagentuserList());
-        while (traderagentuserList.size()<5) {
+        List<String> traderagentuserList = updCasesRelations.getTraderagentuserList();
+        while (traderagentuserList.size()<Constants.TRADER_USER_EMAIL_LIST_lENGTH) {
             traderagentuserList.add(null);
         }
         updCasesRelations.setTraderagentuserList(traderagentuserList);
@@ -51,14 +50,14 @@ public class AnswerLoginConfirmServiceImpl implements AnswerLoginConfirmService{
      * API_案件更新
      * 根据条件，更新案件
      *
-     * @param updCases 
+     * @param updCases 前端传入信息的封装对象
      * @return int 更新行数
      */
     @Override
     public int updCases(UpdCases updCases) {
 
         // 获取邮箱集合
-        List<String> traderagentuserList = new ArrayList<>(updCases.getTraderagentuserList());
+        List<String> traderagentuserList = updCases.getTraderagentuserList();
         // 邮箱信息不足5个的，将空位补为null
         while (traderagentuserList.size() < Constants.TRADER_USER_EMAIL_LIST_lENGTH) {
             traderagentuserList.add(null);

@@ -4,7 +4,7 @@ import com.web.app.domain.AnswerLoginConfirm.UpdCases;
 import com.web.app.domain.AnswerLoginConfirm.UpdCasesRelations;
 
 /**
- * S12 回答内容确认画面
+ * S12 回答内容確認画面
  * Service层
  * AnswerLoginConfirmService
  * 
@@ -14,16 +14,10 @@ import com.web.app.domain.AnswerLoginConfirm.UpdCasesRelations;
  */
 public interface AnswerLoginConfirmService {
 
-    /**
-     * 修改邮箱
-     * @param caseRelations
-     * @return 更新行数
-     */
+
+     //API_案件別個人情報リレーションデータ更新
     int updCasesRelations(UpdCasesRelations updCasesRelations);
-    /**
-     * 案件修改
-     * @param caseDto
-     * @return 更新行数
-     */
+    
+    // API_案件更新
     int updCases(UpdCases updCases);
 } 

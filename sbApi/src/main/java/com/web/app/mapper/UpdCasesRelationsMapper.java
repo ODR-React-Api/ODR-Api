@@ -1,12 +1,11 @@
 package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-
 import com.web.app.domain.AnswerLoginConfirm.UpdCasesRelations;
 
 /**
- * S12 回答内容确认画面
- * API_案件信息更新
+ * S12 回答内容確認画面
+ * API_案件別個人情報リレーションデータ更新
  * Mapper层
  * UpdCasesRelationsMapper
  * 
