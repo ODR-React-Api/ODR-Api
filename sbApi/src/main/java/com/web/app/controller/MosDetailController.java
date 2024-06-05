@@ -1,14 +1,17 @@
 package com.web.app.controller;
 
 import org.springframework.web.bind.annotation.RestController;
-
-import com.web.app.domain.RelatedPersonsEmail;
+import com.web.app.domain.Response;
+import com.web.app.domain.Entity.CaseRelations;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.MosDetailService;
 
+import io.swagger.annotations.Api;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.List;
 
 /**
  * S04申立て概要画面
@@ -19,17 +22,34 @@ import java.util.List;
  * @since 2024/05/27
  * @version 1.0
  */
+@CrossOrigin(origins = "*")
+// 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
+@Api(tags = "S04申立て概要画面") 
 @RestController
-@RequestMapping()
+@RequestMapping("/MosDetail")
 public class MosDetailController {
 
     @Autowired
-    public MosDetailService mosDetailService;
+    private MosDetailService mosDetailService;
 
-    // 根拠 DpId（渡し項目.CaseId）関係者メール取得です
-    @GetMapping("/GetCaseRelations")
-    public List<RelatedPersonsEmail> GetCaseRelations(String DpId) {
-        List<RelatedPersonsEmail> list = mosDetailService.GetCaseRelations(DpId);
-        return list;
+    /**
+     * 関係者メアド取得ControllerAPI
+     *
+     * @param caseId 案件ID
+     * @return 関係者メアド
+     * @throws Exception エラーの説明内容
+     */
+    @SuppressWarnings("rawtypes")
+    @GetMapping("/getCaseRelations")
+    public Response getCaseRelations(String caseId) {
+        try {
+            CaseRelations caseRelations = mosDetailService.getCaseRelations(caseId);
+            if (caseRelations != null) {
+                return Response.success(caseRelations);
+            }
+            return Response.error(Constants.RETCD_NG);
+        } catch (Exception e) {
+            return Response.error(e.getMessage());
+        }
     }
 }

@@ -1,8 +1,6 @@
 package com.web.app.service;
 
-import java.util.List;
-
-import com.web.app.domain.RelatedPersonsEmail;
+import com.web.app.domain.Entity.CaseRelations;
 
 /**
  * S04申立て概要画面
@@ -15,6 +13,6 @@ import com.web.app.domain.RelatedPersonsEmail;
  */
 public interface MosDetailService {
     // 関係者メール取得です
-    List<RelatedPersonsEmail> GetCaseRelations(String DpId);
+    CaseRelations getCaseRelations(String caseId) throws Exception;;
 
 }

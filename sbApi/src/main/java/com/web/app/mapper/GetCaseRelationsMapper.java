@@ -1,13 +1,11 @@
 package com.web.app.mapper;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 
-import com.web.app.domain.RelatedPersonsEmail;
+import com.web.app.domain.Entity.CaseRelations;
 
 /**
- * S04申立て概要画面
+ * 関係者メアド取得
  * Mapperr層
  * GetCaseRelationsMapper
  * 
@@ -17,7 +15,8 @@ import com.web.app.domain.RelatedPersonsEmail;
  */
 @Mapper
 public interface GetCaseRelationsMapper {
+    
     // 関係者のメールアドレスを取得する
-    List<RelatedPersonsEmail> FindEmailRelatdPersonnel(String DpId);
+    CaseRelations findCaseRelations(String caseId);
 
 }

@@ -1,11 +1,9 @@
 package com.web.app.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.app.domain.RelatedPersonsEmail;
+import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.mapper.GetCaseRelationsMapper;
 import com.web.app.service.MosDetailService;
 
@@ -22,19 +20,19 @@ import com.web.app.service.MosDetailService;
 public class MosDetailServiceImpl implements MosDetailService {
 
     @Autowired
-    GetCaseRelationsMapper getCaseRelationsMapper;
+    private GetCaseRelationsMapper getCaseRelationsMapper;
 
     /**
      * API_関係者メアド取得
      * DpIdに基づいてcase_relationsテーブルから事件を検索した場合、事件関係者のメールアドレスに返信します。
      * 
-     * @param DpId 照会対象の案件idです
+     * @param caseId 照会対象の案件idです
      * @return List<CaseRelations> 関係者メアド
      * 
      */
     @Override
-    public List<RelatedPersonsEmail> GetCaseRelations(String DpId) {
-        List<RelatedPersonsEmail> relatedPersonsEmails = getCaseRelationsMapper.FindEmailRelatdPersonnel(DpId);
+    public CaseRelations getCaseRelations(String caseId) throws Exception {
+        CaseRelations relatedPersonsEmails = getCaseRelationsMapper.findCaseRelations(caseId);
         return relatedPersonsEmails;
     }
 }
