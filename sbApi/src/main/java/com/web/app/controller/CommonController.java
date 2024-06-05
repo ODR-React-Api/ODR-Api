@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
 import com.web.app.domain.User;
 import com.web.app.domain.Entity.ActionHistories;
+import com.web.app.domain.Entity.Cases;
+import com.web.app.domain.Entity.MasterPlatforms;
 import com.web.app.domain.Entity.MasterTypes;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.CommonService;
@@ -130,6 +132,51 @@ public class CommonController {
             List<MasterTypes> masterTypesList = utilService.GetMasterTypeName(type, languageId, platformId);
             if(masterTypesList.size() != 0) {
                 return Response.success(masterTypesList);
+            }
+            return Response.error(Constants.RETCD_NG);
+        } catch (Exception e) {
+            return Response.error(e.getMessage());
+        }
+    }
+
+    /**
+     * プラットフォーム情報取得API
+     * 
+     * @param platformId プラットフォームID
+     * @return プラットフォーム情報
+     * @throws Exception エラーの説明内容
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("プラットフォーム情報取得")
+    @PostMapping("/GetMasterPlatforms")
+    public Response GetMasterPlatforms(String platformId) {
+        try {
+            MasterPlatforms masterPlatforms = utilService.GetMasterPlatforms(platformId);
+            if(masterPlatforms != null) {
+                return Response.success(masterPlatforms);
+            }
+            return Response.error(Constants.RETCD_NG);
+        } catch (Exception e) {
+            return Response.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 案件情報取得API
+     * 
+     * @param caseId 案件ID
+     * @param platformId プラットフォームID(nullに入力された場合はcaseIdのみに基づいて検索されます)
+     * @return 案件情報
+     * @throws Exception エラーの説明内容
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("案件情報取得")
+    @PostMapping("/GetCasesByCid")
+    public Response GetCasesByCid(String caseId, String platformId) {
+        try {
+            Cases cases = utilService.GetCasesByCid(caseId, platformId);
+            if(cases != null) {
+                return Response.success(cases);
             }
             return Response.error(Constants.RETCD_NG);
         } catch (Exception e) {

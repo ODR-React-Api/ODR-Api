@@ -77,8 +77,8 @@ public class UtilServiceImpl implements UtilService {
      * @return 案件情報
      */
     @Override
-    public Cases GetCasesByCid(String cid) {
-        return commonMapper.FindCasesInfoByCid(cid);
+    public Cases GetCasesByCid(String cid, String platformId) {
+        return commonMapper.FindCasesInfoByCid(cid, platformId);
     }
 
     /**
@@ -183,7 +183,7 @@ public class UtilServiceImpl implements UtilService {
                     }
 
                     if(!(request.getCaseId() == null || request.getCaseId() == "")) {
-                        String caseTitle = GetCasesByCid(request.getCaseId()).getCaseTitle();
+                        String caseTitle = GetCasesByCid(request.getCaseId(), null).getCaseTitle();
                         int index = caseTitle.lastIndexOf("_");
 
                         for(int j = 0; j < request.getParameter().size(); j++) {
@@ -206,7 +206,7 @@ public class UtilServiceImpl implements UtilService {
                 String caseTitledisplayName = "";
                 if(!(request.getCaseId() == null || request.getCaseId() == "")) {
                     // CaseTitle表示名の置換
-                    caseTitle = GetCasesByCid(request.getCaseId()).getCaseTitle();
+                    caseTitle = GetCasesByCid(request.getCaseId(), null).getCaseTitle();
                     int index = caseTitle.lastIndexOf('_');
                     String typeValue = caseTitle.substring(index + 1);
                     String resloveDisplayName = GetMasterDisplayName(request.getPlatformId(), sendMailTemplate.get(0).getLanguageId(), "ResloveType", typeValue);

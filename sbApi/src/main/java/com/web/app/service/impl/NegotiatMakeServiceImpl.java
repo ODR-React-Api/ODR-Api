@@ -2,6 +2,7 @@ package com.web.app.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,29 +78,35 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     @Override
     public SettlementDraftDataResult settlementDraftDataInfoSearch(FromSessionLogin sessionLogin) {
         // 初期画面表示処理時、和解案下書きデータ取得
-        SettlementDraftDataSelectedInfo selectedInfo = getNegotiationsDataMapper
+        List<SettlementDraftDataSelectedInfo> selectedInfoList = getNegotiationsDataMapper
                 .getNegotiationsDataInfoSearch(sessionLogin.getSessionCaseId());
 
         SettlementDraftDataResult settlementResult = new SettlementDraftDataResult();
         // 和解案下書きデータ取得があり場合
-        if (selectedInfo != null) {
+        if (selectedInfoList.size() != 0) {
             // 和解案下書きデータ取得できる場合、下書き保存（ボタン）と保存して編集依頼（リンク）の表示方法
-            settlementResult.setStatus(selectedInfo.getStatus());
+            settlementResult.setStatus(selectedInfoList.get(0).getStatus());
             // 和解案下書きデータ取得できる場合、対応方法
-            settlementResult.setCorrespondence(selectedInfo.getExpectResloveTypeValue());
+            settlementResult.setCorrespondence(Arrays.asList(selectedInfoList.get(0).getExpectResloveTypeValue().split(",")));
             // 和解案下書きデータ取得できる場合、そのた
 
-            boolean contains = selectedInfo.getExpectResloveTypeValue().contains("その他");
+            boolean contains = selectedInfoList.get(0).getExpectResloveTypeValue().contains("その他");
             if (contains) {
-                settlementResult.setOtherContext(selectedInfo.getOtherContext());
+                settlementResult.setOtherContext(selectedInfoList.get(0).getOtherContext());
             } else {
                 settlementResult.setOtherContext("");
             }
+            List<String> fileNameList = new ArrayList<>();
+            for (SettlementDraftDataSelectedInfo selectedInfo : selectedInfoList) {
+                fileNameList.add(selectedInfo.getFileName());
+            }
+            settlementResult.setFileNameList(fileNameList);
             settlementResult.setMessage(Constants.RETCD_OK);
+
         } else {
             // 和解案下書きデータ取得がなし場合
             settlementResult.setStatus(0);
-            settlementResult.setCorrespondence("");
+            settlementResult.setCorrespondence(null);
             settlementResult.setOtherContext("");
             settlementResult.setMessage(Constants.RETCD_NG);
         }

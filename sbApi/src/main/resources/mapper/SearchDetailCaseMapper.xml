@@ -55,10 +55,10 @@
             <if test="caseTitle != null and caseTitle != ''">
             AND cases.CaseTitle LIKE concat('%',#{caseTitle},'%')
             </if>
-            <if test="petitionDateStart != null">
+            <if test="petitionDateStart != null and petitionDateStart != ''">
             AND cases.PetitionDate &gt;= #{petitionDateStart}
             </if>
-            <if test="petitionDateEnd != null">
+            <if test="petitionDateEnd != null and petitionDateEnd != ''">
             AND cases.PetitionDate &lt;= #{petitionDateEnd}
             </if>
             <if test="caseStatus != null and caseStatus != ''">

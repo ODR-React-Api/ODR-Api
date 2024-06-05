@@ -2,6 +2,7 @@ package com.web.app.domain.NegotiatMake;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -17,7 +18,7 @@ public class SettlementDraftDataResult implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // 対応方法
-    private String correspondence;
+    private List<String> correspondence;
 
     // その他 内容
     private String otherContext;
@@ -41,7 +42,7 @@ public class SettlementDraftDataResult implements Serializable {
     private int status;
 
     // ファイル名
-    private String fileName;
+    private List<String> fileNameList;
 
     // 異常終了利用してのメッセージ
     private String message;

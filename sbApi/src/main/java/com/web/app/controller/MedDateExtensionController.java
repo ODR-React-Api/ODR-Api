@@ -1,7 +1,5 @@
 package com.web.app.controller;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,13 +41,14 @@ public class MedDateExtensionController {
   @ApiOperation("案件情報更新")
   @PostMapping("/updCasesForMediationEndDate")
   @SuppressWarnings("unchecked")
-  public Response<Integer> updCasesForMediationEndDate(Date mediationEndDate, String cid) {
+  public Response<Integer> updCasesForMediationEndDate(String mediationEndDate, String cid) {
     System.out.println(mediationEndDate);
     try {
-      if (medDateExtensionService.updCasesForMediationEndDate(mediationEndDate, cid) != 0) {
+      int res = medDateExtensionService.updCasesForMediationEndDate(mediationEndDate, cid);
+      if (res != 0) {
         return AjaxResult.success("案件情報が更新されました!", Constants.RESULT_CODE_SUCCESS);
       }
-      return AjaxResult.success("案件情報が更新されませんでした!", Constants.RESULT_CODE_ERROR);
+      return AjaxResult.error("案件情報が更新されませんでした!");
     } catch (Exception e) {
       return AjaxResult.fatal("更新に失敗しました!", e);
     }

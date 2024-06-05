@@ -1,6 +1,9 @@
 package com.web.app.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +40,7 @@ public class QuesAnswerServiceImpl implements QuesAnswerService {
         QuestionnaireMails allQuestionnaire = new QuestionnaireMails();
 
         QuestionnaireData questionnaireData = getQuestionnairesMapper.questionnaieDataSearch(id);
-        
+
         // 確認画面用データ
         allQuestionnaire.setQuestionnaireData(questionnaireData);
 
@@ -59,5 +62,15 @@ public class QuesAnswerServiceImpl implements QuesAnswerService {
         allQuestionnaire.setQuestionnaireList(questionnaireList);
 
         return allQuestionnaire;
+    }
+
+    /**
+     * @return Guid List
+     */
+    @Override
+    public List<String> getQuestionnairesGuidList() {
+        List<String> GuidList = getQuestionnairesMapper.getQuestionnairesGuidList();
+        Set<String> set = new HashSet<>(GuidList);
+        return new ArrayList<>(set);
     }
 }

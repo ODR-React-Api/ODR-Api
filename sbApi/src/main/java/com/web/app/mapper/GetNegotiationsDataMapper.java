@@ -1,5 +1,7 @@
 package com.web.app.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.web.app.domain.NegotiatMake.SettlementDraftDataSelectedInfo;
@@ -14,5 +16,5 @@ import com.web.app.domain.NegotiatMake.SettlementDraftDataSelectedInfo;
 @Mapper
 public interface GetNegotiationsDataMapper {
     // 和解案下書きデータ取得
-    SettlementDraftDataSelectedInfo getNegotiationsDataInfoSearch(String sessionCaseId);
+    List<SettlementDraftDataSelectedInfo> getNegotiationsDataInfoSearch(String sessionCaseId);
 }

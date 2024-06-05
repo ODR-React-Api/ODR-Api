@@ -5,7 +5,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.web.app.domain.Response;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.UserLoginService;
+import com.web.app.tool.AjaxResult;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -32,10 +37,21 @@ public class UserLoginController {
      * @return Email メールアドレス
      * @throws Exception エラーの説明内容
      */
+    @SuppressWarnings("rawtypes")
     @ApiOperation("仮会員登録データ取得")
     @GetMapping("/getPreUserData")
-    public String getPreUserData(String guid) {
-        System.out.println(guid);
-        return userLoginService.getPreUserData(guid);
+    public Response getPreUserData(String guid) {
+        try {
+            System.out.println(guid);
+            String GUID = userLoginService.getPreUserData(guid);
+            if (GUID == null || GUID == "") {
+                return AjaxResult.error(Constants.RETCD_NG);
+            }
+            return AjaxResult.success(Constants.RETCD_OK, GUID);
+
+        } catch (Exception e) {
+            return AjaxResult.fatal(Constants.RETCD_NG, e);
+        }
+
     }
-} 
+}

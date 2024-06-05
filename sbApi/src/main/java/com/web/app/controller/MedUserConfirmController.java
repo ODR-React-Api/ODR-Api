@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.MedUserConfirm.GetMediatorGen;
 import com.web.app.domain.MedUserConfirm.GetUserIDbyMail;
-import com.web.app.domain.MedUserConfirm.MedUserConfirm;
 import com.web.app.domain.Response;
 import com.web.app.domain.MedUserConfirm.MedUserConfirmSession;
 import com.web.app.domain.MedUserConfirm.MediatorInfo;
@@ -90,9 +90,9 @@ public class MedUserConfirmController {
     @SuppressWarnings({"rawtypes"})
     @ApiOperation("ファイル名取得")
     @PostMapping("GetFileName")
-    public Response GetFileName(@RequestBody MedUserConfirm medUserConfirm) {
+    public Response GetFileName(@RequestParam String FileId) {
         try {
-            String fileName = medUserConfirmService.GetFileName(medUserConfirm.getFileId());
+            String fileName = medUserConfirmService.GetFileName(FileId);
             return AjaxResult.success( "成功!",fileName);
         } catch (Exception e) {
             return AjaxResult.fatal( "失敗!",e);
@@ -109,9 +109,9 @@ public class MedUserConfirmController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停変更回数取得")
     @PostMapping("GetMediatorChangeableCount")
-    public Response GetMediatorChangeableCount(@RequestBody MedUserConfirm medUserConfirm) {
+    public Response GetMediatorChangeableCount(@RequestParam String CaseId) {
         try {
-            Cases cases = medUserConfirmService.GetMediatorChangeableCount(medUserConfirm.getCaseId());
+            Cases cases = medUserConfirmService.GetMediatorChangeableCount(CaseId);
             return AjaxResult.success( "成功!",cases);
         } catch (Exception e) {
             return AjaxResult.fatal( "失敗!",e);
@@ -129,7 +129,7 @@ public class MedUserConfirmController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停案ステータス取得")
     @PostMapping("/GetMediationStatus")
-    public Response GetMediationStatus(@RequestBody String CaseId) {
+    public Response GetMediationStatus(@RequestParam String CaseId) {
         try {
             // 調停案ステータスを取得
             String getMediationStatus = medUserConfirmService.getMediationStatus(CaseId);

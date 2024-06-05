@@ -142,6 +142,7 @@ public class MosDetailServiceImpl implements MosDetailService {
     public RelationsContent selectRelationsContentData(String caseId) {
         // 関係者メアド取得API呼び出し
         CaseRelations caseRelations = getCaseRelationsMapper.getCaseRelations(caseId);
+        System.out.println("2222222" + caseRelations);
 
         RelationsContent relationsContent = new RelationsContent();
 
@@ -328,6 +329,23 @@ public class MosDetailServiceImpl implements MosDetailService {
             } else {
                 // 取得なしの場合
                 relationsContent.setTrader5Flag(1);
+            }
+        }
+
+        if (caseRelations.getMediatorUserEmail() != null) {
+            OdrUsers users = getRelationsContentMapper
+                    .RelationsContentListDataSearch(caseRelations.getMediatorUserEmail());
+            System.out.println("11111111111111111" + users);
+            if (users != null) {
+                // 申立人氏名
+                relationsContent.setMediatorUserName(users.getFirstName() + " " + users.getLastName());
+                // 申立人氏名（カナ）
+                relationsContent
+                        .setMediatorUserkana(users.getFirstName_kana() + " " + users.getLastName_kana());
+                // 申立人所属会社
+                relationsContent.setMediatorUsercompanyName(users.getCompanyName());
+                // 申立人メールアドレス
+                relationsContent.setMediatorUserEmail(caseRelations.getMediatorUserEmail());
             }
         }
 
