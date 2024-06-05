@@ -2,6 +2,7 @@ package com.web.app.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +87,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // 和解案下書きデータ取得できる場合、下書き保存（ボタン）と保存して編集依頼（リンク）の表示方法
             settlementResult.setStatus(selectedInfoList.get(0).getStatus());
             // 和解案下書きデータ取得できる場合、対応方法
-            settlementResult.setCorrespondence(selectedInfoList.get(0).getExpectResloveTypeValue());
+            settlementResult.setCorrespondence(Arrays.asList(selectedInfoList.get(0).getExpectResloveTypeValue().split(",")));
             // 和解案下書きデータ取得できる場合、そのた
 
             boolean contains = selectedInfoList.get(0).getExpectResloveTypeValue().contains("その他");
@@ -105,7 +106,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         } else {
             // 和解案下書きデータ取得がなし場合
             settlementResult.setStatus(0);
-            settlementResult.setCorrespondence("");
+            settlementResult.setCorrespondence(null);
             settlementResult.setOtherContext("");
             settlementResult.setMessage(Constants.RETCD_NG);
         }

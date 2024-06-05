@@ -18,7 +18,7 @@ public class SettlementDraftDataResult implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // 対応方法
-    private String correspondence;
+    private List<String> correspondence;
 
     // その他 内容
     private String otherContext;
