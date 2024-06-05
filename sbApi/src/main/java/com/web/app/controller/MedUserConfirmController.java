@@ -173,7 +173,7 @@ public class MedUserConfirmController {
     @SuppressWarnings("rawtypes")
     @ApiOperation("調停人情報取得")
     @PostMapping("/GetMediatorGen")
-    public Response GetMediatorGen(@RequestBody String CaseId) {
+    public Response GetMediatorGen(@RequestParam String CaseId) {
         try {
             // 調停人情報取得
             ArrayList<GetMediatorGen> getMediatorGen = medUserConfirmService.getMediatorGen(CaseId);
