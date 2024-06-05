@@ -25,7 +25,7 @@ public interface UtilService {
     OdrUsers GetOdrUsersByUidOrEmail(String uid, String email, String platformId);
 
     // 案件情報取得
-    Cases GetCasesByCid(String cid);
+    Cases GetCasesByCid(String cid, String platformId);
 
     // 種類マスタ表示名の置換
     String GetMasterDisplayName(String platformId, String languageId, String type, String typeValue);
