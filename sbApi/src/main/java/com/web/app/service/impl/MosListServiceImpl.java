@@ -117,16 +117,19 @@ public class MosListServiceImpl implements MosListService {
                     mosList.getCaseTitle(), mosList.getPetitionDateForm(), mosList.getPetitionDateTo(),
                     mosList.getCaseStatus());
             flgParameter.add(parameterData);
-
+            // API「検索用ケース詳細取得」からのデータ受信
+            ReturnData returnedValues = new ReturnData();
             // API「検索用ケース詳細取得」
 
             // test
-            Random random = new Random();
-            int numberOfUnreadMessages = random.nextInt(2);
-            int equiredSupport = random.nextInt(2);
-            ReturnData returnedValues = new ReturnData(statusFlag, "a", "s", "d", "f", time, numberOfUnreadMessages,
-                    equiredSupport);
-            time = time.minusDays(1);
+            // Random random = new Random();
+            // int numberOfUnreadMessages = random.nextInt(2);
+            // int equiredSupport = random.nextInt(2);
+            // returnedValues = new ReturnData(statusFlag, "a", "s", "d", "f", time,
+            // numberOfUnreadMessages,
+            // equiredSupport);
+            // time = time.minusDays(1);
+
             // API「検索用キース詳細取得」で返されるデータ
             returnedValue.add(returnedValues);
 

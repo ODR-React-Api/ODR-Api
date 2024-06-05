@@ -51,4 +51,7 @@ public class ReturnData implements Serializable {
         setNumberOfUnreadMessages(numberOfUnreadMessages);
         setRequiredSupport(requiredSupport);
     }
+
+    public ReturnData() {
+    }
 }
