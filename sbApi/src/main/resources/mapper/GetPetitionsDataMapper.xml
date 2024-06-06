@@ -21,7 +21,8 @@
 
         <sql id = "selectItems">
             cp.productName,cp.ProductId,cp.TraderName,cp.TraderUrl,
-            cp.Other,cp.BoughtDate,cp.Price,cp.petitionTypeValue,
+            cp.Other,cp.Other01,cp.Other02,cp.Other03,cp.Other04,cp.Other05,
+            cp.BoughtDate,cp.Price,cp.petitionTypeValue,
             cp.petitionContext,cp.ExpectResloveTypeValue,fi.FileName,fi.FileUrl
         </sql>
         <sql id = "selectCondition">
@@ -29,7 +30,7 @@
             and cp.DeleteFlag = 0 and cases.cid = cp.CaseId and cases.PlatformId = #{plateFormId} 
             and cases.DeleteFlag = 0 and cfr.CaseId = cp.CaseId and cfr.PlatformId = #{plateFormId} 
             and cfr.RelationType = 0 and cfr.RelatedId = cp.id and cfr.DeleteFlag = 0
-            and fi.id = cfr.fileId order by cfr.LastModifiedDate
+            and fi.id = cfr.fileId order by cfr.LastModifiedDate DESC
         </sql>
         <select id = "getPetitionsData" resultMap="ResultMap">
             select <include refid="selectItems"/> from react_use.case_petitions cp,
