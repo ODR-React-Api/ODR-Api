@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.DateExtension.CaseInfo;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.DateExtensionService;
 import com.web.app.tool.AjaxResult;
 
@@ -67,6 +68,28 @@ public class DateExtensionController {
         try {
             caseInfo.setNegotiationEndDate(dateExtensionService.getToCaseInfo(caseInfo.getCaseId(), caseInfo.getPlatformId()));
             return Response.success(caseInfo);
+        } catch (Exception e) {
+            return Response.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 申立テーブルの内容を更新API
+     *
+     * @param CaseInfo 期日延長オブジェクト
+     * @return 案件情報更新の状況
+     * @throws Exception エラーの説明内容
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("申立テーブルの内容を更新API")
+    @PostMapping("/updDateExtensionCases")
+    public Response updDateExtensionCases(@RequestBody CaseInfo caseInfo) {
+        try {
+            int num = dateExtensionService.updDateExtensionCases(caseInfo);
+            if(num != 0) {
+                return Response.success(Constants.RETCD_OK);
+            }
+            return Response.error(Constants.RETCD_NG);
         } catch (Exception e) {
             return Response.error(e.getMessage());
         }

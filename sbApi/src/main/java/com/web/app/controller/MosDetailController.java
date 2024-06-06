@@ -200,7 +200,7 @@ public class MosDetailController {
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("API_回答の内容取得")
-    @GetMapping("/GetCaseRepliesMosDetail")
+    @PostMapping("/GetCaseRepliesMosDetail")
     public Response getCaseRepliesMosDetail(@RequestBody CaseRepliesMosDetail caseRepliesMosDetail) {
         try {
             // 回答の内容取得
@@ -223,7 +223,7 @@ public class MosDetailController {
      */
     @SuppressWarnings("rawtypes")
     @ApiOperation("API_反訴への回答取得")
-    @GetMapping("/GetCaseClaimrepliesMosDetail")
+    @PostMapping("/GetCaseClaimrepliesMosDetail")
     public Response getCaseClaimrepliesMosDetail(@RequestBody CaseClaimrepliesMosDetail caseClaimrepliesMosDetail) {
         try {
             // 反訴への回答取得

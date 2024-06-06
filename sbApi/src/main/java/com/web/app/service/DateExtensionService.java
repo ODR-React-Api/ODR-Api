@@ -2,6 +2,8 @@ package com.web.app.service;
 
 import java.util.Date;
 
+import com.web.app.domain.DateExtension.CaseInfo;
+
 
 /**
  * 期日延長画面Service
@@ -16,5 +18,8 @@ public interface DateExtensionService {
 
     // 案件情報取得
     Date getToCaseInfo(String caseId, String platformId) throws Exception;
+
+    // 申立テーブルの内容を更新
+    int updDateExtensionCases(CaseInfo caseInfo) throws Exception;
 
 }
