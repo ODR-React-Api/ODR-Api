@@ -91,10 +91,9 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             settlementResult.setPayAmount(selectedInfoList.get(0).getPayAmount());
             // 和解案下書きデータ取得できる場合、反訴の支払金額
             settlementResult.setCounterClaimPayment(selectedInfoList.get(0).getCounterClaimPayment());
-            // 和解案下書きデータ取得できる場合、支払期日
+            // 和解案下書きデータ取得できる場合、支払期日 Date =>String
             SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String time =simpleDateFormat.format(selectedInfoList.get(0).getPaymentEndDate());
-            
             settlementResult.setPaymentEndDate(time);
             // 和解案下書きデータ取得できる場合、対応方法
             settlementResult.setCorrespondence(Arrays.asList(selectedInfoList.get(0).getExpectResloveTypeValue().split(",")));
