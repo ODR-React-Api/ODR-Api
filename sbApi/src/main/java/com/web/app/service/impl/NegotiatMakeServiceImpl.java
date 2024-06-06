@@ -95,6 +95,8 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String time =simpleDateFormat.format(selectedInfoList.get(0).getPaymentEndDate());
             settlementResult.setPaymentEndDate(time);
+            //和解案下書きデータ取得できる場合 特記事項
+            settlementResult.setSpecialItem(selectedInfoList.get(0).getSpecialItem());
             // 和解案下書きデータ取得できる場合、対応方法
             settlementResult.setCorrespondence(Arrays.asList(selectedInfoList.get(0).getExpectResloveTypeValue().split(",")));
             // 和解案下書きデータ取得できる場合、そのた
