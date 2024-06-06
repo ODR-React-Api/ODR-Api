@@ -29,6 +29,6 @@ public class UpdNegotiationEndDate implements Serializable {
     // ログインユーザID
     private String userId;
 
-    // 期日延長申請を承認Flag
+    // 期日延長申請を承認Flag 承認する:true 却下する:false
     private boolean extensionDateApplicationFlag;
 }
