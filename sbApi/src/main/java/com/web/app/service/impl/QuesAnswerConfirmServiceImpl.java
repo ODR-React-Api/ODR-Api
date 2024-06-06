@@ -49,10 +49,24 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
     @Transactional
     @Override
     public int InsQuestionnairesResults(InsQuestionnaireResults insQuestionnaireResults) {
-        // 2.1 メール送信 & アクション履歴記録
+        // ID
+        String uid = null;
+        // ユーザdisplayName
+        String displayName = null;
+        // ユーザ情報取得API
         // 送信先：【画面C08】.userEmail
+        OdrUsers odrUser = utilService.GetOdrUsersByUidOrEmail(null, insQuestionnaireResults.getUserEmail(),
+                insQuestionnaireResults.getPlatformId());
+        if (odrUser != null) {
+            uid = odrUser.getUid();
+            displayName = odrUser.getLastName() + " " + odrUser.getFirstName();
+        }
+
+        // 2.1 メール送信 & アクション履歴記録
         // メール送信の項目を設定
         SendMailRequest sendMailRequest = getSendMailRequest(insQuestionnaireResults);
+        // 送信者ID
+        sendMailRequest.setUserId(uid);
         // メール送信
         boolean bool = utilService.SendMail(sendMailRequest);
         if (!bool) {
@@ -70,6 +84,8 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
         // 2.3 アクション履歴登録
         // 「アクション履歴」の新規登録の項目を設定
         ActionHistories actionHistories = getActionHistories(insQuestionnaireResults);
+        // 【画面C8】.userEmail →ユーザdisplayName
+        actionHistories.setParameters(displayName);
         Boolean insStatus = commonService.InsertActionHistories(actionHistories, null, false, false);
         if (!insStatus) {
             return 0;
@@ -101,8 +117,6 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
         // メールテンプレート対応の引数値
         ArrayList<String> parameter = new ArrayList<String>();
         sendMailRequest.setParameter(parameter);
-        // 送信者ID
-        sendMailRequest.setUserId("001");
         sendMailRequest.setControlType(1);
 
         return sendMailRequest;
@@ -159,13 +173,6 @@ public class QuesAnswerConfirmServiceImpl implements QuesAnswerConfirmService {
         Integer caseStage = insQuestionnairesResultsMapper.getCaseStage(insQuestionnaireResults.getCaseId());
         actionHistories.setCaseStage(caseStage);
         actionHistories.setUserType(0);
-        // 【画面C8】.userEmail →ユーザdisplayName
-        OdrUsers odrUser = utilService.GetOdrUsersByUidOrEmail(null, insQuestionnaireResults.getUserEmail(),
-                insQuestionnaireResults.getPlatformId());
-        if (odrUser != null) {
-            String displayName = odrUser.getLastName() + " " + odrUser.getFirstName();
-            actionHistories.setParameters(displayName);
-        }
         actionHistories.setLastModifiedBy("questionnaire");
 
         return actionHistories;
