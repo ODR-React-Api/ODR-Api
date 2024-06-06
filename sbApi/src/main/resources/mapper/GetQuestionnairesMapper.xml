@@ -44,4 +44,13 @@
         Order By
             questionnaires.Order ASC
     </select>
+
+    <select id="getQuestionnairesGuidList" resultType="string">
+        SELECT
+            GUID
+        FROM
+            questionnaire_mails
+        WHERE
+            DeleteFlag = 0
+    </select>
 </mapper>

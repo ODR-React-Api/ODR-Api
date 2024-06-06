@@ -1,5 +1,7 @@
 package com.web.app.service;
 
+import java.util.List;
+
 import com.web.app.domain.QuesAnswer.QuestionnaireMails;
 
 /**
@@ -12,4 +14,6 @@ import com.web.app.domain.QuesAnswer.QuestionnaireMails;
 public interface QuesAnswerService {
     // アンケート情報取得
     QuestionnaireMails getQuestionnaires(String id, String platformId);
+
+    List<String> getQuestionnairesGuidList();
 }

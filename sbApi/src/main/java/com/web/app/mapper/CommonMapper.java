@@ -31,7 +31,7 @@ public interface CommonMapper {
     OdrUsers FindUserByUidOrEmail(String uid, String email, String platformId);
 
     // caseIDによる案件情報の照会
-    Cases FindCasesInfoByCid(String cid);
+    Cases FindCasesInfoByCid(String cid, String platformId);
 
     // チェックボックスを取得する方法
     List<MasterTypes> FindMasterTypeName(String type, String languageId, String platformId);

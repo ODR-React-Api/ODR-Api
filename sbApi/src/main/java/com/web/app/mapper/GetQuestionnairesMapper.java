@@ -26,4 +26,6 @@ public interface GetQuestionnairesMapper {
     // アンケートの問題リスト
     List<QuestionnaireList> searchQuestionnaieList(String questionId, String platformId);
 
+    // Guidリスト
+    List<String> getQuestionnairesGuidList();
 }

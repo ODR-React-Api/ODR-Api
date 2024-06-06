@@ -332,7 +332,7 @@ public class NegotiatPreviewServiceImpl implements NegotiatPreviewService {
         ArrayList<String> parameter = new ArrayList<String>();
         parameter.add(negotiatPreview.getCaseId());
 
-        Cases case1 = commonMapper.FindCasesInfoByCid(negotiatPreview.getCaseId());
+        Cases case1 = commonMapper.FindCasesInfoByCid(negotiatPreview.getCaseId(), null);
 
         parameter.add(case1.getCaseTitle());
 

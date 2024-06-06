@@ -45,5 +45,11 @@ public class User implements Serializable {
 
     private Date updateTime;
 
+    private String firstName;
+
+    private String middleName;
+
+    private String lastName;
+
     private static final long serialVersionUID = 1L;
 }

@@ -27,30 +27,30 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/medDateExtension")
 public class MedDateExtensionController {
 
-    @Autowired
-    private MedDateExtensionService medDateExtensionService;
+  @Autowired
+  private MedDateExtensionService medDateExtensionService;
 
-    /**
-     * API_案件情報更新
-     * サービスメソッドを呼び出して案件を更新し、
-     * 更新結果を判断してページに戻る
-     * 
-     * @param casesForMediationEndDate 案件情報更新の引数
-     * @return Response 案件情報更新の状況
-     */
-    @ApiOperation("案件情報更新")
-    @PostMapping("/updCasesForMediationEndDate")
-    @SuppressWarnings("unchecked")
-    public Response<Integer> updCasesForMediationEndDate(String mediationEndDate, String cid) {
-        System.out.println(mediationEndDate);
-        try {
-            int res = medDateExtensionService.updCasesForMediationEndDate(mediationEndDate, cid);
-            if (res != 0) {
-                return AjaxResult.success("案件情報が更新されました!", Constants.RESULT_CODE_SUCCESS);
-            }
-            return AjaxResult.success("案件情報が更新されませんでした!", Constants.RESULT_CODE_ERROR);
-        } catch (Exception e) {
-            return AjaxResult.fatal("更新に失敗しました!", e);
-        }
+  /**
+   * API_案件情報更新
+   * サービスメソッドを呼び出して案件を更新し、
+   * 更新結果を判断してページに戻る
+   * 
+   * @param casesForMediationEndDate 案件情報更新の引数
+   * @return Response 案件情報更新の状況
+   */
+  @ApiOperation("案件情報更新")
+  @PostMapping("/updCasesForMediationEndDate")
+  @SuppressWarnings("unchecked")
+  public Response<Integer> updCasesForMediationEndDate(String mediationEndDate, String cid) {
+    System.out.println(mediationEndDate);
+    try {
+      int res = medDateExtensionService.updCasesForMediationEndDate(mediationEndDate, cid);
+      if (res != 0) {
+        return AjaxResult.success("案件情報が更新されました!", Constants.RESULT_CODE_SUCCESS);
+      }
+      return AjaxResult.error("案件情報が更新されませんでした!");
+    } catch (Exception e) {
+      return AjaxResult.fatal("更新に失敗しました!", e);
     }
+  }
 }

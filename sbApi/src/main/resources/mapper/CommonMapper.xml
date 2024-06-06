@@ -91,7 +91,7 @@
             master_platforms
         WHERE
             Id = #{platformId}
-            AND DeleteFlag = false
+            AND DeleteFlag = 0
         ORDER BY
             Id
     </select>
@@ -163,7 +163,7 @@
                     AND 1 = 1
                 </otherwise>
             </choose>
-            AND DeleteFlag = false
+            AND DeleteFlag = 0
     </select>
     <!-- caseIDによる案件情報の照会 -->
     <select id="FindCasesInfoByCid" resultType="com.web.app.domain.Entity.Cases">
@@ -229,7 +229,15 @@
             cases
         WHERE
             cid = #{cid}
-            AND DeleteFlag = false
+            <choose>
+                <when test="platformId != null and platformId != ''">
+                    AND PlatformId = #{platformId}
+                </when>
+                <otherwise>
+                    AND 1 = 1
+                </otherwise>
+            </choose>
+            AND DeleteFlag = 0
     </select>
 
     <!-- チェックボックスを取得する方法 -->
@@ -261,7 +269,7 @@
             AND type = #{type}
             AND IsActive = 1
             AND LanguageId = #{languageId}
-            AND DeleteFlag = false
+            AND DeleteFlag = 0
         ORDER BY
             OrderNo
     </select>
@@ -309,7 +317,7 @@
         SELECT odr_users.FirstName,odr_users.MiddleName,odr_users.LastName FROM odr_users INNER JOIN case_relations
         WHERE case_relations.CaseId = #{caseId}
         AND case_relations.PlatformId = #{platformId}
-        AND case_relations.DeleteFlag = '0'
+        AND case_relations.DeleteFlag = 0
         <if test="identity">
             AND odr_users.Email = case_relations.PetitionUserInfo_Email
         </if>
@@ -317,7 +325,7 @@
             AND odr_users.Email = case_relations.TraderUserEmail
         </if>
         AND odr_users.PlatformId = #{platformId}
-        AND odr_users.DeleteFlag = '0'
+        AND odr_users.DeleteFlag = 0
         AND odr_users.Status = '0'
     </select>
 
@@ -336,7 +344,7 @@
                 Email = #{email}
             </otherwise>
         </choose>
-            AND DeleteFlag = false
+            AND DeleteFlag = 0
             AND PlatformId = #{platformId}
     </select>
 
@@ -393,7 +401,7 @@
             Action_File_Relations
         where
             id = #{id}
-            And DeleteFlag = '0'
+            And DeleteFlag = 0
     </select>
 
     <!-- 「アクション履歴-添付ファイルリレーション」新規登録 -->
