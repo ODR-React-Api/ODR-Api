@@ -237,18 +237,23 @@ public class MosDetailServiceImpl implements MosDetailService {
             }
         }
 
-        OdrUsers traderUser = getRelationsContentMapper
-                .RelationsContentListDataSearch(caseRelations.getTraderUserEmail());
-
-        if (traderUser != null) {
-            // 相手方氏名
-            relationsContent.setTraderUserName(traderUser.getFirstName() + " " + traderUser.getLastName());
-            // 相手方氏名（カナ）
-            relationsContent.setTraderUserkana(traderUser.getFirstName_kana() + " " + traderUser.getLastName_kana());
-            // 相手方所属会社
-            relationsContent.setTraderUsercompanyName(traderUser.getCompanyName());
-            // 相手方メールアドレス
-            relationsContent.setTraderUserEmail(caseRelations.getTraderUserEmail());
+        if (caseRelations.getTraderUserEmail() != null) {
+            OdrUsers traderUser = getRelationsContentMapper
+                    .RelationsContentListDataSearch(caseRelations.getTraderUserEmail());
+            if (traderUser != null) {
+                // 相手方氏名
+                relationsContent.setTraderUserName(traderUser.getFirstName() + " " + traderUser.getLastName());
+                // 相手方氏名（カナ）
+                relationsContent
+                        .setTraderUserkana(traderUser.getFirstName_kana() + " " + traderUser.getLastName_kana());
+                // 相手方所属会社
+                relationsContent.setTraderUsercompanyName(traderUser.getCompanyName());
+                // 相手方メールアドレス
+                relationsContent.setTraderUserEmail(caseRelations.getTraderUserEmail());
+            } else {
+                // 取得なしの場合
+                relationsContent.setTraderUserFlag(1);
+            }
         }
 
         if (caseRelations.getTraderAgent1_UserEmail() != null) {
@@ -337,15 +342,18 @@ public class MosDetailServiceImpl implements MosDetailService {
                     .RelationsContentListDataSearch(caseRelations.getMediatorUserEmail());
             System.out.println("11111111111111111" + users);
             if (users != null) {
-                // 申立人氏名
+                // 調停人氏名
                 relationsContent.setMediatorUserName(users.getFirstName() + " " + users.getLastName());
-                // 申立人氏名（カナ）
+                // 調停人氏名（カナ）
                 relationsContent
                         .setMediatorUserkana(users.getFirstName_kana() + " " + users.getLastName_kana());
-                // 申立人所属会社
+                // 調停人所属会社
                 relationsContent.setMediatorUsercompanyName(users.getCompanyName());
-                // 申立人メールアドレス
+                // 調停人メールアドレス
                 relationsContent.setMediatorUserEmail(caseRelations.getMediatorUserEmail());
+            } else {
+                // 取得なしの場合
+                relationsContent.setMediatorUserFlag(1);
             }
         }
 

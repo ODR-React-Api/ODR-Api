@@ -93,6 +93,9 @@ public class RelationsContent implements Serializable {
   // 相手方Email
   private String traderUserEmail;
 
+  // 相手方Flag
+  private int traderUserFlag;
+
   // 代理人1氏名
   private String trader1Name;
 
@@ -156,12 +159,15 @@ public class RelationsContent implements Serializable {
   // 所属会社名
   private String mediatorUsercompanyName;
 
-  // 申立人氏名
+  // 調停人氏名
   private String mediatorUserName;
 
-  // 申立人氏名（カナ）
+  // 調停人氏名（カナ）
   private String mediatorUserkana;
 
-  // 申立人Email
+  // 調停人Email
   private String mediatorUserEmail;
+
+  // 調停人Flag
+  private int mediatorUserFlag;
 }
