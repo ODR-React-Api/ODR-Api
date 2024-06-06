@@ -64,4 +64,7 @@ public interface MosDetailService {
 
     // API_調停内容取得
     CaseMediationsData GetCaseMediationsData(String caseId);
+
+    // API_調停内容取得
+    int updMediatorHistories(String caseId, String userId);
 }

@@ -2,18 +2,18 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.app.mapper.UpdMediatorHistoriesMapper">
+<mapper namespace="com.web.app.mapper.UpdMediatorHistoriesResignMapper">
 
-    <update id="updMediatorHistories" parameterType="com.web.app.domain.NamAccept.UpdMediatorHistories">
+    <update id="updMediatorHistoriesResign" parameterType="com.web.app.domain.Entity.MediatorHistories">
         UPDATE
             mediator_histories
         SET
+            ResignFlag = 1,
             Status = 4,
             LastModifiedDate = NOW(),
             LastModifiedBy = #{lastModifiedBy}
         WHERE
             userId = #{userId}
             AND caseId = #{caseId}
-            AND Status IN (0)
     </update>
 </mapper>

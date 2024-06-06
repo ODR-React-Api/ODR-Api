@@ -22,6 +22,7 @@ import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.Entity.Files;
 import com.web.app.domain.Entity.MasterPlatforms;
+import com.web.app.domain.Entity.MediatorHistories;
 import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.domain.Entity.UsersMessages;
 import com.web.app.domain.MosDetail.CaseClaimrepliesMosDetail;
@@ -49,6 +50,7 @@ import com.web.app.mapper.GetCaseRepliesMosDetailMapper;
 import com.web.app.mapper.GetPetitionsContentMapper;
 import com.web.app.mapper.GetRelationsContentMapper;
 import com.web.app.mapper.UpdCasesStatusMapper;
+import com.web.app.mapper.UpdMediatorHistoriesResignMapper;
 import com.web.app.mapper.UpdShowTuritorMapper;
 import com.web.app.service.CommonService;
 import com.web.app.service.MosDetailService;
@@ -106,6 +108,9 @@ public class MosDetailServiceImpl implements MosDetailService {
 
     @Autowired
     private GetCaseMediationsDataMapper getCaseMediationsDataMapper;
+
+    @Autowired
+    private UpdMediatorHistoriesResignMapper updMediatorHistoriesResign;
 
     /**
      * 申立ての内容取得
@@ -1146,5 +1151,21 @@ public class MosDetailServiceImpl implements MosDetailService {
         NumberFormat nf = NumberFormat.getInstance();
         String formattedMoney = Constants.STR_DOLLAR + nf.format(money);
         return formattedMoney;
+    }
+
+    /**
+     * APIで調停人変更履歴の変更を行う。
+     * 
+     * @param caseId セッション.案件ID
+     * @param userId セッション.ユーザID(ログインユーザーID)
+     * reurn 更新件数
+     */
+    public int updMediatorHistories(String caseId, String userId) {
+        MediatorHistories mediatorHistories = new MediatorHistories();
+        mediatorHistories.setCaseId(caseId);
+        mediatorHistories.setUserId(userId);
+        mediatorHistories.setLastModifiedBy(userId);
+        int res = updMediatorHistoriesResign.updMediatorHistoriesResign(mediatorHistories);
+        return res;
     }
 }

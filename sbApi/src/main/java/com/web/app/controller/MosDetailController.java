@@ -335,4 +335,26 @@ public class MosDetailController {
             return null;
         }
     }
+
+    /**
+     * APIで調停人変更履歴の変更を行う。
+     * 
+     * @param caseId セッション.案件ID
+     * @param userId セッション.ユーザID(ログインユーザーID)
+     * @return Response API「調停人変更履歴の変更を行う」を呼び出すData
+     */
+    @ApiOperation("調停人変更履歴の変更を行う")
+    @GetMapping("/UpdMediatorHistories")
+    @SuppressWarnings("rawtypes")
+    public Response updMediatorHistories(String caseId, String userId) {
+        try {
+            int count = mosDetailService.updMediatorHistories(caseId, userId);
+            if (count == 0) {
+                return AjaxResult.error("Error");
+            }
+            return AjaxResult.success("Success", count);
+        } catch (Exception e) {
+            return AjaxResult.fatal("Error", e);
+        }
+    }
 }
