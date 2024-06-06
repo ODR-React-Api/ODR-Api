@@ -32,7 +32,7 @@ public class MosDetailServiceImpl implements MosDetailService {
      */
     @Override
     public CaseRelations getCaseRelations(String caseId) throws Exception {
-        CaseRelations relatedPersonsEmails = getCaseRelationsMapper.findCaseRelations(caseId);
-        return relatedPersonsEmails;
+        CaseRelations caseRelations = getCaseRelationsMapper.findCaseRelations(caseId);
+        return caseRelations;
     }
 }

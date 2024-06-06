@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @version 1.0
  */
 @CrossOrigin(origins = "*")
-// 声明当前controller需要生成文档，并且指定在文档中的标签为“用户模块”
+// 声明当前controller需要生成文档，并且指定在文档中的标签为“S04申立て概要画面”
 @Api(tags = "S04申立て概要画面") 
 @RestController
 @RequestMapping("/MosDetail")
