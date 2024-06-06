@@ -35,7 +35,7 @@ public class MosListController {
     @ApiOperation("曖昧検索用ケース詳細取得")
     @PostMapping("/FuzzyQueryDetailCase")
     @SuppressWarnings("rawtypes")
-    public Response fuzzyQueryDetailCase(String CaseId, Integer PetitionUserId) {
+    public Response fuzzyQueryDetailCase(String caseId, Integer petitionUserId, Integer positionFlag, String query) {
         
         return new Response();
 
