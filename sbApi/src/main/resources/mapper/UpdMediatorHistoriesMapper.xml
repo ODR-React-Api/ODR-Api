@@ -8,6 +8,9 @@
         UPDATE
             mediator_histories
         SET
+            <if test="ResignFlag == 1 ">
+                ResignFlag = 1,
+            </if>
             Status = 4,
             LastModifiedDate = NOW(),
             LastModifiedBy = #{lastModifiedBy}

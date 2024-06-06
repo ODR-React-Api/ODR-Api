@@ -23,6 +23,9 @@ public class UpdMediatorHistories {
     // 受理状態
     private String status;
 
+    // 辞任フラグ
+    private int ResignFlag;
+
     // システム日付
     private Date lastModifiedDate;
 
