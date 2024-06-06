@@ -25,4 +25,13 @@ public class CaseInfo implements Serializable {
 
     // 交渉期限日
     private Date NegotiationEndDate;
+
+    // ログインユーザID
+    private String UserId;
+
+    // 交渉期限日変更ステータス
+    private int NegotiationEndDateChangeStatus;
+
+    // 交渉期限日変更回数
+    private int NegotiationEndDateChangeCount;
 }
