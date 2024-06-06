@@ -50,7 +50,7 @@ public class AnswerLoginConfirmController {
             if (result>0) {
                 return AjaxResult.success("邮箱修改成功!",result);
             }
-                return  AjaxResult.success("邮箱修改成功！",null);
+                return  AjaxResult.success("更新行数为0！",null);
         }catch (Exception e) {
             AjaxResult.fatal("邮箱修改失败!",e);
             return null;
