@@ -86,6 +86,12 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         if (selectedInfoList.size() != 0) {
             // 和解案下書きデータ取得できる場合、下書き保存（ボタン）と保存して編集依頼（リンク）の表示方法
             settlementResult.setStatus(selectedInfoList.get(0).getStatus());
+            // 和解案下書きデータ取得できる場合、申立て支払金額
+            settlementResult.setPayAmount(selectedInfoList.get(0).getPayAmount());
+            // 和解案下書きデータ取得できる場合、反訴の支払金額
+            settlementResult.setCounterClaimPayment(selectedInfoList.get(0).getCounterClaimPayment());
+            // 和解案下書きデータ取得できる場合、支払期日
+            settlementResult.setPaymentEndDate(selectedInfoList.get(0).getPaymentEndDate());
             // 和解案下書きデータ取得できる場合、対応方法
             settlementResult.setCorrespondence(Arrays.asList(selectedInfoList.get(0).getExpectResloveTypeValue().split(",")));
             // 和解案下書きデータ取得できる場合、そのた
