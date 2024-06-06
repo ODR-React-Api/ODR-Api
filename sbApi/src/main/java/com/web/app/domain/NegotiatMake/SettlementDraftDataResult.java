@@ -30,7 +30,7 @@ public class SettlementDraftDataResult implements Serializable {
     private double counterClaimPayment;
 
     // 支払期日
-    private Date paymentEndDate;
+    private String paymentEndDate;
 
     // 返送時送料
     private int shipmentPayType;
