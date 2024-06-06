@@ -1,5 +1,6 @@
 package com.web.app.service.impl;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,7 +92,10 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             // 和解案下書きデータ取得できる場合、反訴の支払金額
             settlementResult.setCounterClaimPayment(selectedInfoList.get(0).getCounterClaimPayment());
             // 和解案下書きデータ取得できる場合、支払期日
-            settlementResult.setPaymentEndDate(selectedInfoList.get(0).getPaymentEndDate());
+            SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String time =simpleDateFormat.format(selectedInfoList.get(0).getPaymentEndDate());
+            
+            settlementResult.setPaymentEndDate(time);
             // 和解案下書きデータ取得できる場合、対応方法
             settlementResult.setCorrespondence(Arrays.asList(selectedInfoList.get(0).getExpectResloveTypeValue().split(",")));
             // 和解案下書きデータ取得できる場合、そのた
