@@ -32,7 +32,7 @@ public class UpdCases implements Serializable{
     private Boolean deleteFlag;
     // 相手方メール
     private String traderUserEmail;
-    // frontから相手方代理人 （代理人 mailaddress的list）
+    // 代理人mailaddress的list
     private List<String> traderagentuserList;
     // 反訴機能（反诉）
     private Boolean phaseReply;

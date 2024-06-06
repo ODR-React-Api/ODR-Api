@@ -15,7 +15,7 @@ import com.web.app.domain.AnswerLoginConfirm.UpdCasesRelations;
 public interface AnswerLoginConfirmService {
 
 
-     //API_案件別個人情報リレーションデータ更新
+    //API_案件別個人情報リレーションデータ更新
     int updCasesRelations(UpdCasesRelations updCasesRelations);
     
     // API_案件更新

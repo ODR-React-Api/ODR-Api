@@ -35,7 +35,7 @@ public class AnswerLoginConfirmController {
     /**
      * 代理人更新処理
      * API_案件別個人情報リレーションデータ更新
-     * 修改邮箱，不填写默认为null
+     * 案件邮箱修改
      * 
      * @param updCasesRelations 案件对象
      * @return 更新行数

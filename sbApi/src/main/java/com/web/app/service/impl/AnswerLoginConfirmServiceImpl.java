@@ -22,7 +22,7 @@ import com.web.app.domain.constants.Constants;
 @Service
 public class AnswerLoginConfirmServiceImpl implements AnswerLoginConfirmService{
 
-     @Autowired
+    @Autowired
     private UpdCasesRelationsMapper updCasesRelationsMapper;
     @Autowired
     private UpdCasesMapper updCasesMapper;
@@ -37,11 +37,16 @@ public class AnswerLoginConfirmServiceImpl implements AnswerLoginConfirmService{
      */
     @Override
     public int updCasesRelations(UpdCasesRelations updCasesRelations) {
+
+        //创建对象，用来存储前端传入的代理人邮箱集合
         List<String> traderagentuserList = updCasesRelations.getTraderagentuserList();
+        //确保邮箱集合的长度为5，不足的剩余空位补为null
         while (traderagentuserList.size()<Constants.TRADER_USER_EMAIL_LIST_lENGTH) {
             traderagentuserList.add(null);
         }
+        //将更新后的邮箱集合传回updCasesRelations对象
         updCasesRelations.setTraderagentuserList(traderagentuserList);
+
         return updCasesRelationsMapper.updCasesRelations(updCasesRelations);   
     }
 

@@ -20,7 +20,7 @@ public class UpdCasesRelations implements Serializable{
     
     @SuppressWarnings("unused")
     private static final long SerialVersionUID=1L;
-    //frontからmailaddressのlist
+    //代理人mailaddress的list
     private List<String> traderagentuserList;  
     // 案件ID
     private String caseId;
