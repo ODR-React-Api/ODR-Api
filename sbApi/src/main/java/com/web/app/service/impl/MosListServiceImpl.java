@@ -1,10 +1,10 @@
 package com.web.app.service.impl;
 
-import java.time.LocalDate;
+// import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+// import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,7 +106,7 @@ public class MosListServiceImpl implements MosListService {
         // API「検索用キース詳細取得」で返されるデータ
         List<ReturnData> returnedValue = new ArrayList<ReturnData>();
         // testデータ
-        LocalDate time = LocalDate.now();
+        // LocalDate time = LocalDate.now();
 
         for (int i = 0; i < flg.size(); i++) {
             // 取得したCaseIdとPetitionUserIdを引数として、取得したレコードがなくなるまで繰り返して下記APIを呼び出して、ケース詳細内容を取得する。
