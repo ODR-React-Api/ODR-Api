@@ -10,7 +10,6 @@ import com.web.app.domain.Response;
 import com.web.app.domain.MosLogin.GetPetitionTemp;
 import com.web.app.domain.MosLogin.GetPlatform;
 import com.web.app.domain.MosLogin.MosLogin;
-import com.web.app.domain.MosLogin.Relations;
 import com.web.app.domain.MosLogin.ScreenInfo;
 import com.web.app.domain.MosLogin.SessionInfo;
 import com.web.app.service.MosLoginService;
