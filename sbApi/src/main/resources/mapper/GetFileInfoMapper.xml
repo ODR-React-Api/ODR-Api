@@ -3,10 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetFileInfoMapper" >
-
-      <!-- id、caseid、flag、mediatorDisclosureFlag による情報の照会-->
-
-      <select id="getFileInfo" resultType="com.web.app.domain.MosFileList.Files">
+    <!-- id、caseid、flagとmediatorDisclosureFlag による情報の照会-->
+    <select id="getFileInfo" resultType="com.web.app.domain.MosFileList.Files">  
         SELECT
             c3.FileName,
             c3.FileUrl,
@@ -38,7 +36,5 @@
             </if> 
         ORDER BY 
             c1.UserId
-            
     </select>
-     
 </mapper>

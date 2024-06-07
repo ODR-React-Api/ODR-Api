@@ -28,7 +28,7 @@ public class MosFileListServiceImpl implements MosFileListService {
     //ユーザ情報取得
     LoginUserRoleOpenInfo getLoginUserRoleOpenInfo = new LoginUserRoleOpenInfo();
 
-     /**
+    /**
      * API_ログインユーザのロールと開示情報取得
      *
      * @param id ログインユーザId
@@ -57,10 +57,9 @@ public class MosFileListServiceImpl implements MosFileListService {
             getLoginUserRoleOpenInfo.setFlag(3);
         }
         return getLoginUserRoleOpenInfo;
-
     }
 
-     /**
+    /**
      * API_案件添付ファイル取得
      *
      * @param id ログインユーザ
@@ -74,7 +73,6 @@ public class MosFileListServiceImpl implements MosFileListService {
         int mediatorDisclosureFlag = getLoginUserRoleOpenInfo.getMediatorDisclosureFlag();
         Files files = getFileInfoMapper.getFileInfo(id, caseId, flag, mediatorDisclosureFlag);
         return files;
-
     }
 
 }

@@ -3,10 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetLoginUserRoleOpenInfoMapper" >
-
-      <!-- caseid による情報の照会-->
-
-      <select id="getLoginUserRoleOpenInfo" resultType="com.web.app.domain.MosFileList.LoginUserRoleOpenInfo">
+    <!-- caseid による情報の照会-->
+    <select id="getLoginUserRoleOpenInfo" resultType="com.web.app.domain.MosFileList.LoginUserRoleOpenInfo">
         SELECT
             c1.MediatorDisclosureFlag,
             c2.PetitionUserId,
@@ -19,7 +17,5 @@
             AND c1.DeleteFlag = 0
             AND c2.CaseId =c1.cid
             AND c2.DeleteFlag = 0
-        
     </select>
-     
 </mapper>

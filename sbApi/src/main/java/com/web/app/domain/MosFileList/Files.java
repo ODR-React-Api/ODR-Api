@@ -14,7 +14,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class Files implements Serializable{
+public class Files implements Serializable {
 
     private static final long serialVersionUID = 1L;
     //ファイル名

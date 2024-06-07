@@ -14,7 +14,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class LoginUserRoleOpenInfo implements Serializable{
+public class LoginUserRoleOpenInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     //調停人情報開示フラグ
