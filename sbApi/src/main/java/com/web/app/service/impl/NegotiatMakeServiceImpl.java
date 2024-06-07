@@ -18,6 +18,7 @@ import com.web.app.domain.NegotiatMake.UpdNegotiationsFile;
 import com.web.app.domain.Entity.CaseFileRelations;
 import com.web.app.domain.Entity.CaseNegotiations;
 import com.web.app.domain.Entity.Files;
+import com.web.app.domain.Entity.MasterTypes;
 import com.web.app.domain.NegotiatMake.AddFile;
 import com.web.app.domain.NegotiatMake.FromSessionLogin;
 import com.web.app.domain.NegotiatMake.NegotiationsFile;
@@ -29,6 +30,7 @@ import com.web.app.mapper.InsNegotiationTempMapper;
 import com.web.app.mapper.InsNegotiationsEditMapper;
 import com.web.app.mapper.UpdNegotiationsEditMapper;
 import com.web.app.mapper.UpdNegotiationsTempMapper;
+import com.web.app.mapper.CommonMapper;
 import com.web.app.service.NegotiatMakeService;
 import com.web.app.service.UtilService;
 
@@ -69,6 +71,9 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
     @Autowired
     private UtilService utilService;
 
+    @Autowired
+    private CommonMapper commonMapper;
+
     /**
      * 和解案下書きデータ取得API
      * 
@@ -99,8 +104,11 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             settlementResult.setSpecialItem(selectedInfoList.get(0).getSpecialItem());
             // 和解案下書きデータ取得できる場合、対応方法
             settlementResult.setCorrespondence(Arrays.asList(selectedInfoList.get(0).getExpectResloveTypeValue().split(",")));
+            //和解案下書きデータ取得できる場合、返送時送料
+            settlementResult.setShipmentPayType(selectedInfoList.get(0).getShipmentPayType());
+            List<MasterTypes> getMasterTypes =commonMapper.FindMasterTypeName("Shippayby","jp","0001");
+            settlementResult.setMasterTypesList(getMasterTypes);
             // 和解案下書きデータ取得できる場合、そのた
-
             boolean contains = selectedInfoList.get(0).getExpectResloveTypeValue().contains("その他");
             if (contains) {
                 settlementResult.setOtherContext(selectedInfoList.get(0).getOtherContext());

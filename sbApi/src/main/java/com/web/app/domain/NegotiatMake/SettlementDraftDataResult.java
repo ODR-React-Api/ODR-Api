@@ -1,8 +1,9 @@
 package com.web.app.domain.NegotiatMake;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
+
+import com.web.app.domain.Entity.MasterTypes;
 
 import lombok.Data;
 
@@ -43,6 +44,9 @@ public class SettlementDraftDataResult implements Serializable {
 
     // ファイル名
     private List<String> fileNameList;
+
+    //返送時送料
+    private List<MasterTypes> MasterTypesList;
 
     // 異常終了利用してのメッセージ
     private String message;
