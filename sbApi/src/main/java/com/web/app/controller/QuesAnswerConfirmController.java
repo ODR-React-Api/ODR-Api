@@ -46,7 +46,7 @@ public class QuesAnswerConfirmController {
             // アンケート入力結果新規登録
             int res = quesAnswerConfirmService.InsQuestionnairesResults(insQuestionnaireResults);
             if (res == 0) {
-                return AjaxResult.success("登録失敗!");
+                return AjaxResult.error("登録失敗!");
             }
             return AjaxResult.success("登録成功!");
         } catch (Exception e) {

@@ -100,7 +100,7 @@ public class AnswerLoginController {
                 // 反訴・回答データ新規登録/更新
                 int res = answerLoginService.UpdRepliesData(updRepliesDataParameter);
                 if (res == 0) {
-                    return AjaxResult.success("更新失敗!");
+                    return AjaxResult.error("更新失敗!");
                 }
                 return AjaxResult.success("更新成功!");
             } catch (Exception e) {

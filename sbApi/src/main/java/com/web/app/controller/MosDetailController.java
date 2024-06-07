@@ -281,7 +281,7 @@ public class MosDetailController {
                 // チュートリアル表示制御変更
                 int res = mosDetailService.UpdShowTuritor(updShowTuritorParameter);
                 if (res > 0) {
-                    return AjaxResult.success("更新成功!");
+                    return AjaxResult.error("更新成功!");
                 }
                 return AjaxResult.success("更新失敗!");
             } catch (Exception e) {
@@ -343,7 +343,7 @@ public class MosDetailController {
      * @param userId セッション.ユーザID(ログインユーザーID)
      * @return Response API「調停人変更履歴の変更を行う」を呼び出すData
      */
-    @ApiOperation("調停人変更履歴の変更を行う")
+    @ApiOperation("調停人変更履歴の変更")
     @GetMapping("/UpdMediatorHistories")
     @SuppressWarnings("rawtypes")
     public Response updMediatorHistories(String caseId, String userId) {

@@ -78,7 +78,7 @@ public class CouAnswerLoginController {
                 // 反訴への回答データ新規登録/更新
                 int res = couAnswerLoginService.UpdClaimRepliesData(updClaimRepliesDataParameter);
                 if (res == 0) {
-                    return AjaxResult.success("更新失敗!");
+                    return AjaxResult.error("更新失敗!");
                 }
                 return AjaxResult.success("更新成功!");
             } catch (Exception e) {
