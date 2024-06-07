@@ -81,24 +81,6 @@ public class DateExtensionServiceImpl implements DateExtensionService {
     @Override
     public int updDateExtensionCases(CaseInfo caseInfo) throws Exception {
 
-        // ログインユーザ情報取得
-        OdrUsers odrUsers = utilService.GetOdrUsersByUidOrEmail(caseInfo.getUserId(), null, null);
-        // 案件別個人情報取得
-        CaseRelations caseRelations = mosDetailService.getCaseRelations(caseInfo.getCaseId());
-
-        // ログインユーザの立場を判断する
-        if(odrUsers.getEmail().equals(caseRelations.getPetitionUserInfo_Email()) || odrUsers.getEmail().equals(caseRelations.getAgent1_Email())
-        || odrUsers.getEmail().equals(caseRelations.getAgent2_Email()) || odrUsers.getEmail().equals(caseRelations.getAgent3_Email())
-        || odrUsers.getEmail().equals(caseRelations.getAgent4_Email()) || odrUsers.getEmail().equals(caseRelations.getAgent5_Email())) {
-            // ログインユーザの立場が申立人の場合
-            caseInfo.setNegotiationEndDateChangeStatus(2);
-        } else if(odrUsers.getEmail().equals(caseRelations.getTraderUserEmail()) || odrUsers.getEmail().equals(caseRelations.getTraderAgent1_UserEmail())
-        || odrUsers.getEmail().equals(caseRelations.getTraderAgent2_UserEmail()) || odrUsers.getEmail().equals(caseRelations.getTraderAgent3_UserEmail())
-        || odrUsers.getEmail().equals(caseRelations.getTraderAgent4_UserEmail()) || odrUsers.getEmail().equals(caseRelations.getTraderAgent5_UserEmail())) {
-            // ログインユーザの立場が相手方の場合
-            caseInfo.setNegotiationEndDateChangeStatus(1);
-        }
-
         // 前交渉期限日変更回数取得
         Cases cases = utilService.GetCasesByCid(caseInfo.getCaseId(), null);
         caseInfo.setNegotiationEndDateChangeCount(cases.getNegotiationEndDateChangeCount() + 1);
