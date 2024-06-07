@@ -71,17 +71,20 @@ public class MosLoginServiceImpl implements MosLoginService {
      * @param userId    セッション.ユーザID
      */
     @Override
-    public Relations insRelationsTemp(String uuId, String loginUser, String userId) {
+    public int insRelationsTemp(String uuId, String loginUser, String userId) {
         // TBL「申立（case_petitions）」の新規登録
-        insRelationsTempMapper.insCasePetitions(uuId, loginUser);
+        int insCasePetitionsNum = insRelationsTempMapper.insCasePetitions(uuId, loginUser);
         // TBL「案件別個人情報リレーション（case_relations）」の新規登録
-        insRelationsTempMapper.insCaseRelations(uuId, loginUser, userId);
-        // 戻り値として設定
-        // case_petitions.id
-        relations.setUuId(uuId);
-        // case_relations.PetitionUserId
-        relations.setUserId(userId);
-        return relations;
+        int insCaseRelationsNum = insRelationsTempMapper.insCaseRelations(uuId, loginUser, userId);
+        if(insCasePetitionsNum == 1 && insCaseRelationsNum == 1) {
+            // 戻り値として設定
+            // case_petitions.id
+            relations.setUuId(uuId);
+            // case_relations.PetitionUserId
+            relations.setUserId(userId);
+            return 1;
+        }
+        return 0;
     }
 
     /**

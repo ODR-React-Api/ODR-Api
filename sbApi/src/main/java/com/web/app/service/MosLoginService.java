@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import com.web.app.domain.MosLogin.GetPetitionTemp;
 import com.web.app.domain.MosLogin.GetPlatform;
-import com.web.app.domain.MosLogin.Relations;
 import com.web.app.domain.MosLogin.ScreenInfo;
 import com.web.app.domain.MosLogin.SessionInfo;
 
@@ -20,7 +19,7 @@ import com.web.app.domain.MosLogin.SessionInfo;
 public interface MosLoginService {
     // TBL「申立（case_petitions）」の新規登
     // TBL「案件別個人情報リレーション（case_relations）」の新規登録
-    Relations insRelationsTemp(String uuId, String loginUser, String userId);
+    int insRelationsTemp(String uuId, String loginUser, String userId);
 
     // API_画面制御表示項目取得
     GetPlatform getPlatform(SessionInfo sessionInfo);

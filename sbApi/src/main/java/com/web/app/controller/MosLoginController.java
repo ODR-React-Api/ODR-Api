@@ -73,9 +73,13 @@ public class MosLoginController {
                     // 自動採番
                     String uuId = utilService.GetGuid();
                     // API「下書き用準備データ登録」
-                    Relations relations = mosLoginService.insRelationsTemp(uuId, sessionInfo.getLoginUser(),
+                    int insRelationsTempNum = mosLoginService.insRelationsTemp(uuId, sessionInfo.getLoginUser(),
                             sessionInfo.getSessionId());
-                    return AjaxResult.success("登録成功", relations);
+                    if(insRelationsTempNum != 1) {
+                        return AjaxResult.success("登録異常", mospictureResult);
+
+                    }
+                    return AjaxResult.success("登録成功", mospictureResult);
                 } else {
                     mospictureResult.setGetPetitionTemp(petitionsTempList);
                     return AjaxResult.success("拡張項目の表示状態が0の画面表示成功!", mospictureResult);
