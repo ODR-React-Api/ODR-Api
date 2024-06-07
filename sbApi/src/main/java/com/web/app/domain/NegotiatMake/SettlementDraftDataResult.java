@@ -3,6 +3,7 @@ package com.web.app.domain.NegotiatMake;
 import java.io.Serializable;
 import java.util.List;
 
+import com.web.app.domain.Entity.Files;
 import com.web.app.domain.Entity.MasterTypes;
 
 import lombok.Data;
@@ -25,10 +26,10 @@ public class SettlementDraftDataResult implements Serializable {
     private String otherContext;
 
     // 申立て支払金額
-    private double payAmount;
+    private Double payAmount;
 
     // 反訴の支払金額
-    private double counterClaimPayment;
+    private Double counterClaimPayment;
 
     // 支払期日
     private String paymentEndDate;
@@ -43,7 +44,7 @@ public class SettlementDraftDataResult implements Serializable {
     private int status;
 
     // ファイル名
-    private List<String> fileNameList;
+    private List<Files> fileNameList;
 
     //返送時送料
     private List<MasterTypes> MasterTypesList;

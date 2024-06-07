@@ -115,18 +115,18 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             } else {
                 settlementResult.setOtherContext("");
             }
-            List<String> fileNameList = new ArrayList<>();
+            List<Files> fileNameList = new ArrayList<>();
             for (SettlementDraftDataSelectedInfo selectedInfo : selectedInfoList) {
-                fileNameList.add(selectedInfo.getFileName());
+                Files files =new Files();
+                files.setFileName(selectedInfo.getFileName());
+                files.setFileUrl(selectedInfo.getFileUrl());
+                fileNameList.add(files);
             }
             settlementResult.setFileNameList(fileNameList);
             settlementResult.setMessage(Constants.RETCD_OK);
 
         } else {
             // 和解案下書きデータ取得がなし場合
-            settlementResult.setStatus(0);
-            settlementResult.setCorrespondence(null);
-            settlementResult.setOtherContext("");
             settlementResult.setMessage(Constants.RETCD_NG);
         }
         return settlementResult;
