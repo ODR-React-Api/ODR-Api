@@ -306,7 +306,7 @@ public class MosLoginServiceImpl implements MosLoginService {
                 insRepliesTempMapper.caseFileRelationsDelete(case_petitions_id);
             }
 
-            if (screenInfo != null && screenInfo.getFileSize() != 0) {
+            if (screenInfo.getFileSize() != null && screenInfo.getFileSize() != 0) {
                 // ⓹画面上添付ファイルがなくなるまで、TBL「添付ファイル（files）」を新規登録する。
                 // 自動採番のid（Guid取得）
                 String fileMaxId1 = utilService.GetGuid();
