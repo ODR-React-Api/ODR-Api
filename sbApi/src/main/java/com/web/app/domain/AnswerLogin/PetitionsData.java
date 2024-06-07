@@ -7,7 +7,7 @@ import lombok.Data;
 
 @ApiModel
 @Data
-public class PetitionsData implements Serializable{
+public class PetitionsData implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String productName;
@@ -19,6 +19,16 @@ public class PetitionsData implements Serializable{
     private String traderUrl;
 
     private String other;
+
+    private String other01;
+
+    private String other02;
+
+    private String other03;
+
+    private String other04;
+
+    private String other05;
 
     private String boughtDate;
 
