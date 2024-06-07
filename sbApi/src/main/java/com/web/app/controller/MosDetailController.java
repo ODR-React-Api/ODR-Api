@@ -281,9 +281,9 @@ public class MosDetailController {
                 // チュートリアル表示制御変更
                 int res = mosDetailService.UpdShowTuritor(updShowTuritorParameter);
                 if (res > 0) {
-                    return AjaxResult.error("更新成功!");
+                    return AjaxResult.success("更新成功!");
                 }
-                return AjaxResult.success("更新失敗!");
+                return AjaxResult.error("更新失敗!");
             } catch (Exception e) {
                 AjaxResult.fatal("更新失敗!", e);
                 return null;
