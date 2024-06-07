@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdNegotiationEndDateMapper">
+    <update id="updNegotiationEndDate" parameterType="com.web.app.domain.DateExtensionRec.UpdNegotiationEndDate">
+        UPDATE
+            cases
+        SET
+            NegotiationEndDateChangeStatus = 0,
+            <choose>
+                <when test="extensionDateApplicationFlag == true">
+                    NegotiationEndDate = #{negotiationEndDate},
+                </when>
+            </choose>
+            LastModifiedDate = NOW(),
+            LastModifiedBy = #{userId}
+        WHERE
+            cid = #{caseId}
+            AND PlatformId = #{platformId}
+    </update>
+</mapper>
