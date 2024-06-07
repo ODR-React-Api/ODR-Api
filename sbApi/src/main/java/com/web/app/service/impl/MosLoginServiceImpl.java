@@ -209,7 +209,7 @@ public class MosLoginServiceImpl implements MosLoginService {
         // 画面表示項目.申立ての種類
         petitionInfo.setPetitionTypeValue(petitionsTemp.getPetitionTypeValue());
         // 画面表示項目.申立て内容
-        petitionInfo.setPetitionContext(petitionsTemp.getPetitionContext().toString());
+        petitionInfo.setPetitionContext(petitionsTemp.getPetitionContext());
         // 画面表示項目.希望する解決方法
         petitionInfo.setExpectResloveTypeValue(petitionsTemp.getExpectResloveTypeValue());
         // 画面表示項目.その他
@@ -303,7 +303,7 @@ public class MosLoginServiceImpl implements MosLoginService {
                 insRepliesTempMapper.caseFileRelationsDelete(case_petitions_id);
             }
 
-            if (screenInfo.getFileSize() != 0) {
+            if (screenInfo != null && screenInfo.getFileSize() != 0) {
                 // ⓹画面上添付ファイルがなくなるまで、TBL「添付ファイル（files）」を新規登録する。
                 // 自動採番のid（Guid取得）
                 String fileMaxId1 = utilService.GetGuid();
