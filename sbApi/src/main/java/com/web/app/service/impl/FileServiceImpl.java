@@ -34,7 +34,7 @@ public class FileServiceImpl implements FileService {
    * 上传单文件
    */
   @Override
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({"rawtypes", "null"})
   public Response upload(@RequestParam("file") MultipartFile file) {
 
     if (file.isEmpty()) {

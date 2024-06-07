@@ -63,6 +63,7 @@ public class CommonServiceImpl implements CommonService {
      * @param displayNameFlag 関係者内容取得するフラグ
      * @return true false
      */
+    @SuppressWarnings("null")
     @Transactional(noRollbackFor = { ArithmeticException.class })
     @Override
     public Boolean InsertActionHistories(ActionHistories actionHistories, List<String> fileId, Boolean parametersFlag,

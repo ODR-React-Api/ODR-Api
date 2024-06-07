@@ -1,7 +1,6 @@
 package com.web.app.domain.NegotiatMake;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
