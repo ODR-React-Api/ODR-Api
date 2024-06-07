@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 @Aspect
 @Component
+@SuppressWarnings("null")
 public class WebLogAspect {
   // 获取日志类，方便直接在控制台输出统一格式的日志信息
   private final static Logger logger = LoggerFactory.getLogger(WebLogAspect.class);

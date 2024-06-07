@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 //@Component
 public class ExceptionResolver implements HandlerExceptionResolver {
 
+  @SuppressWarnings("null") 
   @Override
   public ModelAndView resolveException(HttpServletRequest request,
       HttpServletResponse response,

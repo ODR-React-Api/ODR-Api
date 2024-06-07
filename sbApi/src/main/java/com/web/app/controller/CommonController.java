@@ -16,6 +16,7 @@ import com.web.app.domain.Entity.ActionHistories;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.Entity.MasterPlatforms;
 import com.web.app.domain.Entity.MasterTypes;
+import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.domain.constants.Constants;
 import com.web.app.service.CommonService;
 import com.web.app.service.UtilService;
@@ -177,6 +178,30 @@ public class CommonController {
             Cases cases = utilService.GetCasesByCid(caseId, platformId);
             if(cases != null) {
                 return Response.success(cases);
+            }
+            return Response.error(Constants.RETCD_NG);
+        } catch (Exception e) {
+            return Response.error(e.getMessage());
+        }
+    }
+
+    /**
+     * ユーザ情報取得API
+     * 
+     * @param uid ユーザID
+     * @param email メールアドレス
+     * @param platformId プラットフォームID
+     * @return ユーザ情報
+     * @throws Exception エラーの説明内容
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("ユーザ情報取得")
+    @PostMapping("/GetOdrUsersByUidOrEmail")
+    public Response GetOdrUsersByUidOrEmail(String uid, String email, String platformId) {
+        try {
+            OdrUsers odrUsers = utilService.GetOdrUsersByUidOrEmail(uid, email, platformId);
+            if(odrUsers != null) {
+                return Response.success(odrUsers);
             }
             return Response.error(Constants.RETCD_NG);
         } catch (Exception e) {

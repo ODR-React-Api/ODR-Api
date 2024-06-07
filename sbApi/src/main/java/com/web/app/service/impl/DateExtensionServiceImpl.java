@@ -6,14 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.app.domain.DateExtension.CaseInfo;
-import com.web.app.domain.Entity.CaseRelations;
 import com.web.app.domain.Entity.Cases;
-import com.web.app.domain.Entity.OdrUsers;
 import com.web.app.mapper.GetNegotiationExtendDaysMapper;
 import com.web.app.mapper.GetToCaseInfoMapper;
 import com.web.app.mapper.UpdDateExtensionCasesMapper;
 import com.web.app.service.DateExtensionService;
-import com.web.app.service.MosDetailService;
 import com.web.app.service.UtilService;
 
 /**
@@ -37,9 +34,6 @@ public class DateExtensionServiceImpl implements DateExtensionService {
 
     @Autowired
     private UtilService utilService;
-
-    @Autowired
-    private MosDetailService mosDetailService;
 
     @Autowired
     private UpdDateExtensionCasesMapper updDateExtensionCasesMapper;
