@@ -377,8 +377,43 @@ public class MosDetailServiceImpl implements MosDetailService {
     @Override
     public int AddMessages(String caseId, String uid, String platformId, String messageGroupId) {
 
-        // セッション情報のCaseId対応な申立人・相手方・代理人のuserid
-        List<String> result = addMessagesMapper.usersId(messageGroupId, platformId, uid);
+        // セッション情報のCaseId対応な申立人・相手方・代理人のuserId
+        // List<String> result = addMessagesMapper.usersId(messageGroupId, platformId,
+        // uid);
+        // 関係者メアド取得
+        CaseRelations caseRelations = addMessagesMapper.getCaseRelatedUserInfo(caseId, platformId);
+        if (caseRelations == null) {
+            return 0;
+        }
+        // Emailリスト
+        List<String> beRecipientEmail = new ArrayList<String>();
+        // userIdリスト
+        List<String> userIdList = new ArrayList<String>();
+        // 申立人
+        beRecipientEmail.add(caseRelations.getPetitionUserInfo_Email());
+        // 申立代理人
+        beRecipientEmail.add(caseRelations.getAgent1_Email());
+        beRecipientEmail.add(caseRelations.getAgent2_Email());
+        beRecipientEmail.add(caseRelations.getAgent3_Email());
+        beRecipientEmail.add(caseRelations.getAgent4_Email());
+        beRecipientEmail.add(caseRelations.getAgent5_Email());
+        // 相手方
+        beRecipientEmail.add(caseRelations.getTraderUserEmail());
+        // 相手代理人
+        beRecipientEmail.add(caseRelations.getTraderAgent1_UserEmail());
+        beRecipientEmail.add(caseRelations.getTraderAgent2_UserEmail());
+        beRecipientEmail.add(caseRelations.getTraderAgent3_UserEmail());
+        beRecipientEmail.add(caseRelations.getTraderAgent4_UserEmail());
+        beRecipientEmail.add(caseRelations.getTraderAgent5_UserEmail());
+        for (String item : beRecipientEmail) {
+            if (item != null) {
+                // ユーザ情報取得API
+                OdrUsers odrUsers = utilService.GetOdrUsersByUidOrEmail(null, item, null);
+                if (odrUsers != null) {
+                    userIdList.add(odrUsers.getUid());
+                }
+            }
+        }
 
         // GUID呼び出し
         String id = utilService.GetGuid();
@@ -387,7 +422,7 @@ public class MosDetailServiceImpl implements MosDetailService {
         // 「ユーザメッセージ」新規登録
         List<UsersMessages> usersMessagesList = new ArrayList<>();
 
-        for (String item : result) {
+        for (String item : userIdList) {
             UsersMessages usersMessages = new UsersMessages();
             usersMessages.setId(utilService.GetGuid());
             usersMessages.setMessageId(id);
@@ -1158,7 +1193,7 @@ public class MosDetailServiceImpl implements MosDetailService {
      * 
      * @param caseId セッション.案件ID
      * @param userId セッション.ユーザID(ログインユーザーID)
-     * reurn 更新件数
+     *               reurn 更新件数
      */
     public int updMediatorHistories(String caseId, String userId) {
         MediatorHistories mediatorHistories = new MediatorHistories();
