@@ -53,7 +53,7 @@ public class AnswerLoginConfirmServiceImpl implements AnswerLoginConfirmService{
     /**
      * 案件更新
      * API_案件更新
-     * 根据条件，更新案件
+     * 根据相应条件，更新案件对象的属性值
      *
      * @param updCases 前端传入信息的封装对象
      * @return int 更新行数
