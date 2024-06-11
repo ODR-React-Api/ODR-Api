@@ -1193,7 +1193,7 @@ public class MosDetailServiceImpl implements MosDetailService {
      * 
      * @param caseId セッション.案件ID
      * @param userId セッション.ユーザID(ログインユーザーID)
-     *               reurn 更新件数
+     * @return 更新件数
      */
     public int updMediatorHistories(String caseId, String userId) {
         MediatorHistories mediatorHistories = new MediatorHistories();
