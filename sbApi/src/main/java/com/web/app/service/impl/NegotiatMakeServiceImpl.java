@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
+
 import com.web.app.domain.NegotiatMake.SettlementDraftDataCaseFileRelations;
 import com.web.app.domain.NegotiatMake.SettlementDraftDataCaseNegotiations;
 import com.web.app.domain.NegotiatMake.SettlementDraftDataFiles;
@@ -377,8 +379,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         caseNegotiations.setPlatformId(sessionLogin.getPlatformId());
         caseNegotiations.setCaseId(sessionLogin.getSessionCaseId());
         caseNegotiations.setStatus(selectedStatus);
-        caseNegotiations
-                .setExpectResloveTypeValue(sessionLogin.getSettlementDraftFromWeb().getExpectResloveTypeValue());
+        caseNegotiations.setExpectResloveTypeValue(StringUtils.join(sessionLogin.getSettlementDraftFromWeb().getExpectResloveTypeValue(), ","));
         caseNegotiations.setOtherContext(sessionLogin.getSettlementDraftFromWeb().getOtherContext());
         caseNegotiations.setHtmlContext(null);
         caseNegotiations.setHtmlContext2(null);
@@ -480,7 +481,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
 
         // 「和解案」更新、画面項目から
         caseNegotiations.setExpectResloveTypeValue(
-                sessionLogin.getSettlementDraftFromWeb().getExpectResloveTypeValue());
+        StringUtils.join(sessionLogin.getSettlementDraftFromWeb().getExpectResloveTypeValue(), ","));
         caseNegotiations.setOtherContext(sessionLogin.getSettlementDraftFromWeb().getOtherContext());
         caseNegotiations.setPayAmount(sessionLogin.getSettlementDraftFromWeb().getPayAmount());
         caseNegotiations.setCounterClaimPayment(sessionLogin.getSettlementDraftFromWeb().getCounterClaimPayment());

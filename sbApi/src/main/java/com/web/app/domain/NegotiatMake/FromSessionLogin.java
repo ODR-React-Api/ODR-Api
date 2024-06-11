@@ -38,6 +38,6 @@ public class FromSessionLogin implements Serializable {
     private String UserId;
 
     // 画面項目から
-    SettlementDraftFromWeb SettlementDraftFromWeb;
+    SettlementDraftFromWeb settlementDraftFromWeb;
 
 }

@@ -19,10 +19,10 @@ public class SettlementDraftFromWeb implements Serializable {
     // 画面項目から
 
     // 希望する解決方法
-    private String ExpectResloveTypeValue;
+    private List<String> expectResloveTypeValue;
 
     // その他 内容
-    private String OtherContext;
+    private String otherContext;
 
     // 支払金額
     private double PayAmount;
