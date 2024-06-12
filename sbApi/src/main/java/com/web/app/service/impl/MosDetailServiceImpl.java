@@ -481,7 +481,7 @@ public class MosDetailServiceImpl implements MosDetailService {
                 }
 
                 try {
-                    withdrawalReturn.setCaseRelations(getCaseRelations(uid));
+                    withdrawalReturn.setCaseRelations(getCaseRelations(caseId));
                 } catch (Exception e) {
                     log.error(e);
                 }
