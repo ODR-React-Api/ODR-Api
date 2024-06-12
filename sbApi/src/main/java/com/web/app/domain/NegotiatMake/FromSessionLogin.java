@@ -36,6 +36,9 @@ public class FromSessionLogin implements Serializable {
 
     // ログインユーザ
     private String UserId;
+    
+    //書き置き保存と保存を判断して編集を依頼する
+    private String butJudge;
 
     // 画面項目から
     SettlementDraftFromWeb settlementDraftFromWeb;
