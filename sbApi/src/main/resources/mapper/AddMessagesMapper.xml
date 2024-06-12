@@ -16,6 +16,30 @@
             userId != #{uid}
   </select>
 
+  <select id="getCaseRelatedUserInfo" resultType="com.web.app.domain.Entity.CaseRelations">
+        SELECT
+            PetitionUserId,
+            PetitionUserInfo_Email,
+            Agent1_Email,
+            Agent2_Email,
+            Agent3_Email,
+            Agent4_Email,
+            Agent5_Email,
+            TraderUserEmail,
+            TraderAgent1_UserEmail,
+            TraderAgent2_UserEmail,
+            TraderAgent3_UserEmail,
+            TraderAgent4_UserEmail,
+            TraderAgent5_UserEmail,
+            MediatorUserEmail
+        FROM
+            case_relations
+        WHERE
+            CaseId = #{caseId}
+            AND PlatformId = #{platformId}
+            AND DeleteFlag = 0
+    </select>
+
   <insert id="messagesInsert">
         INSERT INTO react_use.messages (
             id,
