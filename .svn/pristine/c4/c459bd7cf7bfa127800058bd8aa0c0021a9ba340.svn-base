@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.TestUserMapper">
+    <resultMap id="testUserResultMap" type="com.web.app.domain.TestUser">
+        <id property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userAge" column="user_age" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="testUserSearch" resultMap="testUserResultMap">
+        SELECT
+            user_id,
+            user_name,
+            user_age
+        FROM
+            test_user
+        WHERE
+            user_id = #{userId}
+            AND password = #{password}
+    </select>
+    <select id="testUserListSearch" resultMap="testUserResultMap">
+        SELECT 
+            user_id,
+            password,
+            user_name,
+            user_age
+        FROM
+            test_user
+        WHERE
+            user_age IN
+                <foreach collection="list" item="userAge" separator="," open="(" close=")">
+                    #{userAge}
+                </foreach>
+    </select>
+
+    <insert id="testUserInsert" parameterType="com.web.app.domain.TestUser">
+        INSERT INTO test_user (
+            user_id,
+            password,
+            user_name,
+            user_age
+        )
+        VALUES (
+            #{userId},
+            #{password},
+            #{userName},
+            #{userAge}
+        )
+    </insert>
+
+    <update id="testUserUpdate" parameterType="com.web.app.domain.TestUser">
+        UPDATE test_user
+        SET
+            user_name = #{userName},
+            user_age = #{userAge}
+        WHERE
+            user_id = #{userId}
+            AND password = #{password}
+    </update>
+
+    <delete id="testUserDelete" parameterType="com.web.app.domain.TestUser">
+        DELETE FROM
+            test_user
+        WHERE
+            user_id = #{userId}
+            AND password = #{password}
+    </delete>
+</mapper>

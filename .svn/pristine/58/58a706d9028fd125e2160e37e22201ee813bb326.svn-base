@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.PoliciesMapper">
+    <resultMap id="PoliciesResultMap" type="com.web.app.domain.Policies">
+        <result property="VersionNo" column="version_no" jdbcType="VARCHAR"/>
+        <result property="HtmlContext" column="html_context" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>
