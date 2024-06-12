@@ -173,7 +173,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金");
+                // fromWeb.setExpectResloveTypeValue("全額返金");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(200);
@@ -275,7 +275,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
+                // fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(200);
@@ -344,7 +344,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
+                // fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(300);
@@ -407,7 +407,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
+                // fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(300);
@@ -477,7 +477,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
+                // fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(300);
@@ -537,7 +537,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
+                // fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(200);
@@ -602,7 +602,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
+                // fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(200);
@@ -670,7 +670,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
+                // fromWeb.setExpectResloveTypeValue("全額返金,一部返金,その他");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(200);
@@ -792,7 +792,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金");
+                // fromWeb.setExpectResloveTypeValue("全額返金");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(200);
@@ -855,7 +855,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金");
+                // fromWeb.setExpectResloveTypeValue("全額返金");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(200);
@@ -917,7 +917,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金");
+                // fromWeb.setExpectResloveTypeValue("全額返金");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(200);
@@ -980,7 +980,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金");
+                // fromWeb.setExpectResloveTypeValue("全額返金");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(200);
@@ -1046,7 +1046,7 @@ public class NegotiatMakeTest {
                 fileAdd.add(files);
 
                 SettlementDraftFromWeb fromWeb = new SettlementDraftFromWeb();
-                fromWeb.setExpectResloveTypeValue("全額返金");
+                // fromWeb.setExpectResloveTypeValue("全額返金");
                 fromWeb.setOtherContext("その他 内容");
                 fromWeb.setPayAmount(100);
                 fromWeb.setCounterClaimPayment(200);
