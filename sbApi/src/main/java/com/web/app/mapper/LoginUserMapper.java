@@ -1,6 +1,7 @@
 package com.web.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+
 import com.web.app.domain.Entity.OdrUsers;
 
 /**
@@ -24,4 +25,7 @@ public interface LoginUserMapper {
 
     // TBL「ユーザ」更新
     int updateLoginDate(String email, String passWord);
+
+    // 利用規約情報とプライバシーポリシー情報取得
+    Integer getMasterPolicies(String platformId, String languageId, Integer policyType);
 }

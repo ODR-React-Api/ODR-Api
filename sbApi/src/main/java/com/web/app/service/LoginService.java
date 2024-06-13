@@ -16,4 +16,7 @@ public interface LoginService {
 
     // API_申立データ取得
     OdrUsers LoginUser(LoginUser loginUser);
+
+    // 利用規約情報とプライバシーポリシー情報取得
+    Integer findMasterPolicies(String platformId, String languageId, Integer policyType);
 }

@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.web.app.domain.Response;
 import com.web.app.domain.Entity.OdrUsers;
+import com.web.app.domain.Login.GetMasterPolicies;
 import com.web.app.domain.Login.LoginUser;
+import com.web.app.domain.constants.Constants;
 import com.web.app.service.LoginService;
 import com.web.app.tool.AjaxResult;
 import io.swagger.annotations.Api;
@@ -57,6 +59,28 @@ public class LoginController {
         } catch (Exception e) {
             AjaxResult.fatal("検索異常!", e);
             return null;
+        }
+    }
+    
+    /**
+     * 利用規約、ポリシー管理情報取得
+     *
+     * @param getMasterPolicies 申立データ取得の項目
+     * @return 利用規約、ポリシー管理情報
+     * @throws Exception 検索失敗時異常
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("利用規約、ポリシー管理取得")
+    @PostMapping("/findMasterPolicies")
+    public Response findMasterPolicies(@RequestBody GetMasterPolicies getMasterPolicies) {
+        try {
+            getMasterPolicies.setVersionNo(loginService.findMasterPolicies(getMasterPolicies.getPlatformId(), getMasterPolicies.getLanguageId(), getMasterPolicies.getPolicyType()));
+            if(getMasterPolicies.getVersionNo() != null) {
+                return Response.success(Constants.RETCD_OK, getMasterPolicies);
+            }
+            return Response.error(Constants.RETCD_NG);
+        } catch (Exception e) {
+            return Response.error(e.getMessage());
         }
     }
 }

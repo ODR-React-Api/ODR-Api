@@ -25,7 +25,7 @@ public class OdrUsers {
     private String RegisteredSiteNo;
 
     // メールアドレス
-    private String Email;
+    private String email;
 
     // 通知用メールアドレス
     private String NoticeEmail;

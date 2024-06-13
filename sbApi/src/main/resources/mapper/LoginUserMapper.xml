@@ -105,4 +105,17 @@
             AND password = #{passWord} 
             AND DeleteFlag = 0
     </update>
+    <!-- 利用規約情報とプライバシーポリシー情報取得 -->
+    <select id="getMasterPolicies" resultType="Integer">
+        SELECT
+            VersionNo
+        FROM
+            master_policies
+        WHERE
+            platformId = #{platformId}
+            AND LanguageId = #{languageId}
+            AND PolicyType = #{policyType}
+            AND IsActive = 1
+            AND DeleteFlag = 0
+    </select>
 </mapper>
