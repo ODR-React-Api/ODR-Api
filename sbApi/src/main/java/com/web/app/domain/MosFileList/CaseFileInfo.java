@@ -20,11 +20,11 @@ import lombok.Data;
 public class CaseFileInfo implements Serializable {
     private static final long serialVersionUID = 1L;
     // ファイル名
-    private String FindMailTemplatesListileName;
+    private String fileName;
     // URL
-    private String FileUrl;
+    private String fileUrl;
     // ユーザーID
-    private String RegisterUserId;
+    private String registerUserId;
     // 登録日
-    private String RegisterDate;  
+    private String registerDate;  
 }
