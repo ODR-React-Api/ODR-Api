@@ -8,10 +8,10 @@ import com.web.app.domain.Entity.Cases;
  * DateExtensionService
  * 
  * @author DUC 田壮飞
- * @since 2024/05/27
+ * @since 2024/06/04
  * @version 1.0
  */
 public interface DateExtensionService {
-    //ユーザ情報取得
-    Cases GetCaseInfo(String caseId,String platformId);
+    // ユーザ情報取得
+    Cases getCaseInfo(String caseId, String platformId);
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.web.app.domain.Entity.Cases;
 import com.web.app.mapper.GetToCaseInfoMapper;
 import com.web.app.service.DateExtensionService;
+
 /**
  * S26期日延長画面
  * Service層実現類
@@ -16,14 +17,22 @@ import com.web.app.service.DateExtensionService;
  * @version 1.0
  */
 @Service
-public class DateExtensionServiceImpl implements DateExtensionService{
+public class DateExtensionServiceImpl implements DateExtensionService {
 
     @Autowired
-    GetToCaseInfoMapper getToCaseInfoMapper;
+    private GetToCaseInfoMapper getToCaseInfoMapper;
 
+    /**
+     * API_案件情報取得
+     * 
+     * @param caseId     照会対象の案件idです
+     * @param platformId セッション.PlatformId
+     * @return NegotiationEndDate 交渉期限日,PlatformId プラットフォームID
+     * 
+     */
     @Override
-    public Cases GetCaseInfo(String caseId, String platformId) {
-        Cases cases=getToCaseInfoMapper.FindCaseInfo(caseId,platformId);
+    public Cases getCaseInfo(String caseId, String platformId) {
+        Cases cases = getToCaseInfoMapper.findCaseInfo(caseId, platformId);
         return cases;
     }
 
