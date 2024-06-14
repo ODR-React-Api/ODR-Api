@@ -123,4 +123,17 @@ public class LoginServiceImpl implements LoginService {
 
         return actionHistories;
     }
+
+    /**
+     * 利用規約、ポリシー管理情報取得
+     *
+     * @param getMasterPolicies 申立データ取得の項目
+     * @return 利用規約、ポリシー管理情報
+     * @throws Exception 検索失敗時異常
+     */
+    @Override
+    public Integer findMasterPolicies(String platformId, String languageId, Integer policyType) {
+        return loginUserMapper.getMasterPolicies(platformId, languageId, policyType);
+    }
+
 }

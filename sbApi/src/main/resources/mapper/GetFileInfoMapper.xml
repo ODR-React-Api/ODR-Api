@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.app.mapper.GetFileInfoMapper">
 <resultMap id="getFileInfoMap" type="com.web.app.domain.MosFileList.CaseFileInfo">
+    <result property="fileName" column="FileName" jdbcType="VARCHAR"/>
+    <result property="fileUrl" column="FileUrl" jdbcType="VARCHAR"/>
+    <result property="registerUserId" column="RegisterUserId" jdbcType="VARCHAR"/>
+    <result property="registerDate" column="RegisterDate" jdbcType="VARCHAR"/>
 </resultMap>
 
 <select id="selectCaseFileInfoList" resultMap="getFileInfoMap">
