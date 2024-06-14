@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <mapper namespace="com.web.app.mapper.GetCaseInfoMapper">
+        <select id="getCasesData" resultType="com.web.app.domain.MosDetail.CasesData">
+            SELECT 
+                cases.cid,
+                cases.CaseStage,
+                cases.CaseStatus,
+                cases.CaseTitle,							
+                cases.ReplyEndDate,							
+                cases.CounterclaimEndDate,							
+                cases.CancelDate,							
+                cases.ResolutionDate,							
+                cases.MediationEndDate,							
+                cases.NegotiationEndDateChangeStatus,							
+                cases.NegotiationEndDateChangeCount,							
+                cases.MediationEndDateChangeCount, 							
+                cases.GroupMessageFlag1, 							
+                cases.GroupMessageFlag2,							
+                cases.MediatorUserEmail,							
+                cases.Status,							
+                cases.Status,
+                case_relations.MediatorUserEmail,
+                case_negotiations.Status,
+                case_mediations.Status
+            FROM cases
+            INNER JOIN case_relations
+            ON cases.cid = case_negotiations.CaseId
+            LEFT JOIN case_negotiations
+            ON cases.cid = case_negotiations.CaseId
+            LEFT JOIN case_mediations
+            ON cases.cid = case_mediations.CaseId
+            WHERE
+                cases.cid = #{CaseId}
+            AND cases.cid = 0
+            AND cases.DeleteFlag = 0
+            AND case_relations.DeleteFlag = 0
+            AND case_negotiations.DeleteFlag = 0
+            AND case_mediations.DeleteFlag = 0
+        </select>
+    <select id="getphases" resultType="com.web.app.domain.Entity.MasterPlatforms">
+        SELECT
+            Phase_negotiation,
+            Phase_mediation,
+            Phase_arbitration,
+            Phase_reply
+        FROM master_platforms
+        WHERE
+            Id = #{platformId}
+        AND DeleteFlag = 0
+    </select>
+    <select id="getShowTuritor" resultType="com.web.app.domain.Entity.OdrUsers">
+        SELECT
+            ShowTuritor1,
+            ShowTuritor2,
+            ShowTuritor3
+        FROM odr_users
+        WHERE
+            Uid = #{ueserId}
+        AND PlatformId = #{platformId}
+        AND DeleteFlag = 0
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+							
+
+
+
+
+

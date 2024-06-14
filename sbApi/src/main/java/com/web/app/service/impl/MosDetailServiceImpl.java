@@ -1,0 +1,341 @@
+package com.web.app.service.impl;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.web.app.domain.Entity.MasterPlatforms;
+import com.web.app.domain.Entity.OdrUsers;
+import com.web.app.domain.MosDetail.CaseInfo;
+import com.web.app.domain.MosDetail.CasesData;
+import com.web.app.domain.constants.Constants;
+import com.web.app.mapper.GetCaseInfoMapper;
+import com.web.app.service.MosDetailService;
+
+/**
+ * 
+ */
+@Service
+public class MosDetailServiceImpl implements MosDetailService {
+
+    @Autowired
+    private GetCaseInfoMapper getCaseInfoMapper;
+
+     /**
+     * API_案件状態取得
+     * 申立て一覧画面より渡されたCaseIdを引数として、DBから該当する案件のステータスを取得する。
+     * 
+     * @param caseId     渡し項目.CaseId
+     * @param platformId セッション.PlatformId
+     * @param userId     セッション.ユーザID
+     * @return caseInfo API「案件状態取得」を呼び出すData
+     */
+    @Override
+    public CaseInfo GetCaseInfo(String caseId, String platformId, String userId) {
+        CaseInfo caseInfo = new CaseInfo();
+        // 該当案件のステータスを取得
+        CasesData casesData = getCaseInfoMapper.getCasesData(caseId);
+
+        // 案件内容の設定
+        if (casesData != null) {
+            caseInfo = setCaseInfoCaseStatus(casesData);
+        } else {
+            // （網羅外ステータス）を設定する
+            caseInfo.setCaseStatus(Constants.S9A9B9C9);
+        }
+
+        // 利用モジュール状況取得
+        MasterPlatforms masterPlatforms = getCaseInfoMapper.getPhases(platformId);
+        // 利用モジュール状況の設定
+        if (masterPlatforms != null) {
+            int moudleFlg = setCaseInfoMoudleFlg(masterPlatforms);
+            caseInfo.setMoudleFlg(moudleFlg);
+        }
+
+        // チュートリアル表示制御取得
+        OdrUsers odrUsers = getCaseInfoMapper.getShowTuritor(userId, platformId);
+        if (odrUsers != null) {
+            // チュートリアル表示（申立）
+            int showTuritor1 = odrUsers.getShowTuritor1();
+            // チュートリアル表示（回答）
+            int showTuritor2 = odrUsers.getShowTuritor2();
+            // チュートリアル表示（調停）
+            int showTuritor3 = odrUsers.getShowTuritor3();
+            caseInfo.setShowTuritor1(showTuritor1);
+            caseInfo.setShowTuritor2(showTuritor2);
+            caseInfo.setShowTuritor3(showTuritor3);
+        } else {
+            // 初期値を設定する 99: チュートリアルポップアップを表示しない
+            caseInfo.setShowTuritor1(99);
+            caseInfo.setShowTuritor2(99);
+            caseInfo.setShowTuritor3(99);
+        }
+
+        return caseInfo;
+    }
+ /**
+     * 案件内容の設定 下記項目を返す
+     * CaseTitle タイトル名
+     * 案件ステータス
+     * ・Stage
+     * ・CaseStatus
+     * ・DateRequestStatus
+     * ・MessageStatus
+     * 期日用項目
+     * ・ReplyEndDate 回答期限日
+     * ・CounterclaimEndDate 反訴の回答期限日
+     * ・CancelDate 手続き中止日
+     * ・ResolutionDate 解決日時
+     * ・MediationEndDate 調停期限日
+     * 
+     * @param casesData 案件のステータスを取得
+     * @return caseInfo API「案件状態取得」を呼び出すData---案件内容の設定
+     */
+    public CaseInfo setCaseInfoCaseStatus(CasesData casesData) {
+        CaseInfo caseInfo = new CaseInfo();
+        // タイトル名
+        String caseTitle = casesData.getCaseTitle();
+        // 案件ステージ
+        int caseStage = casesData.getCaseStage();
+        // 案件ステータス
+        String status = casesData.getCaseStatus();
+        // 和解案.ステータス
+        String negotiationStatus = casesData.getNegotiationStatus();
+        // 案件別個人情報リレーション.調停人
+        String mediatorUserEmail = casesData.getMediatorUserEmail();
+        // 調停案.ステータス
+        String mediationStatus = casesData.getMediationStatus();
+        // 交渉期限日変更ステータス
+        int negotiationEndDateChangeStatus = casesData.getNegotiationEndDateChangeStatus();
+        // 交渉期限日変更回数
+        int negotiationEndDateChangeCount = casesData.getNegotiationEndDateChangeCount();
+        // 調停期限変更回数
+        int mediationEndDateChangeCount = casesData.getMediationEndDateChangeCount();
+        // 個別やりとりステータス（申立人↔調停人）
+        int groupMessageFlag1 = casesData.getGroupMessageFlag1();
+        // 個別やりとりステータス（相手方↔調停人）
+        int groupMessageFlag2 = casesData.getGroupMessageFlag2();
+        String caseStatus = status;
+        int dateRequestStatus = 99;
+        int messageStatus = 99;
+        int stage = caseStage;
+        // 案件ステータスの判定
+        if (caseStage == 0) {
+            // CaseStatus
+            if (status.equals(Constants.WAIT_FOR_JOIN)) {
+                caseStatus = Constants.S01;
+            } else if (status.equals(Constants.WAIT_FOR_REPLY)) {
+                caseStatus = Constants.S02;
+            } else {
+                caseStatus = Constants.S9A9B9C9;
+            }
+        } else if (caseStage == 3) {
+            // CaseStatus
+            if (negotiationStatus == null) {
+                caseStatus = Constants.S3B99;
+            } else if (negotiationStatus.equals("0")) {
+                caseStatus = Constants.S3B0;
+            } else if (negotiationStatus.equals("1")) {
+                caseStatus = Constants.S3B1;
+            } else if (negotiationStatus.equals("2")) {
+                caseStatus = Constants.S3B2;
+            } else if (negotiationStatus.equals("3")) {
+                caseStatus = Constants.S3B3;
+            } else if (negotiationStatus.equals("4")) {
+                caseStatus = Constants.S3B4;
+            } else if (negotiationStatus.equals("5")) {
+                caseStatus = Constants.S3B5;
+            } else if (negotiationStatus.equals("7")) {
+                caseStatus = Constants.S3B7;
+            } else if (negotiationStatus.equals("8")) {
+                caseStatus = Constants.S3B8;
+            } else if (negotiationStatus.equals("9")) {
+                caseStatus = Constants.S3B9;
+            } else if (negotiationStatus.equals("10")) {
+                caseStatus = Constants.S3B10;
+            } else if (negotiationStatus.equals("11")) {
+                caseStatus = Constants.S3B11;
+            } else if (negotiationStatus.equals("12")) {
+                caseStatus = Constants.S3B12;
+            } else if (negotiationStatus.equals("13")) {
+                caseStatus = Constants.S3B13;
+            } else if (negotiationStatus.equals("14")) {
+                caseStatus = Constants.S3B14;
+            } else if (negotiationStatus.equals("15")) {
+                caseStatus = Constants.S3B15;
+            } else {
+                caseStatus = Constants.S9A9B9C9;
+            }
+            // DateRequestStatus
+            if (negotiationEndDateChangeStatus == 0 && negotiationEndDateChangeCount == 0) {
+                dateRequestStatus = Constants.S3A0;
+            } else if (negotiationEndDateChangeStatus == 1) {
+                dateRequestStatus = Constants.S3A1;
+            } else if (negotiationEndDateChangeStatus == 2) {
+                dateRequestStatus = Constants.S3A2;
+            } else if (negotiationEndDateChangeStatus == 0 && negotiationEndDateChangeCount == 1) {
+                dateRequestStatus = Constants.S3A3;
+            }
+        } else if (caseStage == 6) {
+            // CaseStatus
+            if (mediatorUserEmail == null) {
+                caseStatus = Constants.S61;
+            } else {
+                caseStatus = Constants.S62;
+            }
+        } else if (caseStage == 7) {
+            // CaseStatus
+            if (mediationStatus == null) {
+                caseStatus = Constants.S7C99;
+            } else if (mediationStatus.equals("0")) {
+                caseStatus = Constants.S7C0;
+            } else if (mediationStatus.equals("1")) {
+                caseStatus = Constants.S7C1;
+            } else if (mediationStatus.equals("2")) {
+                caseStatus = Constants.S7C2;
+            } else if (mediationStatus.equals("3")) {
+                caseStatus = Constants.S7C3;
+            } else if (mediationStatus.equals("4")) {
+                caseStatus = Constants.S7C4;
+            } else if (mediationStatus.equals("7")) {
+                caseStatus = Constants.S7C5;
+            } else if (mediationStatus.equals("8")) {
+                caseStatus = Constants.S7C6;
+            } else {
+                caseStatus = Constants.S9A9B9C9;
+            }
+            // DateRequestStatus
+            if (mediationEndDateChangeCount == 0) {
+                dateRequestStatus = Constants.S7A1;
+            } else if (mediationEndDateChangeCount == 1) {
+                dateRequestStatus = Constants.S7A2;
+            }
+            // MessageStatus
+            if (groupMessageFlag1 == 0 && groupMessageFlag2 == 0) {
+                messageStatus = Constants.S7B0;
+            } else if (groupMessageFlag1 == 1) {
+                messageStatus = Constants.S7B1;
+            } else if (groupMessageFlag1 == 3) {
+                messageStatus = Constants.S7B2;
+            } else if (groupMessageFlag1 == 2) {
+                messageStatus = Constants.S7B3;
+            } else if (groupMessageFlag2 == 1) {
+                messageStatus = Constants.S7B4;
+            } else if (groupMessageFlag2 == 3) {
+                messageStatus = Constants.S7B5;
+            } else if (groupMessageFlag2 == 2) {
+                messageStatus = Constants.S7B6;
+            }
+        }
+        // タイトル名の設定
+        caseInfo.setCaseTitle(caseTitle);
+        // 案件ステータスの設定
+        caseInfo.setStage(stage);
+        caseInfo.setCaseStatus(caseStatus);
+        caseInfo.setDateRequestStatus(dateRequestStatus);
+        caseInfo.setMessageStatus(messageStatus);
+
+        // 日付フォーマット変換
+        // 回答期限日
+        Date replyEndDate = casesData.getReplyEndDate();
+        // 反訴の回答期限日
+        Date counterclaimEndDate = casesData.getCounterclaimEndDate();
+        // 手続き中止日
+        Date cancelDate = casesData.getCancelDate();
+        // 解決日時
+        Date resolutionDate = casesData.getResolutionDate();
+        // 交渉期限日
+        Date negotiationEndDate = casesData.getNegotiationEndDate();
+        // 調停期限日
+        Date mediationEndDate = casesData.getMediationEndDate();
+        // 期日用項目の設定
+        if (replyEndDate != null) {
+            caseInfo.setReplyEndDate(stringToStringFormat(dateToString(replyEndDate)));
+        }
+        if (counterclaimEndDate != null) {
+            caseInfo.setCounterclaimEndDate(stringToStringFormat(dateToString(counterclaimEndDate)));
+        }
+        if (cancelDate != null) {
+            caseInfo.setCancelDate(stringToStringFormat(dateToString(cancelDate)));
+        }
+        if (resolutionDate != null) {
+            caseInfo.setResolutionDate(stringToStringFormat(dateToString(resolutionDate)));
+        }
+        if (negotiationEndDate != null) {
+            caseInfo.setNegotiationEndDate(stringToStringFormat(dateToString(negotiationEndDate)));
+        }
+        if (mediationEndDate != null) {
+            caseInfo.setMediationEndDate(stringToStringFormat(dateToString(mediationEndDate)));
+        }
+
+        return caseInfo;
+    }
+
+    /**
+     * モジュール利用状況Flgの設定
+     * 
+     * @param masterPlatforms 利用モジュール状況取得
+     * @return int モジュール利用状況Flg
+     */
+    public int setCaseInfoMoudleFlg(MasterPlatforms masterPlatforms) {
+        // モジュール利用状況Flg
+        int moudleFlg = 0;
+        // 交渉機能利用有無
+        int phaseNegotiation = masterPlatforms.getPhase_negotiation();
+        // 調停機能利用有無
+        int phaseMediation = masterPlatforms.getPhase_mediation();
+        // 反訴機能利用有無
+        int phaseReply = masterPlatforms.getPhase_reply();
+        // モジュール利用状況Flgの設定
+        if (phaseNegotiation == 1 && phaseMediation == 1 && phaseReply == 1) {
+            moudleFlg = 1;
+        } else if (phaseNegotiation == 1 && phaseMediation == 1 && phaseReply == 0) {
+            moudleFlg = 2;
+        } else if (phaseNegotiation == 1 && phaseMediation == 0 && phaseReply == 1) {
+            moudleFlg = 3;
+        } else if (phaseNegotiation == 1 && phaseMediation == 0 && phaseReply == 0) {
+            moudleFlg = 4;
+        } else if (phaseNegotiation == 0 && phaseMediation == 1 && phaseReply == 1) {
+            moudleFlg = 5;
+        } else if (phaseNegotiation == 0 && phaseMediation == 1 && phaseReply == 0) {
+            moudleFlg = 6;
+        } else if (phaseNegotiation == 0 && phaseMediation == 0 && phaseReply == 1) {
+            moudleFlg = 7;
+        } else if (phaseNegotiation == 0 && phaseMediation == 0 && phaseReply == 0) {
+            moudleFlg = 8;
+        }
+        return moudleFlg;
+    }
+// 共通メソッド
+    /**
+     * 日付書式設定
+     * Date to String (yyyyMMdd)
+     * 
+     * @param formatDate Date
+     * @return String String (yyyyMMdd)
+     */
+    public static String dateToString(Date formatDate) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.FORMAT);
+        return simpleDateFormat.format(formatDate);
+    }
+
+    /**
+     * 日付書式設定
+     * String (yyyyMMdd) to String (yyyy年MM月dd日)
+     * 
+     * @param parseString String (yyyyMMdd)
+     * @return String String (yyyy年MM月dd日)型日付
+     */
+    public static String stringToStringFormat(String parseString) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.FORMAT);
+            SimpleDateFormat simpleDateMenuFormat = new SimpleDateFormat(Constants.MENU_FORMAT);
+            simpleDateFormat.setLenient(false);
+            return simpleDateMenuFormat.format(simpleDateFormat.parse(parseString));
+        } catch (ParseException e) {
+            return parseString;
+        }
+    }
+   
+}
