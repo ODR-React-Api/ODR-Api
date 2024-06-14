@@ -50,7 +50,7 @@ public class NegotiatMakeController {
             if (dataResult.getMessage() == Constants.RETCD_OK) {
                 return Response.success(Constants.RETCD_OK, dataResult);
             }
-            return Response.error(Constants.RETCD_NG);
+            return Response.success(Constants.RETCD_NG,dataResult);
         } catch (Exception e) {
             return AjaxResult.fatal("失敗しました。", e);
         }

@@ -41,10 +41,10 @@ public class SettlementDraftDataCaseNegotiations implements Serializable {
     private String HtmlContext2;
 
     // 支払金額
-    private double PayAmount;
+    private Double PayAmount;
 
     // 反訴の支払金額
-    private double CounterClaimPayment;
+    private Double CounterClaimPayment;
 
     // 支払期日
     private Date PaymentEndDate;
@@ -66,7 +66,7 @@ public class SettlementDraftDataCaseNegotiations implements Serializable {
 
     private Integer DeleteFlag;
 
-    private Date LastModifiedDate;
+    private String LastModifiedDate;
 
     private String LastModifiedBy;
 

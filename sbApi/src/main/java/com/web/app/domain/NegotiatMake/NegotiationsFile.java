@@ -19,13 +19,13 @@ public class NegotiationsFile implements Serializable {
     // その他　内容
     private String otherContext;
     // 支払金額
-    private double payAmount;
+    private Double payAmount;
     // 反訴の支払金額
-    private double counterClaimPayment;
+    private Double counterClaimPayment;
     // 支払期日
     private String paymentEndDate;
     // 返送時送料負担区分
-    private int shipmentPayType;
+    private Integer shipmentPayType;
     // 特記事項
     private String specialItem;
     // フロントからのファイル

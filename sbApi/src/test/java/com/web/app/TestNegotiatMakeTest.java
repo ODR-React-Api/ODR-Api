@@ -407,8 +407,8 @@ public class TestNegotiatMakeTest {
         NegotiationsFile negotiationsFile = new NegotiationsFile();
         negotiationsFile.setExpectResloveTypeValue("1");
         negotiationsFile.setOtherContext("0001");
-        negotiationsFile.setPayAmount(0);
-        negotiationsFile.setCounterClaimPayment(0);
+        // negotiationsFile.setPayAmount(0);
+        // negotiationsFile.setCounterClaimPayment(0);
         negotiationsFile.setPaymentEndDate("20240522");
         negotiationsFile.setShipmentPayType(0);
         negotiationsFile.setSpecialItem(null);

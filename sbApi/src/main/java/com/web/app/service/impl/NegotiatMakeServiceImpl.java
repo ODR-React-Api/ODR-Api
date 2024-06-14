@@ -99,8 +99,13 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
             settlementResult.setCounterClaimPayment(selectedInfoList.get(0).getCounterClaimPayment());
             // 和解案下書きデータ取得できる場合、支払期日 Date =>String
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String time = simpleDateFormat.format(selectedInfoList.get(0).getPaymentEndDate());
-            settlementResult.setPaymentEndDate(time);
+if (selectedInfoList.get(0).getPaymentEndDate() !=null) {
+    String time = simpleDateFormat.format(selectedInfoList.get(0).getPaymentEndDate());
+    settlementResult.setPaymentEndDate(time);
+}else{
+    settlementResult.setPaymentEndDate(null);
+}
+
             // 和解案下書きデータ取得できる場合 特記事項
             settlementResult.setSpecialItem(selectedInfoList.get(0).getSpecialItem());
             // 和解案下書きデータ取得できる場合、対応方法
@@ -129,6 +134,9 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
 
         } else {
             // 和解案下書きデータ取得がなし場合
+            List<MasterTypes> getMasterTypes = commonMapper.FindMasterTypeName("Shippayby", "jp", "0001");
+            settlementResult.setStatus(null);
+            settlementResult.setMasterTypesList(getMasterTypes);
             settlementResult.setMessage(Constants.RETCD_NG);
         }
         return settlementResult;
@@ -176,9 +184,14 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
                     negotiationsFile.setFlag(sessionLogin.getFlag());
                     negotiationsFile.setCaseId(sessionLogin.getSessionCaseId());
                     negotiationsFile.setPlatformId(sessionLogin.getPlatformId());
+                    negotiationsFile.setUserId(sessionLogin.getUserId());
                     negotiationsFile.setExpectResloveTypeValue(StringUtils
                             .join(sessionLogin.getSettlementDraftFromWeb().getExpectResloveTypeValue(), ","));
                     negotiationsFile.setOtherContext(sessionLogin.getSettlementDraftFromWeb().getOtherContext());
+                    negotiationsFile.setPayAmount(sessionLogin.getSettlementDraftFromWeb().getPayAmount());
+                    negotiationsFile.setCounterClaimPayment(sessionLogin.getSettlementDraftFromWeb().getCounterClaimPayment());
+                    negotiationsFile.setShipmentPayType(sessionLogin.getSettlementDraftFromWeb().getShipmentPayType());
+                    negotiationsFile.setSpecialItem(sessionLogin.getSettlementDraftFromWeb().getSpecialItem());
                     addNegotiationsEdit(negotiationsFile);
 
                     result.setMessage(Constants.RETCD_OK);
@@ -227,6 +240,10 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
                         .join(sessionLogin.getSettlementDraftFromWeb().getExpectResloveTypeValue(), ","));
                 negotiationsFile.setOtherContext(sessionLogin.getSettlementDraftFromWeb().getOtherContext());
                 negotiationsFile.setId(caseNegotiationsStatus.getId());
+                negotiationsFile.setPayAmount(sessionLogin.getSettlementDraftFromWeb().getPayAmount());
+                negotiationsFile.setCounterClaimPayment(sessionLogin.getSettlementDraftFromWeb().getCounterClaimPayment());
+                negotiationsFile.setShipmentPayType(sessionLogin.getSettlementDraftFromWeb().getShipmentPayType());
+                negotiationsFile.setSpecialItem(sessionLogin.getSettlementDraftFromWeb().getSpecialItem());
                 updateNegotiationsEdit(negotiationsFile);
                 result.setMessage(Constants.RETCD_OK);
             }
@@ -265,6 +282,10 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
                     negotiationsFile.setExpectResloveTypeValue(StringUtils
                             .join(sessionLogin.getSettlementDraftFromWeb().getExpectResloveTypeValue(), ","));
                     negotiationsFile.setOtherContext(sessionLogin.getSettlementDraftFromWeb().getOtherContext());
+                    negotiationsFile.setPayAmount(sessionLogin.getSettlementDraftFromWeb().getPayAmount());
+                    negotiationsFile.setCounterClaimPayment(sessionLogin.getSettlementDraftFromWeb().getCounterClaimPayment());
+                    negotiationsFile.setShipmentPayType(sessionLogin.getSettlementDraftFromWeb().getShipmentPayType());
+                    negotiationsFile.setSpecialItem(sessionLogin.getSettlementDraftFromWeb().getSpecialItem());
                     addNegotiationsEdit(negotiationsFile);
 
                     result.setMessage(Constants.RETCD_OK);
@@ -313,6 +334,10 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
                         .join(sessionLogin.getSettlementDraftFromWeb().getExpectResloveTypeValue(), ","));
                 negotiationsFile.setOtherContext(sessionLogin.getSettlementDraftFromWeb().getOtherContext());
                 negotiationsFile.setId(caseNegotiationsStatus.getId());
+                negotiationsFile.setPayAmount(sessionLogin.getSettlementDraftFromWeb().getPayAmount());
+                negotiationsFile.setCounterClaimPayment(sessionLogin.getSettlementDraftFromWeb().getCounterClaimPayment());
+                negotiationsFile.setShipmentPayType(sessionLogin.getSettlementDraftFromWeb().getShipmentPayType());
+                negotiationsFile.setSpecialItem(sessionLogin.getSettlementDraftFromWeb().getSpecialItem());
                 updateNegotiationsEdit(negotiationsFile);
 
                 result.setMessage(Constants.RETCD_OK);
@@ -473,7 +498,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         caseNegotiations.setAgreementDate(null);
         caseNegotiations.setDeleteFlag(Constants.DELETE_FLAG_0);
         // システム日付
-        caseNegotiations.setLastModifiedDate(new Date());
+        caseNegotiations.setLastModifiedDate(getSystemtime());
         // ログインユーザ
         caseNegotiations.setLastModifiedBy(sessionLogin.getUserId());
 
@@ -567,7 +592,7 @@ public class NegotiatMakeServiceImpl implements NegotiatMakeService {
         caseNegotiations.setShipmentPayType(sessionLogin.getSettlementDraftFromWeb().getShipmentPayType());
         caseNegotiations.setSpecialItem(sessionLogin.getSettlementDraftFromWeb().getSpecialItem());
         // システム日付に設定する
-        caseNegotiations.setLastModifiedDate(new Date());
+        caseNegotiations.setLastModifiedDate(getSystemtime());
         // ログインユーザに設定する
         caseNegotiations.setLastModifiedBy(sessionLogin.getUserId());
         // 「和解案」更新でステータスの設定

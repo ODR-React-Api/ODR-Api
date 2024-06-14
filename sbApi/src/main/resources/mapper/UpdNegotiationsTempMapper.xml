@@ -91,12 +91,22 @@
         SET
 			ExpectResloveTypeValue = #{caseNegotiations.ExpectResloveTypeValue},
 			OtherContext = #{caseNegotiations.OtherContext},
+            <if test="caseNegotiations.PayAmount != null">
 			PayAmount = #{caseNegotiations.PayAmount},
+            </if>
+			<if test="caseNegotiations.CounterClaimPayment != null">
 			CounterClaimPayment = #{caseNegotiations.CounterClaimPayment},
+            </if>
+			<if test="caseNegotiations.PaymentEndDate != null">
 			PaymentEndDate = #{caseNegotiations.PaymentEndDate}, 
+            </if>
 			LastModifiedDate= #{caseNegotiations.LastModifiedDate},
+			<if test="caseNegotiations.ShipmentPayType != null">
 			ShipmentPayType = #{caseNegotiations.ShipmentPayType},
-			SpecialItem = #{caseNegotiations.SpecialItem},			
+			</if>
+			<if test="caseNegotiations.SpecialItem != null">
+			SpecialItem = #{caseNegotiations.SpecialItem},
+			</if>			
 			LastModifiedBy = #{caseNegotiations.LastModifiedBy},
             Status = #{caseNegotiations.Status},
             UserId = #{caseNegotiations.UserId}

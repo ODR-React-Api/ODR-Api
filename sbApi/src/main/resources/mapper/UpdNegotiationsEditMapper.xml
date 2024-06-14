@@ -8,11 +8,21 @@
         SET
             ExpectResloveTypeValue = #{expectResloveTypeValue},
             OtherContext = #{otherContext},
+            <if test="payAmount != null">
             PayAmount = #{payAmount},
+            </if>
+            <if test="counterClaimPayment != null">
             CounterClaimPayment = #{counterClaimPayment},
+            </if>
+            <if test="paymentEndDate != null">
             PaymentEndDate = #{paymentEndDate},
+            </if>
+            <if test="shipmentPayType != null">
             ShipmentPayType = #{shipmentPayType},
+            </if>
+            <if test="specialItem != null">
             SpecialItem = #{specialItem},
+            </if>
             Status = #{status},
             LastModifiedDate = #{lastModifiedDate},
             LastModifiedBy = #{lastModifiedBy}

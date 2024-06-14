@@ -3,7 +3,6 @@
 <mapper namespace="com.web.app.mapper.GetNegotiationsDataMapper">
     <resultMap id="SettlementDraftInfoResultMap"
         type="com.web.app.domain.NegotiatMake.SettlementDraftDataSelectedInfo">
-        <id property="caseId" column="caseId" jdbcType="VARCHAR" />
         <result property="cId" column="cid" jdbcType="VARCHAR" />
         <result property="caseStage" column="CaseStage" jdbcType="INTEGER" />
         <result property="caseStatus" column="CaseStatus" jdbcType="VARCHAR" />
@@ -14,7 +13,7 @@
 		<result property="CounterClaimPayment" column="CounterClaimPayment" jdbcType="DOUBLE" />
 		<result property="PaymentEndDate" column="PaymentEndDate" jdbcType="DATE" />
 		<result property="ShipmentPayType" column="ShipmentPayType" jdbcType="INTEGER" />
-		<result property="SpecialItem" column="caseId" jdbcType="VARCHAR" />
+		<result property="SpecialItem" column="SpecialItem" jdbcType="VARCHAR" />
 		<result property="Status" column="Status" jdbcType="INTEGER" />
 		<result property="UserId" column="UserIdUserId" jdbcType="VARCHAR" />
 		<result property="FileName" column="FileName" jdbcType="VARCHAR" />
@@ -22,6 +21,37 @@
     </resultMap>
     <select id="getNegotiationsDataInfoSearch" resultMap="SettlementDraftInfoResultMap"> 
         SELECT
+        caseNegotiations.CaseId AS CaseId,
+        caseNegotiations.id AS id,
+        caseNegotiations.platformId AS platformId,
+        caseNegotiations.ExpectResloveTypeValue AS ExpectResloveTypeValue,
+        caseNegotiations.OtherContext AS OtherContext,
+        caseNegotiations.PayAmount AS PayAmount,
+        caseNegotiations.CounterClaimPayment AS CounterClaimPayment,
+        caseNegotiations.PaymentEndDate AS PaymentEndDate,
+        caseNegotiations.ShipmentPayType AS ShipmentPayType,
+        caseNegotiations.SpecialItem AS SpecialItem,
+        caseNegotiations.Status AS Status,
+        caseNegotiations.UserId AS UserId,
+        files.FileName AS FileName,
+        files.FileUrl AS FileUrl
+        FROM case_negotiations caseNegotiations
+            LEFT JOIN react_use.files  files
+                ON caseNegotiations.CaseId = files.CaseId
+                AND caseNegotiations.PlatformId =files.PlatformId
+            LEFT JOIN react_use.case_file_relations caseFileRelations
+                ON   caseNegotiations.CaseId  = caseFileRelations.CaseId
+                AND  caseNegotiations.PlatformId =caseFileRelations.PlatformId
+                AND files.id = caseFileRelations.fileId
+                AND caseFileRelations.RelatedId =  caseNegotiations.id
+                AND caseFileRelations.RelationType = 4  
+                AND caseFileRelations.DeleteFlag = 0
+        WHERE
+            caseNegotiations.CaseId = #{sessionCaseId} 
+            AND caseNegotiations.Status in (0,1,2,7,8,9,10,11,12,13,14,15)
+            AND caseNegotiations.DeleteFlag = 0
+        ORDER BY files.LastModifiedDate asc  
+        <!-- SELECT
         caseNegotiations.id AS id,
         caseNegotiations.ExpectResloveTypeValue AS ExpectResloveTypeValue,
         caseNegotiations.OtherContext AS OtherContext,
@@ -46,6 +76,6 @@
             AND caseNegotiations.DeleteFlag = 0
             AND caseFileRelations.RelationType = 4
             AND caseFileRelations.DeleteFlag = 0
-        ORDER BY files.LastModifiedDate asc    
+        ORDER BY files.LastModifiedDate asc     -->
     </select>
 </mapper> 

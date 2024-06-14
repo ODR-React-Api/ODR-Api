@@ -41,7 +41,7 @@ public class SettlementDraftDataResult implements Serializable {
     private String specialItem;
 
     // ステータス
-    private int status;
+    private Integer status;
 
     // ファイル名
     private List<Files> fileNameList;
