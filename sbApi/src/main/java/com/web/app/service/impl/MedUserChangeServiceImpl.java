@@ -6,8 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.domain.Entity.Cases;
 import com.web.app.domain.MedUserChange.InsertFileInfo;
+import com.web.app.domain.MedUserChange.UpdMediatorHistoriesChangeable;
 import com.web.app.mapper.DelAboutCasesMediationsMapper;
 import com.web.app.mapper.UpdAboutCasesInfoMapper;
+import com.web.app.mapper.UpdMediatorHistoriesChangeableMapper;
 import com.web.app.mapper.InsertFileInfoMapper;
 import com.web.app.service.MedUserChangeService;
 import com.web.app.service.UtilService;
@@ -33,6 +35,9 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
 
     @Autowired
     private UpdAboutCasesInfoMapper updAboutCasesInfoMapper;
+
+    @Autowired
+    private UpdMediatorHistoriesChangeableMapper updMediatorHistoriesChangeableMapper;
 
     /**
      * ファイル関連情報更新API
@@ -104,5 +109,19 @@ public class MedUserChangeServiceImpl implements MedUserChangeService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    /**
+     * 調停人変更履歴更新API
+     *
+     * @param InsertFileInfo 調停人変更履歴更新オブジェクト
+     * @return に答える
+     * @throws Exception エラーの説明内容
+     */
+    @Transactional
+    @Override
+    public int updMediatorHistoriesChangeable(UpdMediatorHistoriesChangeable updMediatorHistoriesChangeable)
+            throws Exception {
+        return updMediatorHistoriesChangeableMapper.updMediatorHistoriesChangeable(updMediatorHistoriesChangeable);
     }
 }

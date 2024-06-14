@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.app.mapper.UpdMediatorHistoriesChangeableMapper">
+    <update id="updMediatorHistoriesChangeable" parameterType="com.web.app.domain.MedUserChange.UpdMediatorHistoriesChangeable">
+        UPDATE
+            mediator_histories
+        SET
+            <choose>
+                <when test="withReason == true">
+                    Status = 3,
+                    ChangeWithReason = 1,
+                    ReasonContext = #{reasonContext},
+                </when>
+                <otherwise>
+                    Status = 2,
+                    ChangeWithoutReason = 1,
+                    DenyFlag = 1,
+                    ReasonType = #{reasonType},
+                </otherwise>
+            </choose>
+            ChangeRequestUserType = #{changeRequestUserType},
+            ChangeRequestDate = NOW(),
+            ChangeRequestUserId = #{changeRequestUserId},
+            LastModifiedDate = NOW(),
+            LastModifiedBy = #{lastModifiedBy}
+        WHERE
+            userId = #{userId}
+            AND caseId = #{caseId}
+            AND Status IN (0, 1)
+    </update>
+</mapper>

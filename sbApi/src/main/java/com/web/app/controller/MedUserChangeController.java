@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.domain.Response;
 import com.web.app.domain.MedUserChange.InsertFileInfo;
+import com.web.app.domain.MedUserChange.UpdMediatorHistoriesChangeable;
 import com.web.app.domain.constants.Constants;
 import com.web.app.domain.constants.MessageConstants;
 import com.web.app.service.MedUserChangeService;
@@ -97,6 +98,28 @@ public class MedUserChangeController {
         try {
             int insertfileInfoNum = medUserChangeService.insertFileInfo(insertFileInfo);
             if (insertfileInfoNum == 1) {
+                return Response.success(Constants.RETCD_OK);
+            }
+            return Response.error(Constants.RETCD_NG);
+        } catch (Exception e) {
+            return Response.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 調停人変更履歴更新API
+     *
+     * @param InsertFileInfo 調停人変更履歴更新オブジェクト
+     * @return に答える
+     * @throws Exception エラーの説明内容
+     */
+    @SuppressWarnings("rawtypes")
+    @ApiOperation("調停人変更履歴更新API")
+    @PostMapping("/updMediatorHistoriesChangeable")
+    public Response updMediatorHistoriesChangeable(@RequestBody UpdMediatorHistoriesChangeable updMediatorHistoriesChangeable) {
+        try {
+            int updMediatorHistoriesChangeableNum = medUserChangeService.updMediatorHistoriesChangeable(updMediatorHistoriesChangeable);
+            if(updMediatorHistoriesChangeableNum != 0) {
                 return Response.success(Constants.RETCD_OK);
             }
             return Response.error(Constants.RETCD_NG);
