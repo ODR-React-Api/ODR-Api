@@ -36,10 +36,10 @@
         files.FileName AS FileName,
         files.FileUrl AS FileUrl
         FROM case_negotiations caseNegotiations
-            LEFT JOIN react_use.files  files
+            LEFT JOIN files  files
                 ON caseNegotiations.CaseId = files.CaseId
                 AND caseNegotiations.PlatformId =files.PlatformId
-            LEFT JOIN react_use.case_file_relations caseFileRelations
+            LEFT JOIN case_file_relations caseFileRelations
                 ON   caseNegotiations.CaseId  = caseFileRelations.CaseId
                 AND  caseNegotiations.PlatformId =caseFileRelations.PlatformId
                 AND files.id = caseFileRelations.fileId
