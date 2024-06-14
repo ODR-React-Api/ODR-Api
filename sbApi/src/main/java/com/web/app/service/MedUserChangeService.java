@@ -1,6 +1,7 @@
 package com.web.app.service;
 
 import com.web.app.domain.MedUserChange.InsertFileInfo;
+import com.web.app.domain.MedUserChange.UpdMediatorHistoriesChangeable;
 
 /**
  * 調停人変更画面Service
@@ -19,5 +20,8 @@ public interface MedUserChangeService {
 
     // ファイル関連情報更新
     int insertFileInfo(InsertFileInfo insertFileInfo) throws Exception;
+
+    // 調停人変更履歴更新API
+    int updMediatorHistoriesChangeable(UpdMediatorHistoriesChangeable updMediatorHistoriesChangeable) throws Exception;
 
 }
