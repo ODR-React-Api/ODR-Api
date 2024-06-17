@@ -2,7 +2,6 @@ package com.web.app.domain.AnswerLoginConfirm;
 
 import java.io.Serializable;
 import java.util.List;
-
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -29,7 +28,7 @@ public class UpdCases implements Serializable{
     // 案件ステータス
     private String caseStatus;
     // 案件ステータス
-    private Boolean deleteFlag;
+    private Integer deleteFlag;
     // 相手方メール
     private String traderUserEmail;
     // 代理人mailaddress的list
